@@ -1,0 +1,23 @@
+@media (max-width: 768px) {
+  .break-760px-display-none {
+    display: none !important;
+  }
+}
+
+/*KEEPING*/
+.page-signup_flex_side {
+  min-height: fit-content;
+  height: fit-content;
+  max-height: fit-content;
+  flex: 1;
+}
+.page-signup_flex_left_logo {
+  height: 120px;
+  width: 170px;
+}
+
+/* .page-signup_flex_left_logo-animate {
+  /* opacity: 0; */
+/* margin-top: -100px; */
+/* animation: 300ms ease-out margin-top_0px-opa-1 forwards;
+} */
