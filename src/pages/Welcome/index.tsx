@@ -2,13 +2,13 @@ import {
   Button,
   Flex,
   Text,
-  Table,
   Skeleton,
   DataList,
-  Badge,
   Box,
   Tabs,
   Select,
+  Card,
+  Separator,
 } from "@radix-ui/themes";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
@@ -16,21 +16,20 @@ import {
   // selectCurrentToken,
   selectCurrentUser,
 } from "../../app/api/auth/authSlice";
-import { Link } from "react-router-dom";
 import { useLogoutMutation } from "../../app/api/auth/authApiSlice";
 import { useThemeContext } from "../../components/context/useThemeContext";
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { ExitIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 import Hint from "../../components/Hint";
 import { AllowedColors } from "../../components/RadixColors";
 
 export default function Welcome() {
-  const user = useAppSelector(selectCurrentUser);
+  const currentUser = useAppSelector(selectCurrentUser);
   // const token = useAppSelector(selectCurrentToken);
   const dispatch = useAppDispatch();
   const [logout] = useLogoutMutation();
-  const welcome = user ? `Welcome ${user.firstName}!` : "Welcome";
-  // const tokenAbbr = `${token?.slice(0, 9)} ...`;
+  const welcome = currentUser ? `Welcome ${currentUser.firstName}!` : "Welcome";
+  // const tokenAbbr = ${token?.slice(0, 9)} ...;
   const { theme, specifyTheme, usesSystemTheme } = useThemeContext();
 
   const handleThemeChange = (theme: "Light" | "Dark" | "System") => {
@@ -49,39 +48,14 @@ export default function Welcome() {
 
   const fetchAuthorizedServices = async () => {
     // Fetch services from an API or define them here
-    const fetchedServices = [
-      {
-        title: "Flow",
-        description: "Flow designer, workflow manager and automations",
-        href: "/flow",
-      },
-    ];
     setTimeout(() => {
-      setServices(fetchedServices);
+      setServices([]);
     }, 2000);
   };
 
   useEffect(() => {
     fetchAuthorizedServices();
   }, []);
-
-  const refreshBtn = () => {
-    return (
-      <Button
-        className="!mx-1"
-        variant="ghost"
-        size={"1"}
-        disabled={services.length == 0}
-        highContrast
-        onClick={() => {
-          setServices([]);
-          fetchAuthorizedServices();
-        }}
-      >
-        refreshing
-      </Button>
-    );
-  };
 
   return (
     <Flex
@@ -107,27 +81,17 @@ export default function Welcome() {
         <Tabs.Root defaultValue="account">
           <Tabs.List>
             <Tabs.Trigger value="account">Account</Tabs.Trigger>
-            <Tabs.Trigger value="preference">Preference</Tabs.Trigger>
+            <Tabs.Trigger value="preferences">Preferences</Tabs.Trigger>
           </Tabs.List>
           <Box pt="3">
             <Tabs.Content value="account">
               {/* <Separator className="!w-full" /> */}
               <DataList.Root className="mt-4">
-                {/* Access Status */}
-                <DataList.Item>
-                  <DataList.Label minWidth="88px">Status</DataList.Label>
-                  <DataList.Value>
-                    <Badge color="jade" variant="soft" radius="full">
-                      Authorized
-                    </Badge>
-                  </DataList.Value>
-                </DataList.Item>
-
                 {/* User Name */}
                 <DataList.Item>
                   <DataList.Label minWidth="88px">Username</DataList.Label>
                   <DataList.Value>
-                    <Text>{user?.userName}</Text>
+                    <Text>{currentUser?.userName}</Text>
                   </DataList.Value>
                 </DataList.Item>
 
@@ -136,7 +100,7 @@ export default function Welcome() {
                   <DataList.Label minWidth="88px">Full Name</DataList.Label>
                   <DataList.Value>
                     <Text>
-                      {user?.firstName} {user?.lastName}
+                      {currentUser?.firstName} {currentUser?.lastName}
                     </Text>
                   </DataList.Value>
                 </DataList.Item>
@@ -145,7 +109,7 @@ export default function Welcome() {
                 <DataList.Item>
                   <DataList.Label minWidth="88px">Email</DataList.Label>
                   <DataList.Value>
-                    <Text>{user?.emailAddress}</Text>
+                    <Text>{currentUser?.emailAddress}</Text>
                   </DataList.Value>
                 </DataList.Item>
               </DataList.Root>
@@ -155,14 +119,15 @@ export default function Welcome() {
                   color="red"
                   className="!mt-4 !w-full"
                 >
-                  Sign Out
+                  <ExitIcon />
+                  Return to portal
                 </Button>
               </Box>
             </Tabs.Content>
 
-            <Tabs.Content value="preference">
+            <Tabs.Content value="preferences">
               <Text size="2">Access and update your preferences</Text>
-              {/* <Box className="!mt-2 !mb-2 !flex content-between"> */}
+              <Separator size={"4"} />
               <Flex className="!flex-row !justify-between !w-full mt-2">
                 <Text size="2">Theme</Text>
                 <Flex className="!flex-col gap-1 mt-1 mb-1">
@@ -213,62 +178,45 @@ export default function Welcome() {
           </Box>
         </Tabs.Root>
       </Flex>
-      {/* Right Column - Available Services */}
+      {/* Services Section with Skeletons */}
       <Flex
         direction="column"
-        className="max-w-[400px] min-w-[350px] p-5 rounded-lg shadow-[gray] shadow-sm"
+        className="max-w-[400px] min-w-[350px] p-5 rounded-lg shadow-[gray]"
       >
-        <Text
-          as="div"
-          size="6"
-          weight="bold"
-          color={headingFontColor as AllowedColors}
-          className="text-center mb-4"
-        >
-          Authorized Services
+        <Text size="6" weight="bold" className="text-center mb-4">
+          Actions and Services
         </Text>
-        <Table.Root className="w-full text-center">
-          <Table.Header>
-            <Table.Row>
-              <Table.RowHeaderCell>Service</Table.RowHeaderCell>
-              <Table.RowHeaderCell>Description</Table.RowHeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {services.length > 0 ? (
-              services.map((service, index) => (
-                <Table.Row key={index}>
-                  <Table.Cell>
-                    <Link to={service.href}>
-                      <Button variant="outline" size={"1"}>
-                        {service.title}
-                      </Button>
-                    </Link>
-                  </Table.Cell>
-                  <Table.Cell>{service.description}</Table.Cell>
-                </Table.Row>
+
+        <Flex direction="column" gap="3">
+          {/* Render Cards for Services */}
+          {services.length > 0
+            ? services.map((service, index) => (
+                <Card key={index} className="p-4 rounded-lg text-white">
+                  <Text size="4" weight="bold">
+                    {service.title}
+                  </Text>
+                  <Text size="2" color="gray">
+                    {service.description}
+                  </Text>
+                  <Button
+                    // href={service.href}
+                    variant="outline"
+                    size="2"
+                    className="mt-2"
+                  >
+                    Visit
+                  </Button>
+                </Card>
               ))
-            ) : (
-              <>
-                {Array.from({ length: 3 }).map((_, index) => (
-                  <Table.Row key={index}>
-                    <Table.Cell>
-                      <Skeleton />
-                    </Table.Cell>
-                    <Table.Cell>
-                      <Skeleton />
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </>
-            )}
-          </Table.Body>
-        </Table.Root>
-        <Hint>
-          Services you've subscribed to will be displayed here. Please contact
-          support if some services are missing or try {refreshBtn()} which may
-          resolve missing services.
-        </Hint>
+            : // Display Skeletons for Loading State
+              Array.from({ length: 3 }).map((_, index) => (
+                <Card key={index} className="p-4 rounded-lg">
+                  <Skeleton height="20px" className="mb-2" />
+                  <Skeleton height="16px" />
+                </Card>
+              ))}
+        </Flex>
+        <Hint>We will display your available actions and services here</Hint>
       </Flex>
     </Flex>
   );
