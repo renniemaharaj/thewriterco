@@ -12,7 +12,7 @@ type RefreshTokenResponse = {
 };
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://auth-api-gmxb.onrender.com",
+  baseUrl: "https://thewriterco-auth.onrender.com",
   // baseUrl: "http://localhost:3001",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
