@@ -77,3 +77,18 @@
 .hrtm-theme-background {
   background-color: var(--hrtm-theme-background);
 }
+
+/* The blurring transparent div */
+.blurred-div {
+  /* position: absolute; */
+  /* top: 50%; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
+  /* width: 300px; */
+  /* height: 200px; */
+  /* background: rgba(17, 17, 17, 0.5); Semi-transparent white */
+  backdrop-filter: blur(20px); /* Blurs the content behind */
+  -webkit-backdrop-filter: blur(20px); /* For Safari support */
+  border-radius: 12px; /* Optional, for rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional, for aesthetics */
+}

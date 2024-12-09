@@ -1,12 +1,13 @@
 // components/Footer.tsx
 import React from "react";
-import { Flex, Link, Text } from "@radix-ui/themes";
+import { Flex, Link, Spinner, Text } from "@radix-ui/themes";
 import {
   InstagramLogoIcon,
   TwitterLogoIcon,
   // FacebookLogoIcon,
   EnvelopeClosedIcon,
   GitHubLogoIcon,
+  QuestionMarkIcon,
 } from "@radix-ui/react-icons";
 
 // Define the FooterItem type
@@ -16,6 +17,13 @@ type FooterItem = {
   weight: "regular" | "medium" | "bold";
 };
 
+type SocialMediaLink = {
+  platform: string;
+  href: string;
+  icon: React.ReactNode;
+  animateLoading: boolean;
+};
+
 // Footer items array
 const footerItems: FooterItem[] = [
   { text: "© 2024 The Writer Company", weight: "medium" },
@@ -23,36 +31,59 @@ const footerItems: FooterItem[] = [
   { text: "Terms of Service", href: "/terms", weight: "regular" },
 ];
 
-// Social media links
-const socialMediaLinks = [
+const socialMediaLinksList: SocialMediaLink[] = [
   {
     platform: "Facebook",
     href: "https://facebook.com",
-    // icon: <FacebookLogoIcon />,
+    animateLoading: false,
+    icon: <QuestionMarkIcon />,
   },
   {
     platform: "Twitter",
     href: "https://twitter.com",
     icon: <TwitterLogoIcon />,
+    animateLoading: false,
   },
   {
     platform: "Instagram",
     href: "https://instagram.com",
     icon: <InstagramLogoIcon />,
+    animateLoading: false,
   },
   {
     platform: "Gmail",
     href: "mailto:rvesprey@gmail.com",
     icon: <EnvelopeClosedIcon />,
+    animateLoading: false,
   },
   {
     platform: "GitHub",
     href: "https://github.com/renniemaharaj/kjv-bible",
     icon: <GitHubLogoIcon />,
+    animateLoading: false,
   },
 ];
-
 const Footer: React.FC = () => {
+  const [socialMediaLinks, setSocialMediaLinks] =
+    React.useState<SocialMediaLink[]>(socialMediaLinksList);
+
+  const toggleSocialMediaLink = (platform: string, state: boolean) => {
+    setSocialMediaLinks(
+      socialMediaLinks.map((item) => {
+        if (item.platform === platform) {
+          return { ...item, animateLoading: state };
+        }
+        return item;
+      }),
+    );
+  };
+
+  const handleOnClick = (link: SocialMediaLink) => {
+    toggleSocialMediaLink(link.platform, true);
+    setTimeout(() => {
+      toggleSocialMediaLink(link.platform, false);
+    }, 1000);
+  };
   return (
     <footer id="footer" className="w-full py-8 pb-20">
       <div className="container mx-auto text-center">
@@ -86,8 +117,9 @@ const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 text-gray-700 hover:text-blue-500"
+              onClick={() => handleOnClick(link)}
             >
-              <span>{link.icon}</span>
+              <span>{link.animateLoading ? <Spinner /> : link.icon}</span>
             </Link>
           ))}
         </Flex>

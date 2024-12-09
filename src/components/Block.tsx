@@ -1,14 +1,11 @@
 import { Flex, Spinner } from "@radix-ui/themes";
-import { useThemeContext } from "./context/useThemeContext";
 
 export default function Block() {
-  const { theme } = useThemeContext();
-
   return (
     <Flex
       justify={"center"}
       align={"center"}
-      className={`${theme == "light" ? "bg-white" : "bg-black"} w-full h-[100vh] fixed top-0 left-0`}
+      className={`w-full h-[100vh] fixed top-0 left-0`}
     >
       <Flex
         justify={"center"}

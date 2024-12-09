@@ -15,7 +15,6 @@ import {
   ChevronUpIcon,
   MagnifyingGlassIcon,
 } from "@radix-ui/react-icons";
-import { useThemeContext } from "../context/useThemeContext";
 import Hint from "../Hint";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
@@ -62,9 +61,6 @@ const Ereader: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const initialContentLoaded = useRef(false);
-
-  const { theme } = useThemeContext();
-  const ereaderBg = theme === "dark" ? "bg-gray-800" : "bg-gray-100";
 
   const toggleOpen = () => setIsOpen(!isOpen);
 
@@ -183,7 +179,7 @@ const Ereader: React.FC = () => {
 
   return (
     <div
-      className={`${ereaderBg} ${
+      className={`${isOpen && "blurred-div"} ereaderBg ${
         isOpen && "h-full"
       } fixed bottom-0 left-0 w-full shadow-lg overflow-auto max-h-full`}
     >

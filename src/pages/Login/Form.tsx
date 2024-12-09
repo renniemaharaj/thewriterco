@@ -47,7 +47,7 @@ import { AllowedColors } from "../../components/RadixColors";
 
 export default function LoginForm() {
   const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
-  const [formTitle] = useState<string>("Portal");
+  const [formTitle] = useState<string>("Boarding");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginMutation();
@@ -71,7 +71,7 @@ export default function LoginForm() {
           weight={"bold"}
           color={headingFontColor as AllowedColors}
         >
-          {!formSubmitting ? formTitle : "Hang tight, we're signing you in"}
+          {!formSubmitting ? formTitle : "Please wait, processing your request"}
         </Text>
       </Flex>
       <Formik

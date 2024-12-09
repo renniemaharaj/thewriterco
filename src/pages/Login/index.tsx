@@ -1,5 +1,5 @@
 //Radix UI
-import { Flex, Link, Section } from "@radix-ui/themes";
+import { Flex, Section } from "@radix-ui/themes";
 
 //Assets
 // import hrtmlogo from "../../assets/HRTM Logo 800X800 Transparent.png";
@@ -29,11 +29,11 @@ export default function Login() {
         {/* Login Form*/}
 
         {/* HRTM additionals and login*/}
-        <Flex {...stylesDict.radix["flex_col-cent-gap-1"]}>
+        {/* <Flex {...stylesDict.radix["flex_col-cent-gap-1"]}>
           <Link size={"2"} href="/signup">
             Create account?
           </Link>
-        </Flex>
+        </Flex> */}
       </Flex>
     </Section>
   );

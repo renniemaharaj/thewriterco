@@ -14,7 +14,7 @@ describe("App component", () => {
 
   test("renders the Signin page on '/login' route", () => {
     render(<App />, { route: "/login", useMemoryRouter: true });
-    const formHeader = screen.getByText(/Portal/i);
+    const formHeader = screen.getByText(/Boarding/i);
     expect(formHeader).toBeInTheDocument();
   });
 
@@ -39,7 +39,7 @@ describe("Protected Routes", () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText(/Portal/i)).toBeInTheDocument();
+      expect(screen.getByText(/Boarding/i)).toBeInTheDocument();
     });
   });
 
