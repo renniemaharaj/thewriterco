@@ -18,6 +18,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Recover from "./pages/recover";
 import Welcome from "./pages/Welcome";
+import IntDeducer from "./pages/deducer/IntDeducer";
 
 // MSAL Configuration
 const msalConfig = {
@@ -62,6 +63,10 @@ const publicRoutes: (CustomRoute | IndexRoute)[] = [
   {
     path: "*",
     element: <NoPage />,
+  },
+  {
+    path: "deducer",
+    element: <IntDeducer />,
   },
 ];
 
