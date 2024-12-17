@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Handle as ReactHandle, Position, HandleType } from "@xyflow/react";
 import { Flex, Text } from "@radix-ui/themes";
-import { useThemeContext } from "../../../context/useThemeContext";
+import { useThemeContext } from "../../../../context/useThemeContext";
 // import { updateNodeProperty } from "../../../../app/flow/flowSlice";
 // import { useDispatch } from "react-redux";
 import { SquareFunctionIcon } from "lucide-react";
