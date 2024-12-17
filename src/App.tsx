@@ -73,7 +73,7 @@ const publicRoutes: (CustomRoute | IndexRoute)[] = [
 // List of protected routes
 const protectedRoutes: CustomRoute[] = [
   {
-    path: "welcome",
+    path: "boarding",
     element: <Welcome />,
   },
 ];

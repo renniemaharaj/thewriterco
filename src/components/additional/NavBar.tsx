@@ -18,8 +18,8 @@ const navLinks: NavLink[] = [
   { label: "Articles", href: "#articles", disabled: false },
   { label: "Biblical", href: "#biblical", disabled: false },
   { label: "Sources", href: "#footer", disabled: false },
-  { label: "?", href: "/deducer", disabled: false },
-  { label: "Ark", href: "/welcome", disabled: false },
+  { label: "#", href: "/deducer", disabled: false },
+  { label: "Boarding", href: "/boarding", disabled: false },
 ];
 
 const Navbar: React.FC = () => {

@@ -34,7 +34,7 @@ describe("App component", () => {
 describe("Protected Routes", () => {
   test("redirects to login if user is not authenticated", async () => {
     render(<App />, {
-      route: "/welcome",
+      route: "/boarding",
       useMemoryRouter: true,
     });
 
@@ -45,7 +45,7 @@ describe("Protected Routes", () => {
 
   test("renders Welcome page if user is authenticated", async () => {
     mockAuth("exampleToken"); // Mock a valid auth token
-    render(<App />, { route: "/welcome", useMemoryRouter: true });
+    render(<App />, { route: "/boarding", useMemoryRouter: true });
     expect(screen.getByText(/Welcome/i)).toBeInTheDocument();
   });
 });
