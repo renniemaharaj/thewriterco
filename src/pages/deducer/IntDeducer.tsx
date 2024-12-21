@@ -68,6 +68,9 @@ const App: React.FC = () => {
     generatePossibilityQuery();
   };
 
+  const scaleTerm = (term: number) => {
+    return Math.floor(term * 2);
+  };
   const stepRangeQuery = (confirmation: boolean) => {
     let foundRangeEnd = false;
 
@@ -100,21 +103,24 @@ const App: React.FC = () => {
       } else {
         setQueryForm({
           visibility: true,
-          textContent: `Is your number more than ${queryForm.term * 2}?`,
+          textContent: `Is your number more than ${prettyNumber(scaleTerm(queryForm.term))}?`,
           operator: ">",
-          term: queryForm.term * 2,
+          term: scaleTerm(queryForm.term),
         });
       }
     }
   };
 
+  const prettyNumber = (number: number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
   const initiateRangeQuery = () => {
     const firstBoundQuery = 2000;
     setIsKnownRange(false);
     setGamingStatus(true);
     setQueryForm({
       visibility: true,
-      textContent: `Is your number more than ${firstBoundQuery}?`,
+      textContent: `Is your number more than ${prettyNumber(firstBoundQuery)}?`,
       operator: ">",
       term: firstBoundQuery,
     });
@@ -163,14 +169,16 @@ const App: React.FC = () => {
               <Box className="flex gap-4">
                 <Flex className="gap-2">
                   <Text>{queryForm.textContent}</Text>
-                  <Flex className="gap-1">
+                  <Flex gap={"2"} className="!gap-2">
                     <Button
+                      variant="ghost"
                       onClick={() => applyQueryResult(true)}
                       className="bg-green-500 text-white px-4 py-2 rounded"
                     >
                       Yes
                     </Button>
                     <Button
+                      variant="ghost"
                       onClick={() => applyQueryResult(false)}
                       className="bg-red-500 text-white px-4 py-2 rounded"
                     >
@@ -185,6 +193,7 @@ const App: React.FC = () => {
             <Box>
               <Text>{`${forcedGuess.textContent} ${forcedGuess.forceGuess}?`}</Text>
               <Button
+                variant="ghost"
                 onClick={mayaPlaysAgain}
                 className="bg-blue-500 text-white px-4 py-2 rounded"
               >
