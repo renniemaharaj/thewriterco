@@ -8,6 +8,14 @@ import {
 import { generatePossibilities, mean } from "./utils";
 import { QueryForm, GameEndNotice } from "./types";
 import { Flex, Box, Button, Text } from "@radix-ui/themes";
+import { AllowedColors } from "../../components/RadixColors";
+import Hint from "../../components/Hint";
+
+type Mind = {
+  title: string;
+  content: string | number;
+  reveal: boolean;
+};
 
 const App: React.FC = () => {
   const [workingRange, setWorkingRange] = useState([rangeStart, rangeEnd]);
@@ -22,6 +30,22 @@ const App: React.FC = () => {
   const [rangeQuery, setRangeQuery] = useState({ rangeStart: 0, rangeEnd: 0 });
   const [isKnownRange, setIsKnownRange] = useState(true);
 
+  const [currentThought, setCurrentThought] = useState({} as Mind);
+
+  useEffect(() => {
+    const thinkingMind = setInterval(() => {
+      setCurrentThought({
+        title: "Considering a set of endless possibilities",
+        content:
+          possibilities.current[
+            Math.floor(Math.random() * possibilities.current.length)
+          ] ?? "No possibilities left",
+        reveal: gamingStatus,
+      });
+    }, 1000);
+    return () => clearInterval(thinkingMind);
+  }, [queriesRequired.current, possibilities.current]);
+
   useEffect(() => {
     possibilities.current = generatePossibilities(
       workingRange[0],
@@ -35,7 +59,7 @@ const App: React.FC = () => {
       const halfPossibilities = meanPossibilities;
       setQueryForm({
         visibility: true,
-        textContent: `Is your number more than ${halfPossibilities}?`,
+        textContent: `Is your number more than ${prettyNumber(halfPossibilities)}?`,
         operator: ">",
         term: halfPossibilities,
       });
@@ -47,7 +71,7 @@ const App: React.FC = () => {
       const max = Math.max(...possibilities.current);
       const forceGuess = Math.floor(Math.random() * (max - min + 1)) + min;
       setForcedGuess({
-        textContent: "I made a guess, your number is: ",
+        textContent: "I'll make a guess. Is your number: ",
         forceGuess: forceGuess,
       });
     }
@@ -140,6 +164,21 @@ const App: React.FC = () => {
     initiateRangeQuery();
   };
 
+  const inferIsGuess = (msg: string) => {
+    const keyMatchersRegex = [/\s*I./, /guess/, /number/, /is/i];
+    let matches = 0;
+    keyMatchersRegex.forEach((regex) => {
+      if (regex.test(msg)) {
+        matches++;
+      }
+    });
+    return matches === keyMatchersRegex.length;
+  };
+
+  const colorize = (msg: string) => {
+    return inferIsGuess(msg) ? "blue" : "";
+  };
+
   return (
     <Flex
       direction="column"
@@ -166,10 +205,10 @@ const App: React.FC = () => {
           {queryForm.visibility &&
             queriesRequired.current > 0 &&
             possibilities.current.length > 1 && (
-              <Box className="flex gap-4">
-                <Flex className="gap-2">
+              <Box className="flex !gap-4">
+                <Flex className="!gap-2">
                   <Text>{queryForm.textContent}</Text>
-                  <Flex gap={"2"} className="!gap-2">
+                  <Flex gap={"3"}>
                     <Button
                       variant="ghost"
                       onClick={() => applyQueryResult(true)}
@@ -186,12 +225,18 @@ const App: React.FC = () => {
                     </Button>
                   </Flex>
                 </Flex>
+                <Hint className="max-w-[500px]">
+                  A simple yes or no question, though seemingly weak, may filter
+                  up to half + 1 the amoung of possibilities
+                </Hint>
               </Box>
             )}
           {(gamingStatus && queriesRequired.current === 0) ||
           possibilities.current.length === 1 ? (
             <Box>
-              <Text>{`${forcedGuess.textContent} ${forcedGuess.forceGuess}?`}</Text>
+              <Text
+                color={colorize(forcedGuess.textContent) as AllowedColors}
+              >{`${forcedGuess.textContent} ${forcedGuess.forceGuess}?`}</Text>
               <Button
                 variant="ghost"
                 onClick={mayaPlaysAgain}
@@ -204,20 +249,11 @@ const App: React.FC = () => {
         </Box>
       )}
       <Box className="mt-4 !py-16 !px-16">
-        {possibilities.current.length <= 50 ? (
-          <>
-            <Text className="text-lg">Possibilities</Text>
-            <Flex className="flex-wrap gap-2">
-              {possibilities.current.map((possibility) => (
-                <Text key={possibility} className="">
-                  {possibility}
-                </Text>
-              ))}
-            </Flex>
-          </>
-        ) : (
-          <Text className="opacity-70 transform scale-70">Thinking...</Text>
-        )}
+        <Text className="opacity-70 transform scale-70">
+          {currentThought.reveal
+            ? currentThought.content
+            : currentThought.title}
+        </Text>
       </Box>
     </Flex>
   );
