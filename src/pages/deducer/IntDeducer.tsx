@@ -189,8 +189,8 @@ const App: React.FC = () => {
       {!gamingStatus ? (
         <Flex className="!flex-col">
           <Text className="mb-4 !w-[400px] !text-wrap">
-            "I can guess any natural number you think of between 0 and infinity"
-            - Rennie
+            "I can guess any natural number you think of from the range (0,∞)" -
+            Rennie
           </Text>
           <Button
             onClick={beginGame}
