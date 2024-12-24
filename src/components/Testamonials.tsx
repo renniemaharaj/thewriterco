@@ -14,14 +14,14 @@ const testimonials = [
   {
     quote: `Let the first axiom be that God is. 
       
-      It is not practical to conlude whether God is or is not. No man can leave the confines of creation to prove or disprove the existence of an external source at rest. All we can have is by the word of another being or simply, another person. 
+      It is not practical to conlude whether God is or is not. No man can leave the confines of creation to prove or disprove the existence of an external source at rest. We have only: theories of minds and practices so who will build a ladder to heaven?. What is even heaven? This cannot be defined unless we first establish the supreme
   
       The first axiom is that God is. This must be accepted as true in order to reason further.`,
     author: "rma1",
   },
   {
     quote:
-      "The second axiom is that the KJV Bible is the word of God, complete and delightedly received for the source of Truth; that any other translation in confliction, whether in, significant character, word, line, verse or chapter, is a lie; that the KJV Bible is the preffered translation of the Holy Bible.",
+      "The second axiom is that the KJV Bible is the word of God, complete and delightedly received as the source of our Truth, as according to what is intended for us to know; that any other translation in confliction, whether in, significant character, word, line, verse or chapter, is a lie; that the KJV Bible is the preffered translation of the Holy Bible.",
     author: "rma2",
   },
   {
@@ -81,14 +81,14 @@ export default function ClientTestamonials() {
           // >
           // {(isIntersecting: boolean) => (
           <Card
-            className="!flex !flex-col !sticky !top-0"
+            className="blurred-div !flex !flex-col !sticky !top-0"
             // className={`sticky top-0 p-2 shadow-[gray] shadow-sm ${theme === "dark" ? "bg-gray-900" : "bg-gray-100"}`}
             // direction={"column"}
             // className={index % 2 ? "!max-w-[20rem]" : "!max-w-[50rem]"}
           >
             <Text
               as="label"
-              size="4"
+              size="2"
               weight="bold"
               mt="4"
               style={{ textAlign: "center" }}
@@ -96,7 +96,9 @@ export default function ClientTestamonials() {
               {testimonial.author}
             </Text>
             {/* <pre className="pre-wrap"> */}
-            <Text>{testimonial.quote}</Text>
+            <Text as="label" size="2" mt="4">
+              {testimonial.quote}
+            </Text>
             {/* </pre> */}
           </Card>
 
