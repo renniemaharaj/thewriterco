@@ -7,7 +7,7 @@ import {
 } from "./config";
 import { generatePossibilities, mean } from "./utils";
 import { QueryForm, GameEndNotice } from "./types";
-import { Flex, Box, Button, Text } from "@radix-ui/themes";
+import { Flex, Box, Button, Text, Link } from "@radix-ui/themes";
 import { AllowedColors } from "../../components/RadixColors";
 import Hint from "../../components/Hint";
 
@@ -198,6 +198,7 @@ const App: React.FC = () => {
           >
             I have a number
           </Button>
+          <Link href="/">thewriter.com</Link>
         </Flex>
       ) : (
         <Box className="text-center">
@@ -237,13 +238,14 @@ const App: React.FC = () => {
               <Text
                 color={colorize(forcedGuess.textContent) as AllowedColors}
               >{`${forcedGuess.textContent} ${forcedGuess.forceGuess}?`}</Text>
-              <Button
-                variant="ghost"
-                onClick={mayaPlaysAgain}
-                className="bg-blue-500 text-white px-4 py-2 rounded"
+
+              <Link
+                className="!cursor-pointer"
+                onClick={() => mayaPlaysAgain()}
               >
-                Play Again
-              </Button>
+                play again{" "}
+              </Link>
+              <Link href="/">thewriter.com</Link>
             </Box>
           ) : null}
         </Box>

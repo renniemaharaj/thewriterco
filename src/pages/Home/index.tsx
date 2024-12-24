@@ -25,7 +25,7 @@ const Index: React.FC = () => {
 
   return (
     <Flex className="!w-full !flex-col merriweather-bold`">
-      <ClientExperiences />\
+      <ClientExperiences />
       <Navbar />
       <Flex align={"center"} className="!w-full p-2 !justify-center">
         <Hint className="max-w-[450px]">

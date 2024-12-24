@@ -12,22 +12,19 @@ import Hint from "./Hint";
 
 const testimonials = [
   {
-    quote: `Let the first axiom be that God is. 
-      
-      It is not practical to conlude whether God is or is not. No man can leave the confines of creation to prove or disprove the existence of an external source at rest. We have only: theories of minds and practices so who will build a ladder to heaven?. What is even heaven? This cannot be defined unless we first establish the supreme
-  
-      The first axiom is that God is. This must be accepted as true in order to reason further.`,
-    author: "rma1",
+    quote:
+      "Existence of God: Assume as true: God exists. It is impractical to prove or disprove this, as no one can transcend creation to verify an external source. Reasoning starts from this axiom: God is.",
+    author: "Existence of God",
   },
   {
     quote:
-      "The second axiom is that the KJV Bible is the word of God, complete and delightedly received as the source of our Truth, as according to what is intended for us to know; that any other translation in confliction, whether in, significant character, word, line, verse or chapter, is a lie; that the KJV Bible is the preffered translation of the Holy Bible.",
-    author: "rma2",
+      "KJV Bible as Truth: Accept the KJV Bible as the complete and authoritative word of God, containing all truth intended for us. Any conflicting translation—whether in character, word, verse, or chapter—is a falsehood.",
+    author: "KJV Bible as Truth",
   },
   {
     quote:
-      "The third and final axiom is that Jesus Christ, the Son of God, the Creator, Messiah, the Way, the Truth and the Life, has already came ONCE as of year ending, 2024, and he came in the manner in which he did, as recorded in the KJV Bible Translation.",
-    author: "rma3",
+      "Jesus Christ's First Coming: Acknowledge that Jesus Christ, the Creator, Messiah, and Truth, has already come once (as of 2024) in the manner recorded in the KJV Bible.",
+    author: "Jesus Christ's First Coming",
   },
 ];
 
@@ -107,8 +104,8 @@ export default function ClientTestamonials() {
         ))}
       </Flex>
       <Hint className="max-w-[700px]">
-        Therefore your general position on any matter forward, must satisfy
-        these three axioms. They are for you to align yourself accordingly.
+        These axioms are the foundation from which a home can be built, and no
+        flood nor storm can shake it.
       </Hint>
     </Section>
   );
