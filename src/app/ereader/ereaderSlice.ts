@@ -33,6 +33,12 @@ const ereaderSlice = createSlice({
     setRenderStyle(state, action: PayloadAction<"rich" | "bible">) {
       state.readerStyle = action.payload;
     },
+    setOpenState(state, action: PayloadAction<boolean>) {
+      state.isOpen = action.payload;
+    },
+    toggleOpenState(state) {
+      state.isOpen = !state.isOpen;
+    },
   },
 });
 
@@ -45,6 +51,8 @@ export const {
   setDate,
   setContent,
   setRenderStyle,
+  setOpenState,
+  toggleOpenState,
 } = ereaderSlice.actions;
 
 export default ereaderSlice;

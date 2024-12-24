@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import {
-  Card,
   Button,
   TextField,
   Flex,
@@ -20,14 +19,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import Sword from "./articles/Sword";
 import { EBook } from "../../app/ereader/types";
-import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
+import {
+  setEBook,
+  setRenderStyle,
+  toggleOpenState,
+} from "../../app/ereader/ereaderSlice";
 
 const Ereader: React.FC = () => {
   // Redux state
   const eReaderState = useSelector((state: RootState) => state.ereader);
 
   // Local state
-  const [isOpen, setIsOpen] = useState(false);
   const [readerState, setRenderState] = useState<"rich" | "bible">(
     eReaderState.readerStyle,
   );
@@ -35,13 +37,13 @@ const Ereader: React.FC = () => {
   const [currentVerse, setCurrentVerse] = useState<string | null>();
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "auto";
-  }, [isOpen]);
+    document.body.style.overflow = eReaderState.isOpen ? "hidden" : "auto";
+  }, [eReaderState.isOpen]);
 
   // Update local state when Redux state changes
   useEffect(() => {
     setRenderState(eReaderState.readerStyle);
-    if (initialContentLoaded.current) setIsOpen(true);
+    // if (initialContentLoaded.current) dispatch(toggleOpenState());
     setTimeout(() => (initialContentLoaded.current = true), 1000);
 
     if (
@@ -61,8 +63,6 @@ const Ereader: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const initialContentLoaded = useRef(false);
-
-  const toggleOpen = () => setIsOpen(!isOpen);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -179,20 +179,23 @@ const Ereader: React.FC = () => {
 
   return (
     <div
-      className={`${isOpen && "blurred-div"} ereaderBg ${
-        isOpen && "h-full"
+      className={`${eReaderState.isOpen && "blurred-div"} ereaderBg ${
+        eReaderState.isOpen && "h-full"
       } fixed bottom-0 left-0 w-full shadow-lg overflow-auto max-h-full`}
     >
       <div className="flex justify-between items-center p-4 border-b">
         {/* <h2 className="text-xl font-semibold">{eReaderState.eContent.title}</h2> */}
         <BiblePicker trigger={<Button>{eReaderState.eContent.title}</Button>} />
-        <IconButton onClick={toggleOpen} aria-label="Toggle Ereader">
-          {isOpen ? <ChevronDownIcon /> : <ChevronUpIcon />}
+        <IconButton
+          onClick={() => dispatch(toggleOpenState())}
+          aria-label="Toggle Ereader"
+        >
+          {eReaderState.isOpen ? <ChevronDownIcon /> : <ChevronUpIcon />}
         </IconButton>
       </div>
 
-      {isOpen && (
-        <Flex className="!flex-col p-4 space-y-4">
+      {eReaderState.isOpen && (
+        <div className="!flex-col p-4 space-y-4">
           {eReaderState.eContent.description && (
             <p className="text-gray-700">{eReaderState.eContent.description}</p>
           )}
@@ -211,7 +214,7 @@ const Ereader: React.FC = () => {
           </div>
 
           {readerState === "bible" && (
-            <Flex className="!gap-4 justify-center">
+            <div className="!gap-4 justify-center">
               <Select.Root
                 defaultValue={currentChapter || ""}
                 value={currentChapter || ""}
@@ -250,7 +253,7 @@ const Ereader: React.FC = () => {
                     ))}
                 </Select.Content>
               </Select.Root>
-            </Flex>
+            </div>
           )}
 
           <Flex justify="center" className="!gap-2">
@@ -271,8 +274,8 @@ const Ereader: React.FC = () => {
             <IconButton onClick={() => navigateVerse("prev")}>
               <ChevronLeftIcon />
             </IconButton>
-            <Card
-              className="max-w-[700px] text-center p-4 shadow-lg"
+            <div
+              className="max-w-[700px] text-center p-4 shadow-lg !bg-transparent"
               style={{ flex: 1 }}
             >
               {readerState === "rich" && typeof parsedContent === "string" ? (
@@ -297,7 +300,7 @@ const Ereader: React.FC = () => {
               ) : (
                 <p>No content to display.</p>
               )}
-            </Card>
+            </div>
             <IconButton onClick={() => navigateVerse("next")}>
               <ChevronRightIcon />
             </IconButton>
@@ -310,9 +313,9 @@ const Ereader: React.FC = () => {
           >
             {shadowVerses().map((verse) => (
               <>
-                <Card
+                <div
                   key={verse}
-                  className="max-w-[700px] text-center p-4 shadow-lg relative"
+                  className="blurred-div max-w-[700px] text-center p-4 shadow-lg sticky top-0"
                 >
                   <h4 className="font-semibold">Verse {verse}</h4>
                   <p>
@@ -320,7 +323,7 @@ const Ereader: React.FC = () => {
                       currentChapter &&
                       eReaderState.eContent.content[currentChapter][verse]}
                   </p>
-                </Card>
+                </div>
                 {verse === shadowVerses().slice(-1)[0] && (
                   <IconButton
                     onClick={() => handleVerseChange(verse)}
@@ -333,7 +336,7 @@ const Ereader: React.FC = () => {
               </>
             ))}
           </Flex>
-        </Flex>
+        </div>
       )}
     </div>
   );

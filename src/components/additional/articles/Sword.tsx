@@ -21,9 +21,11 @@ import {
   propheticBooks,
 } from "./utils/bible/bibleDivisions";
 import Hint from "../../Hint";
+import { useDispatch } from "react-redux";
 import fetchGitBlob from "./utils/bible/gitgetter";
 import { EBook } from "../../../app/ereader/types";
 import Block from "../../Block";
+import { setOpenState } from "../../../app/ereader/ereaderSlice";
 
 type Article = {
   title: string;
@@ -46,6 +48,7 @@ const divisions = {
   "Prophetic Books": propheticBooks,
 };
 const Sword: React.FC<SwordProps> = ({ setEBook, asChild }) => {
+  const dispatch = useDispatch();
   const [isFetchingContent, setIsFetchingContent] = React.useState(false);
   const handleArticleClick = ({
     title,
@@ -56,6 +59,7 @@ const Sword: React.FC<SwordProps> = ({ setEBook, asChild }) => {
   }) => {
     setIsFetchingContent(true);
     fetchGitBlob(title).then((content) => {
+      setTimeout(() => dispatch(setOpenState(true)), 100);
       setEBook({
         title,
         content: JSON.parse(content),

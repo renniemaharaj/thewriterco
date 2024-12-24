@@ -10,6 +10,7 @@ import Ereader from "../../components/additional/Ereader";
 import { EBook } from "../../app/ereader/types";
 import { useDispatch } from "react-redux";
 import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
+import ClientExperiences from "../../components/Testamonials";
 
 //Suppress ESLint errors
 const Index: React.FC = () => {
@@ -24,8 +25,8 @@ const Index: React.FC = () => {
 
   return (
     <Flex className="!w-full !flex-col merriweather-bold`">
+      <ClientExperiences />\
       <Navbar />
-
       <Flex align={"center"} className="!w-full p-2 !justify-center">
         <Hint className="max-w-[450px]">
           Please feel free to choose your preferred theme. Default should be
@@ -33,15 +34,11 @@ const Index: React.FC = () => {
         </Hint>
         <ThemeSwitcher className="!max-w-fit" />
       </Flex>
-
       <Hero />
-
       <Separator size={"4"} />
       <Articles />
       <Sword setEBook={setEreaderState} />
-
       <Footer />
-
       <Ereader />
     </Flex>
   );

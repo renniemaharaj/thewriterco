@@ -6,6 +6,8 @@ import {
   MagnifyingGlassIcon,
 } from "@radix-ui/react-icons";
 import { useThemeContext } from "../context/useThemeContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 type NavLink = {
   label: string;
@@ -25,12 +27,18 @@ const navLinks: NavLink[] = [
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme } = useThemeContext();
+
+  const eReaderState = useSelector((state: RootState) => state.ereader);
+
   const linkHoverClassName =
     theme === "light" ? "after:bg-gray-900" : "after:bg-gray-100";
   const linkClassName = `text-gray-700 relative after:content-[''] after:block after:h-0.5 after:scale-x-0 
     hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left`;
+
   return (
-    <Box className="py-4 shadow-md">
+    <Box
+      className={`py-4 transition-all shadow-md sticky top-0 z-50 blurred-div !overflow-hidden ${eReaderState.isOpen ? "!z-0 relative left-[50%] translate-x-[-50%] " : "w-full"}`}
+    >
       <Flex
         align={"center"}
         className="container mx-auto flex !justify-between !items-center !px-1 !gap-2 !max-w-5xl"
@@ -93,7 +101,7 @@ const Navbar: React.FC = () => {
 
       {/* Collapsible Menu (Small Screens) */}
       {isMenuOpen && (
-        <Flex className="md:hidden border-t border-gray-200 mt-4">
+        <Flex className="md:hidden mt-4">
           <ul className="space-y-4 px-4 py-2">
             {navLinks.map(
               (link, index) =>
