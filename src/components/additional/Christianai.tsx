@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { Flex, IconButton, TextField } from "@radix-ui/themes";
+import { Flex, IconButton, TextField, Card } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { useSendAskRequestMutation } from "../../app/api/apiSlice";
 import { useSelector } from "react-redux";
@@ -11,7 +11,14 @@ const ChristianAIChatbox = () => {
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
     [],
   );
-  const [isTyping, setIsTyping] = useState(false); // State for typing animation
+  const [isTyping, setIsTyping] = useState(false);
+  const [isExpanded] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessages] = useState([
+    "We are processing your request.",
+    "Please be patient. This might take a moment.",
+    "Thank you for waiting!",
+  ]);
 
   const eReaderState = useSelector((state: RootState) => state.ereader);
 
@@ -43,37 +50,28 @@ const ChristianAIChatbox = () => {
       sender: string;
       text: string;
     };
-    // Add user input to the chat
+
     const userMessage: Message = {
       sender: "User",
       text: input,
     };
     setMessages((prev) => [...prev, userMessage]);
 
-    // Clear the input field
     setInput("");
 
-    // Send the user input to the AI
     try {
-      setIsTyping(true); // Show typing animation
-
+      setIsTyping(true);
+      setShowToast(true);
       const response = await sendAskRequest({
         message: input + "\n Please utilize the following as context" + context,
       }).unwrap();
 
       const formattedResponse = response.response;
-      let currentText = ""; // Text being built progressively
+      let currentText = "";
 
-      // setMessages((prev) => [
-      //   ...prev,
-      //   { sender: "AI", text: "Hello, what can I help you with today?" }, // Empty AI message for starting
-      // ]);
-
-      // Set the interval for typing animation
       let index = 0;
       const interval = setInterval(() => {
         if (index < formattedResponse.length) {
-          // Reveal character by character
           currentText += formattedResponse[index];
           setMessages((prev) => {
             const updatedMessages = [...prev];
@@ -85,10 +83,11 @@ const ChristianAIChatbox = () => {
           });
           index++;
         } else {
-          clearInterval(interval); // Stop the animation once all content is revealed
-          setIsTyping(false); // Hide typing animation once finished
+          clearInterval(interval);
+          setIsTyping(false);
+          setShowToast(false);
         }
-      }, 30); // Adjust delay (in ms) between characters for typing effect
+      }, 15); // Faster response animation
     } catch (error: unknown) {
       const errorMessage = {
         sender: "AI",
@@ -96,20 +95,40 @@ const ChristianAIChatbox = () => {
       };
       console.error(error);
       setMessages((prev) => [...prev, errorMessage]);
-      setIsTyping(false); // Hide typing animation on error
+      setIsTyping(false);
+      setShowToast(false);
     }
   };
+
+  const quickMessages = [
+    "Who is God?",
+    "Why Christianity?",
+    "What is your purpose?",
+  ];
 
   return (
     <Flex
       direction="column"
       justify="center"
-      className="p-4 w-full max-w-[500px] mx-auto"
+      className={`p-4 w-full max-w-[500px] mx-auto ${isExpanded ? "h-screen fixed top-0 left-0 z-100 blurred-div" : ""}`}
     >
+      {/* Quick Messages */}
+      <Flex className="gap-2 mb-4">
+        {quickMessages.map((msg, index) => (
+          <Card
+            key={index}
+            className="cursor-pointer px-4 py-2rounded-lg"
+            onClick={() => setInput(msg)}
+          >
+            {msg}
+          </Card>
+        ))}
+      </Flex>
+
       {/* Chat Display */}
       <Flex
         direction="column"
-        className="overflow-y-auto max-h-[400px] mb-4 p-2 rounded-lg shadow-lg"
+        className="overflow-y-auto max-h-[300px] mb-4 p-2 rounded-lg shadow-lg"
       >
         {messages.map((msg, index) => (
           <Flex
@@ -119,9 +138,9 @@ const ChristianAIChatbox = () => {
           >
             <div
               className={`inline-block px-4 py-2 rounded-lg 
-                
+              
               `}
-              dangerouslySetInnerHTML={{ __html: msg.text }} // Render HTML markup
+              dangerouslySetInnerHTML={{ __html: msg.text }}
             ></div>
           </Flex>
         ))}
@@ -131,26 +150,42 @@ const ChristianAIChatbox = () => {
             <span className="animate-pulse">...</span>
           </Flex>
         )}
+
+        {showToast && (
+          <div className="text-center mt-2 text-sm text-gray-600">
+            {toastMessages[Math.floor(Math.random() * toastMessages.length)]}
+          </div>
+        )}
       </Flex>
 
       {/* Input Area */}
-      <Flex align="center" className="!gap-2 mt-4">
+      <Flex align="center" justify={"center"} className="!gap-2 mt-4">
         <TextField.Root
           type="text"
           placeholder="Type your message..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="w-full max-w-[350px] border rounded-lg px-4 py-2 focus:outline-none"
+          className="w-full max-w-[350px] border rounded-lg px-4 py-2 focus:outline-none max-h-[300px] overflow-auto"
         />
         <IconButton
           onClick={handleSendMessage}
           disabled={isLoading || !input.trim()}
-          className="bg-blue-500 text-white hover:bg-blue-600"
+          // className="bg-blue-500 text-white hover:bg-blue-600"
         >
           <MagnifyingGlassIcon aria-label="Send" />
         </IconButton>
+        {/* <Button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="ml-2 px-4 py-2 border rounded-lg"
+        >
+          {isExpanded ? "Close" : "Expand"}
+        </Button> */}
       </Flex>
-      <Hint>AI powered responses, purified by The axioms of Life. </Hint>
+      <Hint>
+        AI powered responses, purified by The axioms of Life. This feature is at
+        most, experimental for now as we need to sort out billing on our end for
+        the SASS, but would preferrably be free for all users.
+      </Hint>
     </Flex>
   );
 };
