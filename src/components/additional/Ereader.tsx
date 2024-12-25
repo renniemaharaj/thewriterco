@@ -1,20 +1,11 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
-import {
-  Button,
-  TextField,
-  Flex,
-  IconButton,
-  Select,
-  Dialog,
-} from "@radix-ui/themes";
+import { Button, Flex, IconButton, Select, Dialog } from "@radix-ui/themes";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  MagnifyingGlassIcon,
 } from "@radix-ui/react-icons";
-import Hint from "../Hint";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import Sword from "./articles/Sword";
@@ -24,6 +15,7 @@ import {
   setRenderStyle,
   toggleOpenState,
 } from "../../app/ereader/ereaderSlice";
+import ChristianAIChatbox from "./Christianai";
 
 const Ereader: React.FC = () => {
   // Redux state
@@ -56,26 +48,9 @@ const Ereader: React.FC = () => {
     }
   }, [eReaderState, readerState]);
 
-  const [parsedContent, setParsedContent] = useState(
-    eReaderState.eContent.content,
-  );
-
-  const [searchTerm, setSearchTerm] = useState("");
+  const [parsedContent] = useState(eReaderState.eContent.content);
 
   const initialContentLoaded = useRef(false);
-
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-    if (typeof eReaderState.eContent.content === "string") {
-      const regex = new RegExp(term, "gi");
-      setParsedContent(
-        eReaderState.eContent.content.replace(
-          regex,
-          (match) => `<mark>${match}</mark>`,
-        ),
-      );
-    }
-  };
 
   const handleChapterChange = (chapter: string) => {
     setCurrentChapter(chapter);
@@ -213,6 +188,7 @@ const Ereader: React.FC = () => {
             )}
           </div>
 
+          <ChristianAIChatbox />
           {readerState === "bible" && (
             <div className="!gap-4 justify-center">
               <Select.Root
@@ -256,20 +232,6 @@ const Ereader: React.FC = () => {
             </div>
           )}
 
-          <Flex justify="center" className="!gap-2">
-            <TextField.Root
-              type="text"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(e) => handleSearch(e.target.value)}
-              className="w-full max-w-[300px]"
-              disabled={typeof eReaderState.eContent.content !== "string"}
-            />
-            <IconButton>
-              <MagnifyingGlassIcon aria-label="Search" />
-            </IconButton>
-          </Flex>
-          <Hint>Powerful search coming soon for biblical research</Hint>
           <Flex className="!justify-center !items-center space-x-4">
             <IconButton onClick={() => navigateVerse("prev")}>
               <ChevronLeftIcon />

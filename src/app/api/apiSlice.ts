@@ -13,7 +13,7 @@ type RefreshTokenResponse = {
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://thewriterco-auth.onrender.com",
-  // baseUrl: "http://localhost:3001",
+  // baseUrl: "http://localhost:3001", // Adjust to your base URL if needed
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const accessToken = (getState() as RootState).auth?.accessToken;
@@ -32,15 +32,15 @@ const baseQueryWithReauth = async (
   let result = await baseQuery(args, api, extraOptions);
   if (result?.error?.status === 403) {
     console.log("sending refresh token");
-    // send refresh token to get new access token
+    // Send refresh token to get new access token
     const refreshResult = await baseQuery("/refresh-token", api, extraOptions);
     console.log(refreshResult);
     if (refreshResult?.data) {
       const { accessToken } = refreshResult.data as RefreshTokenResponse;
       const user = (api.getState() as RootState).auth.user;
-      //store the new token
+      // Store the new token
       api.dispatch(setCredentials({ user, accessToken }));
-      //retry the original query with new access token
+      // Retry the original query with new access token
       result = await baseQuery(args, api, extraOptions);
     } else {
       api.dispatch(logOut());
@@ -53,5 +53,18 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
   tagTypes: ["User"],
-  endpoints: () => ({}),
+  endpoints: (builder) => ({
+    sendAskRequest: builder.mutation<{ response: string }, { message: string }>(
+      {
+        query: (body) => ({
+          url: "/ask",
+          method: "POST",
+          body,
+        }),
+      },
+    ),
+  }),
 });
+
+// Export the mutation hook
+export const { useSendAskRequestMutation } = apiSlice;
