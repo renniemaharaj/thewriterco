@@ -102,12 +102,29 @@ const ChristianAIChatbox = () => {
     }
   };
 
-  const quickMessages = [
+  const [quickMessages, setQuickMessages] = useState<string[]>([
     "Who is God?",
     "Why Christianity?",
-    "What is your purpose?",
-  ];
+    "AI is evil?",
+    "How can I be saved?",
+    "Was the bible written by man?",
+    "The bible promotes slavery?",
+    "White Jesus?",
+    "What is the Gospel?",
+    "Which denomination is right?",
+    "What are the Axioms of Life?",
+  ]);
 
+  const onQuickMessageClick = (msg: string) => {
+    //Remove quick message from the list
+    const index = quickMessages.indexOf(msg);
+    if (index > -1) {
+      const updatedQuickMessages = [...quickMessages];
+      updatedQuickMessages.splice(index, 1);
+      setQuickMessages(updatedQuickMessages);
+    }
+    setInput(msg);
+  };
   return (
     <Flex
       direction="column"
@@ -115,12 +132,12 @@ const ChristianAIChatbox = () => {
       className={`p-4 w-full max-w-[500px] mx-auto ${isExpanded ? "h-screen fixed top-0 left-0 z-100 blurred-div" : ""}`}
     >
       {/* Quick Messages */}
-      <Flex className="gap-2 mb-4">
+      <Flex className="gap-2 mb-4 !flex-wrap">
         {quickMessages.map((msg, index) => (
           <Card
             key={index}
             className="cursor-pointer px-4 py-2 rounded-lg"
-            onClick={() => setInput(msg)}
+            onClick={() => onQuickMessageClick(msg)}
           >
             {msg}
           </Card>
