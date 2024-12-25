@@ -1,10 +1,10 @@
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Flex, IconButton, TextField, Card } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { useSendAskRequestMutation } from "../../app/api/apiSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import Hint from "../Hint";
+import { SendIcon } from "lucide-react";
 
 const ChristianAIChatbox = () => {
   const [input, setInput] = useState("");
@@ -14,11 +14,11 @@ const ChristianAIChatbox = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isExpanded] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [toastMessages] = useState([
+  const toastMessages = [
     "We are processing your request.",
     "Please be patient. This might take a moment.",
     "Thank you for waiting!",
-  ]);
+  ];
 
   const eReaderState = useSelector((state: RootState) => state.ereader);
 
@@ -46,12 +46,7 @@ const ChristianAIChatbox = () => {
   const handleSendMessage = async () => {
     if (!input.trim()) return;
 
-    type Message = {
-      sender: string;
-      text: string;
-    };
-
-    const userMessage: Message = {
+    const userMessage = {
       sender: "User",
       text: input,
     };
@@ -63,7 +58,10 @@ const ChristianAIChatbox = () => {
       setIsTyping(true);
       setShowToast(true);
       const response = await sendAskRequest({
-        message: input + "\n Please utilize the following as context" + context,
+        message:
+          input +
+          "\n Please utilize the following as context" +
+          JSON.stringify(context),
       }).unwrap();
 
       const formattedResponse = response.response;
@@ -75,10 +73,14 @@ const ChristianAIChatbox = () => {
           currentText += formattedResponse[index];
           setMessages((prev) => {
             const updatedMessages = [...prev];
-            updatedMessages[updatedMessages.length - 1] = {
-              sender: "AI",
-              text: currentText,
-            };
+            if (updatedMessages[updatedMessages.length - 1]?.sender === "AI") {
+              updatedMessages[updatedMessages.length - 1] = {
+                sender: "AI",
+                text: currentText,
+              };
+            } else {
+              updatedMessages.push({ sender: "AI", text: currentText });
+            }
             return updatedMessages;
           });
           index++;
@@ -87,8 +89,8 @@ const ChristianAIChatbox = () => {
           setIsTyping(false);
           setShowToast(false);
         }
-      }, 15); // Faster response animation
-    } catch (error: unknown) {
+      }, 15);
+    } catch (error) {
       const errorMessage = {
         sender: "AI",
         text: "Something went wrong. Please try again",
@@ -117,7 +119,7 @@ const ChristianAIChatbox = () => {
         {quickMessages.map((msg, index) => (
           <Card
             key={index}
-            className="cursor-pointer px-4 py-2rounded-lg"
+            className="cursor-pointer px-4 py-2 rounded-lg"
             onClick={() => setInput(msg)}
           >
             {msg}
@@ -137,9 +139,7 @@ const ChristianAIChatbox = () => {
             className={`mb-2 ${msg.sender === "User" ? "text-right" : "text-left"}`}
           >
             <div
-              className={`inline-block px-4 py-2 rounded-lg 
-              
-              `}
+              className="inline-block px-4 py-2 rounded-lg"
               dangerouslySetInnerHTML={{ __html: msg.text }}
             ></div>
           </Flex>
@@ -159,9 +159,8 @@ const ChristianAIChatbox = () => {
       </Flex>
 
       {/* Input Area */}
-      <Flex align="center" justify={"center"} className="!gap-2 mt-4">
+      <Flex align="center" justify="center" className="!gap-2 mt-4">
         <TextField.Root
-          type="text"
           placeholder="Type your message..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -170,21 +169,14 @@ const ChristianAIChatbox = () => {
         <IconButton
           onClick={handleSendMessage}
           disabled={isLoading || !input.trim()}
-          // className="bg-blue-500 text-white hover:bg-blue-600"
         >
-          <MagnifyingGlassIcon aria-label="Send" />
+          <SendIcon aria-label="Send" />
         </IconButton>
-        {/* <Button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="ml-2 px-4 py-2 border rounded-lg"
-        >
-          {isExpanded ? "Close" : "Expand"}
-        </Button> */}
       </Flex>
       <Hint>
-        AI powered responses, purified by The axioms of Life. This feature is at
-        most, experimental for now as we need to sort out billing on our end for
-        the SASS, but would preferrably be free for all users.
+        AI-powered responses, purified by the axioms of Life. This feature is
+        experimental for now as we need to sort out billing on our end for the
+        SaaS, but it will preferably be free for all users.
       </Hint>
     </Flex>
   );
