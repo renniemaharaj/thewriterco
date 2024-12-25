@@ -103,9 +103,8 @@ export default function ClientTestamonials() {
           // </Observe>
         ))}
       </Flex>
-      <Hint className="max-w-[700px]">
-        These axioms are the foundation from which a home can be built, and no
-        flood nor storm can shake it.
+      <Hint className="max-w-[400px]">
+        These axioms will bind AI to the KJV Bible and the theistic worldview.
       </Hint>
     </Section>
   );
