@@ -39,10 +39,57 @@ const ChristianAIChatbox = () => {
       chapter: eReaderState.currentChapter,
       verse: eReaderState.currentVerse,
     });
-  }, [eReaderState]);
+    console.log("Context updated", context);
+  }, [
+    eReaderState,
+    eReaderState.eContent.title,
+    eReaderState.currentChapter,
+    eReaderState.currentVerse,
+  ]);
+
+  // useEffect(() => {
+  //   animateAIResponse(
+  //     "Hello! I am here to help study the bible. I have access to the Holy Bible (KJV), archelogical records, hsitorical documents & general information. All my responses are based on the axioms of Life which I have been commanded to follow. How can I help you today?"
+  //   );
+  // });
 
   const [sendAskRequest, { isLoading }] = useSendAskRequestMutation();
 
+  const animateAIResponse = (response: string) => {
+    let currentText = "";
+
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < response.length) {
+        currentText += response[index];
+        setMessages((prev) => {
+          const updatedMessages = [...prev];
+          if (updatedMessages[updatedMessages.length - 1]?.sender === "AI") {
+            updatedMessages[updatedMessages.length - 1] = {
+              sender: "AI",
+              text: currentText,
+            };
+          } else {
+            updatedMessages.push({ sender: "AI", text: currentText });
+          }
+          return updatedMessages;
+        });
+        index++;
+      } else {
+        clearInterval(interval);
+        setIsTyping(false);
+        setShowToast(false);
+      }
+    }, 15);
+  };
+
+  useEffect(() => {
+    animateAIResponse(
+      `
+      Hello! I’m here to help you study the Bible. I use the Holy Bible (KJV), historical records, and general knowledge, guided by the axioms of Life. I have context which allows me to keep track of the book you're in as well as verse and scripture. How can I assist you today?
+      `,
+    );
+  }, []);
   const handleSendMessage = async () => {
     if (!input.trim()) return;
 
@@ -65,31 +112,7 @@ const ChristianAIChatbox = () => {
       }).unwrap();
 
       const formattedResponse = response.response;
-      let currentText = "";
-
-      let index = 0;
-      const interval = setInterval(() => {
-        if (index < formattedResponse.length) {
-          currentText += formattedResponse[index];
-          setMessages((prev) => {
-            const updatedMessages = [...prev];
-            if (updatedMessages[updatedMessages.length - 1]?.sender === "AI") {
-              updatedMessages[updatedMessages.length - 1] = {
-                sender: "AI",
-                text: currentText,
-              };
-            } else {
-              updatedMessages.push({ sender: "AI", text: currentText });
-            }
-            return updatedMessages;
-          });
-          index++;
-        } else {
-          clearInterval(interval);
-          setIsTyping(false);
-          setShowToast(false);
-        }
-      }, 15);
+      animateAIResponse(formattedResponse);
     } catch (error) {
       const errorMessage = {
         sender: "AI",

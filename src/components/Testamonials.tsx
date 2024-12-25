@@ -61,7 +61,7 @@ export default function ClientTestamonials() {
         Axioms of Life
       </Text>
       <Flex className="!flex-row !flex-wrap !gap-4 w-full max-w-[600px]">
-        {testimonials.map((testimonial) => (
+        {testimonials.map((testimonial, index) => (
           // <Observe
           //   key={index}
           //   // classname="hrtm-page-signup_flex_right-testimonials"
@@ -78,6 +78,7 @@ export default function ClientTestamonials() {
           // >
           // {(isIntersecting: boolean) => (
           <Card
+            key={"testimonial" + index}
             className="blurred-div !flex !flex-col !sticky !top-0"
             // className={`sticky top-0 p-2 shadow-[gray] shadow-sm ${theme === "dark" ? "bg-gray-900" : "bg-gray-100"}`}
             // direction={"column"}

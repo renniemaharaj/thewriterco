@@ -14,38 +14,38 @@ import {
   setEBook,
   setRenderStyle,
   toggleOpenState,
+  setGlobalCurrentChapter,
+  setGlobalCurrentVerse,
 } from "../../app/ereader/ereaderSlice";
 import ChristianAIChatbox from "./Christianai";
 
 const Ereader: React.FC = () => {
   // Redux state
   const eReaderState = useSelector((state: RootState) => state.ereader);
-
+  const currentChapter = eReaderState.currentChapter;
+  const currentVerse = eReaderState.currentVerse;
   // Local state
   const [readerState, setRenderState] = useState<"rich" | "bible">(
     eReaderState.readerStyle,
   );
-  const [currentChapter, setCurrentChapter] = useState<string | null>();
-  const [currentVerse, setCurrentVerse] = useState<string | null>();
-
   useEffect(() => {
     document.body.style.overflow = eReaderState.isOpen ? "hidden" : "auto";
   }, [eReaderState.isOpen]);
 
+  const dispatch = useDispatch();
+
   // Update local state when Redux state changes
   useEffect(() => {
     setRenderState(eReaderState.readerStyle);
-    // if (initialContentLoaded.current) dispatch(toggleOpenState());
     setTimeout(() => (initialContentLoaded.current = true), 1000);
 
-    if (
-      readerState === "bible" &&
-      typeof eReaderState.eContent.content !== "string"
-    ) {
-      const firstChapter = Object.keys(eReaderState.eContent.content)[0];
-      setCurrentChapter(firstChapter);
-      setCurrentVerse("1");
-    }
+    // if (
+    //   readerState === "bible" &&
+    //   typeof eReaderState.eContent.content !== "string"
+    // ) {
+    //   const firstChapter = Object.keys(eReaderState.eContent.content)[0];
+    //   handleChapterChange(firstChapter);
+    // }
   }, [eReaderState, readerState]);
 
   const [parsedContent] = useState(eReaderState.eContent.content);
@@ -53,11 +53,17 @@ const Ereader: React.FC = () => {
   const initialContentLoaded = useRef(false);
 
   const handleChapterChange = (chapter: string) => {
-    setCurrentChapter(chapter);
-    setCurrentVerse("1");
+    dispatch(setGlobalCurrentChapter(chapter));
+    dispatch(setGlobalCurrentVerse("1"));
+
+    console.log("Chapter changed to", chapter);
   };
 
-  const handleVerseChange = (verse: string) => setCurrentVerse(verse);
+  const handleVerseChange = (verse: string) => {
+    dispatch(setGlobalCurrentVerse(verse));
+
+    console.log("Verse changed to", verse);
+  };
 
   const navigateVerse = (direction: "prev" | "next") => {
     if (
@@ -78,9 +84,9 @@ const Ereader: React.FC = () => {
         Object.keys(eReaderState.eContent.content).indexOf(currentChapter) - 1
       ];
       if (prevChapter) {
-        setCurrentChapter(prevChapter);
-        setCurrentVerse(
-          Object.keys(eReaderState.eContent.content[prevChapter]).slice(-1)[0], // Last verse
+        handleChapterChange(prevChapter);
+        handleVerseChange(
+          Object.keys(eReaderState.eContent.content[prevChapter]).slice(-1)[0],
         );
       }
     } else if (newIndex >= chapterVerses.length && direction === "next") {
@@ -88,11 +94,10 @@ const Ereader: React.FC = () => {
         Object.keys(eReaderState.eContent.content).indexOf(currentChapter) + 1
       ];
       if (nextChapter) {
-        setCurrentChapter(nextChapter);
-        setCurrentVerse("1");
+        handleChapterChange(nextChapter);
       }
     } else {
-      setCurrentVerse(chapterVerses[newIndex]);
+      handleVerseChange(chapterVerses[newIndex]);
     }
   };
 
@@ -110,8 +115,6 @@ const Ereader: React.FC = () => {
 
     return chapterVerses.slice(currentIndex + 1, currentIndex + 5);
   };
-
-  const dispatch = useDispatch();
 
   const setEreaderState = (eBook: EBook) => {
     // Dispatch to Redux store
@@ -138,11 +141,6 @@ const Ereader: React.FC = () => {
           </Flex>
 
           <Flex gap="3" mt="4" justify="end">
-            {/* <Dialog.Close>
-              <Button variant="soft" color="gray">
-                Cancel
-              </Button>
-            </Dialog.Close> */}
             <Dialog.Close>
               <Button>Close</Button>
             </Dialog.Close>
@@ -201,7 +199,7 @@ const Ereader: React.FC = () => {
                 </Select.Trigger>
                 <Select.Content>
                   {Object.keys(eReaderState.eContent.content).map((chapter) => (
-                    <Select.Item key={chapter} value={chapter}>
+                    <Select.Item key={"chapter-" + chapter} value={chapter}>
                       {chapter}
                     </Select.Item>
                   ))}
@@ -223,7 +221,7 @@ const Ereader: React.FC = () => {
                         ? eReaderState.eContent.content[currentChapter] || {}
                         : {},
                     ).map((verse) => (
-                      <Select.Item key={verse} value={verse}>
+                      <Select.Item key={"verse-" + verse} value={verse}>
                         {verse}
                       </Select.Item>
                     ))}
@@ -276,7 +274,7 @@ const Ereader: React.FC = () => {
             {shadowVerses().map((verse) => (
               <>
                 <div
-                  key={verse}
+                  key={"shadow_verse-" + verse}
                   className="blurred-div max-w-[700px] text-center p-4 shadow-lg sticky top-0"
                 >
                   <h4 className="font-semibold">Verse {verse}</h4>
