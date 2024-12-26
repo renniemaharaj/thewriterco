@@ -147,10 +147,10 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
     <div
       // direction="column"
       // justify="center"
-      className={`${className}`}
+      className={`${className} !overflow-hidden !m-0`}
     >
       {/* Quick Messages */}
-      <Flex className="gap-1 mb-4 !flex-wrap">
+      <Flex className="p-1 gap-1 mb-4 !flex-wrap">
         {quickMessages.map((msg, index) => (
           <Button
             key={index}
@@ -166,16 +166,16 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
       {/* Chat Display */}
       <Flex
         direction="column"
-        className="overflow-y-auto max-h-[500px] mb-4 box-content shadow-sm"
+        className="overflow-y-auto max-h-[500px] mb-4 box-content shadow-sm "
       >
         {messages.map((msg, index) => (
           <Flex
             key={index}
             justify={msg.sender === "User" ? "end" : "start"}
-            className={`mb-2 ${msg.sender === "User" ? "text-right" : "text-left"} !text-sm`}
+            className={`${msg.sender === "User" ? "text-right" : "text-left"} !text-sm`}
           >
             <div
-              className="inline-block px-4 py-2 rounded-lg"
+              className="inline-block rounded-lg p-4 scale-95"
               dangerouslySetInnerHTML={{ __html: msg.text }}
             ></div>
           </Flex>
