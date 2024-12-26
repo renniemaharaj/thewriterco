@@ -29,7 +29,21 @@ export default function ClientTestamonials() {
         variant="right"
         className="!justify-start !hidden md:!flex"
         centerBar={
-          <Flex className="!flex-col w-[500px] border-2 border-yellow-500">
+          <Flex className="!flex-col w-[500px]">
+            <Text
+              className="m-6"
+              size="8"
+              weight="bold"
+              mb="9"
+              style={{
+                display: "block",
+                textAlign: "center",
+                color: "var(--hrtm-blue)",
+                transition: "1s",
+              }}
+            >
+              Axioms for AI
+            </Text>
             <Tabs.Root defaultValue="axioms">
               <Tabs.List>
                 <Tabs.Trigger value="axioms">Axioms</Tabs.Trigger>
@@ -37,19 +51,6 @@ export default function ClientTestamonials() {
 
               <Box pt="3">
                 <Tabs.Content value="axioms">
-                  <Text
-                    size="8"
-                    weight="bold"
-                    mb="9"
-                    style={{
-                      display: "block",
-                      textAlign: "center",
-                      color: "var(--hrtm-blue)",
-                      transition: "1s",
-                    }}
-                  >
-                    Axioms for AI
-                  </Text>
                   <Separator size={"4"} />
                   <Flex className="!flex-row !flex-wrap !gap-4 w-full max-w-[600px]">
                     {testimonials.map((testimonial) => (
@@ -92,10 +93,10 @@ export default function ClientTestamonials() {
       {/* <Separator size={"3"} orientation={"vertical"} /> */}
       <Card
         // key={"testimonial" + index}
-        className="blurred-div !flex !flex-col !mx-auto"
-        variant="surface"
+        className="blurred-div !flex !flex-col !mx-auto !rounded-none !p-5"
+        variant="ghost"
       >
-        <ChristianAIChatbox className="min-w-[400px]" />
+        <ChristianAIChatbox className="min-w-[400px] !rounded-none" />
         <Flex className="!flex-col !gap-4 !p-2 !items-center">
           <Hint className="max-w-[400px]">
             Responses are shaped by prompts and axioms, but reserve your

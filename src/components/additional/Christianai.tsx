@@ -166,7 +166,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
       {/* Chat Display */}
       <Flex
         direction="column"
-        className="overflow-y-auto max-h-[500px] mb-4 box-content rounded-md shadow-sm"
+        className="overflow-y-auto max-h-[500px] mb-4 box-content shadow-sm"
       >
         {messages.map((msg, index) => (
           <Flex

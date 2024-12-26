@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, IconButton, Flex, TextField, Box, Text } from "@radix-ui/themes";
 import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { useThemeContext } from "../context/useThemeContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { ScanSearchIcon } from "lucide-react";
+import SearchLoading from "../SearchLoading";
 
 type NavLink = {
   label: string;
@@ -32,9 +33,25 @@ const Navbar: React.FC = () => {
   const linkClassName = `text-gray-700 relative after:content-[''] after:block after:h-0.5 after:scale-x-0 
     hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left`;
 
+  const [loading, setLoading] = useState(false);
+  const formRef = React.useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    const searchBox = formRef.current;
+    if (searchBox) {
+      searchBox.onsubmit = (event) => {
+        setLoading(true);
+        event.preventDefault();
+        setTimeout(() => {
+          setLoading(false);
+          alert("Not implemented yet");
+        }, 5000);
+        return true;
+      };
+    }
+  }, []);
   return (
     <Box
-      className={`py-4 transition-all shadow-md sticky top-0 z-10 blurred-div !overflow-hidden ${eReaderState.isOpen ? "!z-0 relative left-[50%] translate-x-[-50%] " : "w-full"}`}
+      className={`py-4 !rounded-none transition-all shadow-md sticky top-0 z-10 blurred-div !overflow-hidden ${eReaderState.isOpen ? "!z-0 relative left-[50%] translate-x-[-50%] " : "w-full"}`}
     >
       <Flex
         align={"center"}
@@ -51,20 +68,18 @@ const Navbar: React.FC = () => {
           align="center"
           className="!w-full max-w-[400px] !md:w-auto !gap-2"
         >
-          <form
-            id="article-search-box-form-id"
-            className="flex gap-2 w-full max-w-lg"
-          >
+          <form ref={formRef} className="flex gap-2 w-full max-w-lg">
             <TextField.Root
               type="text"
               id="article-search-box-id"
-              placeholder="Search words"
+              placeholder="Searching the bible in pure english"
               className="w-full"
-              disabled={true}
+              // disabled={true}
             />
-            <IconButton>
+            <IconButton disabled={loading} type="submit" aria-label="Search">
               <ScanSearchIcon aria-label="Search" width="18" height="18" />
             </IconButton>
+            <SearchLoading isLoading={loading} />
           </form>
           <div className="md:hidden">
             <IconButton
