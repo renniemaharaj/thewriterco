@@ -93,8 +93,8 @@ export default function ClientTestamonials() {
       {/* <Separator size={"3"} orientation={"vertical"} /> */}
       <Card
         // key={"testimonial" + index}
-        className="overflow-auto blurred-div !flex !flex-col !mx-auto !rounded-none !p-0"
-        // variant="ghost"
+        className="overflow-auto blurred-div !flex !flex-col !mx-auto !rounded-none !p-0 !pt-6"
+        variant="ghost"
       >
         <ChristianAIChatbox className="min-w-[400px] !rounded-none" />
         <Flex className="!flex-col !gap-4 !p-2 !items-center">
