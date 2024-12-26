@@ -210,6 +210,11 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
           <SendIcon aria-label="Send" />
         </IconButton>
       </Flex>
+
+      <Hint>
+        Responses are shaped by prompts and axioms, but reserve your
+        discernment. Thank you!
+      </Hint>
       <Hint>
         AI-powered responses, subjected to the axioms of Life. This feature is
         experimental for now as we need to sort out billing on our end for the
