@@ -1,4 +1,4 @@
-import { Text, Section, Flex, Card } from "@radix-ui/themes";
+import { Text, Section, Flex, Card, Separator } from "@radix-ui/themes";
 import Hint from "./Hint";
 import ChristianAIChatbox from "./additional/Christianai";
 
@@ -23,9 +23,13 @@ const testimonials = [
 export default function ClientTestamonials() {
   return (
     <Section>
-      <Flex className="!flex-row !flex-wrap !gap-1 w-full p-5">
+      <Flex
+        justify={"between"}
+        align={"center"}
+        className="!flex-row !flex-wrap !gap-3 w-full p-5"
+      >
         {/* Axioms */}
-        <Flex className="!flex-[3] !flex-col !gap-2 !items-center">
+        <Flex className="!flex-[3] !flex-col !gap-4 !p-2 !items-center">
           <Text
             size="8"
             weight="bold"
@@ -39,24 +43,17 @@ export default function ClientTestamonials() {
           >
             Axioms for AI
           </Text>
-          <Hint className="max-w-[400px]">
-            An axiom is defined as "a statement or proposition which is regarded
-            as being established, accepted, or self-evidently true" - Oxford
-            dictionary.
-          </Hint>
+          <Separator size={"4"} />
           <Flex className="!flex-row !flex-wrap !gap-4 w-full max-w-[600px]">
-            {testimonials.map((testimonial, index) => (
-              <Card
-                key={"testimonial" + index}
-                className="blurred-div !flex !flex-col !sticky !top-0"
-                variant="surface"
-              >
+            {testimonials.map((testimonial) => (
+              <div className="flex flex-row gap-4">
                 <Text
                   as="label"
                   size="2"
                   weight="bold"
                   mt="4"
                   style={{ textAlign: "center" }}
+                  className="min-w-[200px] text-center flex justify-center items-center"
                 >
                   {testimonial.author}
                 </Text>
@@ -64,9 +61,10 @@ export default function ClientTestamonials() {
                   {testimonial.quote}
                 </Text>
                 {/* </pre> */}
-              </Card>
+              </div>
             ))}
           </Flex>
+          <Separator size={"4"} />
           <Hint className="max-w-[400px]">
             These axioms provide the most stable foundation for Christianity,
             unlike doctrines that alter scripture to address inconsistencies.
@@ -74,9 +72,23 @@ export default function ClientTestamonials() {
             free so that both poor and rich can afford to both go and come.
           </Hint>
         </Flex>
-        <Flex className="!flex-[4]">
+        <Separator size={"3"} orientation={"vertical"} />
+        <Card
+          // key={"testimonial" + index}
+          className="blurred-div !flex !flex-col !mx-auto !w-[450px]"
+          variant="surface"
+        >
           <ChristianAIChatbox className="min-w-[400px]" />
-        </Flex>
+          <Hint className="max-w-[400px]">
+            Responses are shaped by prompts and axioms, but reserve your
+            discernment. Thank you!
+          </Hint>
+          <Hint className="max-w-[400px]">
+            AI-powered responses, subjected to the axioms of Life. This feature
+            is experimental for now as we need to sort out billing on our end
+            for the SaaS, but it will preferably be free for all users.
+          </Hint>
+        </Card>
       </Flex>
     </Section>
   );

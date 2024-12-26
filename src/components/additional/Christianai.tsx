@@ -1,9 +1,8 @@
-import { Flex, Card } from "@radix-ui/themes";
+import { Flex, Button, Separator } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { useSendAskRequestMutation } from "../../app/api/apiSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import Hint from "../Hint";
 import Chatbox from "./Chatbox";
 
 const ChristianAIChatbox = ({ className }: { className?: string }) => {
@@ -103,7 +102,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
       const response = await sendAskRequest({
         message:
           message +
-          "\n Please utilize the following as context" +
+          "\n Track the user's current book, chapter, and verse of the Bible. Acknowledge what they're reading and tailor responses or conversations to the scripture." +
           JSON.stringify(context),
       }).unwrap();
 
@@ -145,35 +144,35 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
     setInput(msg);
   };
   return (
-    <Flex
-      direction="column"
-      justify="center"
-      className={`p-4 max-w-[500px] !mx-auto ${className}`}
+    <div
+      // direction="column"
+      // justify="center"
+      className={`!sticky !top-0 ${className}`}
     >
       {/* Quick Messages */}
-      <Flex className="gap-2 mb-4 !flex-wrap">
+      <Flex className="gap-1 mb-4 !flex-wrap">
         {quickMessages.map((msg, index) => (
-          <Card
+          <Button
             key={index}
-            variant="classic"
-            className="cursor-pointer px-4 py-2 rounded-lg !sticky !top-0"
+            variant="soft"
+            className="cursor-pointer !sticky !top-0"
             onClick={() => onQuickMessageClick(msg)}
           >
             {msg}
-          </Card>
+          </Button>
         ))}
       </Flex>
 
       {/* Chat Display */}
       <Flex
         direction="column"
-        className="overflow-y-auto max-h-[300px] mb-4 p-2 rounded-lg shadow-lg"
+        className="max-h-[300px] mb-4 box-content rounded-md shadow-sm"
       >
         {messages.map((msg, index) => (
           <Flex
             key={index}
             justify={msg.sender === "User" ? "end" : "start"}
-            className={`mb-2 ${msg.sender === "User" ? "text-right" : "text-left"}`}
+            className={`mb-2 ${msg.sender === "User" ? "text-right" : "text-left"} !text-sm`}
           >
             <div
               className="inline-block px-4 py-2 rounded-lg"
@@ -195,6 +194,9 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
         )}
       </Flex>
 
+      <Flex justify="center" className="text-sm text-gray-500">
+        <Separator size="3" />
+      </Flex>
       {/* Input Area */}
       <Flex align="center" justify="center" className="!gap-2 mt-4">
         {/* <Text
@@ -218,17 +220,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
           <SendIcon aria-label="Send" />
         </IconButton> */}
       </Flex>
-
-      <Hint>
-        Responses are shaped by prompts and axioms, but reserve your
-        discernment. Thank you!
-      </Hint>
-      <Hint>
-        AI-powered responses, subjected to the axioms of Life. This feature is
-        experimental for now as we need to sort out billing on our end for the
-        SaaS, but it will preferably be free for all users.
-      </Hint>
-    </Flex>
+    </div>
   );
 };
 

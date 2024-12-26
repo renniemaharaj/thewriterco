@@ -51,7 +51,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
   return (
     <Card
       variant="surface"
-      className="!w-full !flex !items-center rounded-lg p-2"
+      className="!w-full !flex !items-center rounded-lg p-1"
     >
       <textarea
         disabled={isDisabled}
