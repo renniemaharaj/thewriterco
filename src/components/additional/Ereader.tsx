@@ -1,11 +1,6 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { Button, Flex, IconButton, Select, Dialog } from "@radix-ui/themes";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-} from "@radix-ui/react-icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import Sword from "./articles/Sword";
@@ -17,6 +12,7 @@ import {
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
 } from "../../app/ereader/ereaderSlice";
+import { BookDownIcon, BookUpIcon } from "lucide-react";
 
 const Ereader: React.FC = () => {
   // Redux state
@@ -153,7 +149,7 @@ const Ereader: React.FC = () => {
     <div
       className={`${eReaderState.isOpen && "blurred-div"} ereaderBg ${
         eReaderState.isOpen && "h-full"
-      } fixed bottom-0 left-0 w-full shadow-lg overflow-auto max-h-full`}
+      } fixed bottom-0 left-0 w-full shadow-lg overflow-auto max-h-full z-20`}
     >
       <div className="flex justify-between items-center p-4 border-b">
         {/* <h2 className="text-xl font-semibold">{eReaderState.eContent.title}</h2> */}
@@ -162,7 +158,7 @@ const Ereader: React.FC = () => {
           onClick={() => dispatch(toggleOpenState())}
           aria-label="Toggle Ereader"
         >
-          {eReaderState.isOpen ? <ChevronDownIcon /> : <ChevronUpIcon />}
+          {eReaderState.isOpen ? <BookDownIcon /> : <BookUpIcon />}
         </IconButton>
       </div>
 

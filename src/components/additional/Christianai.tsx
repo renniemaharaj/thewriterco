@@ -1,10 +1,10 @@
-import { Flex, IconButton, TextField, Card } from "@radix-ui/themes";
+import { Flex, Card } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { useSendAskRequestMutation } from "../../app/api/apiSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import Hint from "../Hint";
-import { SendIcon } from "lucide-react";
+import Chatbox from "./Chatbox";
 
 const ChristianAIChatbox = ({ className }: { className?: string }) => {
   const [input, setInput] = useState("");
@@ -48,7 +48,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     eReaderState.currentVerse,
   ]);
 
-  const [sendAskRequest, { isLoading }] = useSendAskRequestMutation();
+  const [sendAskRequest] = useSendAskRequestMutation();
 
   const animateAIResponse = (response: string) => {
     let currentText = "";
@@ -86,23 +86,23 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
       `,
     );
   }, []);
-  const handleSendMessage = async () => {
-    if (!input.trim()) return;
+  const handleSendMessage = async (message: string) => {
+    if (!message.trim()) return;
 
     const userMessage = {
       sender: "User",
-      text: input,
+      text: message,
     };
     setMessages((prev) => [...prev, userMessage]);
 
-    setInput("");
+    // setInput("");
 
     try {
       setIsTyping(true);
       setShowToast(true);
       const response = await sendAskRequest({
         message:
-          input +
+          message +
           "\n Please utilize the following as context" +
           JSON.stringify(context),
       }).unwrap();
@@ -197,18 +197,26 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
 
       {/* Input Area */}
       <Flex align="center" justify="center" className="!gap-2 mt-4">
-        <TextField.Root
+        {/* <Text
+          multiple
           placeholder="Type your message..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="w-full max-w-[350px] border rounded-lg px-4 py-2 focus:outline-none max-h-[300px] overflow-auto"
+          className="w-auto max-w-[350px] border rounded-lg px-4 py-2 focus:outline-none max-h-[300px] overflow-auto"
+        /> */}
+        <Chatbox
+          disabled={isTyping}
+          textContent={input}
+          handleRecieve={(input: string) => {
+            handleSendMessage(input);
+          }}
         />
-        <IconButton
+        {/* <IconButton
           onClick={handleSendMessage}
           disabled={isLoading || !input.trim()}
         >
           <SendIcon aria-label="Send" />
-        </IconButton>
+        </IconButton> */}
       </Flex>
 
       <Hint>

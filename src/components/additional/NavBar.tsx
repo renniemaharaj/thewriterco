@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { Link, IconButton, Flex, TextField, Box, Text } from "@radix-ui/themes";
-import {
-  HamburgerMenuIcon,
-  Cross1Icon,
-  MagnifyingGlassIcon,
-} from "@radix-ui/react-icons";
+import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { useThemeContext } from "../context/useThemeContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
+import { ScanSearchIcon } from "lucide-react";
 
 type NavLink = {
   label: string;
@@ -37,7 +34,7 @@ const Navbar: React.FC = () => {
 
   return (
     <Box
-      className={`py-4 transition-all shadow-md sticky top-0 z-50 blurred-div !overflow-hidden ${eReaderState.isOpen ? "!z-0 relative left-[50%] translate-x-[-50%] " : "w-full"}`}
+      className={`py-4 transition-all shadow-md sticky top-0 z-10 blurred-div !overflow-hidden ${eReaderState.isOpen ? "!z-0 relative left-[50%] translate-x-[-50%] " : "w-full"}`}
     >
       <Flex
         align={"center"}
@@ -66,7 +63,7 @@ const Navbar: React.FC = () => {
               disabled={true}
             />
             <IconButton>
-              <MagnifyingGlassIcon aria-label="Search" width="18" height="18" />
+              <ScanSearchIcon aria-label="Search" width="18" height="18" />
             </IconButton>
           </form>
           <div className="md:hidden">
