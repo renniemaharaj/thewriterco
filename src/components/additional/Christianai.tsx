@@ -150,7 +150,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
       className={`${className} !overflow-hidden !m-0`}
     >
       {/* Quick Messages */}
-      <Flex className="p-1 gap-1 mb-4 !flex-wrap">
+      <Flex className="gap-1 mb-4 !flex-wrap p-6">
         {quickMessages.map((msg, index) => (
           <Button
             key={index}
