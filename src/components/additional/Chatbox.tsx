@@ -52,13 +52,13 @@ const Chatbox: React.FC<ChatboxProps> = ({
     <Card variant="surface" className="!w-[90%] mx-auto !flex !items-center">
       <textarea
         disabled={isDisabled}
-        className="flex-1 border-none outline-none resize-none text-sm p-2"
-        placeholder="Type a message..."
+        className="flex-1 border-none outline-none resize-none text-sm p-2 !bg-transparent"
+        placeholder="Ask a difficult question..."
         rows={1}
         value={message}
         onChange={handleInput}
         onKeyDown={handleKeyDown}
-      ></textarea>
+      />
       <button
         className="ml-2 p-2 text-yellow-500 hover:text-yellow-700"
         onClick={sendMessage}
