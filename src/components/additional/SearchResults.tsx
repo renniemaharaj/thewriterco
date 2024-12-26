@@ -1,4 +1,5 @@
 import { Button, Dialog, Flex, Text } from "@radix-ui/themes";
+import Hint from "../Hint";
 
 export type Result = {
   book: string;
@@ -27,7 +28,7 @@ const SearchResults = ({
         <Dialog.Title>Intelligent Matching</Dialog.Title>
         <Dialog.Description size="2" mb="4">
           {!displayedResults.length
-            ? "Something went wrong, please provide a clear request"
+            ? "Something went wrong, please provide a clear request or try again."
             : "These are the results return from your search"}
         </Dialog.Description>
 
@@ -48,6 +49,13 @@ const SearchResults = ({
             </Text>
           </Flex>
         ))}
+
+        <Hint className="max-w-[400px]">
+          These results are generated results based on context and wording. The
+          responses are not reliable and the model can generate incomplete forms
+          of data objects. You can either try again or fine tune your search
+          query.
+        </Hint>
         <Flex gap="3" mt="4" justify="end">
           <Dialog.Close>
             <Button variant="soft" color="gray">
