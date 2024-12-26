@@ -12,8 +12,8 @@ type RefreshTokenResponse = {
 };
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://thewriterco-auth.onrender.com",
-  // baseUrl: "http://localhost:3001", // Adjust to your base URL if needed
+  // baseUrl: "https://thewriterco-auth.onrender.com",
+  baseUrl: "http://localhost:3001", // Adjust to your base URL if needed
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const accessToken = (getState() as RootState).auth?.accessToken;
@@ -54,17 +54,22 @@ export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
   tagTypes: ["User"],
   endpoints: (builder) => ({
-    sendAskRequest: builder.mutation<{ response: string }, { message: string }>(
-      {
-        query: (body) => ({
-          url: "/ask",
-          method: "POST",
-          body,
-        }),
-      },
-    ),
+    sendAskReq: builder.mutation<{ response: string }, { message: string }>({
+      query: (body) => ({
+        url: "/ask",
+        method: "POST",
+        body: { message: body.message },
+      }),
+    }),
+    sendFindReq: builder.mutation<{ response: string }, { message: string }>({
+      query: (body) => ({
+        url: "/find",
+        method: "POST",
+        body: { message: body.message },
+      }),
+    }),
   }),
 });
 
 // Export the mutation hook
-export const { useSendAskRequestMutation } = apiSlice;
+export const { useSendAskReqMutation, useSendFindReqMutation } = apiSlice;

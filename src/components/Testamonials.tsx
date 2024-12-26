@@ -27,7 +27,7 @@ export default function ClientTestamonials() {
     <Flex className="w-full">
       <SideBar
         variant="right"
-        className="!justify-start !hidden md:!flex"
+        className="!justify-start !hidden md:!flex !shadow-none"
         centerBar={
           <Flex className="!flex-col w-[500px]">
             <Text
@@ -61,7 +61,7 @@ export default function ClientTestamonials() {
                           weight="bold"
                           mt="4"
                           style={{ textAlign: "center" }}
-                          className="min-w-[200px] text-center flex justify-center items-center"
+                          className="min-w-[150px] text-center flex justify-center items-center"
                         >
                           {testimonial.author}
                         </Text>
@@ -94,9 +94,9 @@ export default function ClientTestamonials() {
       <Card
         // key={"testimonial" + index}
         className="overflow-auto blurred-div !flex !flex-col !mx-auto !rounded-none !p-0"
-        variant="surface"
+        variant="ghost"
       >
-        <ChristianAIChatbox className="min-w-[400px] !rounded-none" />
+        <ChristianAIChatbox className="min-w-[400px] max-w-[600px] !rounded-none" />
         <Flex className="!flex-col !gap-4 !p-2 !items-center">
           <Hint className="max-w-[400px]">
             Responses are shaped by prompts and axioms, but reserve your

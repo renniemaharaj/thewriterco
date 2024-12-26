@@ -1,6 +1,6 @@
 import { Flex, Button, Separator } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
-import { useSendAskRequestMutation } from "../../app/api/apiSlice";
+import { useSendAskReqMutation } from "../../app/api/apiSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import Chatbox from "./Chatbox";
@@ -41,13 +41,14 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     });
     console.log("Context updated", context);
   }, [
+    context,
     eReaderState,
     eReaderState.eContent.title,
     eReaderState.currentChapter,
     eReaderState.currentVerse,
   ]);
 
-  const [sendAskRequest] = useSendAskRequestMutation();
+  const [sendAskReq] = useSendAskReqMutation();
 
   const animateAIResponse = (response: string) => {
     let currentText = "";
@@ -99,7 +100,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
     try {
       setIsTyping(true);
       setShowToast(true);
-      const response = await sendAskRequest({
+      const response = await sendAskReq({
         message:
           message +
           "\n Track the user's current book, chapter, and verse of the Bible. Acknowledge what they're reading and tailor responses or conversations to the scripture." +
