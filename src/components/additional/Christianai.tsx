@@ -41,7 +41,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     });
     console.log("Context updated", context);
   }, [
-    context,
+    // context,
     eReaderState,
     eReaderState.eContent.title,
     eReaderState.currentChapter,
@@ -189,7 +189,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
         )}
 
         {showToast && (
-          <div className="text-center mt-2 text-sm text-gray-600">
+          <div className=" asbolute text-center mt-2 text-sm text-gray-600">
             {toastMessages[Math.floor(Math.random() * toastMessages.length)]}
           </div>
         )}
