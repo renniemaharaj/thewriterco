@@ -147,7 +147,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
     <div
       // direction="column"
       // justify="center"
-      className={`!sticky !top-0 ${className}`}
+      className={`${className}`}
     >
       {/* Quick Messages */}
       <Flex className="gap-1 mb-4 !flex-wrap">

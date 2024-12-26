@@ -49,10 +49,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
   };
 
   return (
-    <Card
-      variant="surface"
-      className="!w-full !flex !items-center rounded-lg p-1"
-    >
+    <Card variant="surface" className="!w-[90%] mx-auto !flex !items-center">
       <textarea
         disabled={isDisabled}
         className="flex-1 border-none outline-none resize-none text-sm p-2"
