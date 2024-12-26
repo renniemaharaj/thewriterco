@@ -6,18 +6,19 @@ import { RootState } from "../../app/store";
 import Hint from "../Hint";
 import { SendIcon } from "lucide-react";
 
-const ChristianAIChatbox = () => {
+const ChristianAIChatbox = ({ className }: { className?: string }) => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
     [],
   );
   const [isTyping, setIsTyping] = useState(false);
-  const [isExpanded] = useState(false);
+  // const [isExpanded] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const toastMessages = [
     "We are processing your request.",
     "Please be patient. This might take a moment.",
     "Thank you for waiting!",
+    "In some cases, our servers may be spinning up. Please wait.",
   ];
 
   const eReaderState = useSelector((state: RootState) => state.ereader);
@@ -47,12 +48,6 @@ const ChristianAIChatbox = () => {
     eReaderState.currentVerse,
   ]);
 
-  // useEffect(() => {
-  //   animateAIResponse(
-  //     "Hello! I am here to help study the bible. I have access to the Holy Bible (KJV), archelogical records, hsitorical documents & general information. All my responses are based on the axioms of Life which I have been commanded to follow. How can I help you today?"
-  //   );
-  // });
-
   const [sendAskRequest, { isLoading }] = useSendAskRequestMutation();
 
   const animateAIResponse = (response: string) => {
@@ -80,13 +75,14 @@ const ChristianAIChatbox = () => {
         setIsTyping(false);
         setShowToast(false);
       }
-    }, 15);
+    }, 0);
   };
 
   useEffect(() => {
     animateAIResponse(
       `
-      Hello! I’m here to help you study the Bible. I use the Holy Bible (KJV), historical records, and general knowledge, guided by the axioms of Life. I have context which allows me to keep track of the book you're in as well as verse and scripture. How can I assist you today?
+      
+I'm here to help you study the Bible using the Holy Bible (KJV), historical records, biblical archeology and general knowledge of the world. My responses are shaped by three core truths, the Axioms of Life, ensuring consistency. I also track the book, chapter, and verse you're reading. How can I assist you today?
       `,
     );
   }, []);
@@ -128,14 +124,14 @@ const ChristianAIChatbox = () => {
   const [quickMessages, setQuickMessages] = useState<string[]>([
     "Who is God?",
     "Why Christianity?",
-    "AI is evil?",
+    "Is AI evil?",
     "How can I be saved?",
     "Was the bible written by man?",
     "The bible promotes slavery?",
     "White Jesus?",
     "What is the Gospel?",
     "Which denomination is right?",
-    "What are the Axioms of Life?",
+    "Explain the Axioms",
   ]);
 
   const onQuickMessageClick = (msg: string) => {
@@ -152,14 +148,15 @@ const ChristianAIChatbox = () => {
     <Flex
       direction="column"
       justify="center"
-      className={`p-4 w-full max-w-[500px] mx-auto ${isExpanded ? "h-screen fixed top-0 left-0 z-100 blurred-div" : ""}`}
+      className={`p-4 max-w-[500px] !mx-auto ${className}`}
     >
       {/* Quick Messages */}
       <Flex className="gap-2 mb-4 !flex-wrap">
         {quickMessages.map((msg, index) => (
           <Card
             key={index}
-            className="cursor-pointer px-4 py-2 rounded-lg"
+            variant="classic"
+            className="cursor-pointer px-4 py-2 rounded-lg !sticky !top-0"
             onClick={() => onQuickMessageClick(msg)}
           >
             {msg}
@@ -214,7 +211,7 @@ const ChristianAIChatbox = () => {
         </IconButton>
       </Flex>
       <Hint>
-        AI-powered responses, purified by the axioms of Life. This feature is
+        AI-powered responses, subjected to the axioms of Life. This feature is
         experimental for now as we need to sort out billing on our end for the
         SaaS, but it will preferably be free for all users.
       </Hint>

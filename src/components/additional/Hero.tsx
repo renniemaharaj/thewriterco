@@ -2,11 +2,17 @@
 import { Flex } from "@radix-ui/themes";
 import React from "react";
 import Hint from "../Hint";
+import { useRegistryObserver } from "../observer/useRegistryObserver";
 
 const Hero: React.FC = () => {
+  const { registerElement } = useRegistryObserver();
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  registerElement(ref);
+
   return (
     <section className="text-center py-16">
-      <h2 className="text-4xl font-bold">
+      <h2 ref={ref} className="text-4xl font-bold">
         Welcome to{" "}
         <span className="w-full text-center">The Writer Company</span>
       </h2>

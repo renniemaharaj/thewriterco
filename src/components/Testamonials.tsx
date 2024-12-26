@@ -1,14 +1,6 @@
 import { Text, Section, Flex, Card } from "@radix-ui/themes";
-// import { useThemeContext } from "./context/useThemeContext";
 import Hint from "./Hint";
-// import useIntersectionObserver from "./hooks/useObserver";
-// import useTestimonials from "./hooks/data/useTestimonials";
-// import Observe from "./Observe";
-// import {testamonials} from
-// type Testimonial = {
-//   quote: string;
-//   author: string;
-// };
+import ChristianAIChatbox from "./additional/Christianai";
 
 const testimonials = [
   {
@@ -29,84 +21,63 @@ const testimonials = [
 ];
 
 export default function ClientTestamonials() {
-  // const { testimonials } = useTestimonials();
-  // const { isIntersecting, elementRef } = useIntersectionObserver({
-  //   root: null, // Observe relative to the viewport
-  //   threshold: 0.1, // Trigger when 10% of the element is in view
-  // });
-
-  // const { theme } = useThemeContext();
   return (
-    <Section
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text
-        // ref={elementRef}
-        size="8"
-        weight="bold"
-        mb="9"
-        style={{
-          display: "block",
-          textAlign: "center",
-          color: "var(--hrtm-blue)",
-          transition: "1s",
-          // opacity: isIntersecting ? 1 : 0,
-        }}
-      >
-        Axioms of Life
-      </Text>
-      <Flex className="!flex-row !flex-wrap !gap-4 w-full max-w-[600px]">
-        {testimonials.map((testimonial, index) => (
-          // <Observe
-          //   key={index}
-          //   // classname="hrtm-page-signup_flex_right-testimonials"
-          //   className={
-          //     "hrtm-theme-background hrtm-page-signup_flex_right-testimonial hrtm-page-signup_flex_right-testimonial-" +
-          //     (index % 3 ? "even" : "odd")
-          //   }
-          //   style={{
-          //     padding: "20px",
-          //     borderRadius: index > 1 ? "0px" : "0px 0px 10px 10px",
-          //     borderTop: index > 1 ? "1px solid transparent" : "none",
-          //     boxShadow: (index <= 1 && "unset") || "",
-          //   }}
-          // >
-          // {(isIntersecting: boolean) => (
-          <Card
-            key={"testimonial" + index}
-            className="blurred-div !flex !flex-col !sticky !top-0"
-            // className={`sticky top-0 p-2 shadow-[gray] shadow-sm ${theme === "dark" ? "bg-gray-900" : "bg-gray-100"}`}
-            // direction={"column"}
-            // className={index % 2 ? "!max-w-[20rem]" : "!max-w-[50rem]"}
+    <Section>
+      <Flex className="!flex-row !flex-wrap !gap-1 w-full p-5">
+        {/* Axioms */}
+        <Flex className="!flex-[3] !flex-col !gap-2 !items-center">
+          <Text
+            size="8"
+            weight="bold"
+            mb="9"
+            style={{
+              display: "block",
+              textAlign: "center",
+              color: "var(--hrtm-blue)",
+              transition: "1s",
+            }}
           >
-            <Text
-              as="label"
-              size="2"
-              weight="bold"
-              mt="4"
-              style={{ textAlign: "center" }}
-            >
-              {testimonial.author}
-            </Text>
-            {/* <pre className="pre-wrap"> */}
-            <Text as="label" size="2" mt="4">
-              {testimonial.quote}
-            </Text>
-            {/* </pre> */}
-          </Card>
-
-          // )}
-          // </Observe>
-        ))}
+            Axioms for AI
+          </Text>
+          <Hint className="max-w-[400px]">
+            An axiom is defined as "a statement or proposition which is regarded
+            as being established, accepted, or self-evidently true" - Oxford
+            dictionary.
+          </Hint>
+          <Flex className="!flex-row !flex-wrap !gap-4 w-full max-w-[600px]">
+            {testimonials.map((testimonial, index) => (
+              <Card
+                key={"testimonial" + index}
+                className="blurred-div !flex !flex-col !sticky !top-0"
+                variant="surface"
+              >
+                <Text
+                  as="label"
+                  size="2"
+                  weight="bold"
+                  mt="4"
+                  style={{ textAlign: "center" }}
+                >
+                  {testimonial.author}
+                </Text>
+                <Text as="label" size="2" mt="4">
+                  {testimonial.quote}
+                </Text>
+                {/* </pre> */}
+              </Card>
+            ))}
+          </Flex>
+          <Hint className="max-w-[400px]">
+            These axioms provide the most stable foundation for Christianity,
+            unlike doctrines that alter scripture to address inconsistencies.
+            The path must be narrow so that scripture is fulfilled; narrow and
+            free so that both poor and rich can afford to both go and come.
+          </Hint>
+        </Flex>
+        <Flex className="!flex-[4]">
+          <ChristianAIChatbox className="min-w-[400px]" />
+        </Flex>
       </Flex>
-      <Hint className="max-w-[400px]">
-        These axioms will bind AI to the KJV Bible and the theistic worldview.
-      </Hint>
     </Section>
   );
 }

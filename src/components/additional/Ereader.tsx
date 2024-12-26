@@ -17,7 +17,6 @@ import {
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
 } from "../../app/ereader/ereaderSlice";
-import ChristianAIChatbox from "./Christianai";
 
 const Ereader: React.FC = () => {
   // Redux state
@@ -185,8 +184,9 @@ const Ereader: React.FC = () => {
               <p>Date: {eReaderState.eContent.date}</p>
             )}
           </div>
-
-          <ChristianAIChatbox />
+          {/* <Section className="justify-items-end">
+            <ChristianAIChatbox className="!mx-10 !sticky !top-0" />
+          </Section> */}
           {readerState === "bible" && (
             <div className="!gap-4 justify-center">
               <Select.Root
@@ -229,7 +229,6 @@ const Ereader: React.FC = () => {
               </Select.Root>
             </div>
           )}
-
           <Flex className="!justify-center !items-center space-x-4">
             <IconButton onClick={() => navigateVerse("prev")}>
               <ChevronLeftIcon />
@@ -265,36 +264,34 @@ const Ereader: React.FC = () => {
               <ChevronRightIcon />
             </IconButton>
           </Flex>
-
           <Flex
             justify="center"
             align={"center"}
             className="!flex-col text-sm mt-4 gap-4 p-2 rounded-md"
           >
-            {shadowVerses().map((verse) => (
-              <>
-                <div
-                  key={"shadow_verse-" + verse}
-                  className="blurred-div max-w-[700px] text-center p-4 shadow-lg sticky top-0"
-                >
-                  <h4 className="font-semibold">Verse {verse}</h4>
-                  <p>
+            {shadowVerses().length > 0 && (
+              <div className="blurred-div max-w-[700px] text-center p-4 shadow-lg rounded-md">
+                <p>
+                  <span className="font-bold">
                     {typeof eReaderState.eContent.content !== "string" &&
                       currentChapter &&
-                      eReaderState.eContent.content[currentChapter][verse]}
-                  </p>
-                </div>
-                {verse === shadowVerses().slice(-1)[0] && (
-                  <IconButton
-                    onClick={() => handleVerseChange(verse)}
-                    className="!absolute !opacity-50"
-                    aria-label={`Forward to Verse ${verse}`}
-                  >
-                    <ChevronRightIcon />
-                  </IconButton>
-                )}
-              </>
-            ))}
+                      `(${eReaderState.currentChapter}:${eReaderState.currentVerse}) ${eReaderState.eContent.content[currentChapter][currentVerse || 1]}`}
+                  </span>
+                  {shadowVerses()
+                    .map(
+                      (verse) =>
+                        `(${eReaderState.currentChapter}:${verse}) ${
+                          typeof eReaderState.eContent.content !== "string" &&
+                          currentChapter &&
+                          eReaderState.eContent.content[currentChapter][
+                            verse || 1
+                          ]
+                        }`,
+                    )
+                    .join(" ")}
+                </p>
+              </div>
+            )}
           </Flex>
         </div>
       )}
