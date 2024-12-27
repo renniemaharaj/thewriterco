@@ -42,7 +42,7 @@ export default function ClientTestamonials() {
                 transition: "1s",
               }}
             >
-              Axioms for AI
+              Axioms for Artificial Intelligence
             </Text>
             <Tabs.Root defaultValue="axioms">
               <Tabs.List>
@@ -51,7 +51,7 @@ export default function ClientTestamonials() {
 
               <Box pt="3">
                 <Tabs.Content value="axioms">
-                  <Separator size={"4"} />
+                  {/* <Separator size={"4"} /> */}
                   <Flex className="!flex-row !flex-wrap !gap-4 w-full max-w-[600px]">
                     {testimonials.map((testimonial) => (
                       <div className="flex flex-row gap-4">
@@ -93,20 +93,22 @@ export default function ClientTestamonials() {
       {/* <Separator size={"3"} orientation={"vertical"} /> */}
       <Card
         // key={"testimonial" + index}
-        className="overflow-auto blurred-div !flex !flex-col !mx-auto !rounded-none !p-0"
+        className="!flex overflow-auto blurred-div !flex-col !mx-auto !rounded-none !justify-center !p-0"
         variant="ghost"
       >
         <ChristianAIChatbox className="min-w-[400px] max-w-[600px] !rounded-none" />
         <Flex className="!flex-col !gap-4 !p-2 !items-center">
           <Hint className="max-w-[400px]">
-            Responses are shaped by prompts and axioms, but reserve your
-            discernment. Thank you!
+            Responses are generated based off of a theistic worldview; on the
+            premises that God exists, the KJV Bible is true, and Jesus Christ
+            has already come. The AI is designed to provide responses that are
+            consistent with these axioms.
           </Hint>
-          <Hint className="max-w-[400px]">
+          {/* <Hint className="max-w-[400px]">
             AI-powered responses, subjected to the axioms of Life. This feature
             is experimental for now as we need to sort out billing on our end
             for the SaaS, but it will preferably be free for all users.
-          </Hint>
+          </Hint> */}
         </Flex>
       </Card>
       {/* </Flex> */}
