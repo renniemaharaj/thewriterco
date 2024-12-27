@@ -1,5 +1,5 @@
 import { Flex, Button, Separator } from "@radix-ui/themes";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSendAskReqMutation } from "../../app/api/apiSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
@@ -11,6 +11,8 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
     [],
   );
+
+  const messageBoxRef = useRef<HTMLDivElement>(null);
 
   const { theme } = useThemeContext();
 
@@ -81,6 +83,9 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         clearInterval(interval);
         setIsTyping(false);
         setShowToast(false);
+      }
+      if (messageBoxRef.current) {
+        messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
       }
     }, 0);
   };
@@ -170,8 +175,9 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
 
       {/* Chat Display */}
       <Flex
+        ref={messageBoxRef}
         direction="column"
-        className={`${theme == "dark" ? "shadow rounded-lg shadow-yellow-600" : "blurred-div"} overflow-y-auto max-h-[500px] mb-4 box-content `}
+        className={`${theme == "dark" ? "shadow rounded-lg shadow-yellow-600" : "blurred-div"} overflow-y-auto max-h-[500px] mb-4 box-content !scroll-smooth`}
       >
         {messages.map((msg, index) => (
           <Flex
