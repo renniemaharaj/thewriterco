@@ -107,7 +107,9 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
       const response = await sendAskReq({
         message:
           message +
-          "\n Track the user's current book, chapter, and verse of the Bible. Acknowledge what they're reading and tailor responses or conversations to the scripture." +
+          `\n Track the user's current book, chapter, and verse of the Bible.
+          If the book is The Holy Bible, Acknowledge that they haven't open their bibles yet and encourage them to suggesting a topic.
+          If book if is a valid book of the bible then acknowledge what they're reading and tailor responses or conversations to the scripture.` +
           JSON.stringify(context),
       }).unwrap();
 
