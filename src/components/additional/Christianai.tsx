@@ -39,7 +39,10 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
 
   useEffect(() => {
     setContext({
-      book: eReaderState.eContent.title,
+      book:
+        eReaderState.eContent.title === "The Holy Bible"
+          ? "Suggest a topic and book instead."
+          : eReaderState.eContent.title,
       chapter: eReaderState.currentChapter,
       verse: eReaderState.currentVerse,
     });
@@ -85,7 +88,6 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
   useEffect(() => {
     animateAIResponse(
       `
-      
 I'm here to help you study the Bible using the Holy Bible (KJV), historical records, biblical archeology and general knowledge of the world. My responses are shaped by three core truths, the Axioms of Life, ensuring consistency. I also track the book, chapter, and verse you're reading. How can I assist you today?
       `,
     );
@@ -99,17 +101,13 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
     };
     setMessages((prev) => [...prev, userMessage]);
 
-    // setInput("");
-
     try {
       setIsTyping(true);
       setShowToast(true);
       const response = await sendAskReq({
         message:
           message +
-          `\n Track the user's current book, chapter, and verse of the Bible.
-          If the book is The Holy Bible, Acknowledge that they haven't open their bibles yet and encourage them to suggesting a topic.
-          If book if is a valid book of the bible then acknowledge what they're reading and tailor responses or conversations to the scripture.` +
+          `\nTrack the user's current book, chapter, and verse of the Bible. Use valid information to tailor resposnes.` +
           JSON.stringify(context),
       }).unwrap();
 
