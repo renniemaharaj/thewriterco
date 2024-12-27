@@ -4,7 +4,6 @@ import Navbar from "../../components/additional/NavBar";
 import Hero from "../../components/additional/Hero";
 import Articles from "../../components/additional/articles/Articles";
 import Sword from "../../components/additional/articles/Sword";
-import ThemeSwitcher from "../../components/additional/ThemeSwitcher";
 import Ereader from "../../components/additional/Ereader";
 import { EBook } from "../../app/ereader/types";
 import { useDispatch } from "react-redux";
@@ -14,6 +13,9 @@ import ClientExperiences from "../../components/Testamonials";
 //Suppress ESLint errors
 const Index: React.FC = () => {
   const dispatch = useDispatch();
+
+  // const { theme, specifyTheme } = useThemeContext();
+
   const setEreaderState = (eBook: EBook) => {
     // Dispatch to Redux store
     dispatch(setEBook(eBook));
@@ -27,17 +29,7 @@ const Index: React.FC = () => {
       <ClientExperiences />
       <Navbar />
       <Hero />
-      <Flex
-        align={"end"}
-        justify={"center"}
-        className="!w-full p-2 !justify-center"
-      >
-        {/* <Hint className="max-w-[450px]">
-          Please feel free to choose your preferred theme. Default should be
-          system detected.
-        </Hint> */}
-        <ThemeSwitcher className="!max-w-fit" />
-      </Flex>
+
       <Separator size={"4"} />
       <Articles />
       <Sword setEBook={setEreaderState} />

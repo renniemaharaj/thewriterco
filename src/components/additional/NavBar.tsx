@@ -1,10 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, IconButton, Flex, TextField, Box, Text } from "@radix-ui/themes";
+import {
+  Link,
+  IconButton,
+  Flex,
+  TextField,
+  Box,
+  Text,
+  Button,
+  Separator,
+} from "@radix-ui/themes";
 import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { useThemeContext } from "../context/useThemeContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { ScanSearchIcon } from "lucide-react";
+import { MoonIcon, ScanSearchIcon, SunIcon } from "lucide-react";
 import SearchLoading from "../SearchLoading";
 import { useSendFindReqMutation } from "../../app/api/apiSlice";
 import { input } from "@testing-library/user-event/dist/cjs/event/input.js";
@@ -29,7 +38,7 @@ const Navbar: React.FC = () => {
   const [navLinks] = useState<NavLink[]>(navLinksArray);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { theme } = useThemeContext();
+  const { theme, specifyTheme } = useThemeContext();
 
   const eReaderState = useSelector((state: RootState) => state.ereader);
 
@@ -102,7 +111,7 @@ const Navbar: React.FC = () => {
         <Flex
           justify="center"
           align="center"
-          className="!w-full max-w-[400px] !md:w-auto !gap-2"
+          className="!w-full max-w-[400px] !md:w-auto !gap-4"
         >
           <form ref={formRef} className="flex gap-2 w-full max-w-lg">
             <TextField.Root
@@ -126,8 +135,29 @@ const Navbar: React.FC = () => {
               {isMenuOpen ? <Cross1Icon /> : <HamburgerMenuIcon />}
             </IconButton>
           </div>
-        </Flex>
 
+          {/* <Flex
+            align={"end"}
+            justify={"center"}
+            className="!w-full p-2 !justify-center"
+          > */}
+          <Separator size="2" orientation={"vertical"} />
+          <Button className="!sticky !top-0" variant="ghost">
+            {theme === "dark" ? (
+              <MoonIcon
+                className="!w-6 !h-6 !text-white animate-pulse"
+                onClick={() => specifyTheme("light")}
+              />
+            ) : (
+              <SunIcon
+                className="!w-6 !h-6 !text-yellow-400 animate-pulse"
+                onClick={() => specifyTheme("dark")}
+              />
+            )}
+          </Button>
+          {/* </Flex> */}
+        </Flex>
+        {/* <Separator size="2" orientation={"vertical"} /> */}
         {/* Navigation Links (Hidden on smaller screens) */}
         <ul className="hidden md:flex space-x-6">
           {navLinks.map(
