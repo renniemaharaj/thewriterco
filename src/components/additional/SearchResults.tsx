@@ -29,11 +29,11 @@ const SearchResults = ({
         <Dialog.Description size="2" mb="4">
           {!displayedResults.length
             ? "Something went wrong, please provide a clear request or try again."
-            : "These are the results return from your search"}
+            : "Showing results from the model."}
         </Dialog.Description>
 
         {displayedResults.map((result, index) => (
-          <Flex key={index} direction="column" gap="2">
+          <Flex key={index} direction="column" gap="2" className="mb-4">
             <Flex justify="between">
               <Flex className="!flex-row">
                 <Text size="2" weight="bold">
@@ -51,10 +51,8 @@ const SearchResults = ({
         ))}
 
         <Hint className="max-w-[400px]">
-          These results are generated results based on context and wording. The
-          responses are not reliable and the model can generate incomplete forms
-          of data objects. You can either try again or fine tune your search
-          query.
+          These results are generated. If search fails then you can either try
+          again or fine tune your search query.
         </Hint>
         <Flex gap="3" mt="4" justify="end">
           <Dialog.Close>
