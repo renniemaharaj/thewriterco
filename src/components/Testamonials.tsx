@@ -77,9 +77,8 @@ export default function ClientTestamonials() {
                     <Hint className="max-w-[400px]">
                       These axioms provide the most stable foundation for
                       Christianity, unlike doctrines that alter scripture to
-                      address inconsistencies. The path must be narrow so that
-                      scripture is fulfilled; narrow and free so that both poor
-                      and rich can afford to both go and come.
+                      address inconsistencies. The path must be narrow, and a
+                      foundation cannot be built on shifting sand.
                     </Hint>
                   </Flex>
                 </Tabs.Content>
