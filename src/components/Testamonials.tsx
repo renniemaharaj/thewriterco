@@ -65,7 +65,7 @@ export default function ClientTestamonials() {
                         >
                           {testimonial.author}
                         </Text>
-                        <Text as="label" size="2" mt="4">
+                        <Text as="label" size="1" mt="4">
                           {testimonial.quote}
                         </Text>
                         {/* </pre> */}
