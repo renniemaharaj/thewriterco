@@ -148,7 +148,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
     <div
       // direction="column"
       // justify="center"
-      className={`${className} !overflow-hidden !m-0`}
+      className={`${className} !overflow-hidden !m-0 blurred-div p-4 shadow-gray-200`}
     >
       {/* Quick Messages */}
       <Flex className="gap-1 mb-4 !flex-wrap p-6">
@@ -167,7 +167,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
       {/* Chat Display */}
       <Flex
         direction="column"
-        className="overflow-y-auto max-h-[500px] mb-4 box-content shadow-sm "
+        className="overflow-y-auto max-h-[500px] mb-4 box-content shadow-sm shadow-gray-200 blurred-div "
       >
         {messages.map((msg, index) => (
           <Flex
