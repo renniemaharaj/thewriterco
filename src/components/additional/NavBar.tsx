@@ -108,7 +108,7 @@ const Navbar: React.FC = () => {
               value={localSearchState}
               type="text"
               id="article-search-box-id"
-              placeholder="Searching the bible in pure english"
+              placeholder="Search the bible in pure english"
               className="w-full"
             />
             <IconButton disabled={isLoading} type="submit" aria-label="Search">
