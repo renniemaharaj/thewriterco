@@ -4,12 +4,16 @@ import { useSendAskReqMutation } from "../../app/api/apiSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import Chatbox from "./Chatbox";
+import { useThemeContext } from "../context/useThemeContext";
 
 const ChristianAIChatbox = ({ className }: { className?: string }) => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
     [],
   );
+
+  const { theme } = useThemeContext();
+
   const [isTyping, setIsTyping] = useState(false);
   // const [isExpanded] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -167,7 +171,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
       {/* Chat Display */}
       <Flex
         direction="column"
-        className="overflow-y-auto max-h-[500px] mb-4 box-content shadow-sm shadow-gray-200 blurred-div "
+        className={`${theme == "dark" ? "shadow rounded-lg shadow-yellow-600" : "blurred-div"} overflow-y-auto max-h-[500px] mb-4 box-content `}
       >
         {messages.map((msg, index) => (
           <Flex
