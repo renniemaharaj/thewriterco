@@ -1,16 +1,27 @@
 import { Flex, Button, Separator } from "@radix-ui/themes";
 import { useEffect, useRef, useState } from "react";
 import { useSendAskReqMutation } from "../../app/api/apiSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import Chatbox from "./Chatbox";
 import { useThemeContext } from "../context/useThemeContext";
+import fetchGitBlob from "./articles/utils/bible/gitgetter";
+import {
+  setEBook,
+  setGlobalCurrentChapter,
+  setGlobalCurrentVerse,
+  setOpenState,
+  setRenderStyle,
+} from "../../app/ereader/ereaderSlice";
+import { EBook } from "../../app/ereader/types";
 
 const ChristianAIChatbox = ({ className }: { className?: string }) => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
     [],
   );
+
+  const dispatch = useDispatch();
 
   const messageBoxRef = useRef<HTMLDivElement>(null);
 
@@ -33,6 +44,14 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     chapter: string | null;
     verse: string | null;
   };
+
+  type Task = {
+    task: string;
+    book: string;
+    chapter: string;
+    verse: string;
+  };
+
   const [context, setContext] = useState<Context>({
     book: eReaderState.eContent.title,
     chapter: eReaderState.currentChapter,
@@ -58,6 +77,36 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
   ]);
 
   const [sendAskReq] = useSendAskReqMutation();
+
+  function extractTasks(response: string): {
+    userResponse: string;
+    tasks: Task[];
+  } {
+    // Regex to match valid JSON objects in the format of task descriptions
+    const taskRegex = /{[^{}]*"task"[^{}]*}/g;
+
+    // Extract all matches for tasks
+    const taskMatches = response.match(taskRegex);
+
+    // Parse the extracted JSON objects into JavaScript objects
+    const tasks: Task[] = taskMatches
+      ? taskMatches
+          .map((match) => {
+            try {
+              return JSON.parse(match);
+            } catch {
+              // Ignore invalid JSON matches
+              return null;
+            }
+          })
+          .filter((task) => task !== null)
+      : [];
+
+    // Remove the matched tasks from the response to get the user's response text
+    const userResponse = response.replace(taskRegex, "").trim();
+
+    return { userResponse, tasks };
+  }
 
   const animateAIResponse = (response: string) => {
     let currentText = "";
@@ -117,7 +166,28 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
       }).unwrap();
 
       const formattedResponse = response.response;
-      animateAIResponse(formattedResponse);
+      const { userResponse, tasks } = extractTasks(formattedResponse);
+      if (tasks) {
+        console.log("Tasks", tasks);
+        tasks.forEach((task: Task) => {
+          if (task.task === "alterBookState") {
+            fetchGitBlob(task.book).then((content) => {
+              dispatch(
+                setEBook({
+                  title: task.book,
+                  content: JSON.parse(content),
+                  date: new Date().toDateString(),
+                } as EBook),
+              );
+              dispatch(setRenderStyle("bible"));
+              dispatch(setGlobalCurrentChapter(task.chapter));
+              dispatch(setGlobalCurrentVerse(task.verse));
+              setTimeout(() => dispatch(setOpenState(true)), 100);
+            });
+          }
+        });
+      }
+      animateAIResponse(userResponse);
     } catch (error) {
       const errorMessage = {
         sender: "AI",
