@@ -1,7 +1,6 @@
 // components/Hero.tsx
 import { Flex } from "@radix-ui/themes";
 import React from "react";
-import Hint from "../Hint";
 import { useRegistryObserver } from "../observer/useRegistryObserver";
 
 const Hero: React.FC = () => {
@@ -22,7 +21,7 @@ const Hero: React.FC = () => {
           Rennie Maharaj
         </p>
       </Flex>
-      <Hint>The Writer Company is cost-free and will always be</Hint>
+      {/* <Hint>The Writer Company is cost-free and will always be</Hint> */}
     </section>
   );
 };

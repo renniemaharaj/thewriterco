@@ -4,7 +4,6 @@ import Navbar from "../../components/additional/NavBar";
 import Hero from "../../components/additional/Hero";
 import Articles from "../../components/additional/articles/Articles";
 import Sword from "../../components/additional/articles/Sword";
-import Hint from "../../components/Hint";
 import ThemeSwitcher from "../../components/additional/ThemeSwitcher";
 import Ereader from "../../components/additional/Ereader";
 import { EBook } from "../../app/ereader/types";
@@ -27,14 +26,18 @@ const Index: React.FC = () => {
     <Flex className="!w-full !flex-col merriweather-bold !p-0`">
       <ClientExperiences />
       <Navbar />
-      <Flex align={"center"} className="!w-full p-2 !justify-center">
-        <Hint className="max-w-[450px]">
+      <Hero />
+      <Flex
+        align={"end"}
+        justify={"center"}
+        className="!w-full p-2 !justify-center"
+      >
+        {/* <Hint className="max-w-[450px]">
           Please feel free to choose your preferred theme. Default should be
           system detected.
-        </Hint>
+        </Hint> */}
         <ThemeSwitcher className="!max-w-fit" />
       </Flex>
-      <Hero />
       <Separator size={"4"} />
       <Articles />
       <Sword setEBook={setEreaderState} />

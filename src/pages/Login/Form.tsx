@@ -91,7 +91,7 @@ export default function LoginForm() {
             }).unwrap();
             console.log("User Data", userData);
             dispatch(setCredentials({ ...userData }));
-            navigate("/welcome");
+            navigate("/boarding");
           } catch (error) {
             if (isServerError(error)) {
               const serverError = error as ServerError;

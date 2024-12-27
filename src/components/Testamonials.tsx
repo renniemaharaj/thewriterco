@@ -22,9 +22,11 @@ const testimonials = [
 ];
 
 export default function ClientTestamonials() {
+  // const currentUser = useAppSelector(selectCurrentUser);
+  // className={`w-full ${!currentUser?.firstName ? "!hidden" : ""}`}
   return (
     // <Section>
-    <Flex className="w-full">
+    <Flex>
       <SideBar
         variant="right"
         className="!justify-start !hidden md:!flex !shadow-none"

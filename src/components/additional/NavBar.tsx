@@ -16,16 +16,18 @@ type NavLink = {
   disabled?: boolean;
 };
 
-const navLinks: NavLink[] = [
+const navLinksArray: NavLink[] = [
   { label: "About", href: "#footer", disabled: false },
   { label: "Articles", href: "#articles", disabled: false },
   { label: "Biblical", href: "#biblical", disabled: false },
   { label: "Sources", href: "#footer", disabled: false },
   { label: "Deducer", href: "/deducer", disabled: false },
-  { label: "Boarding", href: "/boarding", disabled: false },
+  { label: "Home", href: "/boarding", disabled: false },
 ];
 
 const Navbar: React.FC = () => {
+  const [navLinks] = useState<NavLink[]>(navLinksArray);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme } = useThemeContext();
 

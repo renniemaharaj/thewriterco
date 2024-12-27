@@ -115,6 +115,16 @@ export default function Welcome() {
               </DataList.Root>
               <Box className="!mt-2 !mb-2 !flex gap-2">
                 <Button
+                  onClick={() => (location.href = "/")}
+                  color="crimson"
+                  className="!mt-4 !w-full"
+                >
+                  <ExitIcon />
+                  Home
+                </Button>
+              </Box>
+              <Box className="!mt-2 !mb-2 !flex gap-2">
+                <Button
                   onClick={handleLogout}
                   color="red"
                   className="!mt-4 !w-full"
