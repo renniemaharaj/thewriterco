@@ -170,7 +170,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
       if (tasks) {
         console.log("Tasks", tasks);
         tasks.forEach((task: Task) => {
-          if (task.task === "alterBookState") {
+          if (task.task === "signalToUserBookState") {
             fetchGitBlob(task.book).then((content) => {
               dispatch(
                 setEBook({
@@ -211,6 +211,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
     "What is the Gospel?",
     "Which denomination is right?",
     "Explain the Axioms",
+    "Please open John 3:16",
   ]);
 
   const onQuickMessageClick = (msg: string) => {
