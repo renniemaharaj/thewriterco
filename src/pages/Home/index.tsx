@@ -1,5 +1,5 @@
 import { Flex, Separator } from "@radix-ui/themes";
-import Footer from "../../components/additional/footer";
+// import Footer from "../../components/additional/footer";
 import Navbar from "../../components/additional/NavBar";
 import Hero from "../../components/additional/Hero";
 import Articles from "../../components/additional/articles/Articles";
@@ -9,6 +9,8 @@ import { EBook } from "../../app/ereader/types";
 import { useDispatch } from "react-redux";
 import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
 import ClientExperiences from "../../components/Testamonials";
+
+import Footer from "./Footer";
 
 //Suppress ESLint errors
 const Index: React.FC = () => {
@@ -33,6 +35,7 @@ const Index: React.FC = () => {
       <Separator size={"4"} />
       <Articles />
       <Sword setEBook={setEreaderState} />
+      {/* <Footer /> */}
       <Footer />
       <Ereader />
     </Flex>
