@@ -2,6 +2,7 @@ import { Text, Flex, Card, Separator, Tabs, Box } from "@radix-ui/themes";
 import Hint from "./Hint";
 import ChristianAIChatbox from "./additional/Christianai";
 import SideBar from "./SideBar";
+import { useEffect, useState } from "react";
 
 const testimonials = [
   {
@@ -24,6 +25,24 @@ const testimonials = [
 export default function ClientTestamonials() {
   // const currentUser = useAppSelector(selectCurrentUser);
   // className={`w-full ${!currentUser?.firstName ? "!hidden" : ""}`}
+  const [hero, setHero] = useState<string>("");
+  const animateHero = (newHero: string) => {
+    let currentText = "";
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < newHero.length) {
+        currentText += newHero[index];
+        setHero(currentText);
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 20); // Adjust the interval time as needed
+  };
+
+  useEffect(() => {
+    animateHero("Axioms for Artificial Intelligence");
+  }, []);
   return (
     // <Section>
     <Flex>
@@ -33,7 +52,7 @@ export default function ClientTestamonials() {
         centerBar={
           <Flex className="!flex-col w-[500px]">
             <Text
-              className="m-6"
+              className="absolute m-6 min-h-15 pb-10 max-w-[400px] text-wrap"
               size="8"
               weight="bold"
               mb="9"
@@ -44,9 +63,9 @@ export default function ClientTestamonials() {
                 transition: "1s",
               }}
             >
-              Axioms for Artificial Intelligence
+              {hero}
             </Text>
-            <Tabs.Root defaultValue="axioms">
+            <Tabs.Root defaultValue="axioms" className="mt-32">
               <Tabs.List>
                 <Tabs.Trigger value="axioms">Axioms</Tabs.Trigger>
               </Tabs.List>

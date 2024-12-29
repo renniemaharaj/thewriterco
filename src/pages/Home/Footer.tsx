@@ -13,8 +13,8 @@ import {
 
 const companyName = "The Writer Company";
 const companyMission = "AI-integrated bible tools for study and research.";
-const companyAddress = "San Fernando, Trinidad and Tobago";
-const companyEmail = "rvesprey@gmai.com";
+const companyAddress = "Trinidad and Tobago";
+const companyEmail = "rvesprey@gmail.com";
 const companyPhone = "(***) ***-****";
 
 const Footer: React.FC = () => (

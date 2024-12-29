@@ -254,7 +254,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
           <Flex
             key={index}
             justify={msg.sender === "User" ? "end" : "start"}
-            className={`${msg.sender === "User" ? "text-right" : "text-left"} !text-sm`}
+            className={`${msg.sender === "User" ? "text-right" : "text-left"} !text-sm min-h-[9rem]`}
           >
             <div
               className="inline-block rounded-lg p-4 scale-95"

@@ -32,8 +32,8 @@ const Index: React.FC = () => {
       <Navbar />
       <Hero />
 
-      <Separator size={"4"} />
       <Articles />
+      <Separator size={"4"} />
       <Sword setEBook={setEreaderState} />
       {/* <Footer /> */}
       <Footer />
