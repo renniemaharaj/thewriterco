@@ -149,9 +149,9 @@ const Ereader: React.FC = () => {
     <div
       className={`${eReaderState.isOpen && "blurred-div"} ereaderBg ${
         eReaderState.isOpen && "h-full"
-      } fixed bottom-0 left-0 w-full shadow-lg overflow-auto max-h-full z-20`}
+      } fixed bottom-0 left-0 ${eReaderState.isOpen ? "w-full " : "w-auto left-[50%] translate-x-[-50%]"} shadow-lg overflow-auto z-20`}
     >
-      <div className="flex justify-between items-center p-4 border-b">
+      <div className={`flex justify-center gap-2 items-center p-4 border-b`}>
         {/* <h2 className="text-xl font-semibold">{eReaderState.eContent.title}</h2> */}
         <BiblePicker trigger={<Button>{eReaderState.eContent.title}</Button>} />
         <IconButton

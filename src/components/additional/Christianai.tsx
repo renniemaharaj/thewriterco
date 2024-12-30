@@ -228,7 +228,8 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
     <div
       // direction="column"
       // justify="center"
-      className={`${className} !overflow-auto !m-0 blurred-div p-4 shadow-gray-200 h-[800px]`}
+      ref={messageBoxRef}
+      className={`${className} !overflow-auto !sticky !top-0 !m-0  p-4 shadow-gray-200 h-[100vh]`}
     >
       {/* Quick Messages */}
       <Flex className="gap-1 mb-4 !flex-wrap p-6">
@@ -246,7 +247,6 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
 
       {/* Chat Display */}
       <Flex
-        ref={messageBoxRef}
         direction="column"
         className={`${theme === "dark" ? "shadow rounded-lg" : ""} mb-4 box-content !scroll-smooth gap-6`}
       >
@@ -254,7 +254,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
           <Flex
             key={index}
             justify={msg.sender === "User" ? "end" : "start"}
-            className={`${theme === "dark" ? "!shadow-sm !shadow-gray-500" : "blurred-div"} ${msg.sender === "User" ? "text-right !self-end" : "text-left"} max-w-[90%] !text-sm !max-h-fit !overflow-hidden`}
+            className={`${theme === "dark" ? "!shadow-sm !shadow-gray-500" : "blurred-div"} ${msg.sender === "User" ? "text-right !self-end" : "text-left"} min-h-10 max-w-[90%] !text-sm !max-h-fit !overflow-hidden`}
           >
             <div
               className="inline-block rounded-lg p-4 scale-95"
