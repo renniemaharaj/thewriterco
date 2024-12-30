@@ -40,7 +40,7 @@ const SearchResults = ({
                   {result.book}-
                 </Text>
                 <Text size="2" weight="bold">
-                  {result.verseNo}:{result.chapterNo}
+                  {result.chapterNo}:{result.verseNo}
                 </Text>
               </Flex>
             </Flex>
