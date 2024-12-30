@@ -37,7 +37,7 @@ export default function ClientTestamonials() {
       } else {
         clearInterval(interval);
       }
-    }, 20); // Adjust the interval time as needed
+    }, 50); // Adjust the interval time as needed
   };
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function ClientTestamonials() {
         variant="right"
         className="!justify-start !hidden md:!flex !shadow-none"
         centerBar={
-          <Flex className="!flex-col w-[500px]">
+          <Flex className="!flex-col w-[500px] !transition-all">
             <Text
               className="absolute m-6 min-h-15 pb-10 max-w-[400px] text-wrap"
               size="8"
@@ -60,7 +60,7 @@ export default function ClientTestamonials() {
                 display: "block",
                 textAlign: "center",
                 color: "var(--hrtm-blue)",
-                transition: "1s",
+                transition: "30ms",
               }}
             >
               {hero}
