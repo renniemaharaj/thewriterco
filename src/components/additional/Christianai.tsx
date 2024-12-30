@@ -228,7 +228,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
     <div
       // direction="column"
       // justify="center"
-      className={`${className} !overflow-hidden !m-0 blurred-div p-4 shadow-gray-200`}
+      className={`${className} !overflow-auto !m-0 blurred-div p-4 shadow-gray-200 h-[800px]`}
     >
       {/* Quick Messages */}
       <Flex className="gap-1 mb-4 !flex-wrap p-6">
@@ -236,7 +236,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
           <Button
             key={index}
             variant="soft"
-            className="cursor-pointer !sticky !top-0"
+            className="cursor-pointer"
             onClick={() => onQuickMessageClick(msg)}
           >
             {msg}
@@ -248,13 +248,13 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
       <Flex
         ref={messageBoxRef}
         direction="column"
-        className={`${theme == "dark" ? "shadow rounded-lg shadow-yellow-600" : "blurred-div"} overflow-y-auto max-h-[500px] mb-4 box-content !scroll-smooth`}
+        className={`${theme === "dark" ? "shadow rounded-lg" : ""} mb-4 box-content !scroll-smooth gap-6`}
       >
         {messages.map((msg, index) => (
           <Flex
             key={index}
             justify={msg.sender === "User" ? "end" : "start"}
-            className={`${msg.sender === "User" ? "text-right" : "text-left"} !text-sm min-h-[9rem]`}
+            className={`${theme === "dark" ? "!shadow-sm !shadow-gray-500" : "blurred-div"} ${msg.sender === "User" ? "text-right !self-end" : "text-left"} max-w-[90%] !text-sm !max-h-fit !overflow-hidden`}
           >
             <div
               className="inline-block rounded-lg p-4 scale-95"
