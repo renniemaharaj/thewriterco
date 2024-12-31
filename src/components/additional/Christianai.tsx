@@ -46,6 +46,18 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
 
   const [executables, setExecutables] = useState<Executable[]>([]);
 
+  useEffect(() => {
+    // Remove duplication based on `jsxTrigger`
+
+    if (executables.length) {
+      setExecutables(
+        executables.filter(
+          (v, i, a) => a.findIndex((t) => t.jsxTrigger === v.jsxTrigger) == i,
+        ),
+      );
+    }
+  }, [executables]);
+
   const eReaderState = useSelector((state: RootState) => state.ereader);
 
   type Context = {
