@@ -1,5 +1,5 @@
 import { Flex, Button, Separator } from "@radix-ui/themes";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSendAskReqMutation } from "../../app/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
@@ -14,6 +14,13 @@ import {
   setRenderStyle,
 } from "../../app/ereader/ereaderSlice";
 import { EBook } from "../../app/ereader/types";
+import { PlayCircleIcon } from "lucide-react";
+import { Carousel } from "./Carousel";
+
+type Executable = {
+  // executable: () => void;
+  jsxTrigger: React.ReactNode;
+};
 
 const ChristianAIChatbox = ({ className }: { className?: string }) => {
   const [input, setInput] = useState("");
@@ -36,6 +43,8 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     "Thank you for waiting!",
     "In some cases, our servers may be spinning up. Please wait.",
   ];
+
+  const [executables, setExecutables] = useState<Executable[]>([]);
 
   const eReaderState = useSelector((state: RootState) => state.ereader);
 
@@ -167,23 +176,41 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
 
       const formattedResponse = response.response;
       const { userResponse, tasks } = extractTasks(formattedResponse);
+
       if (tasks) {
         console.log("Tasks", tasks);
         tasks.forEach((task: Task) => {
           if (task.task === "signalToUserBookState") {
-            fetchGitBlob(task.book).then((content) => {
-              dispatch(
-                setEBook({
-                  title: task.book,
-                  content: JSON.parse(content),
-                  date: new Date().toDateString(),
-                } as EBook),
-              );
-              dispatch(setRenderStyle("bible"));
-              dispatch(setGlobalCurrentChapter(task.chapter));
-              dispatch(setGlobalCurrentVerse(task.verse));
-              setTimeout(() => dispatch(setOpenState(true)), 100);
-            });
+            setExecutables((prev) => [
+              ...prev,
+              {
+                jsxTrigger: (
+                  <Button
+                    variant="ghost"
+                    size={"1"}
+                    className="animate-pulse !font-bold"
+                    onClick={() => {
+                      fetchGitBlob(task.book).then((content) => {
+                        dispatch(
+                          setEBook({
+                            title: task.book,
+                            content: JSON.parse(content),
+                            date: new Date().toDateString(),
+                          } as EBook),
+                        );
+                        dispatch(setRenderStyle("bible"));
+                        dispatch(setGlobalCurrentChapter(task.chapter));
+                        dispatch(setGlobalCurrentVerse(task.verse));
+                        setTimeout(() => dispatch(setOpenState(true)), 100);
+                      });
+                    }}
+                  >
+                    <PlayCircleIcon />
+                    {task.book} {task.chapter}:{task.verse}
+                  </Button>
+                ),
+              },
+            ]);
           }
         });
       }
@@ -224,6 +251,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
     }
     setInput(msg);
   };
+
   return (
     <div
       // direction="column"
@@ -251,16 +279,35 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
         className={`${theme === "dark" ? "shadow rounded-lg" : ""} mb-4 box-content !scroll-smooth gap-6`}
       >
         {messages.map((msg, index) => (
-          <Flex
-            key={index}
-            justify={msg.sender === "User" ? "end" : "start"}
-            className={`${theme === "dark" ? "!shadow-sm !shadow-gray-500" : "blurred-div"} ${msg.sender === "User" ? "text-right !self-end" : "text-left"} min-h-10 max-w-[90%] !text-sm !max-h-fit !overflow-hidden`}
-          >
-            <div
-              className="inline-block rounded-lg p-4 scale-95"
-              dangerouslySetInnerHTML={{ __html: msg.text }}
-            ></div>
-          </Flex>
+          <>
+            <Flex
+              key={index}
+              justify={msg.sender === "User" ? "end" : "start"}
+              className={`${theme === "dark" ? "!shadow-sm !shadow-gray-500" : "blurred-div"} ${msg.sender === "User" ? "text-right !self-end" : "text-left"} min-h-10 max-w-[90%] !text-sm !max-h-fit !overflow-hidden`}
+            >
+              <div
+                className="inline-block rounded-lg p-4 scale-95"
+                dangerouslySetInnerHTML={{ __html: msg.text }}
+              />
+            </Flex>
+
+            {/* <Flex className="!flex-row !gap-2 !flex-wrap"> */}
+            {index == messages.length - 1 && executables.length > 0 ? (
+              <Carousel
+                variant="no-scrollbar"
+                // className="scale-0 !transition-all"
+                items={executables.map((executable, index) => (
+                  <React.Fragment key={index}>
+                    {executable.jsxTrigger}
+                  </React.Fragment>
+                ))}
+              />
+            ) : (
+              []
+            )}
+
+            {/* </Flex> */}
+          </>
         ))}
 
         {isTyping && (
