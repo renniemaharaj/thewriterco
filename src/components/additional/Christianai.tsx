@@ -168,10 +168,7 @@ I'm here to help you study the Bible using the Holy Bible (KJV), historical reco
       setIsTyping(true);
       setShowToast(true);
       const response = await sendAskReq({
-        message:
-          message +
-          `\nTrack the user's current book, chapter, and verse of the Bible. Use valid information to tailor resposnes.` +
-          JSON.stringify(context),
+        message: message + `\n\n` + JSON.stringify(context),
       }).unwrap();
 
       const formattedResponse = response.response;
