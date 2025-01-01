@@ -1,6 +1,6 @@
 import { Text, Flex, Card, Separator, Tabs, Box } from "@radix-ui/themes";
 import Hint from "./Hint";
-import ChristianAIChatbox from "./additional/Christianai";
+import ChristianAIChatbox from "./additional/ChristianAI/Christianai";
 import SideBar from "./SideBar";
 import { useEffect, useState } from "react";
 
@@ -74,8 +74,8 @@ export default function ClientTestamonials() {
                 <Tabs.Content value="axioms">
                   {/* <Separator size={"4"} /> */}
                   <Flex className="!flex-row !flex-wrap !gap-4 w-full max-w-[600px]">
-                    {testimonials.map((testimonial) => (
-                      <div className="flex flex-row gap-4">
+                    {testimonials.map((testimonial, index) => (
+                      <div key={index} className="flex flex-row gap-4">
                         <Text
                           as="label"
                           size="2"
