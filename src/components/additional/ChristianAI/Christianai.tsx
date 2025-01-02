@@ -229,6 +229,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
           className="text-center !flex-row !gap-2 !p-2"
         >
           <Carousel
+            variant="no-scrollbar"
             items={executables.map((executable, idx) => (
               <React.Fragment key={`exe-${idx}`}>
                 {executable.jsxTrigger}
