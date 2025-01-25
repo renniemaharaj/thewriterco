@@ -190,8 +190,8 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
 
   useEffect(() => {
     const onboardingMessages = [
-      "Hello, I am ChristianAI, my responses are generated based off of a theistic worldview; on the premises that God exists, the KJV Bible is true, and Jesus Christ has already only once. The AI is designed to provide responses that are consistent with these premises. Please feel free to ask me any questions you may have.",
-      "You can also search the entire bible in plain english by using the search bar below. For example, you can type 'What is the meaning of life?' and I will provide scripture references matching your query.",
+      "Hello, I am ChristianAI, my responses are generated based off of a theistic worldview; on the premises that God exists, the KJV Bible is true, and Jesus Christ has already came only once. The AI is designed to provide responses that are consistent with these premises. Please feel free to ask me any questions you may have.",
+      "You can also search the entire bible in plain english by using the search bar embedded into the header. For example, you can type 'What is the meaning of life?' or 'Give me scripture on patience' and I will provide scripture references matching your query.",
       "Please allow up to one minute for an initial response as our servers are currently being hosted on a free tier and may take some time spin up.",
     ];
     const initialBlocks = parseCodeBlocks(onboardingMessages.join("\n"));

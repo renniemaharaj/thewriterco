@@ -102,10 +102,12 @@ const Sword: React.FC<SwordProps> = ({ setEBook, asChild }) => {
               The Word of God - KJV
             </Heading>
             <Hint className="max-w-[450px]">
-              The word of God preserved in KJV translation. The Writer Company
-              provides the full KJV bible free of charge for consumtion and
-              research purposes. We make no attempt in any way to claim
-              ownership of the KJV text.
+              The Writer Company provides the full KJV bible free of charge for
+              consumtion and research purposes. We provide a full copy of the
+              KJV bible in JSON. See footer for more information. Additionaly,
+              we are working on tools to digitally validate the KJV bible by
+              it's digital signature such that no character can be altered
+              without detection.
             </Hint>
           </>
         )}
