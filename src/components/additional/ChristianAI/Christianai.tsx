@@ -187,6 +187,16 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
   useEffect(() => {
     console.log("Executables", executables);
   }, [executables]);
+
+  useEffect(() => {
+    const onboardingMessages = [
+      "Hello, I am ChristianAI, my responses are generated based off of a theistic worldview; on the premises that God exists, the KJV Bible is true, and Jesus Christ has already only once. The AI is designed to provide responses that are consistent with these premises. Please feel free to ask me any questions you may have.",
+      "You can also search the entire bible in plain english by using the search bar below. For example, you can type 'What is the meaning of life?' and I will provide scripture references matching your query.",
+      "Please allow up to one minute for an initial response as our servers are currently being hosted on a free tier and may take some time spin up.",
+    ];
+    const initialBlocks = parseCodeBlocks(onboardingMessages.join("\n"));
+    setMessageBlocks(initialBlocks);
+  }, []);
   return (
     <div
       ref={messageBoxRef}
@@ -214,9 +224,13 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
             <Flex
               direction="column"
               justify={block.sender === "User" ? "end" : "start"}
-              className={`${theme === "dark" ? "!shadow-sm !shadow-gray-500" : "blurred-div"} ${
+              className={`${
                 block.sender === "User" ? "text-right !self-end" : "text-left"
-              } min-h-10 max-w-[90%] !text-sm !max-h-fit !overflow-hidden !p-2`}
+              } min-h-10 max-w-[90%] !text-sm !max-h-fit !overflow-hidden !p-2 opacity-0 animate-fade-in`}
+              style={{
+                animationDuration: "0.5s",
+                animationFillMode: "forwards",
+              }}
             >
               {block.jsxElem}
             </Flex>
@@ -255,13 +269,13 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         <Separator size="3" />
       </Flex>
 
-      <Flex align="center" justify="center" className="!gap-2 mt-4">
-        <Chatbox
-          disabled={isTyping}
-          textContent={input}
-          handleRecieve={(text: string) => handleMessageSend(text)}
-        />
-      </Flex>
+      {/* <Flex className="max-h-[100px] !overflow-auto w-[100%]"> */}
+      <Chatbox
+        disabled={isTyping}
+        textContent={input}
+        handleRecieve={(text: string) => handleMessageSend(text)}
+      />
+      {/* </Flex> */}
     </div>
   );
 };

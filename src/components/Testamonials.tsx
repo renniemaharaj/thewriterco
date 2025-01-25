@@ -118,12 +118,12 @@ export default function ClientTestamonials() {
       >
         <ChristianAIChatbox className="min-w-[400px] max-w-[600px] !rounded-none" />
         <Flex className="!flex-col !gap-4 !p-2 !items-center">
-          <Hint className="max-w-[400px]">
+          {/* <Hint className="max-w-[400px]">
             Responses are generated based off of a theistic worldview; on the
             premises that God exists, the KJV Bible is true, and Jesus Christ
             has already come. The AI is designed to provide responses that are
             consistent with these axioms.
-          </Hint>
+          </Hint> */}
           {/* <Hint className="max-w-[400px]">
             AI-powered responses, subjected to the axioms of Life. This feature
             is experimental for now as we need to sort out billing on our end

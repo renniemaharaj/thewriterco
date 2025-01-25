@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
-// import { ChevronLeftIcon, ChevronRightIcon } from "lucid"
-import classNames from "classnames"; // Assuming cn utility is used
+import classNames from "classnames";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { debounce } from "lodash";
 
 type CarouselVariant = "default" | "no-scrollbar";
 
 type CarouselProps = {
-  items: React.ReactNode[]; // Array of items to display in the carousel
+  items: React.ReactNode[];
   variant?: CarouselVariant;
   className?: string;
   ref?: React.RefObject<HTMLDivElement>;
-  onMount?: () => void;
+  autoScroll?: boolean;
 };
 
 export const Carousel: React.FC<CarouselProps> = ({
@@ -18,18 +18,19 @@ export const Carousel: React.FC<CarouselProps> = ({
   variant = "default",
   className,
   ref,
-  onMount,
+  autoScroll = true,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  let scrollTimeout: ReturnType<typeof setTimeout>;
+  const [charge, setCharge] = useState(0);
   const [isStart, setIsStart] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const maxCharge = 777; // Maximum charge for proportional scrolling
 
   const scrollHandler = () => {
     if (containerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
-      setIsStart(scrollWidth === 0);
-      setIsEnd(scrollLeft + clientWidth >= scrollWidth || scrollWidth === 0);
+      setIsStart(scrollLeft <= 10);
+      setIsEnd(scrollWidth > scrollLeft + clientWidth + 10);
     }
   };
 
@@ -41,12 +42,54 @@ export const Carousel: React.FC<CarouselProps> = ({
     }
   };
 
-  const [wheelLock, setWheelLock] = useState(false);
+  // Effect for proportional scrolling based on charge
+  useEffect(() => {
+    const carousel = containerRef.current;
+    if (!carousel || charge === 0) return;
 
-  const startAutoScroll = () => {
+    const scrollAmount = (charge / maxCharge) * carousel.clientWidth;
+    carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
+
+    // Reset charge after handling
+    const resetTimer = setTimeout(() => setCharge(0), 200); // 200ms delay
+    return () => clearTimeout(resetTimer);
+  }, [charge]);
+
+  // Wheel event to update charge
+  useEffect(() => {
     const carousel = containerRef.current;
     if (!carousel) return;
-    return setInterval(() => {
+
+    const handleWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? -1 : 1; // Scroll up is left, scroll down is right
+        setCharge((prev) =>
+          Math.max(
+            -maxCharge,
+            Math.min(maxCharge, prev + delta * Math.abs(e.deltaY)),
+          ),
+        );
+      }
+    };
+
+    const handleScroll = debounce(scrollHandler, 50); // Debounce scroll updates
+
+    carousel.addEventListener("wheel", handleWheel);
+    carousel.addEventListener("scroll", handleScroll);
+
+    return () => {
+      carousel.removeEventListener("wheel", handleWheel);
+      carousel.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // Auto-scroll feature
+  useEffect(() => {
+    if (!autoScroll || !containerRef.current) return;
+    const carousel = containerRef.current;
+
+    const autoScrollInterval = setInterval(() => {
       if (carousel.scrollWidth > carousel.clientWidth) {
         const isEnd =
           carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth;
@@ -56,77 +99,22 @@ export const Carousel: React.FC<CarouselProps> = ({
         });
       }
     }, 3000);
-  };
 
-  // Auto-scroll effect
-  useEffect(() => {
-    const carousel = containerRef.current;
-    if (!carousel) return;
+    return () => clearInterval(autoScrollInterval);
+  }, [autoScroll]);
 
-    // Handle user scroll to restart the auto-scroll
-    const handleScroll = () => {
-      clearInterval(scrollInterval);
-      clearTimeout(scrollTimeout);
+  if (containerRef.current && variant === "no-scrollbar") {
+    containerRef.current.style.scrollbarWidth = "none";
+  }
 
-      // Restart auto-scroll after 3 seconds of user inactivity
-      scrollTimeout = setTimeout(() => {
-        scrollInterval = startAutoScroll();
-      }, 3000);
-    };
+  const arrowButtonClassnames =
+    "absolute !scale-75 top-1/2 transform -translate-y-1/2 z-10 p-1 bg-[#3e63dd] rounded-full shadow-md opacity-80 text-white";
 
-    // Initialize auto-scroll
-    let scrollInterval = startAutoScroll();
-
-    // Translate vertical scroll to horizontal scroll
-    const handleWheel = (e: WheelEvent) => {
-      if (wheelLock) {
-        setTimeout(() => {
-          return handleWheel(e);
-        }, 1000);
-      }
-      setWheelLock(true);
-      // if (window.innerWidth > 768) return;
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        e.preventDefault();
-        carousel.scrollBy({
-          left: e.deltaY,
-          behavior: "smooth",
-        });
-      }
-      setWheelLock(false);
-    };
-
-    carousel.addEventListener("scroll", handleScroll);
-    carousel.addEventListener("wheel", handleWheel);
-
-    if (containerRef.current && variant === "no-scrollbar") {
-      containerRef.current.style.scrollbarWidth = "none";
-    }
-
-    return () => {
-      clearInterval(scrollInterval);
-      clearTimeout(scrollTimeout);
-      carousel.removeEventListener("scroll", handleScroll);
-      carousel.removeEventListener("wheel", handleWheel);
-    };
-  }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (onMount) onMount();
-      if (containerRef.current) {
-        containerRef.current.scrollTo({
-          left: containerRef.current.scrollWidth,
-          behavior: "smooth",
-        });
-      }
-    }, 100);
-  }, []);
   return (
     <div className={classNames("relative w-full", className)} ref={ref}>
       {variant === "no-scrollbar" && !isStart && (
         <button
-          className="absolute top-1/2 left-0 transform -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-md"
+          className={arrowButtonClassnames + " left-0"}
           onClick={() => scrollTo("left")}
         >
           <ChevronLeftIcon className="animate-pulse" />
@@ -147,9 +135,9 @@ export const Carousel: React.FC<CarouselProps> = ({
         ))}
       </div>
 
-      {variant === "no-scrollbar" && !isEnd && !isStart && (
+      {variant === "no-scrollbar" && isEnd && (
         <button
-          className="opacity-75 absolute top-1/2 right-0 transform -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-md"
+          className={arrowButtonClassnames + " right-0"}
           onClick={() => scrollTo("right")}
         >
           <ChevronRightIcon className="animate-pulse" />

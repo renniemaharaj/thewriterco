@@ -2,7 +2,7 @@ import { Flex, Separator } from "@radix-ui/themes";
 // import Footer from "../../components/additional/footer";
 import Navbar from "../../components/additional/NavBar";
 import Hero from "../../components/additional/Hero";
-import Articles from "../../components/additional/articles/Articles";
+// import Articles from "../../components/additional/articles/Articles";
 import Sword from "../../components/additional/articles/Sword";
 import Ereader from "../../components/additional/Ereader";
 import { EBook } from "../../app/ereader/types";
@@ -32,7 +32,7 @@ const Index: React.FC = () => {
       <Navbar />
       <Hero />
 
-      <Articles />
+      {/* <Articles /> */}
       <Separator size={"4"} />
       <Sword setEBook={setEreaderState} />
       {/* <Footer /> */}
