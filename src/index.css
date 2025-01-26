@@ -78,17 +78,17 @@
   background-color: var(--hrtm-theme-background);
 }
 
-/* The blurring transparent div */
 .blurred-div {
-  /* position: absolute; */
-  /* top: 50%; */
-  /* left: 50%; */
-  /* transform: translate(-50%, -50%); */
-  /* width: 300px; */
-  /* height: 200px; */
-  /* background: rgba(17, 17, 17, 0.5); Semi-transparent white */
   backdrop-filter: blur(10px); /* Blurs the content behind */
   -webkit-backdrop-filter: blur(10px); /* For Safari support */
+  border-radius: 12px; /* Optional, for rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional, for aesthetics */
+  animation: fade-in 0.5s ease-in-out forwards; /* Fade in and out */
+}
+
+.blurred-div-light {
+  backdrop-filter: blur(2px); /* Blurs the content behind */
+  -webkit-backdrop-filter: blur(2px); /* For Safari support */
   border-radius: 12px; /* Optional, for rounded corners */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional, for aesthetics */
   animation: fade-in 0.5s ease-in-out forwards; /* Fade in and out */
