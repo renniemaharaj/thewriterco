@@ -207,7 +207,8 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     scrollMessageBoxToBottom();
   }, [messageBlocks]);
 
-  const baseFrameClassName = "!absolute blurred-div-light !z-10";
+  const baseFrameClassName =
+    "!absolute blurred-div-light !z-10 transition-all duration-500";
 
   const [height, setHeight] = useState<string>("!h-full");
   const [width, setWidth] = useState<string>("w-full");
