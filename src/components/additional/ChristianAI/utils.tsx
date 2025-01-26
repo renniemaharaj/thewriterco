@@ -38,7 +38,10 @@ function parseCodeBlocks(response: string) {
             content: para,
             language: "plaintext",
             jsxElem: (
-              <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(para) }} />
+              <div
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(para) }}
+                className="p-2"
+              />
             ),
             sender: "AI",
           });

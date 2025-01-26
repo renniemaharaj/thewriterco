@@ -1,4 +1,4 @@
-import { Text, Flex, Card, Tabs, Box } from "@radix-ui/themes";
+import { Text, Flex, Card, Tabs, Box, ScrollArea } from "@radix-ui/themes";
 import ChristianAIChatbox from "./additional/ChristianAI/Christianai";
 import SideBar from "./SideBar";
 import { useEffect, useState } from "react";
@@ -24,46 +24,42 @@ const testimonials = [
 export default function ClientTestamonials() {
   // const currentUser = useAppSelector(selectCurrentUser);
   // className={`w-full ${!currentUser?.firstName ? "!hidden" : ""}`}
-  const [hero, setHero] = useState<string>("");
-  const animateHero = (newHero: string) => {
-    let currentText = "";
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < newHero.length) {
-        currentText += newHero[index];
-        setHero(currentText);
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 50); // Adjust the interval time as needed
-  };
+  const [hero] = useState<string>("Axioms for Artificial Intelligence");
 
+  const [flexOrientationClassName, setFlexOrientationClassName] =
+    useState<string>("flex flex-col gap-4 items-center justify-center");
   useEffect(() => {
-    animateHero("Axioms for Artificial Intelligence");
+    setTimeout(() => {
+      setFlexOrientationClassName(
+        "flex flex-row gap-4 items-center justify-center",
+      );
+    }, 100);
   }, []);
   return (
     // <Section>
-    <Flex>
+    <Flex className={`h-[100vh] ${flexOrientationClassName} !transition-all`}>
       <SideBar
         variant="right"
-        className="!justify-start !hidden md:!flex !shadow-none"
+        className="!justify-start !hidden md:!flex !shadow-none !transition-all"
         centerBar={
-          <Flex className="!flex-col w-[450px] !transition-all">
-            <Text
-              className="absolute m-6 min-h-15 pb-10 max-w-[400px] text-wrap"
-              size="8"
-              weight="bold"
-              mb="9"
-              style={{
-                display: "block",
-                textAlign: "center",
-                color: "var(--hrtm-blue)",
-                transition: "30ms",
-              }}
-            >
-              {hero}
-            </Text>
+          <ScrollArea className="!flex-col !h-[100vh] !w-[450px] !transition-all">
+            <Flex className="hero-container w-full !flex-col !gap-4 !p-2 !items-center">
+              {hero && (
+                <Text
+                  className="absolute m-6  max-w-[400px] text-wrap hero-glow"
+                  size="8"
+                  weight="bold"
+                  style={{
+                    display: "block",
+                    textAlign: "center",
+                    // color: "var(--hrtm-blue)",
+                    transition: "300ms",
+                  }}
+                >
+                  {hero}
+                </Text> // Final hero text
+              )}
+            </Flex>
             <Tabs.Root defaultValue="axioms" className="mt-32">
               <Tabs.List>
                 <Tabs.Trigger value="axioms">Axioms</Tabs.Trigger>
@@ -120,11 +116,11 @@ export default function ClientTestamonials() {
                 <Tabs.Content value="resources"></Tabs.Content>
               </Box>
             </Tabs.Root>
-          </Flex>
+          </ScrollArea>
         }
       />
       <Card
-        className="!flex overflow-auto blurred-div !flex-col !mx-auto !rounded-none !justify-center !p-0"
+        className="!flex overflow-auto !flex-col !mx-auto !rounded-none !justify-center !p-0"
         variant="ghost"
       >
         <ChristianAIChatbox className="min-w-[400px] max-w-[600px] !rounded-none" />

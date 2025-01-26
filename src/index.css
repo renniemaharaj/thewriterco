@@ -91,16 +91,64 @@
   -webkit-backdrop-filter: blur(10px); /* For Safari support */
   border-radius: 12px; /* Optional, for rounded corners */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional, for aesthetics */
-
-  /* opacity: 0; Hidden by default */
-  animation: fadeIn 0.5s ease-in-out; /* Fade in and out */
+  animation: fade-in 0.5s ease-in-out forwards; /* Fade in and out */
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-in-out;
+  animation: fade-in 1s forwards ease-in-out;
 }
 
-@keyframes fadeIn {
+.hero-container {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.hero-skeleton {
+  width: 70%; /* Adjust width */
+  height: 40px;
+  background: linear-gradient(90deg, #6a6052 25%, #6e5e45 50%, transparent 75%);
+  opacity: 0.5;
+  background-size: 400% 100%;
+  animation: skeleton-loading 1s ease-out;
+  /* border-radius: 8px; */
+}
+
+.hero-text {
+  font-size: 2rem;
+  color: var(--hrtm-blue); /* Same color used in your text */
+  text-align: center;
+  animation: fade-in 1s forwards;
+}
+
+/* Skeleton Animation */
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* Glowing Effect Animation */
+@keyframes glowing-effect {
+  0% {
+    text-shadow:
+      0 0 5px #978365,
+      0 0 10px #978365,
+      0 0 20px #978365;
+  }
+  100% {
+    text-shadow:
+      0 0 20px #978365,
+      0 0 40px #978365,
+      0 0 60px #978365;
+  }
+}
+
+/* Fade-in Animation */
+@keyframes fade-in {
   0% {
     opacity: 0;
   }

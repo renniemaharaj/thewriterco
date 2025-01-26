@@ -209,6 +209,10 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     const initialBlocks = parseCodeBlocks(onboardingMessages.join("\n"));
     setMessageBlocks(initialBlocks);
   }, []);
+
+  useEffect(() => {
+    scrollMessageBoxToBottom();
+  }, [messageBlocks]);
   return (
     <Card>
       <ScrollArea
@@ -216,9 +220,9 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         // type="scroll"
         // style={{ scrollBehavior: "smooth" }}
         ref={messageBoxRef}
-        className={`${className} !sticky !top-0 !m-[1rem] p-4 shadow-gray-200 !h-[60vh]`}
+        className={`${className} !sticky !top-0 !m-[1rem] p-4 !h-[60vh]`}
       >
-        <Flex className="gap-1 mb-4 !flex-wrap p-6 blurred-div max-w-[600px]">
+        <Flex className="gap-1 mb-4 !flex-wrap p-6 max-w-[600px]">
           {suggestions.map((msg, index) => (
             <Button
               key={index}
