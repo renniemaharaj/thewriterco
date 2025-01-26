@@ -234,6 +234,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
                 variant="soft"
                 className="cursor-pointer"
                 onClick={() => handleSuggestionClick(msg)}
+                disabled={isTyping}
               >
                 {msg}
               </Button>
