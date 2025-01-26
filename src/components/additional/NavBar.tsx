@@ -27,7 +27,7 @@ type NavLink = {
 
 const navLinksArray: NavLink[] = [
   { label: "About", href: "#footer", disabled: false },
-  { label: "Articles", href: "#articles", disabled: false },
+  { label: "Articles", href: "#articles", disabled: true },
   { label: "Biblical", href: "#biblical", disabled: false },
   { label: "Sources", href: "#footer", disabled: false },
   { label: "Deducer", href: "/deducer", disabled: false },

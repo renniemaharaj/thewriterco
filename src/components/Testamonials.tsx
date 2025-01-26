@@ -1,5 +1,4 @@
-import { Text, Flex, Card, Separator, Tabs, Box } from "@radix-ui/themes";
-import Hint from "./Hint";
+import { Text, Flex, Card, Tabs, Box } from "@radix-ui/themes";
 import ChristianAIChatbox from "./additional/ChristianAI/Christianai";
 import SideBar from "./SideBar";
 import { useEffect, useState } from "react";
@@ -17,7 +16,7 @@ const testimonials = [
   },
   {
     quote:
-      "Jesus Christ's First Coming: Acknowledge that Jesus Christ, the Creator, Messiah, and Truth, has already come once (as of 2024) in the manner recorded in the KJV Bible.",
+      "Jesus Christ's First Coming: Acknowledge that Jesus Christ, the Creator, Messiah, and Truth, has only came once (as of 2024) in the manner recorded in the KJV Bible.",
     author: "Jesus Christ's First Coming",
   },
 ];
@@ -50,7 +49,7 @@ export default function ClientTestamonials() {
         variant="right"
         className="!justify-start !hidden md:!flex !shadow-none"
         centerBar={
-          <Flex className="!flex-col w-[500px] !transition-all">
+          <Flex className="!flex-col w-[450px] !transition-all">
             <Text
               className="absolute m-6 min-h-15 pb-10 max-w-[400px] text-wrap"
               size="8"
@@ -68,14 +67,17 @@ export default function ClientTestamonials() {
             <Tabs.Root defaultValue="axioms" className="mt-32">
               <Tabs.List>
                 <Tabs.Trigger value="axioms">Axioms</Tabs.Trigger>
+                <Tabs.Trigger value="documentation">Documentation</Tabs.Trigger>
+                <Tabs.Trigger value="resources" disabled>
+                  Resources
+                </Tabs.Trigger>
               </Tabs.List>
 
               <Box pt="3">
                 <Tabs.Content value="axioms">
-                  {/* <Separator size={"4"} /> */}
                   <Flex className="!flex-row !flex-wrap !gap-4 w-full max-w-[600px]">
                     {testimonials.map((testimonial, index) => (
-                      <div key={index} className="flex flex-row gap-4">
+                      <div key={index} className="flex flex-row gap-4 p-1">
                         <Text
                           as="label"
                           size="2"
@@ -93,47 +95,41 @@ export default function ClientTestamonials() {
                       </div>
                     ))}
                   </Flex>
-                  <Flex className="!flex-[3] !flex-col !gap-4 !p-2 !items-center">
-                    <Separator size={"4"} />
-                    <Hint className="max-w-[400px]">
-                      These axioms provide the most stable foundation for
-                      Christianity, unlike doctrines that alter scripture to
-                      address inconsistencies. The path must be narrow, and a
-                      foundation cannot be built on shifting sand.
-                    </Hint>
+                </Tabs.Content>
+                <Tabs.Content value="documentation">
+                  <Flex className="!flex-col !gap-4 !p-2 !items-start w-full">
+                    <Box className="max-w-[600px] p-4 blurred-div">
+                      <Text size="2" mb="2">
+                        <strong>Overview:</strong> The axioms are designed to
+                        provide a stable, consistent foundation from which
+                        AI-generated responses can serve in the study of the
+                        Bible.
+                      </Text>
+                    </Box>
+                    <Box className="max-w-[600px] p-4 blurred-div">
+                      <Text size="2" mb="2">
+                        <strong>Usage:</strong> You can either chat with the
+                        model on the right or search the Bible in plain English
+                        by utilizing the header-embedded search bar below,
+                        getting in return a list of verses that contextually
+                        matches your query.
+                      </Text>
+                    </Box>
                   </Flex>
                 </Tabs.Content>
+                <Tabs.Content value="resources"></Tabs.Content>
               </Box>
             </Tabs.Root>
           </Flex>
         }
       />
-      {/* <Separator size={"3"} orientation={"vertical"} /> */}
-      {/* <Flex className=""> */}
-      {/* <Separator size={"3"} orientation={"vertical"} /> */}
       <Card
-        // key={"testimonial" + index}
         className="!flex overflow-auto blurred-div !flex-col !mx-auto !rounded-none !justify-center !p-0"
         variant="ghost"
       >
         <ChristianAIChatbox className="min-w-[400px] max-w-[600px] !rounded-none" />
-        <Flex className="!flex-col !gap-4 !p-2 !items-center">
-          {/* <Hint className="max-w-[400px]">
-            Responses are generated based off of a theistic worldview; on the
-            premises that God exists, the KJV Bible is true, and Jesus Christ
-            has already come. The AI is designed to provide responses that are
-            consistent with these axioms.
-          </Hint> */}
-          {/* <Hint className="max-w-[400px]">
-            AI-powered responses, subjected to the axioms of Life. This feature
-            is experimental for now as we need to sort out billing on our end
-            for the SaaS, but it will preferably be free for all users.
-          </Hint> */}
-        </Flex>
+        <Flex className="!flex-col !gap-4 !p-2 !items-center"></Flex>
       </Card>
-      {/* </Flex> */}
     </Flex>
-
-    // </Section>
   );
 }

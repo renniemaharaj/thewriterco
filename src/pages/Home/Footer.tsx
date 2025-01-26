@@ -18,7 +18,7 @@ const companyEmail = "rvesprey@gmail.com";
 const companyPhone = "(***) ***-****";
 
 const Footer: React.FC = () => (
-  <footer id="contact" className="py-16 !max-w-[140%]">
+  <footer id="footer" className="py-16 !max-w-[140%]">
     {/* First Column: Information Section */}
     <Flex className="w-full flex-col items-center p-10 !overflow-auto ">
       <Heading size="4" className="text-lg font-bold">
