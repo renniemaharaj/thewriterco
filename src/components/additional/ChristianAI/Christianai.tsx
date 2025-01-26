@@ -1,4 +1,11 @@
-import { Flex, Button, Separator, ScrollArea } from "@radix-ui/themes";
+import {
+  Flex,
+  Button,
+  Separator,
+  ScrollArea,
+  Card,
+  Skeleton,
+} from "@radix-ui/themes";
 import React, { useEffect, useRef, useState } from "react";
 import { useSendAskReqMutation } from "../../../app/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -196,95 +203,99 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
 
   useEffect(() => {
     const onboardingMessages = [
-      "Hello, I am TheWriterCoAI, my responses are generated based off of a theistic worldview; on the premises that God exists, the KJV Bible is true, and Jesus Christ has already came only once. The AI is designed to provide responses that are consistent with these premises. Please feel free to ask me any questions you may have.",
+      "Hello, I am TheWriterCoAI, my responses are generated based off of a theistic worldview; on the premises that God exists, the KJV Bible is true, and Jesus Christ has already came only once.",
       "Please allow up to one minute for an initial response as our servers are currently being hosted on a free tier and may take some time to spin up.",
     ];
     const initialBlocks = parseCodeBlocks(onboardingMessages.join("\n"));
     setMessageBlocks(initialBlocks);
   }, []);
   return (
-    <ScrollArea
-      // scrollHideDelay={500}
-      type="scroll"
-      style={{ scrollBehavior: "smooth", height: "100vh" }}
-      ref={messageBoxRef}
-      className={`${className} !sticky !top-0 !m-[1rem] p-4 shadow-gray-200 h-[calc(100vh-1rem)]`}
-    >
-      <Flex className="gap-1 mb-4 !flex-wrap p-6 blurred-div">
-        {suggestions.map((msg, index) => (
-          <Button
-            key={index}
-            variant="soft"
-            className="cursor-pointer"
-            onClick={() => handleSuggestionClick(msg)}
-          >
-            {msg}
-          </Button>
-        ))}
-      </Flex>
-
-      <Flex
-        direction="column"
-        className={`${theme === "dark" ? "shadow rounded-lg" : ""} mb-4 box-content !scroll-smooth gap-6`}
+    <Card>
+      <ScrollArea
+        // scrollHideDelay={500}
+        // type="scroll"
+        // style={{ scrollBehavior: "smooth" }}
+        ref={messageBoxRef}
+        className={`${className} !sticky !top-0 !m-[1rem] p-4 shadow-gray-200 !h-[60vh]`}
       >
-        {messageBlocks.map((block, index) => (
-          <React.Fragment key={index}>
-            <Flex
-              direction="column"
-              justify={block.sender === "User" ? "end" : "start"}
-              className={`${
-                block.sender === "User" ? "text-right !self-end" : "text-left"
-              } min-h-10 max-w-[90%] !text-sm !max-h-fit !overflow-hidden !p-2 opacity-0 animate-fade-in`}
-              style={{
-                animationDuration: "0.5s",
-                animationFillMode: "forwards",
-              }}
+        <Flex className="gap-1 mb-4 !flex-wrap p-6 blurred-div max-w-[600px]">
+          {suggestions.map((msg, index) => (
+            <Button
+              key={index}
+              variant="soft"
+              className="cursor-pointer"
+              onClick={() => handleSuggestionClick(msg)}
             >
-              {block.jsxElem}
-            </Flex>
-          </React.Fragment>
-        ))}
-
+              {msg}
+            </Button>
+          ))}
+        </Flex>
         <Flex
           direction="column"
-          justify="center"
-          className="text-center !flex-row !gap-2 !p-2"
+          className={`${theme === "dark" ? "shadow rounded-lg" : ""} mb-4 box-content !scroll-smooth gap-6`}
         >
-          <Carousel
-            variant="no-scrollbar"
-            items={executables.map((executable, idx) => (
-              <React.Fragment key={`exe-${idx}`}>
-                {executable.jsxTrigger}
-              </React.Fragment>
-            ))}
-          />
+          {messageBlocks.map((block, index) => (
+            <React.Fragment key={index}>
+              <Flex
+                direction="column"
+                justify={block.sender === "User" ? "end" : "start"}
+                className={`${
+                  block.sender === "User" ? "text-right !self-end" : "text-left"
+                } min-h-10 max-w-[90%] !text-sm !max-h-fit !overflow-hidden !p-2 opacity-0 animate-fade-in`}
+                style={{
+                  animationDuration: "0.5s",
+                  animationFillMode: "forwards",
+                }}
+              >
+                {block.jsxElem}
+              </Flex>
+            </React.Fragment>
+          ))}
+
+          <Flex
+            direction="column"
+            justify="center"
+            className="text-center !flex-row !gap-2 !p-2"
+          >
+            <Carousel
+              variant="no-scrollbar"
+              items={executables.map((executable, idx) => (
+                <React.Fragment key={`exe-${idx}`}>
+                  {executable.jsxTrigger}
+                </React.Fragment>
+              ))}
+            />
+          </Flex>
+
+          {isTyping && (
+            <Flex justify="center" className="text-gray-500 italic !flex-col">
+              <Skeleton className="h-4 rounded w-3/4 mb-2" />
+              <Skeleton className="h-4 rounded w-2/4 mb-2" />
+              <Skeleton className="h-4 rounded w-1/4" />
+            </Flex>
+          )}
+
+          {showToast && (
+            <div className="asbolute text-center mt-2 text-sm text-gray-600">
+              {toastMessages[Math.floor(Math.random() * toastMessages.length)]}
+            </div>
+          )}
         </Flex>
 
-        {isTyping && (
-          <Flex justify="center" className="text-gray-500 italic">
-            <span className="animate-pulse">...</span>
-          </Flex>
-        )}
+        <Flex justify="center" className="text-sm text-gray-500">
+          <Separator size="3" />
+        </Flex>
 
-        {showToast && (
-          <div className="asbolute text-center mt-2 text-sm text-gray-600">
-            {toastMessages[Math.floor(Math.random() * toastMessages.length)]}
-          </div>
-        )}
-      </Flex>
+        {/* <Flex className="max-h-[100px] !overflow-auto w-[100%]"> */}
 
-      <Flex justify="center" className="text-sm text-gray-500">
-        <Separator size="3" />
-      </Flex>
-
-      {/* <Flex className="max-h-[100px] !overflow-auto w-[100%]"> */}
+        {/* </Flex> */}
+      </ScrollArea>
       <Chatbox
         disabled={isTyping}
         textContent={input}
         handleRecieve={(text: string) => handleMessageSend(text)}
       />
-      {/* </Flex> */}
-    </ScrollArea>
+    </Card>
   );
 };
 
