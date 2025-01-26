@@ -208,22 +208,53 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
   }, [messageBlocks]);
 
   const baseFrameClassName = "!absolute blurred-div-light !z-10";
+
+  const [height, setHeight] = useState<string>("!h-full");
+  const [width, setWidth] = useState<string>("w-full");
+  const [rightTop, setRightTop] = useState<string>("!top-0");
+  const [bottomLeft, setBottomLeft] = useState<string>("!left-0");
+
   const simulateFrameClassNames = [
-    `${baseFrameClassName} !top-0 !left-0 !w-full !h-[1rem]`, // Top frame (1rem height, full width)
-    `${baseFrameClassName} !top-0 !right-0 !h-full !w-[1rem]`, // Right frame (1rem width, full height)
-    // `${baseFrameClassName} !bottom-0 !left-0 !w-full !h-[1rem]`, // Bottom frame (1rem height, full width)
-    `${baseFrameClassName} !top-0 !left-0 !h-full !w-[1rem]`, // Left frame (1rem width, full height)
+    `${baseFrameClassName} !top-0 !left-0 ${width} !h-[1rem]`, // Top frame (1rem height, full width)
+    `${baseFrameClassName} !right-0 ${rightTop} ${height} !w-[1rem]`, // Right frame (1rem width, full height)
+    `${baseFrameClassName} !bottom-0 ${bottomLeft} ${width} !h-[1rem]`, // Bottom frame (1rem height, full width)
+    `${baseFrameClassName} !top-0 !left-0 ${height} !w-[1rem]`, // Left frame (1rem width, full height)
   ];
+
+  const progressRenderedFrameBars = (percentage: number) => {
+    if (percentage === 0) return [];
+    return simulateFrameClassNames.map((className, index) => ({
+      className,
+      disabled: index / simulateFrameClassNames.length >= percentage / 100,
+    }));
+  };
+
+  const [frameBarPercentage, setFrameBarPercentage] = useState(25);
+
+  useEffect(() => {
+    if (!isTyping) {
+      setFrameBarPercentage(25);
+      setHeight("!h-full");
+      setWidth("!w-full");
+      setBottomLeft("!left-0");
+      setRightTop("!top-0");
+    } else {
+      setFrameBarPercentage(100);
+      setHeight("!h-[100px]");
+      setWidth("!w-[100px]");
+      setBottomLeft("!right-0");
+      setRightTop("!bottom-0");
+    }
+  }, [isTyping]);
+
   return (
     <>
       <Card className="!p-0">
-        {simulateFrameClassNames.map((className, index) => (
-          <Skeleton key={index} className={className} />
-        ))}
+        {progressRenderedFrameBars(frameBarPercentage).map(
+          ({ className, disabled }, index) =>
+            !disabled && <Skeleton key={index} className={className} />,
+        )}
         <ScrollArea
-          // scrollHideDelay={500}
-          // type="scroll"
-          // style={{ scrollBehavior: "smooth" }}
           ref={messageBoxRef}
           className={`${className} !sticky !top-0 !h-[60vh]`}
         >
