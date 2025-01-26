@@ -207,8 +207,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     scrollMessageBoxToBottom();
   }, [messageBlocks]);
 
-  const baseFrameClassName =
-    "!absolute blurred-div-light !z-10 transition-all duration-500";
+  const baseFrameClassName = `!absolute blurred-div-light !z-10 transition-all duration-500`;
 
   const [height, setHeight] = useState<string>("!h-full");
   const [width, setWidth] = useState<string>("w-full");
@@ -257,7 +256,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         )}
         <ScrollArea
           ref={messageBoxRef}
-          className={`${className} !sticky !top-0 !h-[60vh]`}
+          className={`${className} !sticky !top-0 !h-[60vh] ${isTyping && "animate-pulse"}`}
         >
           <Flex className="gap-1 mb-4 !flex-wrap p-6 max-w-[600px]">
             {suggestions.map((msg, index) => (
