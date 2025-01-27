@@ -20,6 +20,8 @@ import { Block, Context, Executable, TaskAlterBookState } from "./types";
 import { taskExtractor } from "./utils.ts";
 import { Carousel } from "../Carousel.tsx";
 import Hint from "../../Hint.tsx";
+import Frame from "../../frames/Frame.tsx";
+import { frameSetups } from "../../frames/frameVarients.ts";
 
 const ChristianAIChatbox = ({ className }: { className?: string }) => {
   const dispatch = useDispatch();
@@ -198,53 +200,34 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     scrollMessageBoxToBottom();
   }, [messageBlocks]);
 
-  const baseFrameClassName = `!absolute blurred-div-light !z-10 transition-all duration-500`;
-
-  const [height, setHeight] = useState<string>("!h-full");
-  const [width, setWidth] = useState<string>("w-full");
-  const [rightTop, setRightTop] = useState<string>("!top-0");
-  const [bottomLeft, setBottomLeft] = useState<string>("!left-0");
-
-  const simulateFrameClassNames = [
-    `${baseFrameClassName} !top-0 !left-0 ${width} !h-[1rem]`, // Top frame (1rem height, full width)
-    `${baseFrameClassName} !right-0 ${rightTop} ${height} !w-[1rem]`, // Right frame (1rem width, full height)
-    `${baseFrameClassName} !bottom-0 ${bottomLeft} ${width} !h-[1rem]`, // Bottom frame (1rem height, full width)
-    `${baseFrameClassName} !top-0 !left-0 ${height} !w-[1rem]`, // Left frame (1rem width, full height)
-  ];
-
-  const progressRenderedFrameBars = (percentage: number) => {
-    if (percentage === 0) return [];
-    return simulateFrameClassNames.map((className, index) => ({
-      className,
-      disabled: index / simulateFrameClassNames.length >= percentage / 100,
-    }));
-  };
-
-  const [frameBarPercentage, setFrameBarPercentage] = useState(25);
+  const [frameSetup, setFrameSetup] = useState(frameSetups.Top);
 
   useEffect(() => {
-    if (!isTyping) {
-      setFrameBarPercentage(25);
-      setHeight("!h-full");
-      setWidth("!w-full");
-      setBottomLeft("!left-0");
-      setRightTop("!top-0");
+    if (isTyping) {
+      const setups = [
+        // frameSetups.VerticalBars,
+        frameSetups.CornersNorthEast,
+        // frameSetups.HorizontalBars,
+        frameSetups.CornersSouthEast,
+        // frameSetups.CornersSouthWest,
+      ];
+      let currentIndex = 0;
+
+      const interval = setInterval(() => {
+        setFrameSetup(setups[currentIndex]);
+        currentIndex = (currentIndex + 1) % setups.length;
+      }, 1000); // Change setup every second
+
+      return () => clearInterval(interval);
     } else {
-      setFrameBarPercentage(100);
-      setHeight("!h-[100px]");
-      setWidth("!w-[100px]");
-      setBottomLeft("!right-0");
-      setRightTop("!bottom-0");
+      setFrameSetup(frameSetups.Top);
     }
   }, [isTyping]);
 
   return (
     <>
       <Card className="!p-0">
-        {progressRenderedFrameBars(frameBarPercentage).map(
-          ({ className, disabled }, index) =>
-            !disabled && <Skeleton key={index} className={className} />,
-        )}
+        <Frame {...frameSetup} />
         <ScrollArea
           ref={messageBoxRef}
           className={`${className} !sticky !top-0 !h-[60vh] ${isTyping && "animate-pulse"}`}
