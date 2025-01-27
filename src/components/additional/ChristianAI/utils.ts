@@ -29,13 +29,41 @@ const taskExtractor = (
 
   return { userResponse, tasks };
 };
+
 function longStringToParagraphs(str: string): string[] {
   const paragraphs = str.split(
     /(?:\r\n|\r|\n|<\s*br\s*\/?\s*>|<\/?\s*ols\s*>)/i,
   );
   const sanitizedParagraphs = paragraphs
     .map((para) => para.trim())
-    .filter((para) => para.length > 0);
+    .filter((para) => para.length > 0)
+    .flatMap((para) => {
+      const maxLength = 500;
+
+      // Split the paragraph into sentences, preserving punctuation marks
+      const sentences = para.match(/[^.!?]*[.!?]+("|')?\s*/g) || [para];
+
+      const output = [];
+      let currentChunk = "";
+
+      for (const sentence of sentences) {
+        if ((currentChunk + sentence).length <= maxLength) {
+          currentChunk += sentence;
+        } else {
+          if (currentChunk) {
+            output.push(currentChunk.trim());
+          }
+          currentChunk = sentence;
+        }
+      }
+
+      if (currentChunk) {
+        output.push(currentChunk.trim());
+      }
+
+      return output;
+    });
+
   console.log(sanitizedParagraphs);
   return sanitizedParagraphs;
 }

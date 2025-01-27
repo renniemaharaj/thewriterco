@@ -40,7 +40,7 @@ function parseCodeBlocks(response: string) {
             jsxElem: (
               <div
                 dangerouslySetInnerHTML={{ __html: sanitizeHtml(para) }}
-                className="p-2"
+                style={{ padding: "5px" }}
               />
             ),
             sender: "AI",
