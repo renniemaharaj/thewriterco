@@ -205,10 +205,10 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
   useEffect(() => {
     if (isTyping) {
       const setups = [
-        frameSetups.VerticalBars,
+        // frameSetups.VerticalBars,
         frameSetups.CornersNorthEast,
-        frameSetups.HorizontalBars,
-        frameSetups.CornersSouthEast,
+        // frameSetups.HorizontalBars,
+        // frameSetups.CornersSouthEast,
         // frameSetups.CornersSouthWest,
       ];
       let currentIndex = 0;
