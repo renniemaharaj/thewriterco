@@ -17,7 +17,6 @@ import { EBook } from "../../../app/ereader/types";
 import { PlayCircleIcon } from "lucide-react";
 import { parseCodeBlocks } from "./utils.tsx";
 import { Block, Context, Executable, TaskAlterBookState } from "./types";
-import { toastMessages } from "./configuration.ts";
 import { taskExtractor } from "./utils.ts";
 import { Carousel } from "../Carousel.tsx";
 import Hint from "../../Hint.tsx";
@@ -30,7 +29,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
   const [messageBlocks, setMessageBlocks] = useState<Block[]>([]);
   const [executables, setExecutables] = useState<Executable[]>([]);
   const [isTyping, setIsTyping] = useState(false);
-  const [showToast, setShowToast] = useState(false);
+  // const [showToast, setShowToast] = useState(false);
   const messageBoxRef = useRef<HTMLDivElement>(null);
 
   const eReaderState = useSelector((state: RootState) => state.ereader);
@@ -85,7 +84,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
 
     try {
       setIsTyping(true);
-      setShowToast(true);
+      // setShowToast(true);
       const data = await sendAskReq({ message: msg }).unwrap();
       const lintedResponse = linters.reduce((acc, linter) => {
         return acc.replace(new RegExp(linter, "g"), "<br/>");
@@ -93,18 +92,10 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
       console.log("Linted response", lintedResponse);
       const newBlocks = parseCodeBlocks(lintedResponse);
 
-      (function addBlocksSequentially(index = 0) {
-        if (index >= newBlocks.length) {
-          setIsTyping(false);
-          setShowToast(false);
-          return;
-        }
-        setTimeout(() => {
-          setMessageBlocks((prev) => [...prev, newBlocks[index]]);
-          scrollMessageBoxToBottom();
-          addBlocksSequentially(index + 1);
-        }, 500);
-      })();
+      setMessageBlocks((prev) => [...prev, ...newBlocks]);
+      setIsTyping(false);
+      // setShowToast(false);
+      // scrollMessageBoxToBottom();
 
       const { tasks } = taskExtractor(data.response);
       tasks.forEach((task: TaskAlterBookState) => {
@@ -157,7 +148,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         },
       ]);
       setIsTyping(false);
-      setShowToast(false);
+      // setShowToast(false);
       console.error("Error", error);
     }
   }
@@ -276,23 +267,12 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
             className={`${theme === "dark" ? "shadow rounded-lg" : ""} m-[1rem] box-content !scroll-smooth gap-6`}
           >
             {messageBlocks.map((block, index) => (
-              <React.Fragment key={index}>
-                <Flex
-                  direction="column"
-                  justify={block.sender === "User" ? "end" : "start"}
-                  className={`${
-                    block.sender === "User"
-                      ? "text-right !self-end"
-                      : "text-left"
-                  } min-h-10 max-w-[90%] !text-sm !max-h-fit !overflow-hidden !p-2 opacity-0 animate-fade-in`}
-                  style={{
-                    animationDuration: "0.5s",
-                    animationFillMode: "forwards",
-                  }}
-                >
-                  {block.jsxElem}
-                </Flex>
-              </React.Fragment>
+              <Flex key={index} justify="center" className={`!flex-col`}>
+                <AnimatedMessageBlock
+                  block={block}
+                  onAnimated={scrollMessageBoxToBottom}
+                />
+              </Flex>
             ))}
 
             <Flex
@@ -312,28 +292,10 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
 
             {isTyping && (
               <Flex justify="center" className="text-gray-500 italic !flex-col">
-                <Skeleton className="h-4 rounded w-3/4 mb-2" />
-                <Skeleton className="h-4 rounded w-2/4 mb-2" />
-                <Skeleton className="h-4 rounded w-1/4" />
+                <SkeletonTextBlock />
               </Flex>
             )}
-
-            {showToast && (
-              <div className="asbolute text-center mt-2 text-sm text-gray-600">
-                {
-                  toastMessages[
-                    Math.floor(Math.random() * toastMessages.length)
-                  ]
-                }
-              </div>
-            )}
           </Flex>
-
-          {/* <Flex justify="center" className="text-sm text-gray-500">
-            <Separator size="3" />
-          </Flex> */}
-
-          {/* <Flex className="max-h-[100px] !overflow-auto w-[100%]"> */}
 
           {/* </Flex> */}
         </ScrollArea>
@@ -343,6 +305,55 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         textContent={input}
         handleRecieve={(text: string) => handleMessageSend(text)}
       />
+    </>
+  );
+};
+
+const AnimatedMessageBlock = ({
+  block,
+  onAnimated,
+}: {
+  block: Block;
+  onAnimated: () => void;
+}) => {
+  const [blockMounted, setBlockMounted] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setBlockMounted(true);
+      setTimeout(() => onAnimated(), 100);
+    }, 1000);
+  }, []);
+  return blockMounted || block.sender === "User" ? (
+    <Flex
+      direction="column"
+      justify={block.sender === "User" ? "end" : "start"}
+      className={`${
+        block.sender === "User" ? "text-right !self-end" : "text-left"
+      } min-h-10 max-w-[90%] !text-sm !max-h-fit !overflow-hidden !p-2 opacity-0 animate-fade-in`}
+      style={{
+        animationDuration: "0.5s",
+        animationFillMode: "forwards",
+      }}
+    >
+      {block.jsxElem}
+    </Flex>
+  ) : (
+    <SkeletonTextBlock />
+  );
+};
+const SkeletonTextBlock = () => {
+  const [blockMounted, setBlockMounted] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setBlockMounted(true), 100);
+  }, []);
+
+  const baseClassName = "w-0 h-4 rounded mb-2 !transition-all !duration-900";
+  return (
+    <>
+      <Skeleton className={`${blockMounted && "!w-3/4"} ${baseClassName}`} />
+      <Skeleton className={`${blockMounted && "!w-2/4"} ${baseClassName}`} />
+      <Skeleton className={`${blockMounted && "!w-1/4"} ${baseClassName}`} />
     </>
   );
 };
