@@ -1,10 +1,16 @@
-import { Position } from "@xyflow/react";
+import { HandleType, Position } from "@xyflow/react";
+
+export type Handle = {
+  type: HandleType;
+  position: Position;
+};
 
 export interface CustomNodeProps {
   data: {
     isInitial?: boolean;
     label: string;
     expression?: string;
+    children?: React.ReactNode;
   };
   id: string;
   position?: { x: string; y: string };

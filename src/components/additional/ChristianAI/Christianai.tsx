@@ -1,5 +1,13 @@
-import { Flex, Button, ScrollArea, Card, Skeleton } from "@radix-ui/themes";
-import React, { useEffect, useRef, useState } from "react";
+import {
+  Flex,
+  Button,
+  ScrollArea,
+  Card,
+  Skeleton,
+  Switch,
+  Text,
+} from "@radix-ui/themes";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSendAskReqMutation } from "../../../app/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
@@ -22,6 +30,8 @@ import { Carousel } from "../Carousel.tsx";
 import Hint from "../../Hint.tsx";
 import Frame from "../../frames/Frame.tsx";
 import { frameSetups } from "../../frames/frameVarients.ts";
+import Flow from "../../flow/Flow.tsx";
+import { Node } from "@xyflow/react";
 
 const ChristianAIChatbox = ({ className }: { className?: string }) => {
   const dispatch = useDispatch();
@@ -208,7 +218,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         // frameSetups.VerticalBars,
         frameSetups.CornersNorthEast,
         // frameSetups.HorizontalBars,
-        frameSetups.CornersSouthEast,
+        // frameSetups.CornersSouthEast,
         // frameSetups.CornersSouthWest,
       ];
       let currentIndex = 0;
@@ -224,119 +234,152 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     }
   }, [isTyping]);
 
+  const AnimatedMessageBlock = ({
+    block,
+    onAnimated,
+  }: {
+    block: Block;
+    onAnimated: () => void;
+  }) => {
+    const [blockMounted, setBlockMounted] = useState(false);
+    useEffect(() => {
+      setTimeout(() => {
+        setBlockMounted(true);
+        setTimeout(() => onAnimated(), 100);
+      }, 1000);
+    }, []);
+    return blockMounted || block.sender === "User" ? (
+      <Flex
+        direction="column"
+        justify={block.sender === "User" ? "end" : "start"}
+        className={`${
+          block.sender === "User" ? "text-right !self-end" : "text-left"
+        } min-h-10 max-w-[90%] !text-sm !max-h-fit !overflow-hidden !p-2 opacity-0 animate-fade-in`}
+        style={{
+          animationDuration: "0.5s",
+          animationFillMode: "forwards",
+        }}
+      >
+        {block.jsxElem}
+      </Flex>
+    ) : (
+      <SkeletonTextBlock />
+    );
+  };
+  const SkeletonTextBlock = () => {
+    const [blockMounted, setBlockMounted] = useState(false);
+
+    useEffect(() => {
+      setTimeout(() => setBlockMounted(true), 100);
+    }, []);
+
+    const baseClassName = "w-0 h-4 rounded mb-2 !transition-all !duration-900";
+    return (
+      <>
+        <Skeleton className={`${blockMounted && "!w-3/4"} ${baseClassName}`} />
+        <Skeleton className={`${blockMounted && "!w-2/4"} ${baseClassName}`} />
+        <Skeleton className={`${blockMounted && "!w-1/4"} ${baseClassName}`} />
+      </>
+    );
+  };
+
+  const ScrollAreaComponent = useCallback(() => {
+    return (
+      <ScrollArea
+        ref={messageBoxRef}
+        className={`${className} !sticky !top-0 !h-[60vh] ${isTyping && "animate-pulse"}`}
+      >
+        <Flex className="gap-1 mb-4 !flex-wrap p-6 max-w-[600px]">
+          {suggestions.map((msg, index) => (
+            <Button
+              key={index}
+              variant="soft"
+              className="cursor-pointer"
+              onClick={() => handleSuggestionClick(msg)}
+              disabled={isTyping}
+            >
+              {msg}
+            </Button>
+          ))}
+        </Flex>
+        <Flex
+          direction="column"
+          className={`${theme === "dark" ? "shadow rounded-lg" : ""} m-[1rem] box-content !scroll-smooth gap-6`}
+        >
+          {messageBlocks.map((block, index) => (
+            <Flex key={index} justify="center" className={`!flex-col`}>
+              <AnimatedMessageBlock
+                block={block}
+                onAnimated={scrollMessageBoxToBottom}
+              />
+            </Flex>
+          ))}
+
+          <Flex
+            direction="column"
+            justify="center"
+            className="text-center !flex-row !gap-2 !p-2"
+          >
+            <Carousel
+              variant="no-scrollbar"
+              items={executables.map((executable, idx) => (
+                <React.Fragment key={`exe-${idx}`}>
+                  {executable.jsxTrigger}
+                </React.Fragment>
+              ))}
+            />
+          </Flex>
+
+          {isTyping && (
+            <Flex justify="center" className="text-gray-500 italic !flex-col">
+              <SkeletonTextBlock />
+            </Flex>
+          )}
+        </Flex>
+
+        {/* </Flex> */}
+      </ScrollArea>
+    );
+  }, [messageBlocks]);
+
+  //Build node from scroll area
+  const scrollAreaToNode: Node = {
+    id: "scroll-area",
+    type: "scrollArea",
+    data: {
+      label: "Scroll Area",
+      children: <ScrollAreaComponent />,
+    },
+    position: { x: 0, y: 0 },
+  };
+
+  const [canvasView, setCanvasView] = useState(false);
+
   return (
     <>
       <Card className="!p-0">
+        {canvasView ? (
+          <Flow nodes={[scrollAreaToNode]} />
+        ) : (
+          <ScrollAreaComponent />
+        )}
         <Frame {...frameSetup} />
-        <ScrollArea
-          ref={messageBoxRef}
-          className={`${className} !sticky !top-0 !h-[60vh] ${isTyping && "animate-pulse"}`}
-        >
-          <Flex className="gap-1 mb-4 !flex-wrap p-6 max-w-[600px]">
-            {suggestions.map((msg, index) => (
-              <Button
-                key={index}
-                variant="soft"
-                className="cursor-pointer"
-                onClick={() => handleSuggestionClick(msg)}
-                disabled={isTyping}
-              >
-                {msg}
-              </Button>
-            ))}
-          </Flex>
-          <Flex
-            direction="column"
-            className={`${theme === "dark" ? "shadow rounded-lg" : ""} m-[1rem] box-content !scroll-smooth gap-6`}
-          >
-            {messageBlocks.map((block, index) => (
-              <Flex key={index} justify="center" className={`!flex-col`}>
-                <AnimatedMessageBlock
-                  block={block}
-                  onAnimated={scrollMessageBoxToBottom}
-                />
-              </Flex>
-            ))}
-
-            <Flex
-              direction="column"
-              justify="center"
-              className="text-center !flex-row !gap-2 !p-2"
-            >
-              <Carousel
-                variant="no-scrollbar"
-                items={executables.map((executable, idx) => (
-                  <React.Fragment key={`exe-${idx}`}>
-                    {executable.jsxTrigger}
-                  </React.Fragment>
-                ))}
-              />
-            </Flex>
-
-            {isTyping && (
-              <Flex justify="center" className="text-gray-500 italic !flex-col">
-                <SkeletonTextBlock />
-              </Flex>
-            )}
-          </Flex>
-
-          {/* </Flex> */}
-        </ScrollArea>
       </Card>
+      <Text as="label" size="2">
+        <Flex gap="2" className="!p-1">
+          <Switch
+            size="1"
+            checked={canvasView}
+            onClick={() => setCanvasView(!canvasView)}
+          />
+          Canvas
+        </Flex>
+      </Text>
       <Chatbox
         disabled={isTyping}
         textContent={input}
         handleRecieve={(text: string) => handleMessageSend(text)}
       />
-    </>
-  );
-};
-
-const AnimatedMessageBlock = ({
-  block,
-  onAnimated,
-}: {
-  block: Block;
-  onAnimated: () => void;
-}) => {
-  const [blockMounted, setBlockMounted] = useState(false);
-  useEffect(() => {
-    setTimeout(() => {
-      setBlockMounted(true);
-      setTimeout(() => onAnimated(), 100);
-    }, 1000);
-  }, []);
-  return blockMounted || block.sender === "User" ? (
-    <Flex
-      direction="column"
-      justify={block.sender === "User" ? "end" : "start"}
-      className={`${
-        block.sender === "User" ? "text-right !self-end" : "text-left"
-      } min-h-10 max-w-[90%] !text-sm !max-h-fit !overflow-hidden !p-2 opacity-0 animate-fade-in`}
-      style={{
-        animationDuration: "0.5s",
-        animationFillMode: "forwards",
-      }}
-    >
-      {block.jsxElem}
-    </Flex>
-  ) : (
-    <SkeletonTextBlock />
-  );
-};
-const SkeletonTextBlock = () => {
-  const [blockMounted, setBlockMounted] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => setBlockMounted(true), 100);
-  }, []);
-
-  const baseClassName = "w-0 h-4 rounded mb-2 !transition-all !duration-900";
-  return (
-    <>
-      <Skeleton className={`${blockMounted && "!w-3/4"} ${baseClassName}`} />
-      <Skeleton className={`${blockMounted && "!w-2/4"} ${baseClassName}`} />
-      <Skeleton className={`${blockMounted && "!w-1/4"} ${baseClassName}`} />
     </>
   );
 };
