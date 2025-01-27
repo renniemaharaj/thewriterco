@@ -208,7 +208,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         // frameSetups.VerticalBars,
         frameSetups.CornersNorthEast,
         // frameSetups.HorizontalBars,
-        // frameSetups.CornersSouthEast,
+        frameSetups.CornersSouthEast,
         // frameSetups.CornersSouthWest,
       ];
       let currentIndex = 0;
