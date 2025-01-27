@@ -216,7 +216,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
       const interval = setInterval(() => {
         setFrameSetup(setups[currentIndex]);
         currentIndex = (currentIndex + 1) % setups.length;
-      }, 1000); // Change setup every second
+      }, 500); // Change setup every second
 
       return () => clearInterval(interval);
     } else {

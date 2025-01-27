@@ -18,6 +18,7 @@ const Frame: React.FC<FrameBarSetup> = ({
             className={`${baseClassName}
               absolute z-10 blurred-div-light
               ${isAnimating && `transition-all ${animationDuration}`}
+                ${isAnimating && `bounce-transition`}
               ${sizeClass}
             `}
           />
