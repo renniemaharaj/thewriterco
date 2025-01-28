@@ -402,7 +402,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         },
         position: { x: 0, y: 0 },
       }) as Node,
-    [messageBlocks],
+    [messageBlocks, canvasView],
   );
 
   return (
