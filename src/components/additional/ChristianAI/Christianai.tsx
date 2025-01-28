@@ -405,11 +405,17 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     [messageBlocks, canvasView],
   );
 
+  const countMessageBlocks = useCallback(() => {
+    return messageBlocks.length;
+  }, [messageBlocks]);
   return (
     <>
       <Card className="!p-0">
         {canvasView ? (
-          <Flow nodes={[scrollAreaToNode()]} />
+          <Flow
+            nodes={[scrollAreaToNode()]}
+            messageBlocksCount={countMessageBlocks()}
+          />
         ) : (
           <ScrollAreaComponent />
         )}
