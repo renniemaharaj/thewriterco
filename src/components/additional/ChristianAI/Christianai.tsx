@@ -22,7 +22,7 @@ import {
   setRenderStyle,
 } from "../../../app/ereader/ereaderSlice";
 import { EBook } from "../../../app/ereader/types";
-import { PlayCircleIcon } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon, PlayCircleIcon } from "lucide-react";
 import { parseCodeBlocks } from "./utils.tsx";
 import { Block, Context, Executable, TaskAlterBookState } from "./types";
 import { taskExtractor } from "./utils.ts";
@@ -283,12 +283,60 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     );
   };
 
+  const [canvasView, setCanvasView] = useState(false);
+
+  const scrollScrollArea = (direction: "up" | "down") => {
+    if (messageBoxRef.current) {
+      const scrollY = messageBoxRef.current.scrollTop;
+      const scrollAmount = 300;
+
+      if (direction === "up") {
+        messageBoxRef.current.scrollTo({
+          top: scrollY - scrollAmount,
+          behavior: "smooth",
+        });
+      } else {
+        messageBoxRef.current.scrollTo({
+          top: scrollY + scrollAmount,
+          behavior: "smooth",
+        });
+      }
+    }
+  };
+  const arrowButtonClassnames =
+    "absolute right-3 !scale-75 transform -translate-y-1/2 z-10 p-1 bg-[#6a6052] rounded-full shadow-md opacity-80 text-white";
+
+  const BtnScrollUp = () => (
+    <button
+      className={arrowButtonClassnames + " !bottom-2/4"}
+      onClick={() => scrollScrollArea("up")}
+    >
+      <ChevronUpIcon />
+    </button>
+  );
+
+  const BtnScrollDown = () => (
+    <button
+      className={arrowButtonClassnames + " !top-2/4"}
+      onClick={() => scrollScrollArea("down")}
+    >
+      <ChevronDownIcon />
+    </button>
+  );
+
   const ScrollAreaComponent = useCallback(() => {
     return (
       <ScrollArea
         ref={messageBoxRef}
         className={`${className} !sticky !top-0 !h-[60vh] ${isTyping && "animate-pulse"}`}
       >
+        {canvasView && (
+          <>
+            <BtnScrollUp />
+            <BtnScrollDown />
+          </>
+        )}
+
         <Flex className="gap-1 mb-4 !flex-wrap p-6 max-w-[600px]">
           {suggestions.map((msg, index) => (
             <Button
@@ -340,7 +388,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         {/* </Flex> */}
       </ScrollArea>
     );
-  }, [messageBlocks]);
+  }, [messageBlocks, canvasView]);
 
   //Build node from scroll area
   const scrollAreaToNode: Node = {
@@ -352,8 +400,6 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     },
     position: { x: 0, y: 0 },
   };
-
-  const [canvasView, setCanvasView] = useState(false);
 
   return (
     <>
