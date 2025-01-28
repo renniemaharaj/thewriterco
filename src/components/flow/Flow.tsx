@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   ReactFlow,
   Background,
@@ -6,6 +6,8 @@ import {
   ReactFlowProvider,
   Node,
   Controls,
+  NodeChange,
+  applyNodeChanges,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import CustomControls from "./components/Controls";
@@ -16,20 +18,33 @@ import { Box } from "@radix-ui/themes";
 import { nodeData } from "./config";
 import { useThemeContext } from "../context/useThemeContext";
 import ResourceMonitor from "./components/ResourceMonitor";
+import { cloneDeep } from "lodash";
 
 export default function Flow({ nodes }: { nodes: Node[] }) {
   const { theme } = useThemeContext();
 
   const nodeTypes = useRef(nodeData).current;
 
+  const [nodesLocal, setNodesLocal] = useState<Node[]>(nodes);
   // const mapRef = useRef(() => <MiniMap />).current;
+
+  const onNodesChange = useCallback(
+    (changes: NodeChange[]) => {
+      setNodesLocal((prevNodes) => {
+        const updatedNodes = applyNodeChanges(changes, cloneDeep(prevNodes));
+        return updatedNodes;
+      });
+    },
+    [nodes],
+  );
 
   return (
     <ReactFlowProvider>
       {/* <main className="flex"> */}
       <Box className="!w-[600px] !h-[60vh] !flex-col">
         <ReactFlow
-          nodes={nodes}
+          nodes={nodesLocal}
+          onNodesChange={onNodesChange}
           edges={[]}
           colorMode={theme as "light" | "dark"}
           fitView
