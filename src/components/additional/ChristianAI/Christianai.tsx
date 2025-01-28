@@ -391,21 +391,25 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
   }, [messageBlocks, canvasView]);
 
   //Build node from scroll area
-  const scrollAreaToNode: Node = {
-    id: "scroll-area",
-    type: "scrollArea",
-    data: {
-      label: "Scroll Area",
-      children: <ScrollAreaComponent />,
-    },
-    position: { x: 0, y: 0 },
-  };
+  const scrollAreaToNode = useCallback(
+    () =>
+      ({
+        id: "scroll-area",
+        type: "scrollArea",
+        data: {
+          label: "Scroll Area",
+          children: <ScrollAreaComponent />,
+        },
+        position: { x: 0, y: 0 },
+      }) as Node,
+    [messageBlocks],
+  );
 
   return (
     <>
       <Card className="!p-0">
         {canvasView ? (
-          <Flow nodes={[scrollAreaToNode]} />
+          <Flow nodes={[scrollAreaToNode()]} />
         ) : (
           <ScrollAreaComponent />
         )}

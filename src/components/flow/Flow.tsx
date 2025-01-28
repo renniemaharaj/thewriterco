@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ReactFlow,
   Background,
@@ -26,6 +26,10 @@ export default function Flow({ nodes }: { nodes: Node[] }) {
   const nodeTypes = useRef(nodeData).current;
 
   const [nodesLocal, setNodesLocal] = useState<Node[]>(nodes);
+
+  useEffect(() => {
+    setNodesLocal(nodes);
+  }, [nodes]);
   // const mapRef = useRef(() => <MiniMap />).current;
 
   const onNodesChange = useCallback(
