@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ReactFlow,
-  Background,
-  BackgroundVariant,
+  // Background,
+  // BackgroundVariant,
   Node,
   Controls,
   NodeChange,
@@ -90,7 +90,7 @@ function FlowComponent({
           <CustomControls />
         </Controls>
         <ResourceMonitor />
-        <Background variant={BackgroundVariant.Cross} gap={12} size={1} />
+        {/* <Background variant={BackgroundVariant.Cross} gap={12} size={1} /> */}
       </ReactFlow>
     </Box>
   );
