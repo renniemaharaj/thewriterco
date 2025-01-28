@@ -218,7 +218,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         // frameSetups.VerticalBars,
         frameSetups.CornersNorthEast,
         // frameSetups.HorizontalBars,
-        // frameSetups.CornersSouthEast,
+        frameSetups.CornersSouthEast,
         // frameSetups.CornersSouthWest,
       ];
       let currentIndex = 0;
@@ -226,7 +226,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
       const interval = setInterval(() => {
         setFrameSetup(setups[currentIndex]);
         currentIndex = (currentIndex + 1) % setups.length;
-      }, 500); // Change setup every second
+      }, 1000); // Change setup every second
 
       return () => clearInterval(interval);
     } else {
