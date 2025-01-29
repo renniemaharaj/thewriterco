@@ -14,9 +14,9 @@ import { useThemeContext } from "./components/context/useThemeContext";
 // Import pages
 import Home from "./pages/Home";
 import NoPage from "./pages/404";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Recover from "./pages/recover";
+// import Login from "./pages/Login";
+// import Signup from "./pages/Signup";
+// import Recover from "./pages/recover";
 import Welcome from "./pages/Welcome";
 import IntDeducer from "./pages/deducer/IntDeducer";
 
@@ -48,18 +48,18 @@ const publicRoutes: (CustomRoute | IndexRoute)[] = [
     index: true,
     element: <Home />,
   },
-  {
-    path: "signup",
-    element: <Signup />,
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "recover",
-    element: <Recover />,
-  },
+  // {
+  //   path: "signup",
+  //   element: <Signup />,
+  // },
+  // {
+  //   path: "login",
+  //   element: <Login />,
+  // },
+  // {
+  //   path: "recover",
+  //   element: <Recover />,
+  // },
   {
     path: "*",
     element: <NoPage />,

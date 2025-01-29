@@ -17,7 +17,7 @@ import { MoonIcon, ScanSearchIcon, SunIcon } from "lucide-react";
 import SearchLoading from "../SearchLoading";
 import { useSendFindReqMutation } from "../../app/api/apiSlice";
 import { input } from "@testing-library/user-event/dist/cjs/event/input.js";
-import SearchResults, { Result } from "./SearchResults";
+import SearchResults from "./SearchResults";
 
 type NavLink = {
   label: string;
@@ -33,6 +33,19 @@ const navLinksArray: NavLink[] = [
   { label: "Deducer", href: "/deducer", disabled: false },
   { label: "Home", href: "/boarding", disabled: false },
 ];
+
+// TypeScript interfaces for the response schema
+export interface Scripture {
+  book: string;
+  chapterNo: number;
+  verseNo: number;
+  verseContent: string;
+}
+
+interface ResponseSchema {
+  markupResponse: string; // For the HTML markup as a string
+  dataObjects: Scripture[]; // Array of Scripture objects
+}
 
 const Navbar: React.FC = () => {
   const [navLinks] = useState<NavLink[]>(navLinksArray);
@@ -52,19 +65,21 @@ const Navbar: React.FC = () => {
 
   const [sendFindReq, { isLoading }] = useSendFindReqMutation();
 
-  const [displayedResults, setDisplayedResults] = useState<Result[]>([]);
+  const [displayedResults, setDisplayedResults] = useState<Scripture[]>([]);
   const [displayResults, setDisplayResults] = useState(false);
 
   const handleFindReq = useCallback(
     async (input: string) => {
       try {
         // alert("Searching for: " + input);
-        const response = await sendFindReq({
+        const data = await sendFindReq({
           message: input,
         }).unwrap();
-        const formattedResponse = response.response;
-        // console.log("Response from find request:", formattedResponse.toString);
-        setDisplayedResults(JSON.parse(JSON.stringify(formattedResponse)));
+
+        // console.log("Response from find request:", typeof data.response);
+        const genaiResponse = JSON.parse(data.response) as ResponseSchema;
+        console.log("Response from find request:", data.response);
+        setDisplayedResults(genaiResponse.dataObjects);
         setDisplayResults(true);
       } catch (error) {
         console.error("Error during find request:", error);

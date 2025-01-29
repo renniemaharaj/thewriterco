@@ -7,41 +7,45 @@ import {
   Switch,
   Text,
 } from "@radix-ui/themes";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSendAskReqMutation } from "../../../app/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import Chatbox from "../Chatbox";
 import { useThemeContext } from "../../context/useThemeContext";
-import fetchGitBlob from "../articles/utils/bible/gitgetter";
+
+import {
+  AlertCircleIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  PlayCircleIcon,
+} from "lucide-react";
+import { parseCodeBlocks } from "./utils.tsx";
+import { Block, Context, Executable } from "./types";
+import Frame from "../../frames/Frame.tsx";
+import { frameSetups } from "../../frames/frameVarients.ts";
+import Flow from "../../flow/Flow.tsx";
+import { Node } from "@xyflow/react";
+import { Carousel } from "../Carousel.tsx";
+import React from "react";
+import fetchGitBlob from "../articles/utils/bible/gitgetter.ts";
 import {
   setEBook,
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
   setOpenState,
   setRenderStyle,
-} from "../../../app/ereader/ereaderSlice";
-import { EBook } from "../../../app/ereader/types";
-import { ChevronDownIcon, ChevronUpIcon, PlayCircleIcon } from "lucide-react";
-import { parseCodeBlocks } from "./utils.tsx";
-import { Block, Context, Executable, TaskAlterBookState } from "./types";
-import { taskExtractor } from "./utils.ts";
-import { Carousel } from "../Carousel.tsx";
-import Hint from "../../Hint.tsx";
-import Frame from "../../frames/Frame.tsx";
-import { frameSetups } from "../../frames/frameVarients.ts";
-import Flow from "../../flow/Flow.tsx";
-import { Node } from "@xyflow/react";
+} from "../../../app/ereader/ereaderSlice.ts";
+import { EBook } from "../../../app/ereader/types.ts";
 
 const ChristianAIChatbox = ({ className }: { className?: string }) => {
-  const dispatch = useDispatch();
   const { theme } = useThemeContext();
+  const dispatch = useDispatch();
 
   const [input] = useState("");
   const [messageBlocks, setMessageBlocks] = useState<Block[]>([]);
   const [executables, setExecutables] = useState<Executable[]>([]);
   const [isTyping, setIsTyping] = useState(false);
-  // const [showToast, setShowToast] = useState(false);
   const messageBoxRef = useRef<HTMLDivElement>(null);
 
   const eReaderState = useSelector((state: RootState) => state.ereader);
@@ -76,13 +80,6 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
   ]);
 
   async function handleMessageSend(msg: string) {
-    const linters = [
-      "&lt;br&gt;&lt;br;",
-      "&lt;br&gt;&lt;br&gt;",
-      "&lt;br&gt;",
-      "r&gt;&lt;br&gt;",
-    ];
-
     if (!msg.trim()) return;
     setMessageBlocks((prev) => [
       ...prev,
@@ -96,72 +93,104 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
 
     try {
       setIsTyping(true);
-      // setShowToast(true);
-      const data = await sendAskReq({ message: msg }).unwrap();
-      const lintedResponse = linters.reduce((acc, linter) => {
-        return acc.replace(new RegExp(linter, "g"), "<br/>");
-      }, data.response);
-      console.log("Linted response", lintedResponse);
-      const newBlocks = parseCodeBlocks(lintedResponse);
 
-      setMessageBlocks((prev) => [...prev, ...newBlocks]);
+      // TypeScript interfaces for the response schema
+      interface Scripture {
+        book: string;
+        chapterNo: number;
+        verseNo: number;
+        verseContent: string;
+      }
+
+      interface ResponseSchema {
+        markupResponse: string; // For the HTML markup as a string
+        dataObjects: Scripture[]; // Array of Scripture objects
+      }
+
+      const attachedTheme = `-@here Note user's theme for appropriate styling: ${theme} mode`;
+      const msgWithTheme = `${msg} \n ${attachedTheme}`;
+
+      const data = await sendAskReq({ message: msgWithTheme }).unwrap();
+
+      console.log(data.response);
+
+      const genaiResponse = JSON.parse(data.response) as ResponseSchema;
+
+      const newBlock: Block = {
+        sender: "AI" as const,
+        type: "text",
+        content: data.response,
+        jsxElem: (
+          <div
+            dangerouslySetInnerHTML={{ __html: genaiResponse.markupResponse }}
+          />
+        ),
+      };
+      setMessageBlocks((prev) => [...prev, newBlock]);
       setIsTyping(false);
-      // setShowToast(false);
-      // scrollMessageBoxToBottom();
 
-      const { tasks } = taskExtractor(data.response);
-      tasks.forEach((task: TaskAlterBookState) => {
-        if (task && task.task && task.task === "signalToUserBookState") {
-          setExecutables((prev) => [
-            ...prev,
-            {
-              jsxTrigger: (
-                <Button
-                  variant="ghost"
-                  size="1"
-                  className="animate-pulse !font-bold"
-                  onClick={() => {
-                    fetchGitBlob(task.book).then((content) => {
-                      dispatch(
-                        setEBook({
-                          title: task.book,
-                          content: JSON.parse(content),
-                          date: new Date().toDateString(),
-                        } as EBook),
-                      );
-                      dispatch(setRenderStyle("bible"));
-                      dispatch(setGlobalCurrentChapter(task.chapter));
-                      dispatch(setGlobalCurrentVerse(task.verse));
-                      setTimeout(() => dispatch(setOpenState(true)), 100);
-                    });
-                  }}
-                >
-                  <PlayCircleIcon /> {task.book} {task.chapter}:{task.verse}
-                </Button>
-              ),
-            },
-          ]);
-        } else {
-          console.log("Task not recognized", task);
-        }
+      genaiResponse.dataObjects.forEach((scripture: Scripture) => {
+        setExecutables((prev) => [
+          ...prev,
+          {
+            jsxTrigger: (
+              <Button
+                variant="ghost"
+                size="1"
+                className="animate-pulse !font-bold"
+                onClick={() => {
+                  fetchGitBlob(scripture.book).then((content) => {
+                    dispatch(
+                      setEBook({
+                        title: scripture.book,
+                        content: JSON.parse(content),
+                        date: new Date().toDateString(),
+                      } as EBook),
+                    );
+                    dispatch(setRenderStyle("bible"));
+                    dispatch(
+                      setGlobalCurrentChapter(scripture.chapterNo.toString()),
+                    );
+                    dispatch(
+                      setGlobalCurrentVerse(scripture.verseNo.toString()),
+                    );
+                    setTimeout(() => dispatch(setOpenState(true)), 100);
+                  });
+                }}
+              >
+                <PlayCircleIcon /> {scripture.book} {scripture.chapterNo} :
+                {scripture.verseNo}
+              </Button>
+            ),
+          },
+        ]);
       });
-    } catch (error: unknown) {
-      setMessageBlocks((prev) => [
-        ...prev,
-        {
-          sender: "AI",
-          type: "text",
-          content: "Model failed to provide valid signal",
-          jsxElem: (
-            <Hint className="max-w-[300px]">
-              Bug catcher, a bug was caught. Please try again.
-            </Hint>
-          ),
-        },
-      ]);
+    } catch (error) {
+      console.error(error);
+      const newBlock: Block = {
+        sender: "AI" as const,
+        type: "text",
+        content: "Sorry, I am unable to process your request at this time.",
+        jsxElem: (
+          // <div dangerouslySetInnerHTML={{ __html: "Something went wrong" }} />
+          <Card className="text-red-500 !flex !flex-col !items-center !gap-2">
+            <AlertCircleIcon className="w-6 h-6" />
+            <Text>Something went wrong</Text>
+            <Button
+              variant="soft"
+              onClick={() => {
+                setMessageBlocks((prev) => prev.slice(0, -2));
+                handleMessageSend(msg);
+              }}
+              className="mt-2"
+            >
+              Retry
+            </Button>
+          </Card>
+        ),
+      };
+      setMessageBlocks((prev) => [...prev, newBlock]);
       setIsTyping(false);
-      // setShowToast(false);
-      console.error("Error", error);
     }
   }
 
@@ -192,10 +221,6 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     scrollMessageBoxToBottom();
     handleMessageSend(msg);
   }
-
-  useEffect(() => {
-    console.log("Executables", executables);
-  }, [executables]);
 
   useEffect(() => {
     const onboardingMessages = [
@@ -363,21 +388,6 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
             </Flex>
           ))}
 
-          <Flex
-            direction="column"
-            justify="center"
-            className="text-center !flex-row !gap-2 !p-2"
-          >
-            <Carousel
-              variant="no-scrollbar"
-              items={executables.map((executable, idx) => (
-                <React.Fragment key={`exe-${idx}`}>
-                  {executable.jsxTrigger}
-                </React.Fragment>
-              ))}
-            />
-          </Flex>
-
           {isTyping && (
             <Flex justify="center" className="text-gray-500 italic !flex-col">
               <SkeletonTextBlock />
@@ -408,6 +418,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
   const countMessageBlocks = useCallback(() => {
     return messageBlocks.length;
   }, [messageBlocks]);
+
   return (
     <>
       <Card className="!p-0">
@@ -420,6 +431,20 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
           <ScrollAreaComponent />
         )}
         <Frame {...frameSetup} />
+        <Flex
+          direction="column"
+          justify="center"
+          className="text-center !flex-row !gap-2 !p-2 max-w-[400px] !m-auto"
+        >
+          <Carousel
+            variant="no-scrollbar"
+            items={executables.map((executable, idx) => (
+              <React.Fragment key={`exe-${idx}`}>
+                {executable.jsxTrigger}
+              </React.Fragment>
+            ))}
+          />
+        </Flex>
       </Card>
       <Text as="label" size="2">
         <Flex gap="2" className="!p-1">

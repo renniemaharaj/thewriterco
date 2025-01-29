@@ -98,7 +98,7 @@ export const Carousel: React.FC<CarouselProps> = ({
           behavior: "smooth",
         });
       }
-    }, 3000);
+    }, 10000);
 
     return () => clearInterval(autoScrollInterval);
   }, [autoScroll]);

@@ -1,20 +1,21 @@
 import { Button, Dialog, Flex, Text } from "@radix-ui/themes";
 import Hint from "../Hint";
+import { Scripture } from "./NavBar";
 
-export type Result = {
-  book: string;
-  title: string;
-  verseNo: number;
-  chapterNo: number;
-  verse: string;
-};
+// export type Result = {
+//   book: string;
+//   title: string;
+//   verseNo: number;
+//   chapterNo: number;
+//   verse: string;
+// };
 const SearchResults = ({
   displayResults,
   displayedResults,
   onOpenChange,
 }: {
   displayResults: boolean;
-  displayedResults: Result[];
+  displayedResults: Scripture[];
   onOpenChange: (open: boolean) => void;
 }) => {
   return (
@@ -25,7 +26,7 @@ const SearchResults = ({
       }}
     >
       <Dialog.Content maxWidth="450px" className="max-h-full overflow-auto">
-        <Dialog.Title>Intelligent Matching</Dialog.Title>
+        <Dialog.Title>Contextual, Relative Matching</Dialog.Title>
         <Dialog.Description size="2" mb="4">
           {!displayedResults.length
             ? "Something went wrong, please provide a clear request or try again."
@@ -45,7 +46,7 @@ const SearchResults = ({
               </Flex>
             </Flex>
             <Text size="1" color="gray">
-              {result.verse}
+              {result.verseContent}
             </Text>
           </Flex>
         ))}
