@@ -224,8 +224,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
 
   useEffect(() => {
     const onboardingMessages = [
-      "Hello, I am TheWriterCoAI, my responses are generated based off of a theistic worldview; on the premises that God exists, the KJV Bible is true, and Jesus Christ has already came only once.",
-      "Please allow up to one minute for an initial response as our servers are currently being hosted on a free tier and may take some time to spin up.",
+      "Greetings in the name of our Lord and Savior Jesus Christ! 🙏 I am here to serve as TheWriterCo's Christian AI apologist, dedicated to upholding the truth of the KJV Bible and guiding others to Christ.",
     ];
     const initialBlocks = parseCodeBlocks(onboardingMessages.join("\n"));
     setMessageBlocks(initialBlocks);
