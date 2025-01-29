@@ -224,8 +224,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
 
   useEffect(() => {
     const onboardingMessages = [
-      "Greetings in the name of our Lord and Savior Jesus Christ! 🙏 I am here to serve as TheWriterCo's Christian AI apologist, dedicated to upholding the truth of the KJV Bible and guiding others to Christ.",
-      "As of now, your messages are independent of each other and do not form a conversation. Think of this service as a search engine for Christian apologetics.",
+      "Hi! 🙏 Your messages do not form a conversation. This as a Christian apologetics search engine. Please provide the required context in every query.",
     ];
     const initialBlocks = parseCodeBlocks(onboardingMessages.join("\n"));
     setMessageBlocks(initialBlocks);
