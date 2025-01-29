@@ -58,14 +58,14 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     sendAskReq: builder.mutation<{ response: string }, { message: string }>({
       query: (body) => ({
-        url: "/ask",
+        url: "/v1/ask",
         method: "POST",
         body: { message: body.message },
       }),
     }),
     sendFindReq: builder.mutation<{ response: string }, { message: string }>({
       query: (body) => ({
-        url: "/find",
+        url: "/v1/find",
         method: "POST",
         body: { message: body.message },
       }),
