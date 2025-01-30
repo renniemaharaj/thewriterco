@@ -6,8 +6,8 @@ interface BlockElement {
   jsxElem: React.ReactNode;
 }
 
-interface Block extends BlockElement {
-  sender: "User" | "AI";
+interface Block {
+  sender: "User" | "AI" | "System";
   type: "text" | "code";
   content: string;
   language?: string;

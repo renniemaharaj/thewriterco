@@ -6,6 +6,7 @@ import {
   Skeleton,
   Switch,
   Text,
+  Badge,
 } from "@radix-ui/themes";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSendAskReqMutation } from "../../../app/api/apiSlice";
@@ -38,6 +39,10 @@ import {
 } from "../../../app/ereader/ereaderSlice.ts";
 import { EBook } from "../../../app/ereader/types.ts";
 
+import * as msgpack from "@msgpack/msgpack";
+import { fromByteArray } from "base64-js";
+import { Scripture } from "../NavBar.tsx";
+
 const ChristianAIChatbox = ({ className }: { className?: string }) => {
   const { theme } = useThemeContext();
   const dispatch = useDispatch();
@@ -47,6 +52,9 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
   const [executables, setExecutables] = useState<Executable[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const messageBoxRef = useRef<HTMLDivElement>(null);
+
+  const [canvasView, setCanvasView] = useState(false);
+  const [Conversational, setConversational] = useState(true);
 
   const eReaderState = useSelector((state: RootState) => state.ereader);
   const [sendAskReq] = useSendAskReqMutation();
@@ -79,55 +87,37 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     eReaderState.currentVerse,
   ]);
 
-  async function handleMessageSend(msg: string) {
-    if (!msg.trim()) return;
-    setMessageBlocks((prev) => [
-      ...prev,
-      {
-        sender: "User",
-        type: "text",
-        content: msg,
-        jsxElem: <div>{msg}</div>,
-      },
-    ]);
+  type Exchange = {
+    sender: "User" | "AI" | "System";
+    content: string;
+  };
 
+  async function buildConversation(
+    additionalExchange?: Exchange,
+  ): Promise<Exchange[]> {
+    const conversation = messageBlocks.map((block) => {
+      return {
+        sender: block.sender,
+        content: block.content,
+      };
+    });
+
+    if (additionalExchange) {
+      conversation.push(additionalExchange);
+    }
+
+    return conversation;
+  }
+
+  async function parseAIResponse(data: { response: string }) {
     try {
-      setIsTyping(true);
-
-      // TypeScript interfaces for the response schema
-      interface Scripture {
-        book: string;
-        chapterNo: number;
-        verseNo: number;
-        verseContent: string;
-      }
-
-      interface ResponseSchema {
-        markupResponse: string; // For the HTML markup as a string
-        dataObjects: Scripture[]; // Array of Scripture objects
-      }
-
-      const attachedTheme = `-@here Note user's theme for appropriate styling: ${theme} mode`;
-      const msgWithTheme = `${msg} \n ${attachedTheme}`;
-
-      const data = await sendAskReq({ message: msgWithTheme }).unwrap();
-
-      console.log(data.response);
-
-      const genaiResponse = JSON.parse(data.response) as ResponseSchema;
-
+      const genaiResponse = JSON.parse(data.response);
       const newBlock: Block = {
         sender: "AI" as const,
         type: "text",
-        content: data.response,
-        jsxElem: (
-          <div
-            dangerouslySetInnerHTML={{ __html: genaiResponse.markupResponse }}
-          />
-        ),
+        content: genaiResponse.markupResponse,
       };
       setMessageBlocks((prev) => [...prev, newBlock]);
-      setIsTyping(false);
 
       genaiResponse.dataObjects.forEach((scripture: Scripture) => {
         setExecutables((prev) => [
@@ -158,38 +148,86 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
                   });
                 }}
               >
-                <PlayCircleIcon /> {scripture.book} {scripture.chapterNo} :
+                <PlayCircleIcon /> {scripture.book} {scripture.chapterNo}:
                 {scripture.verseNo}
               </Button>
             ),
           },
         ]);
       });
+      return true;
+    } catch (error) {
+      setMessageBlocks((prev) => [
+        ...prev,
+        {
+          sender: "System" as const,
+          type: "text",
+          content: "Service works, but failed to interpret the response.",
+        },
+      ]);
+      console.error(error);
+      return false;
+    }
+  }
+
+  async function handleMessageSend(msg: string) {
+    if (!msg.trim()) return;
+    setMessageBlocks((prev) => [
+      ...prev,
+      {
+        sender: "User",
+        type: "text",
+        content: msg,
+      },
+    ]);
+
+    try {
+      setIsTyping(true);
+      const attachedTheme = `-@here Note user's theme for appropriate styling: ${theme} mode`;
+
+      let askSchema;
+      if (Conversational) {
+        const conversation = await buildConversation({
+          sender: "User",
+          content: msg,
+        });
+        const msgPackData = msgpack.encode(conversation);
+        const base64String = fromByteArray(new Uint8Array(msgPackData));
+        askSchema = {
+          conversation: base64String,
+          themeContext: attachedTheme,
+        };
+      } else {
+        const conversation = [
+          {
+            sender: "User",
+            content: msg,
+          },
+        ];
+        const msgPackData = msgpack.encode(conversation);
+        const base64String = fromByteArray(new Uint8Array(msgPackData));
+        askSchema = {
+          Conversation: base64String,
+          themeContext: attachedTheme,
+        };
+      }
+
+      const data = await sendAskReq({
+        message: JSON.stringify(askSchema),
+      }).unwrap();
+
+      await parseAIResponse(data);
     } catch (error) {
       console.error(error);
-      const newBlock: Block = {
-        sender: "AI" as const,
-        type: "text",
-        content: "Sorry, I am unable to process your request at this time.",
-        jsxElem: (
-          // <div dangerouslySetInnerHTML={{ __html: "Something went wrong" }} />
-          <Card className="text-red-500 !flex !flex-col !items-center !gap-2">
-            <AlertCircleIcon className="w-6 h-6" />
-            <Text>Something went wrong</Text>
-            <Button
-              variant="soft"
-              onClick={() => {
-                setMessageBlocks((prev) => prev.slice(0, -2));
-                handleMessageSend(msg);
-              }}
-              className="mt-2"
-            >
-              Retry
-            </Button>
-          </Card>
-        ),
-      };
-      setMessageBlocks((prev) => [...prev, newBlock]);
+      setMessageBlocks((prev) => [
+        ...prev,
+        {
+          sender: "System" as const,
+          type: "text",
+          content: "Sorry, I am unable to process your request at this time.",
+        },
+      ]);
+    } finally {
       setIsTyping(false);
     }
   }
@@ -223,9 +261,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
   }
 
   useEffect(() => {
-    const onboardingMessages = [
-      "Hi! 🙏 Your messages do not form a conversation. This as a Christian apologetics search engine. Please provide the required context in every query.",
-    ];
+    const onboardingMessages = ["Hi! 🙏 How may I be of service to you?"];
     const initialBlocks = parseCodeBlocks(onboardingMessages.join("\n"));
     setMessageBlocks(initialBlocks);
   }, []);
@@ -272,6 +308,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         setTimeout(() => onAnimated(), 100);
       }, 1000);
     }, []);
+
     return blockMounted || block.sender === "User" ? (
       <Flex
         direction="column"
@@ -284,7 +321,41 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
           animationFillMode: "forwards",
         }}
       >
-        {block.jsxElem}
+        {block.sender === "AI" || block.sender === "User" ? (
+          block.sender !== "User" ? (
+            <div dangerouslySetInnerHTML={{ __html: block.content }} />
+          ) : (
+            <div>{block.content}</div>
+          )
+        ) : (
+          <Card className="text-red-500 !flex !flex-col !items-center !gap-2">
+            <AlertCircleIcon className="w-6 h-6" />
+            <Text>Something went wrong</Text>
+            <Flex className="!flex-row !gap-2">
+              <Button
+                variant="soft"
+                onClick={() => {
+                  handleMessageSend(
+                    messageBlocks[messageBlocks.length - 1].content,
+                  );
+                  setMessageBlocks((prev) => prev.slice(0, -2));
+                }}
+                className="mt-2"
+              >
+                Retry
+              </Button>
+              <Button
+                variant="soft"
+                onClick={() => {
+                  setMessageBlocks([]);
+                }}
+                className="mt-2"
+              >
+                New Chat
+              </Button>
+            </Flex>
+          </Card>
+        )}
       </Flex>
     ) : (
       <SkeletonTextBlock />
@@ -306,8 +377,6 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
       </>
     );
   };
-
-  const [canvasView, setCanvasView] = useState(false);
 
   const scrollScrollArea = (direction: "up" | "down") => {
     if (messageBoxRef.current) {
@@ -446,13 +515,28 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         </Flex>
       </Card>
       <Text as="label" size="2">
-        <Flex gap="2" className="!p-1">
-          <Switch
-            size="1"
-            checked={canvasView}
-            onClick={() => setCanvasView(!canvasView)}
-          />
-          Canvas
+        <Flex gap="2" className="!flex-row">
+          <Flex className="!p-1">
+            <Badge color="red" size="2">
+              Beta Unstable
+            </Badge>
+          </Flex>
+          <Flex className="!p-1">
+            <Switch
+              size="1"
+              checked={canvasView}
+              onClick={() => setCanvasView(!canvasView)}
+            />
+            <Text className="!ml-1">Canvas</Text>
+          </Flex>
+          <Flex className="!p-1">
+            <Switch
+              size="1"
+              checked={Conversational}
+              onClick={() => setConversational(!Conversational)}
+            />
+            <Text className="!ml-1">Converse</Text>
+          </Flex>
         </Flex>
       </Text>
       <Chatbox

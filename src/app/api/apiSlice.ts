@@ -7,6 +7,8 @@ import {
 import { setCredentials, logOut } from "./auth/authSlice";
 import { RootState } from "../store";
 
+// import * as msgPack from "@msgpack/msgpack";
+
 type RefreshTokenResponse = {
   accessToken: string;
 };
@@ -51,6 +53,16 @@ const baseQueryWithReauth = async (
   return result;
 };
 
+// type Exchange = {
+//   sender: "User" | "AI" | "System";
+//   content: string;
+// };
+
+// type AskSchema = {
+//   conversation: Exchange[];
+//   themeContext: string;
+// };
+
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
@@ -60,9 +72,11 @@ export const apiSlice = createApi({
       query: (body) => ({
         url: "/v1/ask",
         method: "POST",
-        body: { message: body.message },
+        body: { message: body.message }, // Encode with MessagePack
+        // headers: { "Content-Type": "application/json" },
       }),
     }),
+
     sendFindReq: builder.mutation<{ response: string }, { message: string }>({
       query: (body) => ({
         url: "/v1/find",
