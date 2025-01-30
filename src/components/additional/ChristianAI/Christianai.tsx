@@ -21,8 +21,7 @@ import {
   ChevronUpIcon,
   PlayCircleIcon,
 } from "lucide-react";
-import { parseCodeBlocks } from "./utils.tsx";
-import { Block, Context, Executable } from "./types";
+import { Block, Executable } from "./types";
 import Frame from "../../frames/Frame.tsx";
 import { frameSetups } from "../../frames/frameVarients.ts";
 import Flow from "../../flow/Flow.tsx";
@@ -43,27 +42,38 @@ import * as msgpack from "@msgpack/msgpack";
 import { fromByteArray } from "base64-js";
 import { Scripture } from "../NavBar.tsx";
 
+type Exchange = {
+  sender: "User" | "AI" | "System";
+  content: string;
+};
+
 const ChristianAIChatbox = ({ className }: { className?: string }) => {
   const { theme } = useThemeContext();
+
   const dispatch = useDispatch();
+  const [sendAskReq] = useSendAskReqMutation();
 
   const [input] = useState("");
   const [messageBlocks, setMessageBlocks] = useState<Block[]>([]);
   const [executables, setExecutables] = useState<Executable[]>([]);
   const [isTyping, setIsTyping] = useState(false);
-  const messageBoxRef = useRef<HTMLDivElement>(null);
-
   const [canvasView, setCanvasView] = useState(false);
   const [Conversational, setConversational] = useState(true);
 
-  const eReaderState = useSelector((state: RootState) => state.ereader);
-  const [sendAskReq] = useSendAskReqMutation();
+  const [suggestions, setSuggestions] = useState<string[]>([
+    "Who is God?",
+    "Why Christianity?",
+    "How can I be saved?",
+    "White Jesus?",
+    "What is the Gospel?",
+    "Which denomination is right?",
+    "Let's study patience",
+    "Let's study love",
+  ]);
 
-  const [, setContext] = useState<Context>({
-    book: eReaderState.eContent.title,
-    chapter: eReaderState.currentChapter,
-    verse: eReaderState.currentVerse,
-  });
+  const messageBoxRef = useRef<HTMLDivElement>(null);
+
+  const eReaderState = useSelector((state: RootState) => state.ereader);
 
   const scrollMessageBoxToBottom = () => {
     messageBoxRef.current?.scrollTo({
@@ -72,30 +82,12 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     });
   };
 
-  useEffect(() => {
-    setContext({
-      book:
-        eReaderState.eContent.title === "Bible"
-          ? "none_selected"
-          : eReaderState.eContent.title,
-      chapter: eReaderState.currentChapter,
-      verse: eReaderState.currentVerse,
-    });
-  }, [
-    eReaderState.eContent.title,
-    eReaderState.currentChapter,
-    eReaderState.currentVerse,
-  ]);
-
-  type Exchange = {
-    sender: "User" | "AI" | "System";
-    content: string;
-  };
-
+  // Build conversation for AI
   async function buildConversation(
+    primaryBlocks: Block[],
     additionalExchange?: Exchange,
   ): Promise<Exchange[]> {
-    const conversation = messageBlocks.map((block) => {
+    const conversation = primaryBlocks.map((block) => {
       return {
         sender: block.sender,
         content: block.content,
@@ -109,15 +101,18 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
     return conversation;
   }
 
+  // Parse AI response
   async function parseAIResponse(data: { response: string }) {
     try {
       const genaiResponse = JSON.parse(data.response);
-      const newBlock: Block = {
-        sender: "AI" as const,
-        type: "text",
-        content: genaiResponse.markupResponse,
-      };
-      setMessageBlocks((prev) => [...prev, newBlock]);
+      setMessageBlocks((prev) => [
+        ...prev,
+        {
+          sender: "AI" as const,
+          type: "text",
+          content: genaiResponse.markupResponse,
+        },
+      ]);
 
       genaiResponse.dataObjects.forEach((scripture: Scripture) => {
         setExecutables((prev) => [
@@ -162,7 +157,8 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         {
           sender: "System" as const,
           type: "text",
-          content: "Service works, but failed to interpret the response.",
+          content:
+            "Failure while parsing response from the model, You can safely retry now.",
         },
       ]);
       console.error(error);
@@ -180,38 +176,49 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         content: msg,
       },
     ]);
+    scrollMessageBoxToBottom();
+    setIsTyping(true);
+
+    // Attach additional context to the message
+    const attachedTheme = `-@here Note user's theme for appropriate styling: ${theme} mode`;
+    const attachedBookState = `-@here Note user's current book state for your knowledge: ${eReaderState.eContent.title} ${eReaderState.currentChapter}:${eReaderState.currentVerse}`;
+
+    // Attach date & time
+    const attachedLocalTime = `-@here Note user's local time for context: ${new Date().toLocaleString()}`;
+    const attachedCurrentDate = `-@here Note user's current date for context: ${new Date().toDateString()}`;
+    const additionalContext = [
+      attachedTheme,
+      attachedBookState,
+      attachedLocalTime,
+      attachedCurrentDate,
+    ];
+
+    // Build ask schema
+    const askSchema = {
+      conversation: "",
+      additionalContext,
+    };
+
+    let conversation;
+
+    if (Conversational) {
+      conversation = await buildConversation(messageBlocks, {
+        sender: "User",
+        content: msg,
+      });
+    } else {
+      conversation = await buildConversation([], {
+        sender: "User",
+        content: msg,
+      });
+    }
+
+    const msgPackData = msgpack.encode(conversation);
+    const base64String = fromByteArray(new Uint8Array(msgPackData));
+
+    askSchema.conversation = base64String;
 
     try {
-      setIsTyping(true);
-      const attachedTheme = `-@here Note user's theme for appropriate styling: ${theme} mode`;
-
-      let askSchema;
-      if (Conversational) {
-        const conversation = await buildConversation({
-          sender: "User",
-          content: msg,
-        });
-        const msgPackData = msgpack.encode(conversation);
-        const base64String = fromByteArray(new Uint8Array(msgPackData));
-        askSchema = {
-          conversation: base64String,
-          themeContext: attachedTheme,
-        };
-      } else {
-        const conversation = [
-          {
-            sender: "User",
-            content: msg,
-          },
-        ];
-        const msgPackData = msgpack.encode(conversation);
-        const base64String = fromByteArray(new Uint8Array(msgPackData));
-        askSchema = {
-          Conversation: base64String,
-          themeContext: attachedTheme,
-        };
-      }
-
       const data = await sendAskReq({
         message: JSON.stringify(askSchema),
       }).unwrap();
@@ -224,27 +231,13 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         {
           sender: "System" as const,
           type: "text",
-          content: "Sorry, I am unable to process your request at this time.",
+          content: "A connection error occurred. Please try again later.",
         },
       ]);
     } finally {
       setIsTyping(false);
     }
   }
-
-  const [suggestions, setSuggestions] = useState<string[]>([
-    "Who is God?",
-    "Why Christianity?",
-    "Is AI evil?",
-    "How can I be saved?",
-    "Was the bible written by man?",
-    "The bible promotes slavery?",
-    "White Jesus?",
-    "What is the Gospel?",
-    "Which denomination is right?",
-    "Explain the Axioms",
-    "Please open John 3:16",
-  ]);
 
   function handleSuggestionClick(msg: string) {
     const index = suggestions.indexOf(msg);
@@ -255,15 +248,19 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         return updated;
       });
     }
-    // setInput(msg);
-    scrollMessageBoxToBottom();
+    // scrollMessageBoxToBottom();
     handleMessageSend(msg);
   }
 
+  // Initial message
   useEffect(() => {
-    const onboardingMessages = ["Hi! 🙏 How may I be of service to you?"];
-    const initialBlocks = parseCodeBlocks(onboardingMessages.join("\n"));
-    setMessageBlocks(initialBlocks);
+    setMessageBlocks([
+      {
+        sender: "AI",
+        type: "text",
+        content: "Hi! 🙏 How may I be of service to you?",
+      },
+    ]);
   }, []);
 
   useEffect(() => {
@@ -330,7 +327,7 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
         ) : (
           <Card className="text-red-500 !flex !flex-col !items-center !gap-2">
             <AlertCircleIcon className="w-6 h-6" />
-            <Text>Something went wrong</Text>
+            <Text>{block.content}</Text>
             <Flex className="!flex-row !gap-2">
               <Button
                 variant="soft"
