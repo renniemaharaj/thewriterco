@@ -34,9 +34,16 @@ const Index: React.FC = () => {
 
       {/* <Articles /> */}
       <Separator size={"4"} />
+      {/* <Observer options={{ threshold: 0.5 }}> */}
+      {/* {({ hasIntersected }) => */}
+      {/* hasIntersected &&  */}
       <Sword setEBook={setEreaderState} />
+      {/* } */}
+      {/* </Observer> */}
+
       {/* <Footer /> */}
       <Footer />
+
       <Ereader />
     </Flex>
   );

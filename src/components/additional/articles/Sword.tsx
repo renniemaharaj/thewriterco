@@ -73,7 +73,7 @@ const Sword: React.FC<SwordProps> = ({ setEBook, asChild }) => {
     return (
       <Card
         variant="classic"
-        className="p-4 rounded-lg w-full md:w-1/3 transition-shadow cursor-pointer hover:shadow-lg drop-shadow-md shadow-[gray]"
+        className="animate-fade-in p-4 rounded-lg w-full md:w-1/3 transition-shadow cursor-pointer hover:shadow-lg drop-shadow-md shadow-[gray]"
         style={{
           //   border: "1px solid var(--gray-a6)",
           backgroundColor: "var(--gray-a3)",
@@ -102,12 +102,8 @@ const Sword: React.FC<SwordProps> = ({ setEBook, asChild }) => {
               The Word of God - KJV
             </Heading>
             <Hint className="max-w-[450px]">
-              The Writer Company provides the full KJV bible free of charge for
-              consumtion and research purposes. We provide a full copy of the
-              KJV bible in JSON. See footer for more information. Additionaly,
-              we are working on tools to digitally validate the KJV bible by
-              it's digital signature such that no character can be altered
-              without detection.
+              The Writer Company provides the full KJV bible with: AI-integrated
+              tools, freely for consumtion and research purposes.
             </Hint>
           </>
         )}
