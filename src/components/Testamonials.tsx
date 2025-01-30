@@ -1,130 +1,149 @@
 import { Text, Flex, Card, Tabs, Box, ScrollArea } from "@radix-ui/themes";
+import { motion } from "framer-motion";
 import ChristianAIChatbox from "./additional/ChristianAI/Christianai";
 import SideBar from "./SideBar";
 import { useEffect, useState } from "react";
+import Frame from "./frames/Frame";
+import { FrameBarPosition, FrameBarSetup } from "./frames/types";
 
-const testimonials = [
+const axioms = [
   {
-    quote:
-      "Existence of God: Assume as true: God exists. It is impractical to prove or disprove this, as no one can transcend creation to verify an external source. Reasoning starts from this axiom: God is.",
-    author: "Existence of God",
+    title: "Existence of God",
+    description:
+      "Assume as true: God exists. It is impractical to prove or disprove this, as no one can transcend creation to verify an external source.",
   },
   {
-    quote:
-      "KJV Bible as Truth: Accept the KJV Bible as the complete and authoritative word of God, containing all truth intended for us. Any conflicting translation—whether in character, word, verse, or chapter—is a falsehood.",
-    author: "KJV Bible as Truth",
+    title: "KJV Bible as Truth",
+    description:
+      "The KJV Bible is the complete and authoritative word of God. Any conflicting translation—whether in character, word, verse, or chapter—is false.",
   },
   {
-    quote:
-      "Jesus Christ's First Coming: Acknowledge that Jesus Christ, the Creator, Messiah, and Truth, has only came once (as of 2024) in the manner recorded in the KJV Bible.",
-    author: "Jesus Christ's First Coming",
+    title: "Jesus Christ's First Coming",
+    description:
+      "Jesus Christ, the Creator, Messiah, and Truth, has come once (as of 2024) as recorded in the KJV Bible.",
   },
 ];
 
-export default function ClientTestamonials() {
-  // const currentUser = useAppSelector(selectCurrentUser);
-  // className={`w-full ${!currentUser?.firstName ? "!hidden" : ""}`}
-  const [hero] = useState<string>("Axioms for Artificial Intelligence");
+export default function ClientTestimonials() {
+  const [hero, setHero] = useState("Axioms for Artificial Intelligence");
 
-  const [flexOrientationClassName, setFlexOrientationClassName] =
-    useState<string>("flex flex-col gap-4 items-center justify-center");
   useEffect(() => {
     setTimeout(() => {
-      setFlexOrientationClassName(
-        "flex flex-row gap-4 items-center justify-center",
-      );
-    }, 100);
+      setHero("Axioms for Artificial Intelligence ✨");
+    }, 200);
+  }, []);
+
+  const framePositionNorthEast = {
+    frameBars: [
+      { position: "topLeft", size: "!w-1/4", size2: "!h-[10px]" },
+      { position: "rightBottom", size: "!h-1/4", size2: "!w-[10px]" },
+      { position: "bottomRight", size: "!w-1/4", size2: "!h-[10px]" },
+      { position: "leftTop", size: "!h-1/4", size2: "!w-[10px]" },
+    ] as FrameBarPosition[],
+    isAnimating: true,
+    animationDuration: "duration-500",
+  };
+
+  const framePositionSouthEast = {
+    frameBars: [
+      { position: "topRight", size: "!w-1/4", size2: "!h-[10px]" },
+      { position: "rightTop", size: "!h-1/4", size2: "!w-[10px]" },
+      { position: "bottomLeft", size: "!w-1/4", size2: "!h-[10px]" },
+      { position: "leftBottom", size: "!h-1/4", size2: "!w-[10px]" },
+    ] as FrameBarPosition[],
+    isAnimating: true,
+    animationDuration: "duration-500",
+  };
+
+  const [framePostion, setFramePosition] = useState<FrameBarSetup>(
+    framePositionNorthEast,
+  );
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFramePosition(framePositionSouthEast);
+      setTimeout(() => {
+        setFramePosition(framePositionNorthEast);
+      }, 350);
+    }, 1000);
   }, []);
   return (
-    // <Section>
-    <Flex className={`h-[100vh] ${flexOrientationClassName} !transition-all`}>
+    <Flex className="h-screen w-full md:flex-row transition-all !justify-evenly">
+      {/* Sidebar */}
       <SideBar
         variant="right"
-        className="!justify-start !hidden md:!flex !shadow-none !transition-all"
+        className="!hidden md:!flex flex-col w-[450px] h-full p-6 transition-all"
         centerBar={
-          <ScrollArea className="!flex-col !h-[100vh] !w-[450px] !transition-all">
-            <Flex className="hero-container w-full !flex-col !gap-4 !p-2 !items-center">
-              {hero && (
-                <Text
-                  className="absolute m-6  max-w-[400px] text-wrap hero-glow"
-                  size="8"
-                  weight="bold"
-                  style={{
-                    display: "block",
-                    textAlign: "center",
-                    // color: "var(--hrtm-blue)",
-                    transition: "300ms",
-                  }}
-                >
-                  {hero}
-                </Text> // Final hero text
-              )}
-            </Flex>
-            <Tabs.Root defaultValue="axioms" className="mt-32">
-              <Tabs.List>
-                <Tabs.Trigger value="axioms">Axioms</Tabs.Trigger>
-                <Tabs.Trigger value="documentation">Documentation</Tabs.Trigger>
-                <Tabs.Trigger value="resources" disabled>
-                  Resources
+          <ScrollArea className="flex flex-col h-full">
+            <Text size="8" weight="bold" className="hero-text">
+              {hero}
+            </Text>
+
+            <Tabs.Root defaultValue="axioms" className="mt-8">
+              <Tabs.List className="flex space-x-4 border-b pb-2">
+                <Tabs.Trigger value="axioms" className="px-4 py-2">
+                  Axioms
+                </Tabs.Trigger>
+                <Tabs.Trigger value="documentation" className="px-4 py-2">
+                  Documentation
                 </Tabs.Trigger>
               </Tabs.List>
 
               <Box pt="3">
-                <Tabs.Content value="axioms">
-                  <Flex className="!flex-row !flex-wrap !gap-4 w-full max-w-[600px]">
-                    {testimonials.map((testimonial, index) => (
-                      <div key={index} className="flex flex-row gap-4 p-1">
-                        <Text
-                          as="label"
-                          size="2"
-                          weight="bold"
-                          mt="4"
-                          style={{ textAlign: "center" }}
-                          className="min-w-[150px] text-center flex justify-center items-center"
-                        >
-                          {testimonial.author}
+                {/* Axioms Section */}
+                <Tabs.Content value="axioms" className="!p-1 !overflow-hidden">
+                  <Frame {...framePostion} />
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="!gap-4"
+                  >
+                    {axioms.map((axiom, index) => (
+                      <Card
+                        key={index}
+                        variant="classic"
+                        className="!p-2 rounded-xl !my-2 !mx-2"
+                      >
+                        <Text size="2" className="mb-2">
+                          <strong>{axiom.title}</strong>
                         </Text>
-                        <Text as="label" size="1" mt="4">
-                          {testimonial.quote}
+                        <Text size="2" className="ml-2">
+                          {axiom.description}
                         </Text>
-                        {/* </pre> */}
-                      </div>
+                      </Card>
                     ))}
-                  </Flex>
+                  </motion.div>
                 </Tabs.Content>
+
+                {/* Documentation Section */}
                 <Tabs.Content value="documentation">
-                  <Flex className="!flex-col !gap-4 !p-2 !items-start w-full">
-                    <Box className="max-w-[600px] p-4 blurred-div">
-                      <Text size="2" mb="2">
-                        <strong>Overview:</strong> The axioms are designed to
-                        provide a stable, consistent foundation from which
-                        AI-generated responses can serve in the study of the
-                        Bible.
+                  <Box className="space-y-4 p-4">
+                    <Card className="p-4 rounded-xl">
+                      <Text size="2">
+                        <strong>Overview:</strong> The axioms provide a stable,
+                        consistent foundation for AI-generated responses in the
+                        study of the Bible.
                       </Text>
-                    </Box>
-                    <Box className="max-w-[600px] p-4 blurred-div">
-                      <Text size="2" mb="2">
-                        <strong>Usage:</strong> You can either chat with the
-                        model on the right or search the Bible in plain English
-                        by utilizing the header-embedded search bar below,
-                        getting in return a list of verses that contextually
-                        matches your query.
+                    </Card>
+                    <Card className="p-4 rounded-xl">
+                      <Text size="2">
+                        <strong>Usage:</strong> You can chat with the AI or use
+                        the search bar to find verses contextually matching your
+                        query.
                       </Text>
-                    </Box>
-                  </Flex>
+                    </Card>
+                  </Box>
                 </Tabs.Content>
-                <Tabs.Content value="resources"></Tabs.Content>
               </Box>
             </Tabs.Root>
           </ScrollArea>
         }
       />
-      <Card
-        className="!flex overflow-auto !flex-col !mx-auto !rounded-none !justify-center !p-0"
-        variant="ghost"
-      >
-        <ChristianAIChatbox className="min-w-[400px] max-w-[600px] !rounded-none" />
-        <Flex className="!flex-col !gap-4 !p-2 !items-center"></Flex>
+
+      {/* Chatbox Section */}
+      <Card className="min-w-[400px] max-w-[600px] flex flex-1 flex-col items-center justify-center p-6 transition-all">
+        <ChristianAIChatbox className="!w-full" />
       </Card>
     </Flex>
   );

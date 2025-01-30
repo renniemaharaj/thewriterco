@@ -8,6 +8,7 @@ export interface FrameBarConfig {
 export type FrameBarPosition = {
   position: "topLeft" | "rightTop" | "bottomLeft" | "leftTop";
   size?: string;
+  size2?: string;
 };
 
 export type FrameBarSetup = {

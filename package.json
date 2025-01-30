@@ -30,6 +30,7 @@
     "axios": "^1.7.7",
     "base64-js": "^1.5.1",
     "formik": "^2.4.6",
+    "framer-motion": "^12.0.6",
     "hrtm-react-scaffold": "file:",
     "lodash": "^4.17.21",
     "lucide-react": "^0.447.0",
