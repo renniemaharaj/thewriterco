@@ -2,9 +2,9 @@ type Executable = {
   jsxTrigger: React.ReactNode;
 };
 
-interface BlockElement {
-  jsxElem: React.ReactNode;
-}
+// interface BlockElement {
+//   jsxElem: React.ReactNode;
+// }
 
 interface Block {
   sender: "User" | "AI" | "System";
@@ -26,4 +26,4 @@ interface TaskAlterBookState {
   verse: string;
 }
 
-export type { Executable, BlockElement, Block, Context, TaskAlterBookState };
+export type { Executable, Block, Context, TaskAlterBookState };

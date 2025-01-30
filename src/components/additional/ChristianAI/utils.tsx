@@ -1,6 +1,6 @@
-import MonacoEditor from "../../MonacoEditor";
+// import MonacoEditor from "../../MonacoEditor";
 import { Block } from "./types";
-import { longStringToParagraphs, sanitizeHtml, taskExtractor } from "./utils";
+import { longStringToParagraphs, taskExtractor } from "./utils";
 
 function hasTextContent(text: string) {
   const div = document.createElement("div");
@@ -37,12 +37,12 @@ function parseCodeBlocks(response: string) {
             type: "text",
             content: para,
             language: "plaintext",
-            jsxElem: (
-              <div
-                dangerouslySetInnerHTML={{ __html: sanitizeHtml(para) }}
-                style={{ padding: "5px" }}
-              />
-            ),
+            // jsxElem: (
+            //   <div
+            //     dangerouslySetInnerHTML={{ __html: sanitizeHtml(para) }}
+            //     style={{ padding: "5px" }}
+            //   />
+            // ),
             sender: "AI",
           });
         }
@@ -70,9 +70,9 @@ function parseCodeBlocks(response: string) {
       type: "code",
       language,
       content: codeContent,
-      jsxElem: (
-        <MonacoEditor language={language} code={codeContent} height={300} />
-      ),
+      // jsxElem: (
+      //   <MonacoEditor language={language} code={codeContent} height={300} />
+      // ),
       sender: "AI",
     });
 
@@ -93,9 +93,9 @@ function parseCodeBlocks(response: string) {
           type: "text",
           content: para,
           language: "plaintext",
-          jsxElem: (
-            <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(para) }} />
-          ),
+          // jsxElem: (
+          //   <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(para) }} />
+          // ),
           sender: "AI",
         });
       }
