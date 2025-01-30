@@ -142,8 +142,12 @@ export default function ClientTestimonials() {
       />
 
       {/* Chatbox Section */}
-      <Card className="min-w-[400px] max-w-[600px] flex flex-1 flex-col items-center justify-center p-6 transition-all">
-        <ChristianAIChatbox className="!w-full" />
+      <Card
+        className="!flex overflow-auto !flex-col !mx-auto !rounded-none !justify-center !p-0 !mt-2"
+        variant="ghost"
+      >
+        <ChristianAIChatbox className="min-w-[400px] max-w-[600px] !rounded-none" />
+        <Flex className="!flex-col !gap-4 !p-2 !items-center"></Flex>
       </Card>
     </Flex>
   );
