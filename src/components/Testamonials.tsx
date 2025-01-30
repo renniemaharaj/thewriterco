@@ -4,7 +4,9 @@ import ChristianAIChatbox from "./additional/ChristianAI/Christianai";
 import SideBar from "./SideBar";
 import { useEffect, useState } from "react";
 import Frame from "./frames/Frame";
-import { FrameBarPosition, FrameBarSetup } from "./frames/types";
+import { FrameBarSetup } from "./frames/types";
+import { frameSetups } from "./frames/frameVarients";
+import { debounce } from "lodash";
 
 const axioms = [
   {
@@ -33,40 +35,26 @@ export default function ClientTestimonials() {
     }, 200);
   }, []);
 
-  const framePositionNorthEast = {
-    frameBars: [
-      { position: "topLeft", size: "!w-1/4", size2: "!h-[10px]" },
-      { position: "rightBottom", size: "!h-1/4", size2: "!w-[10px]" },
-      { position: "bottomRight", size: "!w-1/4", size2: "!h-[10px]" },
-      { position: "leftTop", size: "!h-1/4", size2: "!w-[10px]" },
-    ] as FrameBarPosition[],
-    isAnimating: true,
-    animationDuration: "duration-500",
-  };
-
-  const framePositionSouthEast = {
-    frameBars: [
-      { position: "topRight", size: "!w-1/4", size2: "!h-[10px]" },
-      { position: "rightTop", size: "!h-1/4", size2: "!w-[10px]" },
-      { position: "bottomLeft", size: "!w-1/4", size2: "!h-[10px]" },
-      { position: "leftBottom", size: "!h-1/4", size2: "!w-[10px]" },
-    ] as FrameBarPosition[],
-    isAnimating: true,
-    animationDuration: "duration-500",
-  };
-
   const [framePostion, setFramePosition] = useState<FrameBarSetup>(
-    framePositionNorthEast,
+    frameSetups.CornersNorthEastSM,
   );
 
-  useEffect(() => {
+  const highlightAxioms = () => {
     setTimeout(() => {
-      setFramePosition(framePositionSouthEast);
+      setFramePosition(frameSetups.CornersSouthEastSM);
       setTimeout(() => {
-        setFramePosition(framePositionNorthEast);
+        setFramePosition(frameSetups.CornersNorthEastSM);
       }, 350);
     }, 1000);
+  };
+
+  useEffect(() => {
+    highlightAxioms();
   }, []);
+
+  const debounceHighlightAxioms = debounce(() => {
+    highlightAxioms();
+  }, 100);
   return (
     <Flex className="h-screen w-full md:flex-row transition-all !justify-evenly">
       {/* Sidebar */}
@@ -154,7 +142,10 @@ export default function ClientTestimonials() {
         className="!flex overflow-auto !flex-col !mx-auto !rounded-none !justify-center !p-0 !mt-2"
         variant="ghost"
       >
-        <ChristianAIChatbox className="min-w-[400px] max-w-[600px] !rounded-none" />
+        <ChristianAIChatbox
+          highlightAxioms={debounceHighlightAxioms}
+          className="min-w-[400px] max-w-[600px] !rounded-none"
+        />
         <Flex className="!flex-col !gap-4 !p-2 !items-center"></Flex>
       </Card>
     </Flex>

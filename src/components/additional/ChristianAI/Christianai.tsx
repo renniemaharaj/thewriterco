@@ -47,7 +47,13 @@ type Exchange = {
   content: string;
 };
 
-const ChristianAIChatbox = ({ className }: { className?: string }) => {
+const ChristianAIChatbox = ({
+  className,
+  highlightAxioms,
+}: {
+  className?: string;
+  highlightAxioms: () => void;
+}) => {
   const { theme } = useThemeContext();
 
   const dispatch = useDispatch();
@@ -105,6 +111,13 @@ const ChristianAIChatbox = ({ className }: { className?: string }) => {
   async function parseAIResponse(data: { response: string }) {
     try {
       const genaiResponse = JSON.parse(data.response);
+
+      // Detect mention axioms from AI with regex
+      const regex = /axioms?/gi;
+      if (genaiResponse.markupResponse.match(regex)) {
+        highlightAxioms();
+      }
+
       setMessageBlocks((prev) => [
         ...prev,
         {
