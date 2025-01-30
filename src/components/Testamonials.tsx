@@ -29,7 +29,7 @@ export default function ClientTestimonials() {
 
   useEffect(() => {
     setTimeout(() => {
-      setHero("Axioms for Artificial Intelligence ✨");
+      setHero("Axioms for Artificial Intelligence");
     }, 200);
   }, []);
 
@@ -75,10 +75,18 @@ export default function ClientTestimonials() {
         className="!hidden md:!flex flex-col w-[450px] h-full p-6 transition-all"
         centerBar={
           <ScrollArea className="flex flex-col h-full">
-            <Text size="8" weight="bold" className="hero-text">
+            <Text
+              className="max-w-[400px] text-wrap hero-glow"
+              size="8"
+              weight="bold"
+              style={{
+                display: "block",
+                textAlign: "center",
+                transition: "300ms",
+              }}
+            >
               {hero}
             </Text>
-
             <Tabs.Root defaultValue="axioms" className="mt-8">
               <Tabs.List className="flex space-x-4 border-b pb-2">
                 <Tabs.Trigger value="axioms" className="px-4 py-2">
@@ -102,7 +110,7 @@ export default function ClientTestimonials() {
                     {axioms.map((axiom, index) => (
                       <Card
                         key={index}
-                        variant="classic"
+                        variant="ghost"
                         className="!p-2 rounded-xl !my-2 !mx-2"
                       >
                         <Text size="2" className="mb-2">
@@ -119,14 +127,14 @@ export default function ClientTestimonials() {
                 {/* Documentation Section */}
                 <Tabs.Content value="documentation">
                   <Box className="space-y-4 p-4">
-                    <Card className="p-4 rounded-xl">
+                    <Card variant="ghost" className="p-4 rounded-xl">
                       <Text size="2">
                         <strong>Overview:</strong> The axioms provide a stable,
                         consistent foundation for AI-generated responses in the
                         study of the Bible.
                       </Text>
                     </Card>
-                    <Card className="p-4 rounded-xl">
+                    <Card variant="ghost" className="p-4 rounded-xl">
                       <Text size="2">
                         <strong>Usage:</strong> You can chat with the AI or use
                         the search bar to find verses contextually matching your

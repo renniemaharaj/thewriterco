@@ -74,7 +74,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
     <Card
       className={`${
         chatboxFocus ? " border-[#978365] " : "border-transparent"
-      } w-[75%] m-auto !h-auto border-2 outline-none  !flex !gap-2 mt-4 !overflow-auto`}
+      } w-[80%] m-auto !h-auto border-2 outline-none  !flex !gap-2 mt-4 `}
     >
       <textarea
         ref={textAreaRef}
