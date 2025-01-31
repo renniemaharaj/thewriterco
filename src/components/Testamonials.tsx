@@ -85,7 +85,7 @@ export default function ClientTestimonials() {
               {hero}
             </Text>
             <Tabs.Root defaultValue="axioms" className="mt-8">
-              <Tabs.List className="flex space-x-4 border-b pb-2">
+              <Tabs.List className="flex space-x-4 !shadow-none pb-2">
                 <Tabs.Trigger value="axioms" className="px-4 py-2">
                   Axioms
                 </Tabs.Trigger>
