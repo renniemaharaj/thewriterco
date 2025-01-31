@@ -13,7 +13,7 @@ import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { useThemeContext } from "../context/useThemeContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { MoonIcon, ScanSearchIcon, SunIcon } from "lucide-react";
+import { ScanSearchIcon, SunIcon, SunMoonIcon } from "lucide-react";
 import SearchLoading from "../SearchLoading";
 import { useSendFindReqMutation } from "../../app/api/apiSlice";
 import { input } from "@testing-library/user-event/dist/cjs/event/input.js";
@@ -159,7 +159,7 @@ const Navbar: React.FC = () => {
           <Separator size="2" orientation={"vertical"} />
           <Button className="!sticky !top-0" variant="ghost">
             {theme === "dark" ? (
-              <MoonIcon
+              <SunMoonIcon
                 className="!w-6 !h-6 !text-white animate-pulse"
                 onClick={() => specifyTheme("light")}
               />

@@ -59,7 +59,6 @@ const ChristianAIChatbox = ({
   const dispatch = useDispatch();
   const [sendAskReq] = useSendAskReqMutation();
 
-  const [input] = useState("");
   const [messageBlocks, setMessageBlocks] = useState<Block[]>([]);
   const [executables, setExecutables] = useState<Executable[]>([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -551,7 +550,6 @@ const ChristianAIChatbox = ({
       </Text>
       <Chatbox
         disabled={isTyping}
-        textContent={input}
         handleRecieve={(text: string) => handleMessageSend(text)}
       />
     </>
