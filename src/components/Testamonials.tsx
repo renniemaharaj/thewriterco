@@ -154,7 +154,7 @@ export default function ClientTestimonials() {
                         from the generative model. Only one must be a
                         foundation. If not one then two? Maybe three? Why not
                         all? So the question is, which version of the bible is
-                        preffered?
+                        preferred?
                       </Text>
                     </Card>
                     <Card variant="ghost" className="p-4 rounded-xl">
