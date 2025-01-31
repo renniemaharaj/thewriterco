@@ -151,19 +151,22 @@ export default function ClientTestimonials() {
                         explore the bible through artificial intelligence, we
                         must not enter with confusion. If there is any confusion
                         in your prompt, confusion will be reflected in responses
-                        from the generative model. So the question is, which
-                        translated of the bible is preffered? Only one must be a
+                        from the generative model. Only one must be a
                         foundation. If not one, then two? If not two, then
-                        three? Why not all?
+                        three? Why not all? So the question is, which translated
+                        of the bible is preffered?
                       </Text>
                     </Card>
                     <Card variant="ghost" className="p-4 rounded-xl">
                       <Text size="2">
                         <strong>Thewriterco said what?</strong> Should you throw
-                        away your other translations? No. But for the sake of
+                        away your other translations? No, but for the sake of
                         consistency, the KJV is our preferred translation for
                         exploring generative artificial intelligence in the
-                        study of the Bible.
+                        study of the Bible. Why do we need multiple translations
+                        anyway? Does the KJV lack something that other versions
+                        have? To say this is to say that the KJV is not the word
+                        of God. If the KJV is not the word of God, then what is?
                       </Text>
                     </Card>
                     <Separator size="4" className="!my-2" />
