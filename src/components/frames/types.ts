@@ -6,7 +6,19 @@ export interface FrameBarConfig {
 }
 
 export type FrameBarPosition = {
-  position: "topLeft" | "rightTop" | "bottomLeft" | "leftTop";
+  position:
+    | "topLeft"
+    | "rightTop"
+    | "bottomLeft"
+    | "leftTop"
+    | "topRight"
+    | "rightBottom"
+    | "bottomRight"
+    | "leftBottom"
+    | "centerTop"
+    | "centerBottom"
+    | "centerLeft"
+    | "centerRight";
   size?: string;
   size2?: string;
 };

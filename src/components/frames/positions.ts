@@ -10,4 +10,9 @@ export const positionClasses: Record<string, string> = {
   leftTop: `top-0 left-0 h-full ${defaultWidthSizing}`, // Full height, small width
   leftBottom: `top-[100%] left-0 -translate-y-full h-full ${defaultWidthSizing}`, // Full height, small width
   topLeft: `top-0 left-0 w-full ${defaultHeightSizing}`, // Full width, small height
+
+  centerTop: `top-0 left-[50%] -translate-x-[50%] w-full ${defaultHeightSizing}`, // Full width, small height
+  centerBottom: `top-[100%] left-[50%] -translate-x-[50%] -translate-y-full w-full ${defaultHeightSizing}`, // Full width, small height
+  centerLeft: `top-[50%] left-0 -translate-y-[50%] h-full ${defaultWidthSizing}`, // Full height, small width
+  centerRight: `top-[50%] left-[100%] -translate-x-full -translate-y-[50%] h-full ${defaultWidthSizing}`, // Full height, small width
 };

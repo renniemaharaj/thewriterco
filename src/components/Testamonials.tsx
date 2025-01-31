@@ -10,7 +10,7 @@ import {
 import { motion } from "framer-motion";
 import ChristianAIChatbox from "./additional/ChristianAI/Christianai";
 import SideBar from "./SideBar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Frame from "./frames/Frame";
 import { FrameBarSetup } from "./frames/types";
 import { frameSetups } from "./frames/frameVarients";
@@ -48,6 +48,32 @@ export default function ClientTestimonials() {
     frameSetups.CornersNorthEastSM,
   );
 
+  const axiomParentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseOver = () => {
+      setFramePosition(frameSetups.CenteredSM);
+    };
+
+    const handleMouseLeave = () => {
+      setFramePosition(frameSetups.CornersNorthEastSM);
+    };
+
+    const parent = axiomParentRef.current;
+
+    if (parent) {
+      parent.addEventListener("mouseover", handleMouseOver);
+      parent.addEventListener("mouseleave", handleMouseLeave);
+    }
+
+    return () => {
+      if (parent) {
+        parent.removeEventListener("mouseover", handleMouseOver);
+        parent.removeEventListener("mouseleave", handleMouseLeave);
+      }
+      // handleMouseOver.cancel(); // Cancel any pending execution of debounce
+    };
+  }, [axiomParentRef, setFramePosition]);
   const highlightAxioms = () => {
     setTimeout(() => {
       setFramePosition(frameSetups.CornersSouthEastSM);
@@ -64,6 +90,7 @@ export default function ClientTestimonials() {
   const debounceHighlightAxioms = debounce(() => {
     highlightAxioms();
   }, 100);
+
   return (
     <Flex className="h-screen w-full md:flex-row transition-all !justify-evenly">
       {/* Sidebar */}
@@ -96,7 +123,11 @@ export default function ClientTestimonials() {
 
               <Box pt="3">
                 {/* Axioms Section */}
-                <Tabs.Content value="axioms" className="!p-1 !overflow-hidden">
+                <Tabs.Content
+                  ref={axiomParentRef}
+                  value="axioms"
+                  className="!p-1 !overflow-visible"
+                >
                   <Frame {...framePostion} />
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}

@@ -31,12 +31,23 @@ export const frameSetups = {
     isAnimating: true,
     animationDuration: "duration-500",
   } as FrameBarSetup,
+
   CornersNorthEast: {
     frameBars: [
       { position: "topLeft", size: "!w-1/4" },
       { position: "rightBottom", size: "!h-1/4" },
       { position: "bottomRight", size: "!w-1/4" },
       { position: "leftTop", size: "!h-1/4" },
+    ] as FrameBarPosition[],
+    isAnimating: true,
+    animationDuration: "duration-500",
+  } as FrameBarSetup,
+  CenteredSM: {
+    frameBars: [
+      { position: "centerTop", size: "!w-1/4", size2: "!h-[10px]" },
+      { position: "centerRight", size: "!h-1/4", size2: "!w-[10px]" },
+      { position: "centerBottom", size: "!w-1/4", size2: "!h-[10px]" },
+      { position: "centerLeft", size: "!h-1/4", size2: "!w-[10px]" },
     ] as FrameBarPosition[],
     isAnimating: true,
     animationDuration: "duration-500",

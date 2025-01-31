@@ -23,9 +23,13 @@ import { cloneDeep } from "lodash";
 function FlowComponent({
   nodes,
   messageBlocksCount,
+  width,
+  height,
 }: {
   nodes: Node[];
   messageBlocksCount: number;
+  width?: string;
+  height?: string;
 }) {
   const { theme } = useThemeContext();
   const nodeTypes = useRef(nodeData).current;
@@ -70,7 +74,7 @@ function FlowComponent({
   }, [messageBlocksCount, onFitView]);
 
   return (
-    <Box className="!w-[600px] !h-[60vh] !flex-col">
+    <Box className={`w-[600px] h-[60vh] !flex-col ${width} ${height}`}>
       <ReactFlow
         nodes={nodesLocal}
         onNodesChange={onNodesChange}
@@ -98,9 +102,16 @@ function FlowComponent({
 
 // HOC to wrap FlowComponent with ReactFlowProvider
 function withReactFlowProvider(
-  Component: React.ComponentType<{ nodes: Node[]; messageBlocksCount: number }>,
+  Component: React.ComponentType<{
+    width?: string;
+    height?: string;
+    nodes: Node[];
+    messageBlocksCount: number;
+  }>,
 ) {
   return function WrappedComponent(props: {
+    width?: string;
+    height?: string;
     nodes: Node[];
     messageBlocksCount: number;
   }) {

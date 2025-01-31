@@ -50,9 +50,11 @@ type Exchange = {
 const ChristianAIChatbox = ({
   className,
   highlightAxioms,
+  // suspendsAxioms,
 }: {
   className?: string;
   highlightAxioms: () => void;
+  // suspendsAxioms: () => void;
 }) => {
   const { theme } = useThemeContext();
 
