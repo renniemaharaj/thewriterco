@@ -153,8 +153,8 @@ export default function ClientTestimonials() {
                         in your prompt, confusion will be reflected in responses
                         from the generative model. Only one must be a
                         foundation. If not one, then two? If not two, then
-                        three? Why not all? So the question is, which translated
-                        of the bible is preffered?
+                        three? Why not all? So the question is, which version of
+                        the bible is preffered?
                       </Text>
                     </Card>
                     <Card variant="ghost" className="p-4 rounded-xl">
