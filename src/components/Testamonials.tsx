@@ -151,8 +151,10 @@ export default function ClientTestimonials() {
                         explore the bible through artificial intelligence, we
                         must not enter with confusion. If there is any confusion
                         in your prompt, confusion will be reflected in responses
-                        from the generative model. So the question is, which is
-                        preffered?
+                        from the generative model. So the question is, which
+                        translated of the bible is preffered? Only one must be a
+                        foundation. If not one, then two? If not two, then
+                        three? Why not all?
                       </Text>
                     </Card>
                     <Card variant="ghost" className="p-4 rounded-xl">
