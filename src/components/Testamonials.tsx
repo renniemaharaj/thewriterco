@@ -1,4 +1,12 @@
-import { Text, Flex, Card, Tabs, Box, ScrollArea } from "@radix-ui/themes";
+import {
+  Text,
+  Flex,
+  Card,
+  Tabs,
+  Box,
+  ScrollArea,
+  Separator,
+} from "@radix-ui/themes";
 import { motion } from "framer-motion";
 import ChristianAIChatbox from "./additional/ChristianAI/Christianai";
 import SideBar from "./SideBar";
@@ -7,6 +15,7 @@ import Frame from "./frames/Frame";
 import { FrameBarSetup } from "./frames/types";
 import { frameSetups } from "./frames/frameVarients";
 import { debounce } from "lodash";
+import KJVArguments from "./KJVArguments";
 
 const axioms = [
   {
@@ -115,6 +124,9 @@ export default function ClientTestimonials() {
                 {/* Documentation Section */}
                 <Tabs.Content value="documentation">
                   <Box className="space-y-4 p-4">
+                    <Text size="5" weight="bold">
+                      Tools for Bible Study
+                    </Text>
                     <Card variant="ghost" className="p-4 rounded-xl">
                       <Text size="2">
                         <strong>Overview:</strong> The axioms provide a stable,
@@ -129,6 +141,34 @@ export default function ClientTestimonials() {
                         query.
                       </Text>
                     </Card>
+                    <Separator size="4" className="!my-2" />
+                    <Text size="5" weight="bold">
+                      KJV Choice Reasoning
+                    </Text>
+                    <Card variant="ghost" className="p-4 rounded-xl">
+                      <Text size="2">
+                        <strong>For a foundation sake:</strong> If we are to
+                        explore the bible through artificial intelligence, we
+                        must not enter with confusion. If there is any confusion
+                        in your prompt, confusion will be reflected in responses
+                        from the generative model. So the question is, which is
+                        preffered?
+                      </Text>
+                    </Card>
+                    <Card variant="ghost" className="p-4 rounded-xl">
+                      <Text size="2">
+                        <strong>Thewriterco said what?</strong> Should you throw
+                        away your other translations? No. But for the sake of
+                        consistency, the KJV is our preferred translation for
+                        exploring generative artificial intelligence in the
+                        study of the Bible.
+                      </Text>
+                    </Card>
+                    <Separator size="4" className="!my-2" />
+                    <Text size="5" weight="bold">
+                      Arguments for KJV Translation
+                    </Text>
+                    <KJVArguments />
                   </Box>
                 </Tabs.Content>
               </Box>
