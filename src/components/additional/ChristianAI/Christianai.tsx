@@ -288,8 +288,7 @@ const ChristianAIChatbox = ({
   const computeTokens = useCallback(async () => {
     const conversation = await buildConversation(messageBlocks);
     const msgPackData = msgpack.encode(conversation);
-    const base64String = fromByteArray(new Uint8Array(msgPackData));
-    return base64String.length;
+    return msgPackData.length;
   }, [messageBlocks]);
 
   useEffect(() => {
