@@ -16,10 +16,10 @@ import Chatbox from "../Chatbox";
 import { useThemeContext } from "../../context/useThemeContext";
 
 import {
-  AlertCircleIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   PlayCircleIcon,
+  ShieldAlertIcon,
 } from "lucide-react";
 import { Block, Executable } from "./types";
 import Frame from "../../frames/Frame.tsx";
@@ -172,7 +172,7 @@ const ChristianAIChatbox = ({
           sender: "System" as const,
           type: "text",
           content:
-            "Failure while parsing response from the model, You can safely retry now.",
+            "Failure while parsing response from the model, Please wait 30 seconds and try again.",
         },
       ]);
       console.error(error);
@@ -232,6 +232,8 @@ const ChristianAIChatbox = ({
 
     askSchema.conversation = base64String;
 
+    // console.log(JSON.stringify(askSchema));
+    // return;
     try {
       const data = await sendAskReq({
         message: JSON.stringify(askSchema),
@@ -245,7 +247,8 @@ const ChristianAIChatbox = ({
         {
           sender: "System" as const,
           type: "text",
-          content: "A connection error occurred. Please try again later.",
+          content:
+            "A connection error occurred or you have been rate-limited, please try again in 30 seconds.",
         },
       ]);
     } finally {
@@ -340,7 +343,7 @@ const ChristianAIChatbox = ({
           )
         ) : (
           <Card className="text-red-500 !flex !flex-col !items-center !gap-2">
-            <AlertCircleIcon className="w-6 h-6" />
+            <ShieldAlertIcon className="w-6 h-6" />
             <Text>{block.content}</Text>
             <Flex className="!flex-row !gap-2">
               <Button

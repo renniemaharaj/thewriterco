@@ -16,8 +16,8 @@ type RefreshTokenResponse = {
 const baseQuery = fetchBaseQuery({
   //
   // baseUrl: "https://thewriterco-auth.onrender.com",
-  baseUrl: "https://thewriterco-auth-go.onrender.com", // Adjust to your base URL if needed
-  // baseUrl: "http://localhost:3001", // Adjust to your base URL if needed
+  // baseUrl: "https://thewriterco-auth-go.onrender.com", // Adjust to your base URL if needed
+  baseUrl: "http://localhost:3001", // Adjust to your base URL if needed
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const accessToken = (getState() as RootState).auth?.accessToken;
@@ -53,16 +53,6 @@ const baseQueryWithReauth = async (
   return result;
 };
 
-// type Exchange = {
-//   sender: "User" | "AI" | "System";
-//   content: string;
-// };
-
-// type AskSchema = {
-//   conversation: Exchange[];
-//   themeContext: string;
-// };
-
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
@@ -72,8 +62,7 @@ export const apiSlice = createApi({
       query: (body) => ({
         url: "/v1/ask",
         method: "POST",
-        body: { message: body.message }, // Encode with MessagePack
-        // headers: { "Content-Type": "application/json" },
+        body: { message: body.message },
       }),
     }),
 
