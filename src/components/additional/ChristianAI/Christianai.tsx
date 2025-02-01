@@ -166,13 +166,14 @@ const ChristianAIChatbox = ({
       });
       return true;
     } catch (error) {
+      console.log(data.response);
       setMessageBlocks((prev) => [
         ...prev,
         {
           sender: "System" as const,
           type: "text",
           content:
-            "Failure while parsing response from the model, Please wait 30 seconds and try again.",
+            "Failure while parsing response from the model, Please wait 30 seconds before trying again",
         },
       ]);
       console.error(error);
@@ -248,7 +249,7 @@ const ChristianAIChatbox = ({
           sender: "System" as const,
           type: "text",
           content:
-            "A connection error occurred or you have been rate-limited, please try again in 30 seconds.",
+            "A connection error occurred, we rate-limit to throttle requests. Please wait 30 seconds and try again.",
         },
       ]);
     } finally {
@@ -342,9 +343,12 @@ const ChristianAIChatbox = ({
             <div>{block.content}</div>
           )
         ) : (
-          <Card className="text-red-500 !flex !flex-col !items-center !gap-2">
-            <ShieldAlertIcon className="w-6 h-6" />
-            <Text>{block.content}</Text>
+          <Card className="text-red-500 !flex !flex-col !items-center !gap-2 max-w-[300px]">
+            <Flex className="!gap-2">
+              <ShieldAlertIcon className="scale-150" />
+              <Text>{block.content}</Text>
+            </Flex>
+
             <Flex className="!flex-row !gap-2">
               <Button
                 variant="soft"
