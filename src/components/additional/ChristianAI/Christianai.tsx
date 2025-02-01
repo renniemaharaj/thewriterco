@@ -66,6 +66,7 @@ const ChristianAIChatbox = ({
   const [isTyping, setIsTyping] = useState(false);
   const [canvasView, setCanvasView] = useState(false);
   const [Conversational, setConversational] = useState(true);
+  const [conversationTokens, setConversationTokens] = useState<number>(0);
 
   const [suggestions, setSuggestions] = useState<string[]>([
     "Who is God?",
@@ -88,6 +89,17 @@ const ChristianAIChatbox = ({
       behavior: "smooth",
     });
   };
+
+  function setSystemMessage(content: string) {
+    setMessageBlocks((prev) => [
+      ...prev,
+      {
+        sender: "System" as const,
+        type: "text",
+        content,
+      },
+    ]);
+  }
 
   // Build conversation for AI
   async function buildConversation(
@@ -167,15 +179,9 @@ const ChristianAIChatbox = ({
       return true;
     } catch (error) {
       console.log(data.response);
-      setMessageBlocks((prev) => [
-        ...prev,
-        {
-          sender: "System" as const,
-          type: "text",
-          content:
-            "Failure while parsing response from the model, Please wait 30 seconds before trying again",
-        },
-      ]);
+      setSystemMessage(
+        "Failure while parsing response from the model, Please wait 30 seconds before trying again",
+      );
       console.error(error);
       return false;
     }
@@ -191,6 +197,12 @@ const ChristianAIChatbox = ({
         content: msg,
       },
     ]);
+
+    if (Conversational && conversationTokens > 10000) {
+      setSystemMessage("Conversation limit reached, please start a new chat.");
+      return;
+    }
+
     scrollMessageBoxToBottom();
     setIsTyping(true);
 
@@ -233,8 +245,6 @@ const ChristianAIChatbox = ({
 
     askSchema.conversation = base64String;
 
-    // console.log(JSON.stringify(askSchema));
-    // return;
     try {
       const data = await sendAskReq({
         message: JSON.stringify(askSchema),
@@ -243,15 +253,9 @@ const ChristianAIChatbox = ({
       await parseAIResponse(data);
     } catch (error) {
       console.error(error);
-      setMessageBlocks((prev) => [
-        ...prev,
-        {
-          sender: "System" as const,
-          type: "text",
-          content:
-            "A connection error occurred, we rate-limit to throttle requests. Please wait 30 seconds and try again.",
-        },
-      ]);
+      setSystemMessage(
+        "A connection error occurred, we rate-limit to throttle requests. Please wait 30 seconds and try again.",
+      );
     } finally {
       setIsTyping(false);
     }
@@ -281,8 +285,18 @@ const ChristianAIChatbox = ({
     ]);
   }, []);
 
+  const computeTokens = useCallback(async () => {
+    const conversation = await buildConversation(messageBlocks);
+    const msgPackData = msgpack.encode(conversation);
+    const base64String = fromByteArray(new Uint8Array(msgPackData));
+    return base64String.length;
+  }, [messageBlocks]);
+
   useEffect(() => {
     scrollMessageBoxToBottom();
+    computeTokens().then((tokens) => {
+      setConversationTokens(tokens);
+    });
   }, [messageBlocks]);
 
   const [frameSetup, setFrameSetup] = useState(frameSetups.Top);
@@ -345,7 +359,9 @@ const ChristianAIChatbox = ({
         ) : (
           <Card className="text-red-500 !flex !flex-col !items-center !gap-2 max-w-[300px]">
             <Flex className="!gap-2">
-              <ShieldAlertIcon className="scale-150" />
+              <Flex>
+                <ShieldAlertIcon />
+              </Flex>
               <Text>{block.content}</Text>
             </Flex>
 
@@ -553,7 +569,11 @@ const ChristianAIChatbox = ({
               checked={Conversational}
               onClick={() => setConversational(!Conversational)}
             />
-            <Text className="!ml-1">Converse</Text>
+            <Text className="!ml-1">
+              {Conversational
+                ? "Conversation (" + conversationTokens + " / 10k)"
+                : "Conversation"}
+            </Text>
           </Flex>
         </Flex>
       </Text>
