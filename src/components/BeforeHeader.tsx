@@ -23,7 +23,7 @@ const axioms = [
   {
     title: "Existence of God",
     description:
-      "It is beyond the scope of our current confines to either prove or disprove this, we assume as true: God is.",
+      "It is impossible for any created being to transcend creation and directly verify an external source, assume as true: God is.",
   },
   {
     title: "KJV Bible as Truth",
