@@ -178,12 +178,11 @@ const ChristianAIChatbox = ({
       });
       return true;
     } catch (error) {
-      console.log(data.response);
-      setSystemMessage(
-        "Failure while parsing response from the model, Please wait 30 seconds before trying again",
-      );
+      if (data.response) {
+        setSystemMessage(data.response);
+        return false;
+      }
       console.error(error);
-      return false;
     }
   }
 
@@ -245,16 +244,28 @@ const ChristianAIChatbox = ({
 
     askSchema.conversation = base64String;
 
+    let data = { response: "" };
+
     try {
-      const data = await sendAskReq({
+      data = await sendAskReq({
         message: JSON.stringify(askSchema),
       }).unwrap();
+    } catch (error) {
+      console.error(error);
 
+      setSystemMessage(
+        "A connection error occurred or you are required to wait 30 seconds.",
+      );
+      setIsTyping(false);
+      return; // Exit early to prevent further execution
+    }
+
+    try {
       await parseAIResponse(data);
     } catch (error) {
       console.error(error);
       setSystemMessage(
-        "A connection error occurred, we rate-limit to throttle requests. Please wait 30 seconds and try again.",
+        data.response || "An error occurred while processing the response.",
       );
     } finally {
       setIsTyping(false);
