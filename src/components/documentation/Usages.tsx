@@ -37,11 +37,10 @@ const Usages = () => {
           ultimately limit and segregate.
         </li>
         <li>
-          Please no do abuse the generative AI. It is a tool for exploration and
-          learning. We rate limit requests to prevent abuse. We prefer not to
-          put the services behind a login. It is simply not in our interest to
-          do so. We want to provide the tools for free and open exploration.
-          Porfavor!
+          Please do not abuse the generative AI. It is a tool for exploration
+          and learning. We rate limit requests to prevent abuse. We prefer not
+          to put the services behind a login. It is simply not in our interest
+          to do so. We want to provide the tools for free and open. Porfavor!
         </li>
       </ul>
     </Box>
