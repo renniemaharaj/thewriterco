@@ -23,12 +23,12 @@ const axioms = [
   {
     title: "Existence of God",
     description:
-      "Assume as true: God is. It is impractical to prove or disprove this, as no one can transcend creation to verify an external source.",
+      "It is beyond the scope of our current confines to either prove or disprove this, we assume as true: God is.",
   },
   {
     title: "KJV Bible as Truth",
     description:
-      "The KJV Bible is the complete and authoritative word of God. Any conflicting translation—whether in character, word, verse, or chapter—is false.",
+      "The KJV Bible is the complete and authoritative written source, and word of God.",
   },
   {
     title: "Jesus Christ's First Coming",
@@ -88,106 +88,108 @@ export default function BeforeHeader() {
   }, [axiomParentRef, setFramePosition]);
 
   return (
-    <Flex className="h-screen w-full md:flex-row transition-all !justify-evenly">
-      {/* Sidebar */}
-      <SideBar
-        variant="right"
-        className="!hidden md:!flex flex-col w-[450px] h-full p-6 transition-all"
-        centerBar={
-          <ScrollArea className="flex flex-col h-full">
-            <Text
-              className="max-w-[400px] text-wrap hero-glow"
-              size="8"
-              weight="bold"
-              style={{
-                display: "block",
-                textAlign: "center",
-                transition: "300ms",
-              }}
-            >
-              {hero}
-            </Text>
-            <Tabs.Root defaultValue="axioms" className="mt-8">
-              <Tabs.List className="flex space-x-4 !shadow-none pb-2">
-                <Tabs.Trigger value="axioms" className="px-4 py-2">
-                  Axioms
-                </Tabs.Trigger>
-                <Tabs.Trigger value="documentation" className="px-4 py-2">
-                  Documentation
-                </Tabs.Trigger>
-              </Tabs.List>
+    <SideBar
+      variant="right"
+      className="flex-col w-[96vw] relative m-auto pt-7 !h-[100vh] transition-all !box-border"
+      childLeft={
+        <ScrollArea className="!hidden md:!flex !w-[400px] pr-7 flex-col h-full">
+          <Text
+            className="text-wrap"
+            size="8"
+            weight="bold"
+            style={{
+              display: "block",
+              textAlign: "center",
+              transition: "300ms",
+            }}
+          >
+            {hero}
+          </Text>
+          <Tabs.Root defaultValue="axioms" className="mt-8">
+            <Tabs.List className="flex space-x-4 !shadow-none pb-2">
+              <Tabs.Trigger value="axioms" className="px-4 py-2">
+                Axioms
+              </Tabs.Trigger>
+              <Tabs.Trigger value="reasoning" className="px-4 py-2">
+                Verbose
+              </Tabs.Trigger>
+              <Tabs.Trigger value="services" className="px-4 py-2">
+                Services
+              </Tabs.Trigger>
+            </Tabs.List>
 
-              <Box pt="3">
-                {/* Axioms Section */}
-                <Tabs.Content
-                  ref={axiomParentRef}
-                  value="axioms"
-                  className="!p-1 !overflow-visible"
+            <Box pt="3">
+              {/* Axioms Section */}
+              <Tabs.Content
+                ref={axiomParentRef}
+                value="axioms"
+                className="!overflow-visible"
+              >
+                <Frame {...framePostion} />
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="!gap-4"
                 >
-                  <Frame {...framePostion} />
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="!gap-4"
-                  >
-                    {axioms.map((axiom, index) => (
-                      <Card
-                        key={index}
-                        variant="ghost"
-                        className="!p-2 rounded-xl !my-2 !mx-2"
-                      >
-                        <Text size="2" className="mb-2">
-                          <strong>{axiom.title}</strong>
-                        </Text>
-                        <Text size="2" className="ml-2">
-                          {axiom.description}
-                        </Text>
-                      </Card>
-                    ))}
-                  </motion.div>
-                </Tabs.Content>
+                  {axioms.map((axiom, index) => (
+                    <Card
+                      key={index}
+                      variant="ghost"
+                      className="!p-2 rounded-xl !my-2 !mx-2"
+                    >
+                      <Text size="2" className="mb-2">
+                        <strong>{axiom.title}</strong>
+                      </Text>
+                      <Text size="2" className="ml-2">
+                        {axiom.description}
+                      </Text>
+                    </Card>
+                  ))}
+                </motion.div>
+              </Tabs.Content>
 
-                {/* Documentation Section */}
-                <Tabs.Content value="documentation" className="w-[95%]">
-                  <Text size="4" weight="bold">
-                    Tools Provided
-                  </Text>
-                  <Usages />
+              {/* Reasoning Section */}
+              <Tabs.Content value="reasoning">
+                <Text size="4" weight="bold">
+                  Reasoning for Axioms
+                </Text>
 
-                  <Separator size="4" className="!my-2" />
+                <Axioms />
 
-                  <Text size="4" weight="bold">
-                    Axioms
-                  </Text>
+                <Separator size="4" className="!my-2" />
 
-                  <Axioms />
+                <Text size="4" weight="bold">
+                  Arguments for KJV Translation
+                </Text>
 
-                  <Separator size="4" className="!my-2" />
-
-                  <Text size="4" weight="bold">
-                    Arguments for KJV Translation
-                  </Text>
-
-                  <KJVArguments />
-                </Tabs.Content>
-              </Box>
-            </Tabs.Root>
-          </ScrollArea>
-        }
-      />
-
-      {/* Chatbox Section */}
-      <Card
-        className="!flex overflow-auto !flex-col !mx-auto !rounded-none !justify-center !p-0 !mt-2"
-        variant="ghost"
-      >
-        <ChristianAIChatbox
-          highlightAxioms={debounceHighlightAxioms}
-          className="min-w-[400px] max-w-[600px] !rounded-none"
-        />
-        <Flex className="!flex-col !gap-4 !p-2 !items-center"></Flex>
-      </Card>
-    </Flex>
+                <KJVArguments />
+              </Tabs.Content>
+              {/* Services Section */}
+              <Tabs.Content value="services" className="w-[95%]">
+                <Text size="4" weight="bold">
+                  Services, Usages and Limits
+                </Text>
+                <Usages />
+              </Tabs.Content>
+            </Box>
+          </Tabs.Root>
+        </ScrollArea>
+      }
+      centerBar={<></>}
+      childRight={
+        /* Chatbox Section */
+        <Card
+          className="!flex overflow-auto !flex-col !mx-auto !rounded-none !justify-center"
+          variant="ghost"
+        >
+          <ChristianAIChatbox
+            highlightAxioms={debounceHighlightAxioms}
+            className="min-w-[400px] max-w-[600px] !rounded-none"
+          />
+          <Flex className="!flex-col !gap-4 !p-2 !items-center"></Flex>
+        </Card>
+      }
+    />
   );
 }
