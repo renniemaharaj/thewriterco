@@ -303,7 +303,13 @@ const ChristianAIChatbox = ({
   }, [messageBlocks]);
 
   useEffect(() => {
-    scrollMessageBoxToBottom();
+    if (messageBlocks.length) {
+      const lastMessage = messageBlocks[messageBlocks.length - 1];
+      if (lastMessage.sender === "AI") {
+        scrollMessageBoxToBottom();
+      }
+    }
+
     computeTokens().then((tokens) => {
       setConversationTokens(tokens);
     });
@@ -335,13 +341,20 @@ const ChristianAIChatbox = ({
 
   const AnimatedMessageBlock = ({
     block,
+    animate,
     onAnimated,
   }: {
     block: Block;
+    animate: boolean;
     onAnimated: () => void;
   }) => {
     const [blockMounted, setBlockMounted] = useState(false);
     useEffect(() => {
+      if (!animate) {
+        setBlockMounted(true);
+        onAnimated();
+        return;
+      }
       setTimeout(() => {
         setBlockMounted(true);
         setTimeout(() => onAnimated(), 100);
@@ -495,6 +508,7 @@ const ChristianAIChatbox = ({
             <Flex key={index} justify="center" className={`!flex-col`}>
               <AnimatedMessageBlock
                 block={block}
+                animate={index === messageBlocks.length - 1}
                 onAnimated={scrollMessageBoxToBottom}
               />
             </Flex>
@@ -561,8 +575,8 @@ const ChristianAIChatbox = ({
       <Text as="label" size="2">
         <Flex gap="2" className="!flex-row">
           <Flex className="!p-1">
-            <Badge color="red" size="2">
-              Beta Unstable
+            <Badge color="green" size="2">
+              Beta
             </Badge>
           </Flex>
           <Flex className="!p-1">
