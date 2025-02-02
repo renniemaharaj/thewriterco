@@ -1,5 +1,6 @@
 import { Box } from "@radix-ui/themes";
 import Strong from "./Strong";
+import Collapsible from "../Collapsible";
 
 const reasoningForAxioms = [
   {
@@ -39,8 +40,19 @@ const Axioms = () => {
         point="Introduction"
         content="These axioms are assumed as the foundational premises for reasoning I will briefly explain my reasoning for each axiom, but they require no proof. They are assumed as true."
       />
+
       {reasoningForAxioms.map((axiom, index) => (
-        <Strong key={index} point={axiom.title} content={axiom.description} />
+        <Collapsible
+          maxHeight="max-h-[400px]"
+          title={axiom.title}
+          children={
+            <Strong
+              key={index}
+              point={axiom.title}
+              content={axiom.description}
+            />
+          }
+        />
       ))}
     </Box>
   );
