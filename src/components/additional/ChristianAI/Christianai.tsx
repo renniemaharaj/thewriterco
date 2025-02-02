@@ -502,7 +502,7 @@ const ChristianAIChatbox = ({
         </Flex>
         <Flex
           direction="column"
-          className={`${theme === "dark" ? "shadow rounded-lg" : ""} m-[1rem] box-content !scroll-smooth gap-6`}
+          className={`m-[1rem] box-content !scroll-smooth gap-6`}
         >
           {messageBlocks.map((block, index) => (
             <Flex key={index} justify="center" className={`!flex-col`}>
