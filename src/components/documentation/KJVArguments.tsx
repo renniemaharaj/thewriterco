@@ -1,4 +1,4 @@
-import { Card, Flex, Link, Separator } from "@radix-ui/themes";
+import { Box, Card, Flex, Link, Separator } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes";
 
 interface KJVPoint {
@@ -51,7 +51,7 @@ const kjvArguments: KJVPoint[] = [
 
 const KJVArguments = () => {
   return (
-    <>
+    <Box className="space-y-4 p-4">
       <Flex className="gap-4 !flex-col">
         {kjvArguments.map((argument, index) => (
           <Card variant="ghost" key={index} className="p-4 rounded-xl">
@@ -66,14 +66,14 @@ const KJVArguments = () => {
           </Card>
         ))}
       </Flex>
-      <Separator size="4" className="!my-2" />
+      <Separator size="3" className="!my-2" />
       <Link
         href="https://www.youtube.com/watch?v=zzMKhuMfLF0&t=2875s"
         className="text-center"
       >
         Source: Robert Breaker Why King James Only? Youtube Video
       </Link>
-    </>
+    </Box>
   );
 };
 

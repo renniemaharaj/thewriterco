@@ -8,7 +8,7 @@ import Ereader from "../../components/additional/Ereader";
 import { EBook } from "../../app/ereader/types";
 import { useDispatch } from "react-redux";
 import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
-import ClientExperiences from "../../components/Testamonials";
+import ClientExperiences from "../../components/BeforeHeader";
 
 import Footer from "./Footer";
 
