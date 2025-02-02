@@ -1,5 +1,6 @@
-import { Box } from "@radix-ui/themes";
+import { Box, Callout } from "@radix-ui/themes";
 import Strong from "./Strong";
+import { ShieldBanIcon } from "lucide-react";
 
 const Usages = () => {
   return (
@@ -43,6 +44,16 @@ const Usages = () => {
           to do so. We want to provide the tools for free and open. Porfavor!
         </li>
       </ul>
+      <Callout.Root>
+        <Callout.Icon>
+          <ShieldBanIcon />
+        </Callout.Icon>
+        <Callout.Text>
+          Requests to API are only allowed if they are 30 seconds apart. This is
+          enforced by the server, all successive requests will be rejected and
+          your wait time reinstated.
+        </Callout.Text>
+      </Callout.Root>
     </Box>
   );
 };
