@@ -1,5 +1,6 @@
 import { Box, Card, Flex, Link, Separator } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes";
+import Collapsible from "../Collapsible";
 
 interface KJVPoint {
   title: string;
@@ -54,19 +55,25 @@ const KJVArguments = () => {
     <Box className="space-y-4 p-4">
       <Flex className="gap-4 !flex-col">
         {kjvArguments.map((argument, index) => (
-          <Card variant="ghost" key={index} className="p-4 rounded-xl">
-            <strong>{argument.title}:</strong>
-            <ul className="mt-2 space-y-2 list-disc pl-4">
-              {argument.points.map((point, i) => (
-                <li key={i}>
-                  <Text size="2">{point}</Text>
-                </li>
-              ))}
-            </ul>
-          </Card>
+          <Collapsible
+            key={index}
+            title={argument.title}
+            children={
+              <Card variant="ghost" key={index} className="p-4 rounded-xl">
+                <strong>{argument.title}:</strong>
+                <ul className="mt-2 space-y-2 list-disc pl-4">
+                  {argument.points.map((point, i) => (
+                    <li key={i}>
+                      <Text size="2">{point}</Text>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            }
+          />
         ))}
       </Flex>
-      <Separator size="3" className="!my-2" />
+      <Separator size="4" className="!my-2" />
       <Link
         href="https://www.youtube.com/watch?v=zzMKhuMfLF0&t=2875s"
         className="text-center"

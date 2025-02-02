@@ -139,7 +139,7 @@ export default function BeforeHeader() {
                       className="!p-2 rounded-xl !my-2 !mx-2"
                     >
                       <Text size="2" className="mb-2">
-                        <strong>{axiom.title}</strong>
+                        <strong>{axiom.title}:</strong>
                       </Text>
                       <Text size="2" className="ml-2">
                         {axiom.description}
