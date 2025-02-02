@@ -49,7 +49,7 @@ const Usages = () => {
           <ShieldBanIcon />
         </Callout.Icon>
         <Callout.Text>
-          Requests to API are only allowed if they are 30 seconds apart. This is
+          Requests to API are allowed if they are 30 seconds apart. This is
           enforced by the server, all successive requests will be rejected and
           your wait time reinstated.
         </Callout.Text>
