@@ -52,8 +52,9 @@ const SearchResults = ({
         ))}
 
         <Hint className="max-w-[400px]">
-          These results are generated. If search fails then you can either try
-          again or fine tune your search query.
+          These results are generated and are subject to rate-limiting. If
+          search fails then you can either try again after 30 seconds, and or
+          fine tune your search query.
         </Hint>
         <Flex gap="3" mt="4" justify="end">
           <Dialog.Close>
