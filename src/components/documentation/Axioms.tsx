@@ -8,14 +8,22 @@ const reasoningForAxioms = [
     title: "Existence of God",
     description: (
       <Text>
-        Assume as true: God is. It is impossible for any created being to
-        transcend creation and directly verify an external source. Therefore, we
-        take as our starting point: God is. If you cannot explore the assumtion
-        that God is, then nothing within this framework will satisfy you because
-        we make no attempt to prove God. In mathematics, no one proves that a
-        point has no size or that parallel lines never meet in Euclidean space;
-        these are just taken as given, but required to construct a logical
-        system. So why should the existence of God be treated differently?
+        Assume as true: <strong>God is</strong> It is impossible for any created
+        being to transcend creation and directly verify an external source.
+        However, we have only two possible cases: either <strong>God is</strong>{" "}
+        or he is not. We do not seek to convince nor prove to you that{" "}
+        <strong>God is</strong>, but rather, we fully assume{" "}
+        <strong>God is</strong> for the purpose of this exploration.
+        <br />
+        <br />
+        If you cannot explore the assumtion that <strong>God is</strong>, then
+        nothing within this framework will satisfy you because we make no
+        attempt to prove God. Rather, We seek to construct a logical system from
+        which the answers to four primitive questions can be derived. In
+        mathematics, no one proves that a point has no size or that parallel
+        lines never meet in Euclidean space; these are just taken as given, but
+        required to construct a logical system. So why should the existence of
+        God be treated differently?
         <br />
         <br />
         The demand for proof presupposes that God's existence must be
@@ -48,23 +56,24 @@ const reasoningForAxioms = [
         distractions are too costly, we cannot afford them, and we see through
         the system that enslaves us by our drive to afford these distractions.
         The end of the chase is emptiness. If these questions cannot be answered
-        then I have no drive to continue. I will answer these four questions in
-        terms of the initiator of creation and creation itself. If I cannot
-        derive consistent results then I know that the framework is flawed and I
-        will abandon it. If I can derive consistent results then the framwork is
-        stable much like many concepts in mathematics.
+        then I have no drive to continue. We will derive the answers to these
+        four questions in terms of the initiator of creation and creation
+        itself. If we cannot derive consistent results then we know that the
+        framework is flawed and we will abandon it. If we can derive consistent
+        results then the framwork is stable much like many concepts in
+        mathematics.
         <br />
         <br />
-        These four questions are required to be answered in terms of creation
-        and the initiator of creation since the single term, creation, is not
-        sufficient by itself to derive the answers to all four questions, and we
-        are determined to answer all four questions, but we must begin with the
-        assumption that God is.
+        These four questions are required to be answered in terms of both
+        creation and the initiator of creation since the single term, creation,
+        is not sufficient by itself to derive the answers to all four questions,
+        and we are determined to answer all four questions, but we must begin
+        with the assumption that <strong>God is</strong>.
         <br />
         <br />
-        Having established that God is, and that creation is, we now declare the
-        following constraints for the two terms, creation and initiator, and
-        their relationship:
+        Having established that <strong>God is</strong>, and that creation is,
+        we now declare the following constraints for the two terms: creation and
+        initiator, and their relationship:
         <br />
         <br />
         <ul className={uClassName}>
@@ -80,11 +89,9 @@ const reasoningForAxioms = [
         multiple initiators, their collaboration would require a higher
         governing cause, which itself must be singular and pre-existing. Thus,
         the initiator is necessarily one. We are not interested in proving or
-        disproving the existence of God. Since we have assumed God is and that
-        God is one, we automatically reject any form of polytheism, pantheism,
-        or atheism as they are inconsistent with our constraints and with our
-        framework. We do not seek to convince you that God is, but rather we
-        assume it as true for the purpose of this framework.
+        disproving the existence of God. We automatically reject any form of
+        polytheism, pantheism, or atheism as they are inconsistent with our
+        constraints, and with our framework.
       </Text>
     ),
   },
