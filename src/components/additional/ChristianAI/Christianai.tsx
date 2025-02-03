@@ -254,7 +254,7 @@ const ChristianAIChatbox = ({
       console.error(error);
 
       setSystemMessage(
-        "A connection error occurred or you are required to wait 30 seconds.",
+        "A connection error occurred or you are required to wait 15 seconds.",
       );
       setIsTyping(false);
       return; // Exit early to prevent further execution
