@@ -21,6 +21,7 @@ import Usages from "./documentation/Usages";
 import Axioms from "./documentation/Axioms";
 import Collapsible from "./Collapsible";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import Contribute from "./documentation/Contribute";
 
 const axioms = [
   {
@@ -190,6 +191,11 @@ export default function BeforeHeader() {
                   Services, Usages and Limits
                 </Text>
                 <Usages />
+                <Separator size="4" className="!my-2" />
+                <Text size="4" weight="bold">
+                  Developer Contribute, Issues, and Feedback
+                </Text>
+                <Contribute />
               </Tabs.Content>
             </Box>
           </Tabs.Root>
@@ -206,7 +212,6 @@ export default function BeforeHeader() {
             highlightAxioms={debounceHighlightAxioms}
             className="min-w-[400px] max-w-[600px] !rounded-none"
           />
-          <Flex className="!flex-col !gap-4 !p-2 !items-center"></Flex>
         </Card>
       }
     />
