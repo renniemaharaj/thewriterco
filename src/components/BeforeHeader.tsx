@@ -6,6 +6,7 @@ import {
   Box,
   ScrollArea,
   Separator,
+  Callout,
 } from "@radix-ui/themes";
 import { motion } from "framer-motion";
 import ChristianAIChatbox from "./additional/ChristianAI/Christianai";
@@ -18,6 +19,8 @@ import { debounce } from "lodash";
 import KJVArguments from "./documentation/KJVArguments";
 import Usages from "./documentation/Usages";
 import Axioms from "./documentation/Axioms";
+import Collapsible from "./Collapsible";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 const axioms = [
   {
@@ -123,30 +126,46 @@ export default function BeforeHeader() {
               <Tabs.Content
                 ref={axiomParentRef}
                 value="axioms"
-                className="!overflow-visible"
+                className="!overflow-visible relative"
               >
-                <Frame {...framePostion} />
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="!gap-4"
+                  className="!gap-4 relative !overflow-hidden"
                 >
-                  {axioms.map((axiom, index) => (
-                    <Card
-                      key={index}
-                      variant="ghost"
-                      className="!p-2 rounded-xl !my-2 !mx-2"
-                    >
-                      <Text size="2" className="mb-2">
-                        <strong>{axiom.title}:</strong>
-                      </Text>
-                      <Text size="2" className="ml-2">
-                        {axiom.description}
-                      </Text>
-                    </Card>
-                  ))}
+                  <Flex className="!flex-col !gap-4 !p-4 !overflow-hidden">
+                    <Frame {...framePostion} />
+                    {axioms.map((axiom, index) => (
+                      <Collapsible
+                        key={index}
+                        title={axiom.title}
+                        children={
+                          <Card
+                            key={index}
+                            variant="ghost"
+                            className="!p-2 rounded-xl !my-2 !mx-2"
+                          >
+                            <Text size="2" className="mb-2">
+                              <strong>{axiom.title}:</strong>
+                            </Text>
+                            <Text size="2" className="ml-2">
+                              {axiom.description}
+                            </Text>
+                          </Card>
+                        }
+                      />
+                    ))}
+                  </Flex>
                 </motion.div>
+                <Callout.Root className="mt-5">
+                  <Callout.Icon>
+                    <InfoCircledIcon />
+                  </Callout.Icon>
+                  <Callout.Text>
+                    Verbose reasoning in the "Verbose" tab.
+                  </Callout.Text>
+                </Callout.Root>
               </Tabs.Content>
 
               {/* Reasoning Section */}
