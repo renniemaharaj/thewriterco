@@ -207,7 +207,7 @@ export default function BeforeHeader() {
         <Card className="!flex !flex-[5] !w-auto !flex-col !rounded-none !mx-auto !justify-center">
           <ChristianAIChatbox
             highlightAxioms={debounceHighlightAxioms}
-            className="!w-[85%] !max-w-[100%] !p-0 mx-auto !rounded-none"
+            className="w-[100%] md:!w-[85%]  !max-w-[100%] !p-0 mx-auto !rounded-none"
           />
         </Card>
       }
