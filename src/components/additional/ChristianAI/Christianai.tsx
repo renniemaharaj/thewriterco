@@ -465,7 +465,7 @@ const ChristianAIChatbox = ({
           </>
         )}
 
-        <Flex className="gap-1 mb-4 !flex-wrap max-w-[600px]">
+        <Flex className="gap-1 mb-4 !flex-wrap">
           {suggestions.map((msg, index) => (
             <Button
               key={index}
@@ -538,7 +538,7 @@ const ChristianAIChatbox = ({
       <Flex
         direction="column"
         justify="center"
-        className="text-center !flex-row !gap-2 !p-2 max-w-[500px] !m-auto"
+        className="text-center !flex-row !gap-2 !w-full !p-2 !m-auto"
       >
         <Carousel
           variant="no-scrollbar"
