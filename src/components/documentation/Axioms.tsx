@@ -1,17 +1,92 @@
-import { Box } from "@radix-ui/themes";
+import { Box, Text } from "@radix-ui/themes";
 import Strong from "./Strong";
 import Collapsible from "../Collapsible";
 
+const uClassName = "space-y-2 list-disc pl-4 text-sm";
 const reasoningForAxioms = [
   {
     title: "Existence of God",
-    description: `
-    Assume as true: God is. It is impossible for any created being to transcend creation and directly verify an external source. Therefore, we take as our starting point: God is.
-    This is the beginning of a framework which seeks to answer four questions: Who, What, Why, and How; the questions of a man's heart.
-    These four questions are required to be answered in terms of creation and the initiator of creation, and we are determined to answer these questions, but we must begin with the assumption that God is.
-    We are not interested in proving or disproving the existence of God. We are interested in answering these four questions in terms of creation and the initiator of creation.
-    We automatically reject any form of polytheism, pantheism, or atheism as they are inconsistent with the world around us and with our reasoning thus far:
-    creation is, initiator is, the initiator must be one. If there were multiple initiators, their collaboration would require a higher governing cause, which itself must be singular and pre-existing. Thus, the initiator is necessarily one. Initiator equals God, initiator not equals creation. Since the initiator is one and is not part of creation, we affirm the existence of a monotheistic God.`,
+    description: (
+      <Text>
+        Assume as true: God is. It is impossible for any created being to
+        transcend creation and directly verify an external source. Therefore, we
+        take as our starting point: God is. If you cannot explore the assumtion
+        that God is, then nothing within this framework will satisfy you because
+        we make no attempt to prove God. In mathematics, no one proves that a
+        point has no size or that parallel lines never meet in Euclidean space;
+        these are just taken as given, but required to construct a logical
+        system. So why should the existence of God be treated differently?
+        <br />
+        <br />
+        The demand for proof presupposes that God's existence must be
+        demonstrable like a scientific hypothesis, but what if God's existence
+        is more like an axiom—necessary to construct a logical system, and not
+        derivable from something more fundamental? This is the beginning of a
+        framework which seeks to answer four primitive questions in terms of the
+        initiator of creation and creation itself:
+        <br />
+        <br />
+        <ul className={uClassName}>
+          <li>
+            <strong>Who</strong> created?
+          </li>
+          <li>
+            <strong>What</strong> was created?
+          </li>
+          <li>
+            <strong>Why</strong> was it all created?
+          </li>
+          <li>
+            <strong>How</strong> was it all created?
+          </li>
+        </ul>
+        <br />
+        <br />
+        ;the questions of a man's heart. The answers to these questions are
+        essential for any sense of purpose. We cannot lay idle or buy into the
+        distractions which distract us from asking these questions. No, these
+        distractions are too costly, we cannot afford them, and we see through
+        the system that enslaves us by our drive to afford these distractions.
+        The end of the chase is emptiness. If these questions cannot be answered
+        then I have no drive to continue. I will answer these four questions in
+        terms of the initiator of creation and creation itself. If I cannot
+        derive consistent results then I know that the framework is flawed and I
+        will abandon it. If I can derive consistent results then the framwork is
+        stable much like many concepts in mathematics.
+        <br />
+        <br />
+        These four questions are required to be answered in terms of creation
+        and the initiator of creation since the single term, creation, is not
+        sufficient by itself to derive the answers to all four questions, and we
+        are determined to answer all four questions, but we must begin with the
+        assumption that God is.
+        <br />
+        <br />
+        Having established that God is, and that creation is, we now declare the
+        following constraints for the two terms, creation and initiator, and
+        their relationship:
+        <br />
+        <br />
+        <ul className={uClassName}>
+          <li>Initiator is.</li>
+          <li>Creation is.</li>
+          <li>Initiator not equals creation</li>
+          <li>Initiator, ultimately is one.</li>
+        </ul>
+        <br />
+        <br />
+        The assumed God equals the initiator since we define initiator as an
+        ultimate cause, the definition of God. Initiator is one. If there can be
+        multiple initiators, their collaboration would require a higher
+        governing cause, which itself must be singular and pre-existing. Thus,
+        the initiator is necessarily one. We are not interested in proving or
+        disproving the existence of God. Since we have assumed God is and that
+        God is one, we automatically reject any form of polytheism, pantheism,
+        or atheism as they are inconsistent with our constraints and with our
+        framework. We do not seek to convince you that God is, but rather we
+        assume it as true for the purpose of this framework.
+      </Text>
+    ),
   },
   {
     title: "KJV Bible as Truth",
