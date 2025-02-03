@@ -72,7 +72,7 @@ const Chatbox: React.FC<ChatboxProps> = ({ handleRecieve, disabled }) => {
     <Card
       className={`${
         chatboxFocus ? " border-[#978365] " : "border-transparent"
-      } w-[80%] m-auto !h-auto border-2 outline-none  !flex !gap-2 mt-4 `}
+      } w-[100%] m-auto !h-auto border-2 outline-none !flex !gap-2 mt-4 `}
     >
       <Flex align={"center"} className="flex gap-2 !w-full !justify-evenly">
         <textarea

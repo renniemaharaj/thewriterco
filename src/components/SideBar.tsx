@@ -25,7 +25,7 @@ const SideBar = ({
       height={height}
       // align={"start"}
       justify={"center"}
-      className={`gap-2 !flex-row ${className}`}
+      className={`!flex-row ${className}`}
     >
       {/** Left */}
       {variant === "center" && childLeft}

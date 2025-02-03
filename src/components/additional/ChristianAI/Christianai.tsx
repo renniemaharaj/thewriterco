@@ -6,7 +6,6 @@ import {
   Skeleton,
   Switch,
   Text,
-  Badge,
 } from "@radix-ui/themes";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSendAskReqMutation } from "../../../app/api/apiSlice";
@@ -188,6 +187,7 @@ const ChristianAIChatbox = ({
 
   async function handleMessageSend(msg: string) {
     if (!msg.trim()) return;
+
     setMessageBlocks((prev) => [
       ...prev,
       {
@@ -478,7 +478,7 @@ const ChristianAIChatbox = ({
     return (
       <ScrollArea
         ref={messageBoxRef}
-        className={`${className} !sticky !top-0 !h-[60vh] ${isTyping && "animate-pulse"}`}
+        className={`${className} !top-0 !h-[60vh] ${isTyping && "animate-pulse"}`}
       >
         {canvasView && (
           <>
@@ -487,7 +487,7 @@ const ChristianAIChatbox = ({
           </>
         )}
 
-        <Flex className="gap-1 mb-4 !flex-wrap p-6 max-w-[600px]">
+        <Flex className="gap-1 mb-4 !flex-wrap max-w-[600px]">
           {suggestions.map((msg, index) => (
             <Button
               key={index}
@@ -546,39 +546,34 @@ const ChristianAIChatbox = ({
   }, [messageBlocks]);
 
   return (
-    <>
-      <Card className="!p-0">
-        {canvasView ? (
-          <Flow
-            nodes={[scrollAreaToNode()]}
-            messageBlocksCount={countMessageBlocks()}
-          />
-        ) : (
-          <ScrollAreaComponent />
-        )}
-        <Frame {...frameSetup} />
-        <Flex
-          direction="column"
-          justify="center"
-          className="text-center !flex-row !gap-2 !p-2 max-w-[400px] !m-auto"
-        >
-          <Carousel
-            variant="no-scrollbar"
-            items={executables.map((executable, idx) => (
-              <React.Fragment key={`exe-${idx}`}>
-                {executable.jsxTrigger}
-              </React.Fragment>
-            ))}
-          />
-        </Flex>
-      </Card>
+    <Flex className={`${className} !flex-col`}>
+      {/* <Card className="bg-red-400 !top-0" variant="ghost"> */}
+      {canvasView ? (
+        <Flow
+          nodes={[scrollAreaToNode()]}
+          messageBlocksCount={countMessageBlocks()}
+        />
+      ) : (
+        <ScrollAreaComponent />
+      )}
+      <Frame {...frameSetup} />
+      <Flex
+        direction="column"
+        justify="center"
+        className="text-center !flex-row !gap-2 !p-2 max-w-[500px] !m-auto"
+      >
+        <Carousel
+          variant="no-scrollbar"
+          items={executables.map((executable, idx) => (
+            <React.Fragment key={`exe-${idx}`}>
+              {executable.jsxTrigger}
+            </React.Fragment>
+          ))}
+        />
+      </Flex>
+      {/* </Card> */}
       <Text as="label" size="2">
         <Flex gap="2" className="!flex-row">
-          <Flex className="!p-1">
-            <Badge color="green" size="2">
-              Beta
-            </Badge>
-          </Flex>
           <Flex className="!p-1">
             <Switch
               size="1"
@@ -605,7 +600,7 @@ const ChristianAIChatbox = ({
         disabled={isTyping}
         handleRecieve={(text: string) => handleMessageSend(text)}
       />
-    </>
+    </Flex>
   );
 };
 

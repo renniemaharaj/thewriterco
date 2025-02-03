@@ -94,9 +94,9 @@ export default function BeforeHeader() {
   return (
     <SideBar
       variant="right"
-      className="flex-col w-[96vw] relative m-auto pt-7 !h-[100vh] transition-all !box-border"
+      className="flex-col !w-full relative m-auto !h-[100vh] transition-all"
       childLeft={
-        <ScrollArea className="!hidden md:!flex !w-[400px] pr-7 flex-col h-full">
+        <ScrollArea className="!hidden md:!flex flex-[2.5] !w-[400px] pr-7 pt-7 flex-col h-full">
           <Text
             className="text-wrap"
             size="8"
@@ -204,13 +204,10 @@ export default function BeforeHeader() {
       centerBar={<></>}
       childRight={
         /* Chatbox Section */
-        <Card
-          className="!flex overflow-auto !flex-col !mx-auto !rounded-none !justify-center"
-          variant="ghost"
-        >
+        <Card className="!flex !flex-[5] !w-auto overflow-auto !flex-col !rounded-none !mx-auto !justify-center">
           <ChristianAIChatbox
             highlightAxioms={debounceHighlightAxioms}
-            className="min-w-[400px] max-w-[600px] !rounded-none"
+            className="min-w-[400px] !w-[85%] !p-0 mx-auto !rounded-none"
           />
         </Card>
       }
