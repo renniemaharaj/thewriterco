@@ -92,7 +92,14 @@ function AppContent() {
   const { theme } = useThemeContext();
 
   return (
-    <Theme appearance={theme} accentColor={"gold"}>
+    <Theme
+      appearance={theme}
+      accentColor={"gold"}
+      radius="full"
+      panelBackground="translucent"
+      scaling="105%"
+      grayColor="sage"
+    >
       <MsalProvider instance={msalInstance}>
         <Routes>
           {/* Public Routes */}

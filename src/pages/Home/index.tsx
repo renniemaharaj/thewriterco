@@ -8,7 +8,7 @@ import Ereader from "../../components/additional/Ereader";
 import { EBook } from "../../app/ereader/types";
 import { useDispatch } from "react-redux";
 import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
-import ClientExperiences from "../../components/BeforeHeader";
+import BeforeHeader from "../../components/BeforeHeader";
 
 import Footer from "./Footer";
 
@@ -28,22 +28,24 @@ const Index: React.FC = () => {
 
   return (
     <Flex className="!w-full !flex-col merriweather-bold !p-0`">
-      <ClientExperiences />
+      {/* <BeforeHeader /> */}
+      <BeforeHeader />
+      {/* <Navbar /> */}
       <Navbar />
+
+      {/* <Hero /> */}
       <Hero />
 
       {/* <Articles /> */}
       <Separator size={"4"} />
-      {/* <Observer options={{ threshold: 0.5 }}> */}
-      {/* {({ hasIntersected }) => */}
-      {/* hasIntersected &&  */}
+
+      {/* <Sword />*/}
       <Sword setEBook={setEreaderState} />
-      {/* } */}
-      {/* </Observer> */}
 
       {/* <Footer /> */}
       <Footer />
 
+      {/* <Ereader /> */}
       <Ereader />
     </Flex>
   );
