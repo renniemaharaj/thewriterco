@@ -97,7 +97,7 @@ function AppContent() {
       accentColor={"gold"}
       radius="full"
       panelBackground="translucent"
-      scaling="105%"
+      scaling="100%"
       grayColor="sage"
     >
       <MsalProvider instance={msalInstance}>
