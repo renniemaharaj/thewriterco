@@ -96,7 +96,7 @@ export default function BeforeHeader() {
       variant="right"
       className="flex-col !w-full relative m-auto !h-[100vh] transition-all"
       childLeft={
-        <ScrollArea className="!hidden md:!flex !mx-auto flex-[2.5] !w-[400px] p-2 pt-7 flex-col h-full">
+        <ScrollArea className="!hidden md:!flex !mx-auto flex-[2.2] p-2 pt-7 flex-col h-full">
           <Text
             className="text-wrap"
             size="8"

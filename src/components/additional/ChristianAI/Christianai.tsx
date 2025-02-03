@@ -317,28 +317,6 @@ const ChristianAIChatbox = ({
 
   const [frameSetup] = useState(frameSetups.Top);
 
-  // useEffect(() => {
-  //   if (isTyping) {
-  //     const setups = [
-  //       // frameSetups.VerticalBars,
-  //       frameSetups.CornersNorthEast,
-  //       // frameSetups.HorizontalBars,
-  //       frameSetups.CornersSouthEast,
-  //       // frameSetups.CornersSouthWest,
-  //     ];
-  //     let currentIndex = 0;
-
-  //     const interval = setInterval(() => {
-  //       setFrameSetup(setups[currentIndex]);
-  //       currentIndex = (currentIndex + 1) % setups.length;
-  //     }, 1000); // Change setup every second
-
-  //     return () => clearInterval(interval);
-  //   } else {
-  //     setFrameSetup(frameSetups.Top);
-  //   }
-  // }, [isTyping]);
-
   const AnimatedMessageBlock = ({
     block,
     animate,
