@@ -29,9 +29,13 @@ const reasoningForAxioms = [
         The demand for proof presupposes that God's existence must be
         demonstrable like a scientific hypothesis, but what if God's existence
         is more like an axiom—necessary to construct a logical system, and not
-        derivable from something more fundamental? This is the beginning of a
-        framework which seeks to answer four primitive questions in terms of the
-        initiator of creation and creation itself:
+        derivable from something more fundamental?
+        <br />
+        <br />
+        We perceive an initiator because science suggests a beginning. Hence,
+        this is the beginning of a framework which seeks to answer four
+        primitive questions in terms of the initiator of creation and creation
+        itself:
         <br />
         <br />
         <ul className={uClassName}>
