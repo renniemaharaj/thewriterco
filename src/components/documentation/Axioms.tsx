@@ -32,10 +32,12 @@ const reasoningForAxioms = [
         derivable from something more fundamental?
         <br />
         <br />
-        Since science suggests a beginning, we infer the necessity of an
-        initiator. Based on this inference, we establish a framework to derive
-        answers to four primitive questions concerning the initiator of creation
-        and creation itself:
+        While science suggests a beginning, our detailed observations also lead
+        us to perceive one. However, beyond mere beginnings, we recognize
+        evidence of intelligent design, leading us to infer the necessity of an
+        initiator with personality. Based on this inference, we establish a
+        framework to derive answers to four primitive questions concerning the
+        initiator of creation and creation itself:
         <br />
         <br />
         <ul className={uClassName}>
