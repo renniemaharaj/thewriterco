@@ -4,8 +4,8 @@ import {
   ScrollArea,
   Card,
   Skeleton,
-  Switch,
   Text,
+  Tooltip,
 } from "@radix-ui/themes";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSendAskReqMutation } from "../../../app/api/apiSlice";
@@ -144,33 +144,36 @@ const ChristianAIChatbox = ({
           ...prev,
           {
             jsxTrigger: (
-              <Button
-                variant="ghost"
-                size="1"
-                className="animate-pulse !font-bold"
-                onClick={() => {
-                  fetchGitBlob(scripture.book).then((content) => {
-                    dispatch(
-                      setEBook({
-                        title: scripture.book,
-                        content: JSON.parse(content),
-                        date: new Date().toDateString(),
-                      } as EBook),
-                    );
-                    dispatch(setRenderStyle("bible"));
-                    dispatch(
-                      setGlobalCurrentChapter(scripture.chapterNo.toString()),
-                    );
-                    dispatch(
-                      setGlobalCurrentVerse(scripture.verseNo.toString()),
-                    );
-                    setTimeout(() => dispatch(setOpenState(true)), 100);
-                  });
-                }}
-              >
-                <PlayCircleIcon /> {scripture.book} {scripture.chapterNo}:
-                {scripture.verseNo}
-              </Button>
+              <Tooltip content={scripture.verseContent}>
+                {/* <IconButton radius="full"> */}
+                <Button
+                  variant="ghost"
+                  size="1"
+                  className="animate-pulse !font-bold"
+                  onClick={() => {
+                    fetchGitBlob(scripture.book).then((content) => {
+                      dispatch(
+                        setEBook({
+                          title: scripture.book,
+                          content: JSON.parse(content),
+                          date: new Date().toDateString(),
+                        } as EBook),
+                      );
+                      dispatch(setRenderStyle("bible"));
+                      dispatch(
+                        setGlobalCurrentChapter(scripture.chapterNo.toString()),
+                      );
+                      dispatch(
+                        setGlobalCurrentVerse(scripture.verseNo.toString()),
+                      );
+                      setTimeout(() => dispatch(setOpenState(true)), 100);
+                    });
+                  }}
+                >
+                  <PlayCircleIcon /> {scripture.book} {scripture.chapterNo}:
+                  {scripture.verseNo}
+                </Button>
+              </Tooltip>
             ),
           },
         ]);
@@ -533,33 +536,30 @@ const ChristianAIChatbox = ({
         />
       </Flex>
       {/* </Card> */}
-      <Text as="label" size="2">
-        <Flex gap="2" className="!flex-row">
-          <Flex className="!p-1">
-            <Switch
-              size="1"
-              checked={canvasView}
-              onClick={() => setCanvasView(!canvasView)}
-            />
-            <Text className="!ml-1">Canvas</Text>
-          </Flex>
-          <Flex className="!p-1">
-            <Switch
-              size="1"
-              checked={Conversational}
-              onClick={() => setConversational(!Conversational)}
-            />
-            <Text className="!ml-1">
-              {Conversational
-                ? "Conversation (" + conversationTokens + " / 10k)"
-                : "Conversation"}
-            </Text>
-          </Flex>
-        </Flex>
-      </Text>
+      <Text as="label" size="2"></Text>
       <Chatbox
         disabled={isTyping}
         handleRecieve={(text: string) => handleMessageSend(text)}
+        children={
+          <Flex gap="2" className="!flex-row">
+            <Flex align={"center"} className="!p-1 gap-2">
+              <Button
+                variant={canvasView ? "soft" : "outline"}
+                onClick={() => setCanvasView(!canvasView)}
+              >
+                Canvas
+              </Button>
+              <Button
+                variant={Conversational ? "soft" : "outline"}
+                onClick={() => setConversational(!Conversational)}
+              >
+                {Conversational
+                  ? "Conversation (" + conversationTokens + " / 10k)"
+                  : "Conversation"}
+              </Button>
+            </Flex>
+          </Flex>
+        }
       />
     </Flex>
   );

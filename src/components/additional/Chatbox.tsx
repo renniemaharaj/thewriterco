@@ -1,13 +1,18 @@
-import { Card, Flex } from "@radix-ui/themes";
+import { Button, Card, Flex } from "@radix-ui/themes";
 import { ArrowUpIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 interface ChatboxProps {
   handleRecieve: (input: string) => void;
   disabled: boolean;
+  children?: React.ReactNode;
 }
 
-const Chatbox: React.FC<ChatboxProps> = ({ handleRecieve, disabled }) => {
+const Chatbox: React.FC<ChatboxProps> = ({
+  handleRecieve,
+  disabled,
+  children,
+}) => {
   const [message, setMessage] = useState("");
   const [chatboxFocus, setChatboxFocus] = useState(false);
 
@@ -72,29 +77,31 @@ const Chatbox: React.FC<ChatboxProps> = ({ handleRecieve, disabled }) => {
     <Card
       className={`${
         chatboxFocus ? " border-[#978365] " : "border-transparent"
-      } w-[100%] m-auto !h-auto border-2 outline-none !flex !gap-2 mt-4 `}
+      } w-[90%] m-auto !h-auto border-2 outline-none !flex !flex-col !gap-2 mt-4 `}
     >
-      <Flex align={"center"} className="flex gap-2 !w-full !justify-evenly">
-        <textarea
-          ref={textAreaRef}
-          disabled={disabled}
-          className="scrollbar-hide flex-1 border-none outline-none resize-none text-sm p-2 bg-transparent max-h-[150px]"
-          placeholder="What would you like help with?"
-          rows={1}
-          value={message}
-          onChange={handleInput}
-          onKeyDown={handleKeyDown}
-        />
-        <Flex className="flex !gap-2 !align-middle !justify-center">
-          {message.trim() && (
-            <ArrowUpIcon
-              className=" text-yellow-500 hover:text-yellow-700 cursor-pointer"
-              onClick={sendMessage}
-            />
-          )}
-          {/* <NetworkIcon className={`${extraToolIconClassNames}`} /> */}
+      <Flex>
+        <Flex align={"center"} className="flex gap-2 !w-full !justify-evenly">
+          <textarea
+            ref={textAreaRef}
+            disabled={disabled}
+            className="scrollbar-hide flex-1 border-none outline-none resize-none text-sm p-2 bg-transparent !max-h-[3rem]"
+            placeholder="What would you like help with?"
+            rows={1}
+            value={message}
+            onChange={handleInput}
+            onKeyDown={handleKeyDown}
+          />
+          <Flex className="flex !gap-2 !align-middle !justify-center">
+            {message.trim() && (
+              <Button onClick={sendMessage} variant="soft">
+                <ArrowUpIcon />
+              </Button>
+            )}
+            {/* <NetworkIcon className={`${extraToolIconClassNames}`} /> */}
+          </Flex>
         </Flex>
       </Flex>
+      {children}
     </Card>
   );
 };

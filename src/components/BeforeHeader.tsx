@@ -132,52 +132,57 @@ export default function BeforeHeader() {
                 value="axioms"
                 className="!overflow-visible relative"
               >
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="!gap-4 relative !overflow-hidden"
-                >
-                  <Flex className="!flex-col !gap-4 !p-4 !overflow-hidden">
-                    <Frame {...framePostion} />
-                    {axioms.map((axiom, index) => (
-                      <Collapsible
-                        key={index}
-                        title={axiom.title}
-                        children={
-                          <Card
-                            key={index}
-                            variant="ghost"
-                            className="!p-2 rounded-xl !my-2 !mx-2"
-                          >
-                            <Text size="2" className="mb-2">
-                              <strong>{axiom.title}:</strong>
-                            </Text>
-                            <Text size="2" className="ml-2">
-                              {axiom.description}
-                            </Text>
-                          </Card>
-                        }
-                      />
-                    ))}
-                  </Flex>
-                </motion.div>
-                <Callout.Root className="mt-5">
-                  <Callout.Icon>
-                    <InfoCircledIcon />
-                  </Callout.Icon>
-                  <Callout.Text>
-                    Verbose reasoning in the "Verbose" tab.
-                  </Callout.Text>
-                </Callout.Root>
-                <Callout.Root className="mt-5">
-                  <Callout.Icon>
-                    <InfoCircledIcon />
-                  </Callout.Icon>
-                  <Callout.Text>
-                    External sources and arguments are considered separately.
-                  </Callout.Text>
-                </Callout.Root>
+                <Box className="space-y-4 p-4">
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="!gap-4 relative !overflow-hidden"
+                  >
+                    <Flex className="!flex-col !gap-4 !p-4 !overflow-hidden">
+                      <Frame {...framePostion} />
+                      {axioms.map((axiom, index) => (
+                        <Collapsible
+                          key={index}
+                          title={axiom.title}
+                          children={
+                            <Card
+                              key={index}
+                              variant="ghost"
+                              className="!p-2 rounded-xl !my-2 !mx-2"
+                            >
+                              <Text size="2" className="mb-2">
+                                <strong>{axiom.title}:</strong>
+                              </Text>
+                              <Text size="2" className="ml-2">
+                                {axiom.description}
+                              </Text>
+                            </Card>
+                          }
+                        />
+                      ))}
+                    </Flex>
+                  </motion.div>
+                </Box>
+                <Box className="space-y-4 p-4">
+                  <Callout.Root className="mt-5">
+                    <Callout.Icon>
+                      <InfoCircledIcon />
+                    </Callout.Icon>
+                    <Callout.Text>
+                      Verbose reasoning in the "Verbose" tab.
+                    </Callout.Text>
+                  </Callout.Root>
+                  <Separator size="4" className="!my-2" />
+                  <Callout.Root className="mt-5">
+                    <Callout.Icon>
+                      <InfoCircledIcon />
+                    </Callout.Icon>
+                    <Callout.Text>
+                      We recommend viewing this site in dark mode.
+                    </Callout.Text>
+                  </Callout.Root>
+                </Box>
               </Tabs.Content>
 
               {/* Reasoning Section */}
@@ -216,11 +221,11 @@ export default function BeforeHeader() {
       childRight={
         /* Chatbox Section */
         <Flex
-          className={`${theme === "dark" ? "bg-[#171918]" : "border"} !flex !flex-[5] !w-auto !flex-col border-not-rounded !mx-auto !justify-center`}
+          className={`${theme === "dark" ? "bg-[#171918]" : "border"} p-2 !flex !flex-[5] !flex-col border-not-rounded`}
         >
           <ChristianAIChatbox
             highlightAxioms={debounceHighlightAxioms}
-            className="w-[100%] md:!w-[85%]  !max-w-[100%] !p-0 mx-auto !rounded-none"
+            className="w-[100%] md:!w-[85%] !max-w-[100%] !p-0 mx-auto !rounded-none"
           />
         </Flex>
       }
