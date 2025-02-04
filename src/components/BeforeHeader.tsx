@@ -16,7 +16,7 @@ import Frame from "./frames/Frame";
 import { FrameBarSetup } from "./frames/types";
 import { frameSetups } from "./frames/frameVarients";
 import { debounce } from "lodash";
-import KJVArguments from "./documentation/KJVArguments";
+import KJVersions from "./documentation/KJVersion";
 import Usages from "./documentation/Usages";
 import Axioms from "./documentation/Axioms";
 import Collapsible from "./Collapsible";
@@ -180,10 +180,10 @@ export default function BeforeHeader() {
                 <Separator size="4" className="!my-2" />
 
                 <Text size="4" weight="bold">
-                  Arguments for KJV Translation
+                  Considerations for KJV
                 </Text>
 
-                <KJVArguments />
+                <KJVersions />
               </Tabs.Content>
               {/* Services Section */}
               <Tabs.Content value="services" className="w-[95%]">

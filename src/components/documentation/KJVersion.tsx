@@ -1,6 +1,7 @@
-import { Box, Card, Flex, Link, Separator } from "@radix-ui/themes";
+import { Box, Callout, Card, Flex, Link, Separator } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes";
 import Collapsible from "../Collapsible";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 interface KJVPoint {
   title: string;
@@ -73,6 +74,7 @@ const KJVArguments = () => {
           />
         ))}
       </Flex>
+
       <Separator size="4" className="!my-2" />
       <Link
         href="https://www.youtube.com/watch?v=zzMKhuMfLF0&t=2875s"
@@ -80,6 +82,28 @@ const KJVArguments = () => {
       >
         Source: Robert Breaker Why King James Only? Youtube Video
       </Link>
+      <Separator size="4" className="!my-2" />
+      <Collapsible
+        title="However"
+        children={
+          <Callout.Root>
+            <Callout.Icon>
+              <InfoCircledIcon />
+            </Callout.Icon>
+            <Callout.Text>
+              Our second axiom is not directly derived from the external points
+              made in favor of the KJV. Rather, we adopt the KJV because it best
+              satisfies the constraints of our framework. We believe it to be
+              the most consistent, historically sound, and doctrinally pure
+              source of scripture within Christianity, which we prioritize as
+              the most coherent system answering our four fundamental questions
+              while satisfying our constraints. However, while our framework
+              remains independent of these external considerations, it should
+              still remain consistent with any actual truth.
+            </Callout.Text>
+          </Callout.Root>
+        }
+      />
     </Box>
   );
 };
