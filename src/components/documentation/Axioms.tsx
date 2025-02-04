@@ -18,7 +18,7 @@ const reasoningForAxioms = [
         <br />
         If you cannot explore the assumtion that <strong>God is</strong>, then
         nothing within this framework will satisfy you because we make no
-        attempt to prove God. Rather, We seek to construct a logical system from
+        attempt to prove God. Rather, we seek to construct a logical system from
         which the answers to four primitive questions can be derived. In
         mathematics, no one proves that a point has no size or that parallel
         lines never meet in Euclidean space; these are just taken as given, but
@@ -97,16 +97,34 @@ const reasoningForAxioms = [
   },
   {
     title: "KJV Bible as Truth",
-    description: `
-    The KJV Bible is the complete and authoritative written source, and Word of God. Any conflicting translation—whether in character, word, verse, or chapter—is false.
-    Having established that God is and that God is one, we must now gather and analyze the information we have about God. This information comes from scripture, but first, we must determine which scripture is true, since many claim to be true yet contradict each other.
-    The true scripture must:
-    Provide answers or pointers toward the answers to our four fundamental questions (Who, What, Why, and How).
-    Be internally consistent (without contradictions).
-    Be consistent with the world around us (historically, prophetically, and doctrinally sound).
-    Among all religious texts, we have chosen scripture from the Christian faith as our lead. Within Christianity, the KJV Bible stands as the most consistent, historically sound, and doctrinally pure version.
-    We do not attempt to prove the KJV Bible to be true; rather, we assume it as true for the purpose of this framework, while external arguments and sources are considered separately.
-    `,
+    description: (
+      <Text>
+        The KJV Bible is the complete and authoritative written source, and word
+        of God. Any conflicting translation—whether in character, word, verse,
+        or chapter—is false. We have much information on the term: creation so
+        building on the first axiom, we have established, and in our quest to
+        answer the four fundamental questions, we now gather and analyze the
+        information we have about the second term: God (Initiator). This
+        information comes from scripture, but first, we must determine which
+        scripture is true, since many claim to be true yet contradict each
+        other.
+        <br />
+        <br />
+        The true scripture must: Provide answers or pointers toward the answers
+        to our four fundamental questions, They must be: internally consistent
+        (without contradictions), consistent with the world around us
+        (historically, prophetically, and doctrinally sound) and satisfy our
+        constraints.
+        <br />
+        <br />
+        Among all religious texts, we have chosen scripture from the Christian
+        faith as our lead. Within Christianity, the KJV Bible stands as the most
+        consistent, historically sound, and doctrinally pure version. We do not
+        attempt to prove the KJV Bible to be true; rather, we assume it as true
+        for the purpose of this framework, while external arguments and sources
+        are considered separately.
+      </Text>
+    ),
   },
   {
     title: "Jesus Christ's First Coming",
