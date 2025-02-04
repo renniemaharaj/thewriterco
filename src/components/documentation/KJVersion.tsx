@@ -99,7 +99,7 @@ const KJVArguments = () => {
               the most coherent system answering our four fundamental questions
               while satisfying our constraints. However, while our framework
               remains independent of these external considerations, it should
-              still remain consistent with any actual truth.
+              still remain consistent with any actual truth, and or corrections.
             </Callout.Text>
           </Callout.Root>
         }
