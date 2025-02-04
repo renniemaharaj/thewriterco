@@ -22,6 +22,7 @@ import Axioms from "./documentation/Axioms";
 import Collapsible from "./Collapsible";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import Contribute from "./documentation/Contribute";
+import { useThemeContext } from "./context/useThemeContext";
 
 const axioms = [
   {
@@ -43,6 +44,8 @@ const axioms = [
 
 export default function BeforeHeader() {
   const hero = "TheWriterCo";
+
+  const { theme } = useThemeContext();
 
   const [framePostion, setFramePosition] = useState<FrameBarSetup>(
     frameSetups.CornersNorthEastSM,
@@ -167,6 +170,14 @@ export default function BeforeHeader() {
                     Verbose reasoning in the "Verbose" tab.
                   </Callout.Text>
                 </Callout.Root>
+                <Callout.Root className="mt-5">
+                  <Callout.Icon>
+                    <InfoCircledIcon />
+                  </Callout.Icon>
+                  <Callout.Text>
+                    External sources and arguments are considered separately.
+                  </Callout.Text>
+                </Callout.Root>
               </Tabs.Content>
 
               {/* Reasoning Section */}
@@ -204,12 +215,14 @@ export default function BeforeHeader() {
       centerBar={<></>}
       childRight={
         /* Chatbox Section */
-        <Card className="!flex !flex-[5] !w-auto !flex-col !rounded-none !mx-auto !justify-center">
+        <Flex
+          className={`${theme === "dark" ? "bg-[#171918]" : "border"} !flex !flex-[5] !w-auto !flex-col border-not-rounded !mx-auto !justify-center`}
+        >
           <ChristianAIChatbox
             highlightAxioms={debounceHighlightAxioms}
             className="w-[100%] md:!w-[85%]  !max-w-[100%] !p-0 mx-auto !rounded-none"
           />
-        </Card>
+        </Flex>
       }
     />
   );

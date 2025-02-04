@@ -21,8 +21,8 @@ import {
   ShieldAlertIcon,
 } from "lucide-react";
 import { Block, Executable } from "./types";
-import Frame from "../../frames/Frame.tsx";
-import { frameSetups } from "../../frames/frameVarients.ts";
+// import Frame from "../../frames/Frame.tsx";
+// import { frameSetups } from "../../frames/frameVarients.ts";
 import Flow from "../../flow/Flow.tsx";
 import { Node } from "@xyflow/react";
 import { Carousel } from "../Carousel.tsx";
@@ -315,31 +315,16 @@ const ChristianAIChatbox = ({
     });
   }, [messageBlocks]);
 
-  const [frameSetup] = useState(frameSetups.Top);
+  // const [frameSetup] = useState(frameSetups.Top);
 
-  const AnimatedMessageBlock = ({
+  const MessageBlock = ({
     block,
-    animate,
-    onAnimated,
   }: {
     block: Block;
     animate: boolean;
     onAnimated: () => void;
   }) => {
-    const [blockMounted, setBlockMounted] = useState(false);
-    useEffect(() => {
-      if (!animate) {
-        setBlockMounted(true);
-        onAnimated();
-        return;
-      }
-      setTimeout(() => {
-        setBlockMounted(true);
-        setTimeout(() => onAnimated(), 100);
-      }, 1000);
-    }, []);
-
-    return blockMounted || block.sender === "User" ? (
+    return (
       <Flex
         direction="column"
         justify={block.sender === "User" ? "end" : "start"}
@@ -392,8 +377,6 @@ const ChristianAIChatbox = ({
           </Card>
         )}
       </Flex>
-    ) : (
-      <SkeletonTextBlock />
     );
   };
   const SkeletonTextBlock = () => {
@@ -484,7 +467,7 @@ const ChristianAIChatbox = ({
         >
           {messageBlocks.map((block, index) => (
             <Flex key={index} justify="center" className={`!flex-col`}>
-              <AnimatedMessageBlock
+              <MessageBlock
                 block={block}
                 animate={index === messageBlocks.length - 1}
                 onAnimated={scrollMessageBoxToBottom}
@@ -534,7 +517,7 @@ const ChristianAIChatbox = ({
       ) : (
         <ScrollAreaComponent />
       )}
-      <Frame {...frameSetup} />
+      {/* <Frame {...frameSetup} /> */}
       <Flex
         direction="column"
         justify="center"
