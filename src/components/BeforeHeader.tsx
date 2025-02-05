@@ -101,7 +101,7 @@ export default function BeforeHeader() {
       childLeft={
         <ScrollArea className="!hidden md:!flex !mx-auto flex-[2.2] p-2 pt-7 flex-col h-full">
           <Text
-            className="text-wrap"
+            className="text-wrap cursor-pointer"
             size="8"
             weight="bold"
             style={{
@@ -109,6 +109,7 @@ export default function BeforeHeader() {
               textAlign: "center",
               transition: "300ms",
             }}
+            onClick={() => (location.href = "/")}
           >
             {hero}
           </Text>

@@ -28,10 +28,10 @@ type NavLink = {
 const navLinksArray: NavLink[] = [
   { label: "About", href: "#footer", disabled: false },
   { label: "Articles", href: "#articles", disabled: true },
-  { label: "Biblical", href: "#biblical", disabled: false },
+  { label: "KJV", href: "/kjv", disabled: false },
   { label: "Sources", href: "#footer", disabled: false },
   { label: "Deducer", href: "/deducer", disabled: false },
-  { label: "Home", href: "/boarding", disabled: false },
+  { label: "AI", href: "/ai", disabled: false },
 ];
 
 // TypeScript interfaces for the response schema
@@ -118,7 +118,13 @@ const Navbar: React.FC = () => {
         className="container mx-auto flex !justify-between !items-center !px-1 !gap-2 !max-w-5xl"
       >
         {/* Logo Section */}
-        <Text as="div" size="4" weight="bold">
+        <Text
+          as="div"
+          size="4"
+          weight="bold"
+          className="cursor-pointer"
+          onClick={() => (location.href = "/")}
+        >
           TheWriterCo
         </Text>
 

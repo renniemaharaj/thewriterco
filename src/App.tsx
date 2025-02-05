@@ -20,6 +20,7 @@ import NoPage from "./pages/404";
 import Welcome from "./pages/Welcome";
 import IntDeducer from "./pages/deducer/IntDeducer";
 import AI from "./pages/AI";
+import Kjv from "./pages/Kjv";
 
 // MSAL Configuration
 const msalConfig = {
@@ -72,6 +73,10 @@ const publicRoutes: (CustomRoute | IndexRoute)[] = [
   {
     path: "ai",
     element: <AI />,
+  },
+  {
+    path: "kjv",
+    element: <Kjv />,
   },
 ];
 
