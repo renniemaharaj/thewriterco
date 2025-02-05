@@ -1,4 +1,4 @@
-import { Flex, Separator } from "@radix-ui/themes";
+import { Button, Flex, Separator, Text } from "@radix-ui/themes";
 // import Footer from "../../components/additional/footer";
 import Navbar from "../../components/additional/NavBar";
 import Hero from "../../components/additional/Hero";
@@ -8,7 +8,7 @@ import Ereader from "../../components/additional/Ereader";
 import { EBook } from "../../app/ereader/types";
 import { useDispatch } from "react-redux";
 import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
-import BeforeHeader from "../../components/BeforeHeader";
+// import BeforeHeader from "../../components/BeforeHeader";
 
 import Footer from "./Footer";
 
@@ -28,15 +28,27 @@ const Index: React.FC = () => {
 
   return (
     <Flex className="!w-full !flex-col merriweather-bold !p-0`">
-      {/* <BeforeHeader /> */}
-      <BeforeHeader />
       {/* <Navbar /> */}
       <Navbar />
 
       {/* <Hero /> */}
       <Hero />
 
-      {/* <Articles /> */}
+      <Flex className="w-full flex-col items-center justify-center p-8">
+        <Text className="text-2xl font-semibold text-foreground text-center leading-tight">
+          Explore the Bible through our <br /> AI-powered study tool
+        </Text>
+        <Text className="text-sm text-muted-foreground text-center mt-2">
+          Engage with an AI model designed to help you study scripture deeply.
+        </Text>
+        <Button
+          variant="soft"
+          className="mt-5 px-6 py-3 text-lg font-medium rounded-lg"
+          onClick={() => (location.href = "/ai")}
+        >
+          Start Chatting Now
+        </Button>
+      </Flex>
       <Separator size={"4"} />
 
       {/* <Sword />*/}

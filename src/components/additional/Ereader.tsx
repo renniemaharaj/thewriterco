@@ -153,10 +153,15 @@ const Ereader: React.FC = () => {
     >
       <div className={`flex justify-center gap-2 items-center p-4 border-b`}>
         {/* <h2 className="text-xl font-semibold">{eReaderState.eContent.title}</h2> */}
-        <BiblePicker trigger={<Button>{eReaderState.eContent.title}</Button>} />
+        <BiblePicker
+          trigger={
+            <Button variant="soft">{eReaderState.eContent.title}</Button>
+          }
+        />
         <IconButton
           onClick={() => dispatch(toggleOpenState())}
           aria-label="Toggle Ereader"
+          variant="soft"
         >
           {eReaderState.isOpen ? <BookDownIcon /> : <BookUpIcon />}
         </IconButton>
@@ -184,14 +189,14 @@ const Ereader: React.FC = () => {
             <ChristianAIChatbox className="!mx-10 !sticky !top-0" />
           </Section> */}
           {readerState === "bible" && (
-            <div className="!gap-4 justify-center">
+            <Flex className="!gap-4 justify-center">
               <Select.Root
                 defaultValue={currentChapter || ""}
                 value={currentChapter || ""}
                 onValueChange={(val) => handleChapterChange(val)}
               >
                 <Select.Trigger>
-                  <Button>{"Chapter " + currentChapter}</Button>
+                  <Button variant="soft">{"Chapter " + currentChapter}</Button>
                 </Select.Trigger>
                 <Select.Content>
                   {Object.keys(eReaderState.eContent.content).map((chapter) => (
@@ -208,7 +213,7 @@ const Ereader: React.FC = () => {
                 onValueChange={(val) => handleVerseChange(val)}
               >
                 <Select.Trigger>
-                  <Button>{"Verse " + currentVerse}</Button>
+                  <Button variant="soft">{"Verse " + currentVerse}</Button>
                 </Select.Trigger>
                 <Select.Content>
                   {currentChapter &&
@@ -223,10 +228,10 @@ const Ereader: React.FC = () => {
                     ))}
                 </Select.Content>
               </Select.Root>
-            </div>
+            </Flex>
           )}
           <Flex className="!justify-center !items-center space-x-4">
-            <IconButton onClick={() => navigateVerse("prev")}>
+            <IconButton onClick={() => navigateVerse("prev")} variant="soft">
               <ChevronLeftIcon />
             </IconButton>
             <div
@@ -256,7 +261,7 @@ const Ereader: React.FC = () => {
                 <p>No content to display.</p>
               )}
             </div>
-            <IconButton onClick={() => navigateVerse("next")}>
+            <IconButton onClick={() => navigateVerse("next")} variant="soft">
               <ChevronRightIcon />
             </IconButton>
           </Flex>

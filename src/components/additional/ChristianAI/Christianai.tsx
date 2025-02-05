@@ -564,6 +564,7 @@ const ChristianAIChatbox = ({
                   : "Conversation"}
               </Button>
               <SegmentedControl.Root
+                variant="classic"
                 size={"2"}
                 defaultValue={responseConstraint}
               >

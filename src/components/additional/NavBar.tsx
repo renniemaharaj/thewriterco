@@ -128,7 +128,10 @@ const Navbar: React.FC = () => {
           align="center"
           className="!w-full max-w-[400px] !md:w-auto !gap-4"
         >
-          <form ref={formRef} className="flex gap-2 w-full max-w-lg">
+          <form
+            ref={formRef}
+            className="flex gap-2 w-full max-w-lg !items-center"
+          >
             <TextField.Root
               onChange={(e) => setLocalSearchState(e.target.value)}
               value={localSearchState}
@@ -136,8 +139,14 @@ const Navbar: React.FC = () => {
               id="article-search-box-id"
               placeholder="Search the bible in pure english"
               className="w-full"
+              size={"2"}
             />
-            <IconButton disabled={isLoading} type="submit" aria-label="Search">
+            <IconButton
+              disabled={isLoading}
+              type="submit"
+              aria-label="Search"
+              variant="soft"
+            >
               <ScanSearchIcon aria-label="Search" width="18" height="18" />
             </IconButton>
             <SearchLoading isLoading={isLoading} />
