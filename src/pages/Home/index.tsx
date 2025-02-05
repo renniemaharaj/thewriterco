@@ -21,7 +21,7 @@ const Index: React.FC = () => {
         <Text className="text-sm text-muted-foreground text-center mt-2">
           Engage with an AI model designed to help you study scripture deeply.
           <br />
-          Service are free and open, no account required.
+          Services are free and open, no account required.
         </Text>
         <Button
           variant="soft"
