@@ -16,10 +16,12 @@ const Index: React.FC = () => {
       <Separator size={"4"} />
       <Flex className="w-full flex-col items-center justify-center p-8 gap-2">
         <Text className="text-2xl font-semibold text-foreground text-center leading-tight">
-          Explore the Bible through our <br /> AI-powered study tool
+          Explore the Bible through our <br /> AI-powered study tools
         </Text>
         <Text className="text-sm text-muted-foreground text-center mt-2">
           Engage with an AI model designed to help you study scripture deeply.
+          <br />
+          Service are free and open, no account required.
         </Text>
         <Button
           variant="soft"
