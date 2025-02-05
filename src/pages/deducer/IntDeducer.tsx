@@ -7,9 +7,11 @@ import {
 } from "./config";
 import { generatePossibilities, mean } from "./utils";
 import { QueryForm, GameEndNotice } from "./types";
-import { Flex, Box, Button, Text, Link } from "@radix-ui/themes";
+import { Flex, Box, Button, Text, Link, Separator } from "@radix-ui/themes";
 import { AllowedColors } from "../../components/RadixColors";
 import Hint from "../../components/Hint";
+import Navbar from "../../components/additional/NavBar";
+import Footer from "../Home/Footer";
 
 type Mind = {
   title: string;
@@ -180,83 +182,91 @@ const App: React.FC = () => {
   };
 
   return (
-    <Flex
-      direction="column"
-      align="center"
-      justify="center"
-      className="h-screen"
-    >
-      {!gamingStatus ? (
-        <Flex className="!flex-col">
-          <Text className="mb-4 !w-[400px] !text-wrap">
-            "I can guess any natural number you think of from the range (0,∞)" -
-            Rennie
-          </Text>
-          <Button
-            onClick={beginGame}
-            className="bg-blue-500 text-white px-4 py-2 rounded !max-w-fit"
-          >
-            I have a number
-          </Button>
-          <Link href="/">thewriter.com</Link>
-        </Flex>
-      ) : (
-        <Box className="text-center">
-          <Text className="text-xl mb-4">{`Maximum steps required: ${queriesRequired.current}`}</Text>
-          {queryForm.visibility &&
-            queriesRequired.current > 0 &&
-            possibilities.current.length > 1 && (
-              <Box className="flex !gap-4">
-                <Flex className="!gap-2">
-                  <Text>{queryForm.textContent}</Text>
-                  <Flex gap={"3"}>
-                    <Button
-                      variant="ghost"
-                      onClick={() => applyQueryResult(true)}
-                      className="bg-green-500 text-white px-4 py-2 rounded"
-                    >
-                      Yes
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      onClick={() => applyQueryResult(false)}
-                      className="bg-red-500 text-white px-4 py-2 rounded"
-                    >
-                      No
-                    </Button>
+    <Flex className="!w-full !flex-col merriweather-bold !p-0`">
+      {/* <Navbar /> */}
+      <Navbar />
+      <Flex
+        direction="column"
+        align="center"
+        justify="center"
+        className="!w-full !p-10"
+      >
+        {!gamingStatus ? (
+          <Flex className="!flex-col">
+            <Text className="mb-4 !w-[400px] !text-wrap">
+              "I can guess any natural number you think of from the range (0,∞)"
+              - Rennie
+            </Text>
+            <Button
+              onClick={beginGame}
+              className="bg-blue-500 text-white px-4 py-2 rounded !max-w-fit"
+              variant="soft"
+            >
+              I have a number
+            </Button>
+            <Link href="/">thewriter.com</Link>
+          </Flex>
+        ) : (
+          <Box className="text-center">
+            <Text className="text-xl mb-4">{`Maximum steps required: ${queriesRequired.current}`}</Text>
+            {queryForm.visibility &&
+              queriesRequired.current > 0 &&
+              possibilities.current.length > 1 && (
+                <Box className="flex !gap-4">
+                  <Flex className="!gap-2">
+                    <Text>{queryForm.textContent}</Text>
+                    <Flex gap={"3"}>
+                      <Button
+                        variant="ghost"
+                        onClick={() => applyQueryResult(true)}
+                        className="bg-green-500 text-white px-4 py-2 rounded"
+                      >
+                        Yes
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        onClick={() => applyQueryResult(false)}
+                        className="bg-red-500 text-white px-4 py-2 rounded"
+                      >
+                        No
+                      </Button>
+                    </Flex>
                   </Flex>
-                </Flex>
-                <Hint className="max-w-[500px]">
-                  A simple yes or no question, though seemingly weak, may filter
-                  up to half + 1 the amoung of possibilities
-                </Hint>
-              </Box>
-            )}
-          {(gamingStatus && queriesRequired.current === 0) ||
-          possibilities.current.length === 1 ? (
-            <Box>
-              <Text
-                color={colorize(forcedGuess.textContent) as AllowedColors}
-              >{`${forcedGuess.textContent} ${forcedGuess.forceGuess}?`}</Text>
+                  <Hint className="max-w-[500px]">
+                    A simple yes or no question, though seemingly weak, may
+                    filter up to half + 1 the amoung of possibilities
+                  </Hint>
+                </Box>
+              )}
+            {(gamingStatus && queriesRequired.current === 0) ||
+            possibilities.current.length === 1 ? (
+              <Box>
+                <Text
+                  color={colorize(forcedGuess.textContent) as AllowedColors}
+                >{`${forcedGuess.textContent} ${forcedGuess.forceGuess}?`}</Text>
 
-              <Link
-                className="!cursor-pointer"
-                onClick={() => mayaPlaysAgain()}
-              >
-                play again{" "}
-              </Link>
-              <Link href="/">thewriter.com</Link>
-            </Box>
-          ) : null}
+                <Link
+                  className="!cursor-pointer"
+                  onClick={() => mayaPlaysAgain()}
+                >
+                  play again{" "}
+                </Link>
+                <Link href="/">thewriter.com</Link>
+              </Box>
+            ) : null}
+          </Box>
+        )}
+        <Box className="mt-4 !py-16 !px-16">
+          <Text className="opacity-70 transform scale-70">
+            {currentThought.reveal
+              ? currentThought.content
+              : currentThought.title}
+          </Text>
         </Box>
-      )}
-      <Box className="mt-4 !py-16 !px-16">
-        <Text className="opacity-70 transform scale-70">
-          {currentThought.reveal
-            ? currentThought.content
-            : currentThought.title}
-        </Text>
-      </Box>
+      </Flex>
+      <Separator size="4" className="!my-2" />
+      {/* <Footer /> */}
+      <Footer />
     </Flex>
   );
 };
