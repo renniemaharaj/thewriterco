@@ -191,6 +191,15 @@ const App: React.FC = () => {
         justify="center"
         className="!w-full !p-10"
       >
+        <Flex className="w-full flex-col items-center justify-center p-8">
+          <Text className="text-2xl font-semibold text-foreground text-center leading-tight">
+            Be entertained by a <br /> binary-search, range-finder &
+            binary-search, guesser
+          </Text>
+          <Text className="text-sm text-muted-foreground text-center mt-2">
+            It's just math, with 1/2 teaspoon of chance
+          </Text>
+        </Flex>
         {!gamingStatus ? (
           <Flex className="!flex-col">
             <Text className="mb-4 !w-[400px] !text-wrap">
@@ -234,13 +243,13 @@ const App: React.FC = () => {
                   </Flex>
                   <Hint className="max-w-[500px]">
                     A simple yes or no question, though seemingly weak, may
-                    filter up to half + 1 the amoung of possibilities
+                    filter up to half the amount of possibilities.
                   </Hint>
                 </Box>
               )}
             {(gamingStatus && queriesRequired.current === 0) ||
             possibilities.current.length === 1 ? (
-              <Box>
+              <Flex className="!flex-col !gap-4">
                 <Text
                   color={colorize(forcedGuess.textContent) as AllowedColors}
                 >{`${forcedGuess.textContent} ${forcedGuess.forceGuess}?`}</Text>
@@ -252,7 +261,7 @@ const App: React.FC = () => {
                   play again{" "}
                 </Link>
                 <Link href="/">thewriter.com</Link>
-              </Box>
+              </Flex>
             ) : null}
           </Box>
         )}
