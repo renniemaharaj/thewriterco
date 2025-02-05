@@ -193,8 +193,8 @@ const App: React.FC = () => {
       >
         <Flex className="w-full flex-col items-center justify-center p-8">
           <Text className="text-2xl font-semibold text-foreground text-center leading-tight">
-            Be entertained by a <br /> binary-search, range-finder &
-            binary-search, guesser
+            Be entertained by a binary-search, <br /> range-finder and number
+            guesser.
           </Text>
           <Text className="text-sm text-muted-foreground text-center mt-2">
             It's just math, with 1/2 teaspoon of chance
