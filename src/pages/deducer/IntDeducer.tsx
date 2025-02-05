@@ -12,6 +12,7 @@ import { AllowedColors } from "../../components/RadixColors";
 import Hint from "../../components/Hint";
 import Navbar from "../../components/additional/NavBar";
 import Footer from "../Home/Footer";
+import { BrainCircuit } from "lucide-react";
 
 type Mind = {
   title: string;
@@ -201,19 +202,20 @@ const App: React.FC = () => {
           </Text>
         </Flex>
         {!gamingStatus ? (
-          <Flex className="!flex-col">
+          <Flex className="!flex-col gap-1">
             <Text className="mb-4 !w-[400px] !text-wrap">
               "I can guess any natural number you think of from the range (0,∞)"
               - Rennie
             </Text>
-            <Button
-              onClick={beginGame}
-              className="bg-blue-500 text-white px-4 py-2 rounded !max-w-fit"
-              variant="soft"
-            >
-              I have a number
-            </Button>
-            <Link href="/">thewriter.com</Link>
+            <Flex className="!gap-4">
+              <Button
+                onClick={beginGame}
+                className="bg-blue-500 text-white px-4 py-2 rounded !max-w-fit"
+                variant="soft"
+              >
+                Guess my number
+              </Button>
+            </Flex>
           </Flex>
         ) : (
           <Box className="text-center">
@@ -266,7 +268,8 @@ const App: React.FC = () => {
           </Box>
         )}
         <Box className="mt-4 !py-16 !px-16">
-          <Text className="opacity-70 transform scale-70">
+          <Text className="opacity-70 transform scale-70 flex items-center gap-2 animate-pulse">
+            <BrainCircuit size={24} />
             {currentThought.reveal
               ? currentThought.content
               : currentThought.title}
