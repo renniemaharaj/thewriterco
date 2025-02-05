@@ -6,6 +6,7 @@ import {
   Skeleton,
   Text,
   Tooltip,
+  SegmentedControl,
 } from "@radix-ui/themes";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSendAskReqMutation } from "../../../app/api/apiSlice";
@@ -66,6 +67,9 @@ const ChristianAIChatbox = ({
   const [canvasView, setCanvasView] = useState(false);
   const [Conversational, setConversational] = useState(true);
   const [conversationTokens, setConversationTokens] = useState<number>(0);
+  const [responseConstraint, setResponseConstraint] = useState<
+    "short" | "shorter" | "detailed"
+  >("shorter");
 
   const [suggestions, setSuggestions] = useState<string[]>([
     "Who is God?",
@@ -215,11 +219,13 @@ const ChristianAIChatbox = ({
     // Attach date & time
     const attachedLocalTime = `-@here Note user's local time for context: ${new Date().toLocaleString()}`;
     const attachedCurrentDate = `-@here Note user's current date for context: ${new Date().toDateString()}`;
+    const attachedResponseConstraint = `-@here Note user's chosen response-constraint for appropriate response length: ${responseConstraint}`;
     const additionalContext = [
       attachedTheme,
       attachedBookState,
       attachedLocalTime,
       attachedCurrentDate,
+      attachedResponseConstraint,
     ];
 
     // Build ask schema
@@ -542,7 +548,7 @@ const ChristianAIChatbox = ({
         handleRecieve={(text: string) => handleMessageSend(text)}
         children={
           <Flex gap="2" className="!flex-row">
-            <Flex align={"center"} className="!p-1 gap-2">
+            <Flex align={"center"} className="!p-1 gap-2 !flex-wrap">
               <Button
                 variant={canvasView ? "soft" : "outline"}
                 onClick={() => setCanvasView(!canvasView)}
@@ -557,6 +563,37 @@ const ChristianAIChatbox = ({
                   ? "Conversation (" + conversationTokens + " / 10k)"
                   : "Conversation"}
               </Button>
+              <SegmentedControl.Root
+                size={"2"}
+                defaultValue={responseConstraint}
+              >
+                <SegmentedControl.Item
+                  value="shorter"
+                  onClick={() => setResponseConstraint("shorter")}
+                >
+                  <Tooltip content="Shorter responses, best for quick replies">
+                    <Text>1</Text>
+                  </Tooltip>
+                </SegmentedControl.Item>
+
+                <SegmentedControl.Item
+                  value="short"
+                  onClick={() => setResponseConstraint("short")}
+                >
+                  <Tooltip content="Short responses, great for quick replies">
+                    <Text>2</Text>
+                  </Tooltip>
+                </SegmentedControl.Item>
+
+                <SegmentedControl.Item
+                  value="detailed"
+                  onClick={() => setResponseConstraint("detailed")}
+                >
+                  <Tooltip content="Regular responses, best for detailed replies">
+                    <Text>3</Text>
+                  </Tooltip>
+                </SegmentedControl.Item>
+              </SegmentedControl.Root>
             </Flex>
           </Flex>
         }
