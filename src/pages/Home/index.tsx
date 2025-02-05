@@ -14,7 +14,7 @@ const Index: React.FC = () => {
       {/* <Hero /> */}
       <Hero />
       <Separator size={"4"} />
-      <Flex className="w-full flex-col items-center justify-center p-8">
+      <Flex className="w-full flex-col items-center justify-center p-8 gap-2">
         <Text className="text-2xl font-semibold text-foreground text-center leading-tight">
           Explore the Bible through our <br /> AI-powered study tool
         </Text>

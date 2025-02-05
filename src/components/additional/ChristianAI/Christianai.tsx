@@ -7,6 +7,9 @@ import {
   Text,
   Tooltip,
   SegmentedControl,
+  IconButton,
+  Popover,
+  Separator,
 } from "@radix-ui/themes";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSendAskReqMutation } from "../../../app/api/apiSlice";
@@ -18,6 +21,7 @@ import { useThemeContext } from "../../context/useThemeContext";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
+  EllipsisVerticalIcon,
   PlayCircleIcon,
   ShieldAlertIcon,
 } from "lucide-react";
@@ -549,6 +553,53 @@ const ChristianAIChatbox = ({
         children={
           <Flex gap="2" className="!flex-row">
             <Flex align={"center"} className="!p-1 gap-2 !flex-wrap">
+              <Popover.Root>
+                <Popover.Trigger>
+                  <IconButton variant={canvasView ? "soft" : "outline"}>
+                    <EllipsisVerticalIcon />
+                  </IconButton>
+                </Popover.Trigger>
+                <Popover.Content>
+                  <Text className="!w-full !text-center text-sm">
+                    Response Length
+                  </Text>
+                  <Separator size="4" className="!my-2" />
+                  <Flex gap="3">
+                    <SegmentedControl.Root
+                      variant="classic"
+                      size={"2"}
+                      defaultValue={responseConstraint}
+                    >
+                      <SegmentedControl.Item
+                        value="shorter"
+                        onClick={() => setResponseConstraint("shorter")}
+                      >
+                        <Tooltip content="Shorter responses, best for quick replies">
+                          <Text>1</Text>
+                        </Tooltip>
+                      </SegmentedControl.Item>
+
+                      <SegmentedControl.Item
+                        value="short"
+                        onClick={() => setResponseConstraint("short")}
+                      >
+                        <Tooltip content="Short responses, great for quick replies">
+                          <Text>2</Text>
+                        </Tooltip>
+                      </SegmentedControl.Item>
+
+                      <SegmentedControl.Item
+                        value="detailed"
+                        onClick={() => setResponseConstraint("detailed")}
+                      >
+                        <Tooltip content="Regular responses, best for detailed replies">
+                          <Text>3</Text>
+                        </Tooltip>
+                      </SegmentedControl.Item>
+                    </SegmentedControl.Root>
+                  </Flex>
+                </Popover.Content>
+              </Popover.Root>
               <Button
                 variant={canvasView ? "soft" : "outline"}
                 onClick={() => setCanvasView(!canvasView)}
@@ -563,38 +614,6 @@ const ChristianAIChatbox = ({
                   ? "Conversation (" + conversationTokens + " / 10k)"
                   : "Conversation"}
               </Button>
-              <SegmentedControl.Root
-                variant="classic"
-                size={"2"}
-                defaultValue={responseConstraint}
-              >
-                <SegmentedControl.Item
-                  value="shorter"
-                  onClick={() => setResponseConstraint("shorter")}
-                >
-                  <Tooltip content="Shorter responses, best for quick replies">
-                    <Text>1</Text>
-                  </Tooltip>
-                </SegmentedControl.Item>
-
-                <SegmentedControl.Item
-                  value="short"
-                  onClick={() => setResponseConstraint("short")}
-                >
-                  <Tooltip content="Short responses, great for quick replies">
-                    <Text>2</Text>
-                  </Tooltip>
-                </SegmentedControl.Item>
-
-                <SegmentedControl.Item
-                  value="detailed"
-                  onClick={() => setResponseConstraint("detailed")}
-                >
-                  <Tooltip content="Regular responses, best for detailed replies">
-                    <Text>3</Text>
-                  </Tooltip>
-                </SegmentedControl.Item>
-              </SegmentedControl.Root>
             </Flex>
           </Flex>
         }
