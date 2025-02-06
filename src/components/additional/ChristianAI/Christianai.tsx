@@ -555,8 +555,8 @@ const ChristianAIChatbox = ({
             <Flex align={"center"} className="!p-1 gap-2 !flex-wrap">
               <Popover.Root>
                 <Popover.Trigger>
-                  <IconButton variant={canvasView ? "soft" : "outline"}>
-                    <EllipsisVerticalIcon />
+                  <IconButton variant="soft">
+                    <EllipsisVerticalIcon className="scale-75" />
                   </IconButton>
                 </Popover.Trigger>
                 <Popover.Content>
