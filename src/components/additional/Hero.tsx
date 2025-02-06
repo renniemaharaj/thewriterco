@@ -7,7 +7,10 @@ const Hero: React.FC = () => {
     <section className="text-center py-16">
       <h2 className="text-4xl font-bold">
         Welcome to{" "}
-        <span className="w-full text-center">The Writer Company</span>
+        <span className="w-full text-center">
+          The Writer <br />
+          Company
+        </span>
       </h2>
       <Flex justify={"center"} className="w-full p-1">
         <Text>
@@ -27,7 +30,7 @@ const Hero: React.FC = () => {
             Can we foresee the next hour.
             <br />
             <br />
-            No, we have no such that power, but ask those with older ages,
+            No, we have no such power, but ask those with older ages,
             <br />
             They have been through our current storm.
             <br />
