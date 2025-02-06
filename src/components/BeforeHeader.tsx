@@ -27,7 +27,7 @@ export default function BeforeHeader() {
         >
           <ChristianAIChatbox
             highlightAxioms={() => setAxiomsMentioned(!axiomsMentioned)}
-            className="w-[100%] md:!w-[85%] !max-w-[100%] !p-0 mx-auto !rounded-none"
+            className="sm:!w-[100%] md:!w-[85%] !p-0 mx-auto !rounded-none"
           />
         </Flex>
       }
