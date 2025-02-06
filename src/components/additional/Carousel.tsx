@@ -67,8 +67,8 @@ export const Carousel: React.FC<CarouselProps> = ({
         setCharge((prev) =>
           Math.max(
             -maxCharge,
-            Math.min(maxCharge, prev + delta * Math.abs(e.deltaY)),
-          ),
+            Math.min(maxCharge, prev + delta * Math.abs(e.deltaY))
+          )
         );
       }
     };
@@ -91,24 +91,36 @@ export const Carousel: React.FC<CarouselProps> = ({
 
     const autoScrollInterval = setInterval(() => {
       if (carousel.scrollWidth > carousel.clientWidth) {
-        const isEnd =
-          carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth;
-        carousel.scrollTo({
-          left: isEnd ? 0 : carousel.scrollLeft + carousel.clientWidth,
-          behavior: "smooth",
-        });
+        // Get all the child elements of the carousel
+        const carouselItems = Array.from(carousel.children);
+
+        // If there are children in the carousel
+        if (carouselItems.length > 0) {
+          // Pick a random item from the carousel items
+          const randomIndex = Math.floor(Math.random() * carouselItems.length);
+          const randomItem = carouselItems[randomIndex];
+
+          // Scroll the selected item into view smoothly
+          randomItem.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest", // Align the item in the nearest block (vertical positioning)
+            inline: "center", // Align the item to the center horizontally
+          });
+        }
       }
-    }, 10000);
+    }, 10000); // Every 10 seconds
 
     return () => clearInterval(autoScrollInterval);
   }, [autoScroll]);
 
-  if (containerRef.current && variant === "no-scrollbar") {
-    containerRef.current.style.scrollbarWidth = "none";
-  }
-
   const arrowButtonClassnames =
     "absolute !scale-75 top-1/2 transform -translate-y-1/2 z-10 p-1 bg-[#3e63dd] rounded-full shadow-md opacity-80 text-white";
+
+  useEffect(() => {
+    if (containerRef.current && variant === "no-scrollbar") {
+      containerRef.current.style.scrollbarWidth = "none";
+    }
+  }, [containerRef]);
 
   return (
     <div className={classNames("relative w-full", className)} ref={ref}>
