@@ -111,7 +111,7 @@ const ChristianAIChatbox = ({
   // Build conversation for AI
   async function buildConversation(
     primaryBlocks: Block[],
-    additionalExchange?: Exchange,
+    additionalExchange?: Exchange
   ): Promise<Exchange[]> {
     const conversation = primaryBlocks.map((block) => {
       return {
@@ -165,14 +165,14 @@ const ChristianAIChatbox = ({
                           title: scripture.book,
                           content: JSON.parse(content),
                           date: new Date().toDateString(),
-                        } as EBook),
+                        } as EBook)
                       );
                       dispatch(setRenderStyle("bible"));
                       dispatch(
-                        setGlobalCurrentChapter(scripture.chapterNo.toString()),
+                        setGlobalCurrentChapter(scripture.chapterNo.toString())
                       );
                       dispatch(
-                        setGlobalCurrentVerse(scripture.verseNo.toString()),
+                        setGlobalCurrentVerse(scripture.verseNo.toString())
                       );
                       setTimeout(() => dispatch(setOpenState(true)), 100);
                     });
@@ -267,7 +267,7 @@ const ChristianAIChatbox = ({
       console.error(error);
 
       setSystemMessage(
-        "A connection error occurred or you are required to wait 15 seconds.",
+        "A connection error occurred or you are required to wait 15 seconds."
       );
       setIsTyping(false);
       return; // Exit early to prevent further execution
@@ -278,7 +278,7 @@ const ChristianAIChatbox = ({
     } catch (error) {
       console.error(error);
       setSystemMessage(
-        data.response || "An error occurred while processing the response.",
+        data.response || "An error occurred while processing the response."
       );
     } finally {
       setIsTyping(false);
@@ -369,7 +369,7 @@ const ChristianAIChatbox = ({
                 variant="soft"
                 onClick={() => {
                   handleMessageSend(
-                    messageBlocks[messageBlocks.length - 1].content,
+                    messageBlocks[messageBlocks.length - 1].content
                   );
                   setMessageBlocks((prev) => prev.slice(0, -2));
                 }}
@@ -479,7 +479,11 @@ const ChristianAIChatbox = ({
           className={`m-[1rem] box-content !scroll-smooth gap-6`}
         >
           {messageBlocks.map((block, index) => (
-            <Flex key={index} justify="center" className={`!flex-col`}>
+            <Flex
+              key={index}
+              justify="center"
+              className={`!flex-col max-w-[90%]`}
+            >
               <MessageBlock
                 block={block}
                 animate={index === messageBlocks.length - 1}
@@ -512,7 +516,7 @@ const ChristianAIChatbox = ({
         },
         position: { x: 0, y: 0 },
       }) as Node,
-    [messageBlocks, canvasView],
+    [messageBlocks, canvasView]
   );
 
   const countMessageBlocks = useCallback(() => {
@@ -546,7 +550,6 @@ const ChristianAIChatbox = ({
         />
       </Flex>
       {/* </Card> */}
-      <Text as="label" size="2"></Text>
       <Chatbox
         disabled={isTyping}
         handleRecieve={(text: string) => handleMessageSend(text)}
@@ -600,6 +603,12 @@ const ChristianAIChatbox = ({
                   </Flex>
                 </Popover.Content>
               </Popover.Root>
+              <Button
+                variant={"outline"}
+                onClick={() => dispatch(setOpenState(true))}
+              >
+                Bible
+              </Button>
               <Button
                 variant={canvasView ? "soft" : "outline"}
                 onClick={() => setCanvasView(!canvasView)}

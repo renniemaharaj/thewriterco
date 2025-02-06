@@ -19,7 +19,8 @@ const Observer: React.FC<ObserverProps> = ({ options, children }) => {
     <div
       ref={targetRef}
       style={{
-        minHeight: "50px",
+        minHeight:
+          "!absolute 50px left 50% top 50% transform -translate-x-1/2 -translate-y-1/2",
       }}
     >
       {children({ isIntersecting, hasIntersected })}

@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { Button, Flex, IconButton, Select, Dialog } from "@radix-ui/themes";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,14 +14,14 @@ import {
 } from "../../app/ereader/ereaderSlice";
 import { BookDownIcon, BookUpIcon } from "lucide-react";
 
-const Ereader: React.FC = () => {
+const Ereader = ({ hidePicker }: { hidePicker?: boolean }) => {
   // Redux state
   const eReaderState = useSelector((state: RootState) => state.ereader);
   const currentChapter = eReaderState.currentChapter;
   const currentVerse = eReaderState.currentVerse;
   // Local state
   const [readerState, setRenderState] = useState<"rich" | "bible">(
-    eReaderState.readerStyle,
+    eReaderState.readerStyle
   );
   useEffect(() => {
     document.body.style.overflow = eReaderState.isOpen ? "hidden" : "auto";
@@ -69,7 +69,7 @@ const Ereader: React.FC = () => {
       return;
 
     const chapterVerses = Object.keys(
-      eReaderState.eContent.content[currentChapter],
+      eReaderState.eContent.content[currentChapter]
     );
     const currentIndex = chapterVerses.indexOf(currentVerse);
     const newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
@@ -81,7 +81,7 @@ const Ereader: React.FC = () => {
       if (prevChapter) {
         handleChapterChange(prevChapter);
         handleVerseChange(
-          Object.keys(eReaderState.eContent.content[prevChapter]).slice(-1)[0],
+          Object.keys(eReaderState.eContent.content[prevChapter]).slice(-1)[0]
         );
       }
     } else if (newIndex >= chapterVerses.length && direction === "next") {
@@ -104,7 +104,7 @@ const Ereader: React.FC = () => {
     )
       return [];
     const chapterVerses = Object.keys(
-      eReaderState.eContent.content[currentChapter],
+      eReaderState.eContent.content[currentChapter]
     );
     const currentIndex = chapterVerses.indexOf(currentVerse);
 
@@ -151,7 +151,9 @@ const Ereader: React.FC = () => {
         eReaderState.isOpen && "h-full"
       } fixed bottom-0 left-0 ${eReaderState.isOpen ? "w-full " : "w-auto left-[50%] translate-x-[-50%]"} shadow-lg overflow-auto z-20`}
     >
-      <div className={`flex justify-center gap-2 items-center p-4 border-b`}>
+      <div
+        className={`${hidePicker && !eReaderState.isOpen && "!hidden"} flex justify-center gap-2 items-center p-4 border-b`}
+      >
         {/* <h2 className="text-xl font-semibold">{eReaderState.eContent.title}</h2> */}
         <BiblePicker
           trigger={
@@ -220,7 +222,7 @@ const Ereader: React.FC = () => {
                     Object.keys(
                       typeof eReaderState.eContent.content !== "string"
                         ? eReaderState.eContent.content[currentChapter] || {}
-                        : {},
+                        : {}
                     ).map((verse) => (
                       <Select.Item key={"verse-" + verse} value={verse}>
                         {verse}
@@ -287,7 +289,7 @@ const Ereader: React.FC = () => {
                           eReaderState.eContent.content[currentChapter][
                             verse || 1
                           ]
-                        }`,
+                        }`
                     )
                     .join(" ")}
                 </p>

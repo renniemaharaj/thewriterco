@@ -17,7 +17,9 @@ export default function BeforeHeader() {
       variant="right"
       className="flex-col !w-full relative m-auto !h-[100vh] transition-all"
       childLeft={<></>}
-      centerBar={<Menu axiomsMentioned className="!hidden md:!flex" />}
+      centerBar={
+        <Menu axiomsMentioned={axiomsMentioned} className="!hidden md:!flex" />
+      }
       childRight={
         /* Chatbox Section */
         <Flex

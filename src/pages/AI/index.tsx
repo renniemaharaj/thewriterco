@@ -8,7 +8,7 @@ const index = () => {
       {/* <BeforeHeader /> */}
       <BeforeHeader />
       {/* <Ereader /> */}
-      <Ereader />
+      <Ereader hidePicker={true} />
     </Flex>
   );
 };
