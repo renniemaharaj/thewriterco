@@ -16,8 +16,8 @@ type RefreshTokenResponse = {
 const baseQuery = fetchBaseQuery({
   //
   // baseUrl: "https://thewriterco-auth.onrender.com",
-  baseUrl: "https://thewriterco-auth-go.onrender.com", // Adjust to your base URL if needed
-  // baseUrl: "http://localhost:3001", // Adjust to your base URL if needed
+  // baseUrl: "https://thewriterco-auth-go.onrender.com", // Adjust to your base URL if needed
+  baseUrl: "http://localhost:3001", // Adjust to your base URL if needed
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const accessToken = (getState() as RootState).auth?.accessToken;
@@ -31,7 +31,7 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (
   args: FetchArgs | string,
   api: BaseQueryApi,
-  extraOptions: object,
+  extraOptions: object
 ) => {
   let result = await baseQuery(args, api, extraOptions);
   if (result?.error?.status === 403) {

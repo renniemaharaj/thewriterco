@@ -68,6 +68,7 @@ const Index: React.FC = () => {
       <Carousel
         variant="no-scrollbar"
         autoScroll={true}
+        // className=""
         items={carouselItems.map((item, idx) => (
           <React.Fragment key={`exe-${idx}`}>{item}</React.Fragment>
         ))}

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { debounce } from "lodash";
+import { Observer } from "../observer/Observer";
 
 type CarouselVariant = "default" | "no-scrollbar";
 
@@ -24,7 +25,8 @@ export const Carousel: React.FC<CarouselProps> = ({
   const [charge, setCharge] = useState(0);
   const [isStart, setIsStart] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
-  const maxCharge = 777; // Maximum charge for proportional scrolling
+  const maxCharge = useRef(777); // Maximum charge for proportional scrolling
+  const isInView = useRef(false);
 
   const scrollHandler = () => {
     if (containerRef.current) {
@@ -47,7 +49,7 @@ export const Carousel: React.FC<CarouselProps> = ({
     const carousel = containerRef.current;
     if (!carousel || charge === 0) return;
 
-    const scrollAmount = (charge / maxCharge) * carousel.clientWidth;
+    const scrollAmount = (charge / maxCharge.current) * carousel.clientWidth;
     carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
 
     // Reset charge after handling
@@ -64,12 +66,7 @@ export const Carousel: React.FC<CarouselProps> = ({
       if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
         e.preventDefault();
         const delta = e.deltaY < 0 ? -1 : 1; // Scroll up is left, scroll down is right
-        setCharge((prev) =>
-          Math.max(
-            -maxCharge,
-            Math.min(maxCharge, prev + delta * Math.abs(e.deltaY))
-          )
-        );
+        delta > 0 ? scrollTo("right") : scrollTo("left");
       }
     };
 
@@ -90,6 +87,7 @@ export const Carousel: React.FC<CarouselProps> = ({
     const carousel = containerRef.current;
 
     const autoScrollInterval = setInterval(() => {
+      if (!isInView.current) return;
       if (carousel.scrollWidth > carousel.clientWidth) {
         // Get all the child elements of the carousel
         const carouselItems = Array.from(carousel.children);
@@ -120,10 +118,20 @@ export const Carousel: React.FC<CarouselProps> = ({
     if (containerRef.current && variant === "no-scrollbar") {
       containerRef.current.style.scrollbarWidth = "none";
     }
+
+    // maxCharge.current = containerRef.current?.clientWidth || 777;
   }, [containerRef]);
 
   return (
     <div className={classNames("relative w-full", className)} ref={ref}>
+      <Observer
+        options={{ root: ref?.current, rootMargin: "0px", threshold: 1.0 }}
+      >
+        {({ isIntersecting }) => {
+          isInView.current = isIntersecting;
+          return <></>;
+        }}
+      </Observer>
       {variant === "no-scrollbar" && !isStart && (
         <button
           className={arrowButtonClassnames + " left-0"}
