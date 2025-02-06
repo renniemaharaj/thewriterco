@@ -19,11 +19,11 @@ const Hero: React.FC = () => {
           <Quote className="italic animate-fade-in">
             My companion in writing for God;
             <br />
-            time reveals the hands of God.
+            time reveals the hands of God,
             <br />
             <br />
             Time is like a notebook and God is the author. Except, we cannot
-            skip these <br /> pages, likewise we cannot foresee the next hour.
+            skip His <br /> pages, likewise, we cannot foresee the next hour.
             <br />
             <br />
             No, we have no such power, but ask those with older ages,
