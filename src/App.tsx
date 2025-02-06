@@ -17,7 +17,7 @@ import NoPage from "./pages/404";
 import Welcome from "./pages/Welcome";
 import AI from "./pages/AI";
 import Kjv from "./pages/Kjv";
-import Deducer from "./pages/Deducer";
+// import Deducer from "./pages/Deducer";
 import Study from "./pages/Study";
 
 // MSAL Configuration
@@ -64,10 +64,10 @@ const publicRoutes: (CustomRoute | IndexRoute)[] = [
     path: "*",
     element: <NoPage />,
   },
-  {
-    path: "deducer",
-    element: <Deducer />,
-  },
+  // {
+  //   path: "deducer",
+  //   element: <Deducer />,
+  // },
   {
     path: "ai",
     element: <AI />,
