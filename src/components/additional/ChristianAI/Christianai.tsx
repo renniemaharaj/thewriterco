@@ -26,8 +26,6 @@ import {
   ShieldAlertIcon,
 } from "lucide-react";
 import { Block, Executable } from "./types";
-// import Frame from "../../frames/Frame.tsx";
-// import { frameSetups } from "../../frames/frameVarients.ts";
 import Flow from "../../flow/Flow.tsx";
 import { Node } from "@xyflow/react";
 import { Carousel } from "../Carousel.tsx";
@@ -65,7 +63,13 @@ const ChristianAIChatbox = ({
   const dispatch = useDispatch();
   const [sendAskReq] = useSendAskReqMutation();
 
-  const [messageBlocks, setMessageBlocks] = useState<Block[]>([]);
+  const [messageBlocks, setMessageBlocks] = useState<Block[]>([
+    {
+      sender: "AI",
+      type: "text",
+      content: "Hi! 🙏 How may I be of service to you?",
+    },
+  ]);
   const [executables, setExecutables] = useState<Executable[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [canvasView, setCanvasView] = useState(false);
@@ -286,28 +290,9 @@ const ChristianAIChatbox = ({
   }
 
   function handleSuggestionClick(msg: string) {
-    const index = suggestions.indexOf(msg);
-    if (index > -1) {
-      setSuggestions((current) => {
-        const updated = [...current];
-        updated.splice(index, 1);
-        return updated;
-      });
-    }
-    // scrollMessageBoxToBottom();
+    setSuggestions([]);
     handleMessageSend(msg);
   }
-
-  // Initial message
-  useEffect(() => {
-    setMessageBlocks([
-      {
-        sender: "AI",
-        type: "text",
-        content: "Hi! 🙏 How may I be of service to you?",
-      },
-    ]);
-  }, []);
 
   const computeTokens = useCallback(async () => {
     const conversation = await buildConversation(messageBlocks);
