@@ -3,7 +3,6 @@ import Navbar from "../../components/additional/NavBar";
 import Hero from "../../components/additional/Hero";
 
 import Footer from "./Footer";
-import Hint from "../../components/Hint";
 
 //Suppress ESLint errors
 const Index: React.FC = () => {
@@ -56,10 +55,16 @@ const Index: React.FC = () => {
           <br /> you a reason for the hope that is in you, with meekness and
           fear.
         </Quote>
-        <Hint children={"Begin study to find reasoning and other material"} />
+        <Button
+          variant="soft"
+          className="mt-5 px-6 py-3 text-lg font-medium rounded-lg"
+          onClick={() => (location.href = "/reasoning")}
+        >
+          Explore reasoning
+        </Button>
       </Flex>
       {/* </Box> */}
-
+      <Separator size={"4"} />
       {/* <Footer /> */}
       <Footer />
     </Flex>

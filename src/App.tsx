@@ -14,13 +14,11 @@ import { useThemeContext } from "./components/context/useThemeContext";
 // Import pages
 import Home from "./pages/Home";
 import NoPage from "./pages/404";
-// import Login from "./pages/Login";
-// import Signup from "./pages/Signup";
-// import Recover from "./pages/recover";
 import Welcome from "./pages/Welcome";
-import IntDeducer from "./pages/deducer/IntDeducer";
 import AI from "./pages/AI";
 import Kjv from "./pages/Kjv";
+import Deducer from "./pages/Deducer";
+import Study from "./pages/Study";
 
 // MSAL Configuration
 const msalConfig = {
@@ -68,7 +66,7 @@ const publicRoutes: (CustomRoute | IndexRoute)[] = [
   },
   {
     path: "deducer",
-    element: <IntDeducer />,
+    element: <Deducer />,
   },
   {
     path: "ai",
@@ -77,6 +75,10 @@ const publicRoutes: (CustomRoute | IndexRoute)[] = [
   {
     path: "kjv",
     element: <Kjv />,
+  },
+  {
+    path: "reasoning",
+    element: <Study />,
   },
 ];
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   defaultQueryForm,
   defaultForceGuess,
@@ -20,7 +20,7 @@ type Mind = {
   reveal: boolean;
 };
 
-const App: React.FC = () => {
+const Index = () => {
   const [workingRange, setWorkingRange] = useState([rangeStart, rangeEnd]);
   const [gamingStatus, setGamingStatus] = useState(false);
   const [queryForm, setQueryForm] = useState<QueryForm>(defaultQueryForm);
@@ -181,7 +181,6 @@ const App: React.FC = () => {
   const colorize = (msg: string) => {
     return inferIsGuess(msg) ? "blue" : "";
   };
-
   return (
     <Flex className="!w-full !flex-col merriweather-bold !p-0`">
       {/* <Navbar /> */}
@@ -283,4 +282,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Index;
