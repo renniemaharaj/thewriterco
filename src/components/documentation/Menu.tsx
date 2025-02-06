@@ -41,7 +41,13 @@ const axioms = [
   },
 ];
 
-const Menu = ({ axiomsMentioned }: { axiomsMentioned?: boolean }) => {
+const Menu = ({
+  axiomsMentioned,
+  className,
+}: {
+  axiomsMentioned?: boolean;
+  className?: string;
+}) => {
   const hero = "TheWriterCo";
 
   const [framePostion, setFramePosition] = useState<FrameBarSetup>(
@@ -96,7 +102,9 @@ const Menu = ({ axiomsMentioned }: { axiomsMentioned?: boolean }) => {
   }, [axiomsMentioned]);
 
   return (
-    <ScrollArea className="!hidden md:!flex !mx-auto flex-[2.2] p-2 pt-7 flex-col h-full">
+    <ScrollArea
+      className={`${className} !mx-auto flex-[2.2] p-2 pt-7 flex-col h-full`}
+    >
       <Text
         className="text-wrap cursor-pointer"
         size="8"
