@@ -17,8 +17,8 @@ import NoPage from "./pages/404";
 import Welcome from "./pages/Welcome";
 import AI from "./pages/AI";
 import Kjv from "./pages/Kjv";
-// import Deducer from "./pages/Deducer";
 import Study from "./pages/Study";
+import Guesser from "./pages/Guesser";
 
 // MSAL Configuration
 const msalConfig = {
@@ -64,10 +64,10 @@ const publicRoutes: (CustomRoute | IndexRoute)[] = [
     path: "*",
     element: <NoPage />,
   },
-  // {
-  //   path: "deducer",
-  //   element: <Deducer />,
-  // },
+  {
+    path: "deducer",
+    element: <Guesser />,
+  },
   {
     path: "ai",
     element: <AI />,
@@ -124,7 +124,7 @@ function AppContent() {
                 path={route.path}
                 element={route.element}
               />
-            ),
+            )
           )}
 
           {/* Protected Routes and Login Persistent Routes */}
