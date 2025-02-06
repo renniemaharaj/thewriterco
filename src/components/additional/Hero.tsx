@@ -22,12 +22,8 @@ const Hero: React.FC = () => {
             Time reveals the hands of God.
             <br />
             <br />
-            Time is like a notebook and God is the author,
-            <br />
-            <br />
-            Except, we cannot skip these pages-neither
-            <br />
-            Can we foresee the next hour.
+            Time is like a notebook and God is the author. Except, we cannot
+            skip these <br /> pages-neither can we foresee the next hour.
             <br />
             <br />
             No, we have no such power, but ask those with older ages,

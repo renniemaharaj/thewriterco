@@ -3,7 +3,7 @@ import Strong from "./Strong";
 import Collapsible from "../Collapsible";
 
 const uClassName = "space-y-2 list-disc pl-4 text-sm";
-const reasoningForAxioms = [
+export const reasoningForAxioms = [
   {
     title: "Existence of God",
     description: (

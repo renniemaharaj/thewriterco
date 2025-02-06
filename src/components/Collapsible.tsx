@@ -1,25 +1,27 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Button, Flex, ScrollArea } from "@radix-ui/themes";
 import { motion } from "framer-motion";
 import { useThemeContext } from "./context/useThemeContext";
 
 type CollapsibleProps = {
-  title: string;
+  title: ReactNode;
   children: React.ReactNode;
   maxHeight?: string;
+  className?: string;
 };
 
 export default function Collapsible({
   title,
   children,
   maxHeight = "200px",
+  className,
 }: CollapsibleProps) {
   const [open, setOpen] = useState(false);
   const { theme } = useThemeContext();
   return (
     <div
-      className={`${theme === "light" && "border"} w-full rounded-lg shadow-sm`}
+      className={`${theme === "light" && "border"} ${className} w-full rounded-lg shadow-sm`}
     >
       {/* Header / Trigger */}
       <Button

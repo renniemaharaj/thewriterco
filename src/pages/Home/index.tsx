@@ -3,6 +3,7 @@ import Navbar from "../../components/additional/NavBar";
 import Hero from "../../components/additional/Hero";
 
 import Footer from "./Footer";
+import Hint from "../../components/Hint";
 
 //Suppress ESLint errors
 const Index: React.FC = () => {
@@ -41,6 +42,23 @@ const Index: React.FC = () => {
         </Button>
       </Flex>
       <Separator size={"4"} />
+
+      {/* <Box className="space-y-4 p-4"> */}
+      <Flex className="w-full max-w-[600px] mx-auto !flex-col justify-center p-8 gap-6 !items-start ">
+        <Text className="text-3xl font-bold text-primary text-center leading-tight ">
+          Sharpen your sword with
+          <br /> sound reasoning
+        </Text>
+
+        <Quote className="italic animate-fade-in text-lg text-center px-6 mb-6">
+          But sanctify the Lord God in your hearts,
+          <br /> and be ready always to give an answer to every man who asketh
+          <br /> you a reason for the hope that is in you, with meekness and
+          fear.
+        </Quote>
+        <Hint children={"Begin study to find reasoning and other material"} />
+      </Flex>
+      {/* </Box> */}
 
       {/* <Footer /> */}
       <Footer />
