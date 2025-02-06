@@ -23,7 +23,7 @@ const Hero: React.FC = () => {
             <br />
             <br />
             Time is like a notebook and God is the author. Except, we cannot
-            skip these <br /> pages-neither can we foresee the next hour.
+            skip these <br /> pages, likewise we cannot foresee the next hour.
             <br />
             <br />
             No, we have no such power, but ask those with older ages,
