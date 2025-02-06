@@ -19,7 +19,7 @@ const Hero: React.FC = () => {
           <Quote className="italic animate-fade-in">
             My companion in writing for God;
             <br />
-            Time reveals the hands of God.
+            time reveals the hands of God.
             <br />
             <br />
             Time is like a notebook and God is the author. Except, we cannot
@@ -28,7 +28,7 @@ const Hero: React.FC = () => {
             <br />
             No, we have no such power, but ask those with older ages,
             <br />
-            They have been through our current storm.
+            they have been through our current storm.
             <br />
             <br />
             They shall bear witness that time reveals the hands of God.
