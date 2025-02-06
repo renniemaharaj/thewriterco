@@ -25,11 +25,11 @@ const Hero: React.FC = () => {
           <br />
           <br />
           <Quote className="italic animate-fade-in">
-            " But without faith it is impossible to please him:
+            But without faith it is impossible to please him:
             <br />
             for he that cometh to God must believe that he is,
             <br />
-            and that he is a rewarder of them that diligently seek him. "
+            and that he is a rewarder of them that diligently seek him.
           </Quote>
         </Text>
       </Flex>
