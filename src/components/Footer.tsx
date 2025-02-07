@@ -91,7 +91,7 @@ const Footer: React.FC = () => {
               placeholder="Enter your email"
               // className="text-black"
             />
-            <Button size="2" variant="soft">
+            <Button size="2" variant="solid" highContrast>
               Sign Up
             </Button>
           </Flex>
