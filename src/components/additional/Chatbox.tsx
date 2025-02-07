@@ -74,35 +74,37 @@ const Chatbox: React.FC<ChatboxProps> = ({
   // const extraToolIconClassNames =
   //   "text-yellow-500 hover:text-yellow-700 cursor-pointer scale-75";
   return (
+    // <Flex className="!h-[25vh] !w-full">
     <Card
       className={`${
         chatboxFocus ? " border-[#978365] " : "border-transparent"
-      } w-[90%] m-auto !h-auto border-2 outline-none !flex !flex-col !gap-2 mt-4 `}
+      } !absolute left-[50%] translate-x-[-50%] !bottom-0 !h-auto !w-[90%] border-2 outline-none !flex !flex-col !gap-2 mt-4 `}
     >
-      <Flex>
-        <Flex align={"center"} className="flex gap-2 !w-full !justify-evenly">
-          <textarea
-            ref={textAreaRef}
-            disabled={disabled}
-            className="scrollbar-hide flex-1 border-none outline-none resize-none text-sm p-2 bg-transparent !max-h-[3rem]"
-            placeholder="What would you like help with?"
-            rows={1}
-            value={message}
-            onChange={handleInput}
-            onKeyDown={handleKeyDown}
-          />
-          <Flex className="flex !gap-2 !align-middle !justify-center">
-            {message.trim() && (
-              <Button onClick={sendMessage} variant="soft">
-                <ArrowUpIcon />
-              </Button>
-            )}
-            {/* <NetworkIcon className={`${extraToolIconClassNames}`} /> */}
-          </Flex>
+      {/* <Flex> */}
+      <Flex align={"center"} className="flex gap-2 !w-full !justify-evenly">
+        <textarea
+          ref={textAreaRef}
+          disabled={disabled}
+          className="scrollbar-hide flex-1 border-none outline-none resize-none text-sm p-2 bg-transparent !max-h-[3rem]"
+          placeholder="What would you like help with?"
+          rows={1}
+          value={message}
+          onChange={handleInput}
+          onKeyDown={handleKeyDown}
+        />
+        <Flex className="flex !gap-2 !align-middle !justify-center">
+          {message.trim() && (
+            <Button onClick={sendMessage} variant="soft">
+              <ArrowUpIcon />
+            </Button>
+          )}
+          {/* <NetworkIcon className={`${extraToolIconClassNames}`} /> */}
         </Flex>
       </Flex>
+      {/* </Flex> */}
       {children}
     </Card>
+    // </Flex>
   );
 };
 

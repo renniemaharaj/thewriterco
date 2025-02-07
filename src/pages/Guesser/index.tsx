@@ -11,8 +11,10 @@ import { Flex, Box, Button, Text, Link, Separator } from "@radix-ui/themes";
 import { AllowedColors } from "../../components/RadixColors";
 import Hint from "../../components/Hint";
 import Navbar from "../../components/additional/NavBar";
-import Footer from "../Home/Footer";
+// import Footer from "../../components/Footer";
 import { BrainCircuit } from "lucide-react";
+import Footer from "../../components/Footer";
+// import Footer from "../../components/additional/footer";
 
 type Mind = {
   title: string;

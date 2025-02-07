@@ -2,9 +2,10 @@ import { Button, Flex, Quote, Separator, Text } from "@radix-ui/themes";
 import Navbar from "../../components/additional/NavBar";
 import Hero from "../../components/additional/Hero";
 
-import Footer from "./Footer";
 import { Carousel } from "../../components/additional/Carousel";
 import React from "react";
+import Footer from "../../components/Footer";
+// import Footer from "../../components/additional/footer";
 
 const carouselItems = [
   <Flex className="!w-[100vw] !flex-col items-center justify-center p-8 gap-2">

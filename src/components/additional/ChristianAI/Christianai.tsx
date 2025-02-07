@@ -10,6 +10,7 @@ import {
   IconButton,
   Popover,
   Separator,
+  Badge,
 } from "@radix-ui/themes";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSendAskReqMutation } from "../../../app/api/apiSlice";
@@ -25,7 +26,14 @@ import {
   PlayCircleIcon,
   ShieldAlertIcon,
 } from "lucide-react";
-import { Block, Executable } from "./types";
+import {
+  Block,
+  Code,
+  Exchange,
+  MarkupResponse,
+  ResponseBlock,
+  Scripture,
+} from "./types";
 import Flow from "../../flow/Flow.tsx";
 import { Node } from "@xyflow/react";
 import { Carousel } from "../Carousel.tsx";
@@ -42,12 +50,8 @@ import { EBook } from "../../../app/ereader/types.ts";
 
 import * as msgpack from "@msgpack/msgpack";
 import { fromByteArray } from "base64-js";
-import { Scripture } from "../NavBar.tsx";
-
-type Exchange = {
-  sender: "User" | "AI" | "System";
-  content: string;
-};
+// import { Scripture } from "../NavBar.tsx";
+import MonacoEditor from "../../MonacoEditor.tsx";
 
 const ChristianAIChatbox = ({
   className,
@@ -66,11 +70,14 @@ const ChristianAIChatbox = ({
   const [messageBlocks, setMessageBlocks] = useState<Block[]>([
     {
       sender: "AI",
-      type: "text",
-      content: "Hi! 🙏 How may I be of service to you?",
+      type: "markup",
+      content: {
+        type: "markup",
+        markupContent: "Hi! 🙏 How may I be of service to you?",
+      },
     },
   ]);
-  const [executables, setExecutables] = useState<Executable[]>([]);
+  // const [executables, setExecutables] = useState<Executable[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [canvasView, setCanvasView] = useState(false);
   const [Conversational, setConversational] = useState(true);
@@ -106,8 +113,11 @@ const ChristianAIChatbox = ({
       ...prev,
       {
         sender: "System" as const,
-        type: "text",
-        content,
+        type: "markup",
+        content: {
+          type: "markup",
+          markupContent: content,
+        },
       },
     ]);
   }
@@ -118,10 +128,22 @@ const ChristianAIChatbox = ({
     additionalExchange?: Exchange,
   ): Promise<Exchange[]> {
     const conversation = primaryBlocks.map((block) => {
-      return {
-        sender: block.sender,
-        content: block.content,
-      };
+      if (block.type === "markup") {
+        return {
+          sender: block.sender,
+          content: (block.content as MarkupResponse).markupContent,
+        };
+      } else if (block.type === "code") {
+        return {
+          sender: block.sender,
+          content: (block.content as Code).codeContent,
+        };
+      } else {
+        return {
+          sender: block.sender,
+          content: (block.content as Scripture).verses.toString(),
+        };
+      }
     });
 
     if (additionalExchange) {
@@ -136,67 +158,67 @@ const ChristianAIChatbox = ({
     try {
       const genaiResponse = JSON.parse(data.response);
 
-      // Detect mention axioms from AI with regex
-      const regex = /axioms?/gi;
-      if (genaiResponse.markupResponse.match(regex)) {
-        highlightAxioms();
+      // Ensure responseBlocks exist
+      if (!genaiResponse.responseBlocks) {
+        throw new Error("Invalid AI response format: Missing responseBlocks");
       }
 
-      setMessageBlocks((prev) => [
-        ...prev,
-        {
-          sender: "AI" as const,
-          type: "text",
-          content: genaiResponse.markupResponse,
-        },
-      ]);
+      // Iterate through responseBlocks and handle different content types
+      genaiResponse.responseBlocks.forEach((block: ResponseBlock) => {
+        const regex = /axioms?/gi;
+        switch (block.type) {
+          case "markup":
+            // Append AI markup response
+            setMessageBlocks((prev) => [
+              ...prev,
+              {
+                sender: "AI" as const,
+                type: "markup",
+                content: block.content as MarkupResponse,
+              },
+            ]);
 
-      genaiResponse.dataObjects.forEach((scripture: Scripture) => {
-        setExecutables((prev) => [
-          ...prev,
-          {
-            jsxTrigger: (
-              <Tooltip content={scripture.verseContent}>
-                {/* <IconButton radius="full"> */}
-                <Button
-                  variant="ghost"
-                  size="1"
-                  className="animate-pulse !font-bold"
-                  onClick={() => {
-                    fetchGitBlob(scripture.book).then((content) => {
-                      dispatch(
-                        setEBook({
-                          title: scripture.book,
-                          content: JSON.parse(content),
-                          date: new Date().toDateString(),
-                        } as EBook),
-                      );
-                      dispatch(setRenderStyle("bible"));
-                      dispatch(
-                        setGlobalCurrentChapter(scripture.chapterNo.toString()),
-                      );
-                      dispatch(
-                        setGlobalCurrentVerse(scripture.verseNo.toString()),
-                      );
-                      setTimeout(() => dispatch(setOpenState(true)), 100);
-                    });
-                  }}
-                >
-                  <PlayCircleIcon /> {scripture.book} {scripture.chapterNo}:
-                  {scripture.verseNo}
-                </Button>
-              </Tooltip>
-            ),
-          },
-        ]);
+            // Detect mention of axioms
+            if ((block.content as MarkupResponse).markupContent.match(regex)) {
+              highlightAxioms();
+            }
+            break;
+
+          case "scripture":
+            // Process scripture content
+            setMessageBlocks((prev) => [
+              ...prev,
+              {
+                sender: "AI" as const,
+                type: "scripture",
+                content: block.content as Scripture,
+              },
+            ]);
+            break;
+
+          case "code":
+            // Process code content
+            setMessageBlocks((prev) => [
+              ...prev,
+              {
+                sender: "AI" as const,
+                type: "code",
+                content: block.content as Code,
+              },
+            ]);
+            break;
+
+          default:
+            console.warn(`Unknown response block type: ${block.type}`);
+        }
       });
+
       return true;
     } catch (error) {
       if (data.response) {
         setSystemMessage(data.response);
-        return false;
       }
-      console.error(error);
+      console.error("Error parsing AI response:", error);
     }
   }
 
@@ -207,8 +229,11 @@ const ChristianAIChatbox = ({
       ...prev,
       {
         sender: "User",
-        type: "text",
-        content: msg,
+        type: "markup",
+        content: {
+          type: "markup",
+          markupContent: msg,
+        },
       },
     ]);
 
@@ -255,6 +280,9 @@ const ChristianAIChatbox = ({
         content: msg,
       });
     }
+
+    console.log("conversation", conversation);
+    // return;
 
     const msgPackData = msgpack.encode(conversation);
     const base64String = fromByteArray(new Uint8Array(msgPackData));
@@ -334,19 +362,20 @@ const ChristianAIChatbox = ({
           animationFillMode: "forwards",
         }}
       >
-        {block.sender === "AI" || block.sender === "User" ? (
-          block.sender !== "User" ? (
-            <div dangerouslySetInnerHTML={{ __html: block.content }} />
-          ) : (
-            <div>{block.content}</div>
-          )
-        ) : (
+        {block.sender === "User" && (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: (block.content as MarkupResponse).markupContent,
+            }}
+          />
+        )}
+        {block.sender === "System" && (
           <Card className="text-red-500 !flex !flex-col !items-center !gap-2 max-w-[300px]">
             <Flex className="!gap-2">
               <Flex>
                 <ShieldAlertIcon />
               </Flex>
-              <Text>{block.content}</Text>
+              <Text>{(block.content as MarkupResponse).markupContent}</Text>
             </Flex>
 
             <Flex className="!flex-row !gap-2">
@@ -354,7 +383,10 @@ const ChristianAIChatbox = ({
                 variant="soft"
                 onClick={() => {
                   handleMessageSend(
-                    messageBlocks[messageBlocks.length - 1].content,
+                    (
+                      messageBlocks[messageBlocks.length - 1]
+                        .content as MarkupResponse
+                    ).markupContent,
                   );
                   setMessageBlocks((prev) => prev.slice(0, -2));
                 }}
@@ -373,6 +405,68 @@ const ChristianAIChatbox = ({
               </Button>
             </Flex>
           </Card>
+        )}
+        {block.sender === "AI" && block.type === "markup" && (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: (block.content as MarkupResponse).markupContent,
+            }}
+          />
+        )}
+        {block.sender === "AI" && block.type === "code" && (
+          <Card className="!p-1">
+            <Flex className="!flex-row !gap-1 !mb-2">
+              <Badge variant="soft" className="!mr-2">
+                {(block.content as Code).filename}
+              </Badge>
+              {/* <Badge variant="soft">{(block.content as Code).language}</Badge> */}
+            </Flex>
+            <MonacoEditor
+              language={(block.content as Code).language || "plaintext"}
+              code={(block.content as Code).codeContent}
+              height={(block.content as Code).editorHeight || 400}
+            />
+          </Card>
+        )}
+
+        {block.sender === "AI" && block.type === "scripture" && (
+          <Carousel
+            variant="no-scrollbar"
+            className="max-w-[300px]"
+            items={(block.content as Scripture).verses.map((verse, idx) => (
+              <React.Fragment key={`verse-${idx}`}>
+                <Tooltip content={verse.verseContent}>
+                  <Button
+                    variant="ghost"
+                    size="1"
+                    className="animate-pulse !font-bold"
+                    onClick={() => {
+                      fetchGitBlob(verse.book).then((content) => {
+                        dispatch(
+                          setEBook({
+                            title: verse.book,
+                            content: JSON.parse(content),
+                            date: new Date().toDateString(),
+                          } as EBook),
+                        );
+                        dispatch(setRenderStyle("bible"));
+                        dispatch(
+                          setGlobalCurrentChapter(verse.chapterNo.toString()),
+                        );
+                        dispatch(
+                          setGlobalCurrentVerse(verse.verseNo.toString()),
+                        );
+                        setTimeout(() => dispatch(setOpenState(true)), 100);
+                      });
+                    }}
+                  >
+                    <PlayCircleIcon /> {verse.book} {verse.chapterNo}:
+                    {verse.verseNo}
+                  </Button>
+                </Tooltip>
+              </React.Fragment>
+            ))}
+          />
         )}
       </Flex>
     );
@@ -437,7 +531,7 @@ const ChristianAIChatbox = ({
     return (
       <ScrollArea
         ref={messageBoxRef}
-        className={`${className} !top-0 !h-[60vh] ${isTyping && "animate-pulse"}`}
+        className={`${className} !top-0 !h-[70vh] ${isTyping && "animate-pulse"}`}
       >
         {canvasView && (
           <>
@@ -467,7 +561,7 @@ const ChristianAIChatbox = ({
             <Flex
               key={index}
               justify="center"
-              className={`!flex-col max-w-[90%]`}
+              className={`!flex-col max-w-[90%] !gap-4`}
             >
               <MessageBlock
                 block={block}
@@ -509,7 +603,7 @@ const ChristianAIChatbox = ({
   }, [messageBlocks]);
 
   return (
-    <Flex className={`${className} !flex-col`}>
+    <Flex className={`relative ${className} !flex-col !h-[100vh] `}>
       {/* <Card className="bg-red-400 !top-0" variant="ghost"> */}
       {canvasView ? (
         <Flow
@@ -520,21 +614,6 @@ const ChristianAIChatbox = ({
         <ScrollAreaComponent />
       )}
       {/* <Frame {...frameSetup} /> */}
-      <Flex
-        direction="column"
-        justify="center"
-        className="text-center !flex-row !gap-2 !w-full max-w-[500px] !mx-auto !p-2 !m-auto"
-      >
-        <Carousel
-          variant="no-scrollbar"
-          items={executables.map((executable, idx) => (
-            <React.Fragment key={`exe-${idx}`}>
-              {executable.jsxTrigger}
-            </React.Fragment>
-          ))}
-        />
-      </Flex>
-      {/* </Card> */}
       <Chatbox
         disabled={isTyping}
         handleRecieve={(text: string) => handleMessageSend(text)}

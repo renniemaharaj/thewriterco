@@ -1,7 +1,9 @@
 import { Flex, Separator } from "@radix-ui/themes";
-import Footer from "../Home/Footer";
+// import Footer from "../../components/Footer";
 import Navbar from "../../components/additional/NavBar";
 import Menu from "../../components/documentation/Menu";
+import Footer from "../../components/Footer";
+// import Footer from "../../components/additional/footer";
 
 const Index = () => {
   return (

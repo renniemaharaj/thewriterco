@@ -6,24 +6,69 @@ type Executable = {
 //   jsxElem: React.ReactNode;
 // }
 
-interface Block {
-  sender: "User" | "AI" | "System";
-  type: "text" | "code";
-  content: string;
-  language?: string;
-}
-
 type Context = {
   book: string;
   chapter: string | null;
   verse: string | null;
 };
 
-interface TaskAlterBookState {
-  task: string;
-  book: string;
-  chapter: string;
-  verse: string;
+// interface TaskAlterBookState {
+//   task: string;
+//   book: string;
+//   chapter: string;
+//   verse: string;
+// }
+
+type Exchange = {
+  sender: "User" | "AI" | "System";
+  content: string;
+};
+
+type ResponseBlock = {
+  type: "markup" | "scripture" | "code";
+  content: MarkupResponse | Scripture | Code;
+};
+
+interface Block extends ResponseBlock {
+  sender: "User" | "AI" | "System";
 }
 
-export type { Executable, Block, Context, TaskAlterBookState };
+type MarkupResponse = {
+  type: "markup";
+  markupContent: string; // HTML-formatted string response
+};
+
+type Verse = {
+  book: string; // Valid Bible book name
+  chapterNo: number;
+  verseNo: number;
+  verseContent: string;
+};
+
+type Scripture = {
+  type: "scripture";
+  verses: Verse[];
+};
+
+type Code = {
+  language: string;
+  filename: string;
+  codeContent: string;
+  editorHeight: number;
+};
+
+type DefaultResponseSchema = {
+  responseBlocks: ResponseBlock[];
+};
+
+export type {
+  Executable,
+  Context,
+  ResponseBlock,
+  MarkupResponse,
+  Scripture,
+  Code,
+  DefaultResponseSchema,
+  Block,
+  Exchange,
+};

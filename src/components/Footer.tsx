@@ -12,14 +12,17 @@ import {
 } from "lucide-react";
 
 const companyName = "The Writer Company";
-const companyMission = "AI-integrated bible tools for study and research.";
+const companyMission = "Bible tools for study and research.";
 const companyAddress = "Trinidad and Tobago";
 const companyEmail = "rvesprey@gmail.com";
 const companyPhone = "(***) ***-****";
 
 const Footer: React.FC = () => {
   return (
-    <footer id="footer" className="py-16 !max-w-[140%] animate-fade-in">
+    <footer
+      id="footer"
+      className="py-16 !max-w-[140%] animate-fade-in bg-[#171918] text-white"
+    >
       {/* First Column: Information Section */}
 
       {/* <Box className="relative p-4"> */}
@@ -44,17 +47,26 @@ const Footer: React.FC = () => {
           </Heading>
           <ul className="space-y-2">
             <li>
-              <Link href="#" className="text-sm text-gray-300">
+              <Link
+                href="#"
+                className="text-sm !text-gray-300 hover:!text-white"
+              >
                 FAQ
               </Link>
             </li>
             <li>
-              <Link href="#" className="text-sm text-gray-300">
+              <Link
+                href="#"
+                className="text-sm !text-gray-300 hover:!text-white"
+              >
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link href="#" className="text-sm text-gray-300">
+              <Link
+                href="#"
+                className="text-sm !text-gray-300 hover:!text-white"
+              >
                 Terms of Service
               </Link>
             </li>
@@ -77,18 +89,18 @@ const Footer: React.FC = () => {
               disabled
               size="2"
               placeholder="Enter your email"
-              className="text-black"
+              // className="text-black"
             />
-            <Button size="2" variant="solid">
+            <Button size="2" variant="soft">
               Sign Up
             </Button>
           </Flex>
           <Flex gap="4" className="mt-4 !overflow-auto">
             <Link href="https://github.com/renniemaharaj/kjv-bible">
-              <GitHubLogoIcon className="h-5 w-5 text-gray-300 hover:text-white" />
+              <GitHubLogoIcon className="h-5 w-5 text-gray-300 hover:!text-white" />
             </Link>
             <Link href="https://www.facebook.com/profile.php?id=61571490380198">
-              <Facebook className="h-5 w-5 text-gray-300 hover:text-white" />
+              <Facebook className="h-5 w-5 text-gray-300 hover:!text-white" />
             </Link>
             {/* <Link href="#">
             <Twitter className="h-5 w-5 text-gray-300 hover:text-white" />
@@ -114,14 +126,19 @@ const Footer: React.FC = () => {
             <MapPin className="h-5 w-5 text-primary" />
             <Text>
               {companyAddress} <br />
-              <Link href="#" className="text-blue-400 underline">
+              <Link href="#" className="!text-gray-300 hover:!text-white">
                 Get Directions
               </Link>
             </Text>
           </Flex>
           <Flex className="items-center gap-2 text-sm mt-2">
             <Mail className="h-5 w-5 text-primary" />
-            <Link href={`mailto:${companyEmail}`}>Email: {companyEmail}</Link>
+            <Link
+              href={`mailto:${companyEmail}`}
+              className="!text-gray-300 hover:!text-white"
+            >
+              Email: {companyEmail}
+            </Link>
           </Flex>
           <Flex className="items-center gap-2 text-sm mt-2">
             <Phone className="h-5 w-5 text-primary" />

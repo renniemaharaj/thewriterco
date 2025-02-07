@@ -6,7 +6,9 @@ import { EBook } from "../../app/ereader/types";
 import { useDispatch } from "react-redux";
 import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
 import Navbar from "../../components/additional/NavBar";
-import Footer from "../Home/Footer";
+import Footer from "../../components/Footer";
+// import Footer from "../../components/additional/footer";
+// import Footer from "../../components/Footer";
 const Index = () => {
   const dispatch = useDispatch();
   const setEreaderState = (eBook: EBook) => {
