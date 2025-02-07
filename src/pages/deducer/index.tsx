@@ -14,6 +14,7 @@ import Navbar from "../../components/additional/NavBar";
 // import Footer from "../../components/Footer";
 import { BrainCircuit } from "lucide-react";
 import Footer from "../../components/Footer";
+import Ereader from "../../components/additional/Ereader";
 // import Footer from "../../components/additional/footer";
 
 type Mind = {
@@ -187,6 +188,7 @@ const Index = () => {
     <Flex className="!w-full !flex-col merriweather-bold !p-0`">
       {/* <Navbar /> */}
       <Navbar />
+      <Ereader hidePicker={true} />
       <Flex
         direction="column"
         align="center"

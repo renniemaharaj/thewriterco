@@ -3,6 +3,7 @@ import { Flex, Separator } from "@radix-ui/themes";
 import Navbar from "../../components/additional/NavBar";
 import Menu from "../../components/documentation/Menu";
 import Footer from "../../components/Footer";
+import Ereader from "../../components/additional/Ereader";
 // import Footer from "../../components/additional/footer";
 
 const Index = () => {
@@ -10,6 +11,7 @@ const Index = () => {
     <Flex className="!w-full  !flex-col merriweather-bold !p-0`">
       {/* <Navbar /> */}
       <Navbar />
+      <Ereader hidePicker={true} />
       <Flex
         direction="column"
         align="center"
