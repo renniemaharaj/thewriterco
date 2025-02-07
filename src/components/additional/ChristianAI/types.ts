@@ -12,12 +12,12 @@ type Context = {
   verse: string | null;
 };
 
-// interface TaskAlterBookState {
-//   task: string;
-//   book: string;
-//   chapter: string;
-//   verse: string;
-// }
+interface TaskAlterBookState {
+  task: string;
+  book: string;
+  chapter: string;
+  verse: string;
+}
 
 type Exchange = {
   sender: "User" | "AI" | "System";
@@ -69,6 +69,7 @@ export type {
   Scripture,
   Code,
   DefaultResponseSchema,
+  TaskAlterBookState,
   Block,
   Exchange,
 };
