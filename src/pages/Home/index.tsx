@@ -5,6 +5,7 @@ import Hero from "../../components/additional/Hero";
 import { Carousel } from "../../components/additional/Carousel";
 import React from "react";
 import Footer from "../../components/Footer";
+import Ereader from "../../components/additional/Ereader";
 // import Footer from "../../components/additional/footer";
 
 const carouselItems = [
@@ -62,6 +63,8 @@ const Index: React.FC = () => {
     <Flex className="!w-full !flex-col merriweather-bold !p-0`">
       {/* <Navbar /> */}
       <Navbar />
+
+      <Ereader hidePicker={true} />
 
       {/* <Hero /> */}
       <Hero />

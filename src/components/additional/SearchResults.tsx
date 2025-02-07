@@ -1,23 +1,29 @@
 import { Button, Dialog, Flex, Text } from "@radix-ui/themes";
 import Hint from "../Hint";
-import { Scripture } from "./NavBar";
+// import { Scripture } from "./NavBar";
+import fetchGitBlob from "./articles/utils/bible/gitgetter";
+import { Verse } from "./ChristianAI/types";
 
-// export type Result = {
-//   book: string;
-//   title: string;
-//   verseNo: number;
-//   chapterNo: number;
-//   verse: string;
-// };
+import {
+  setEBook,
+  setGlobalCurrentChapter,
+  setGlobalCurrentVerse,
+  setOpenState,
+  setRenderStyle,
+} from "../../app/ereader/ereaderSlice";
+import { EBook } from "../../app/ereader/types";
+import { useDispatch } from "react-redux";
+
 const SearchResults = ({
   displayResults,
   displayedResults,
   onOpenChange,
 }: {
   displayResults: boolean;
-  displayedResults: Scripture[];
+  displayedResults: Verse[];
   onOpenChange: (open: boolean) => void;
 }) => {
+  const dispatch = useDispatch();
   return (
     <Dialog.Root
       open={displayResults}
@@ -25,7 +31,7 @@ const SearchResults = ({
         onOpenChange(value);
       }}
     >
-      <Dialog.Content maxWidth="450px" className="max-h-full overflow-auto">
+      <Dialog.Content maxWidth="450px" className="max-h-[400px]  overflow-auto">
         <Dialog.Title>Contextual, Relative Matching</Dialog.Title>
         <Dialog.Description size="2" mb="4">
           {!displayedResults.length
@@ -34,7 +40,33 @@ const SearchResults = ({
         </Dialog.Description>
 
         {displayedResults.map((result, index) => (
-          <Flex key={index} direction="column" gap="2" className="mb-4">
+          <Flex
+            key={index}
+            direction="column"
+            gap="2"
+            className="mb-4 cursor-pointer hover:animate-pulse"
+            onClick={() => {
+              fetchGitBlob((result as Verse).book).then((content) => {
+                dispatch(
+                  setEBook({
+                    title: (result as Verse).book,
+                    content: JSON.parse(content),
+                    date: new Date().toDateString(),
+                  } as EBook),
+                );
+                dispatch(setRenderStyle("bible"));
+                dispatch(
+                  setGlobalCurrentChapter(
+                    (result as Verse).chapterNo.toString(),
+                  ),
+                );
+                dispatch(
+                  setGlobalCurrentVerse((result as Verse).verseNo.toString()),
+                );
+                setTimeout(() => dispatch(setOpenState(true)), 100);
+              });
+            }}
+          >
             <Flex justify="between">
               <Flex className="!flex-row">
                 <Text size="2" weight="bold">

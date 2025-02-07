@@ -18,6 +18,7 @@ import SearchLoading from "../SearchLoading";
 import { useSendFindReqMutation } from "../../app/api/apiSlice";
 import { input } from "@testing-library/user-event/dist/cjs/event/input.js";
 import SearchResults from "./SearchResults";
+import { ResponseBlock, Scripture, Verse } from "./ChristianAI/types";
 
 type NavLink = {
   label: string;
@@ -33,19 +34,6 @@ const navLinksArray: NavLink[] = [
   { label: "Deducer", href: "/deducer", disabled: false },
   { label: "AI", href: "/ai", disabled: false },
 ];
-
-// TypeScript interfaces for the response schema
-export interface Scripture {
-  book: string;
-  chapterNo: number;
-  verseNo: number;
-  verseContent: string;
-}
-
-interface ResponseSchema {
-  markupResponse: string; // For the HTML markup as a string
-  dataObjects: Scripture[]; // Array of Scripture objects
-}
 
 const Navbar: React.FC = () => {
   const [navLinks] = useState<NavLink[]>(navLinksArray);
@@ -65,7 +53,7 @@ const Navbar: React.FC = () => {
 
   const [sendFindReq, { isLoading }] = useSendFindReqMutation();
 
-  const [displayedResults, setDisplayedResults] = useState<Scripture[]>([]);
+  const [displayedResults, setDisplayedResults] = useState<Verse[]>([]);
   const [displayResults, setDisplayResults] = useState(false);
 
   const handleFindReq = useCallback(
@@ -77,10 +65,22 @@ const Navbar: React.FC = () => {
         }).unwrap();
 
         // console.log("Response from find request:", typeof data.response);
-        const genaiResponse = JSON.parse(data.response) as ResponseSchema;
-        console.log("Response from find request:", data.response);
-        setDisplayedResults(genaiResponse.dataObjects);
-        setDisplayResults(true);
+        const genaiResponse = JSON.parse(data.response);
+
+        // Ensure responseBlocks exist
+        if (!genaiResponse.responseBlocks) {
+          throw new Error("Invalid AI response format: Missing responseBlocks");
+        }
+
+        genaiResponse.responseBlocks.forEach((block: ResponseBlock) => {
+          if (block.type === "scripture") {
+            const scriptureBlock = block.content as Scripture;
+            // console.log("Response from find request:", scriptureBlock.verses);
+            setDisplayedResults(scriptureBlock.verses);
+            setDisplayResults(true);
+            return;
+          }
+        });
       } catch (error) {
         console.error("Error during find request:", error);
         setDisplayedResults([]);

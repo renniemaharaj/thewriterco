@@ -67,6 +67,7 @@ export type {
   ResponseBlock,
   MarkupResponse,
   Scripture,
+  Verse,
   Code,
   DefaultResponseSchema,
   TaskAlterBookState,
