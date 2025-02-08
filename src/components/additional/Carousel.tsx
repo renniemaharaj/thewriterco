@@ -66,17 +66,25 @@ export const Carousel: React.FC<CarouselProps> = ({
       if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
         e.preventDefault();
         const delta = e.deltaY < 0 ? -1 : 1; // Scroll up is left, scroll down is right
-        delta > 0 ? scrollTo("right") : scrollTo("left");
+        if (delta > 0) {
+          scrollTo("right");
+        } else {
+          scrollTo("left");
+        }
       }
     };
 
+    const handleWheelDebounced = (e: WheelEvent) => {
+      debounce(handleWheel, 90)(e);
+      e.preventDefault();
+    }; // Debounce wheel updates
     const handleScroll = debounce(scrollHandler, 50); // Debounce scroll updates
 
-    carousel.addEventListener("wheel", handleWheel);
+    carousel.addEventListener("wheel", handleWheelDebounced);
     carousel.addEventListener("scroll", handleScroll);
 
     return () => {
-      carousel.removeEventListener("wheel", handleWheel);
+      carousel.removeEventListener("wheel", handleWheelDebounced);
       carousel.removeEventListener("scroll", handleScroll);
     };
   }, []);

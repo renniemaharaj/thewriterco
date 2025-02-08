@@ -48,7 +48,7 @@ const Menu = ({
   axiomsMentioned?: boolean;
   className?: string;
 }) => {
-  const hero = "TheWriterCo";
+  const hero = "Reasoning";
 
   const [framePostion, setFramePosition] = useState<FrameBarSetup>(
     frameSetups.CornersNorthEastSM,
@@ -114,7 +114,7 @@ const Menu = ({
           textAlign: "center",
           transition: "300ms",
         }}
-        onClick={() => (location.href = "/")}
+        onClick={() => (location.href = "/reasoning")}
       >
         {hero}
       </Text>
@@ -177,15 +177,6 @@ const Menu = ({
                 </Callout.Icon>
                 <Callout.Text>
                   Verbose reasoning in the "Verbose" tab.
-                </Callout.Text>
-              </Callout.Root>
-              <Separator size="4" className="!my-2" />
-              <Callout.Root className="mt-5">
-                <Callout.Icon>
-                  <InfoCircledIcon />
-                </Callout.Icon>
-                <Callout.Text>
-                  We recommend viewing this site in dark mode.
                 </Callout.Text>
               </Callout.Root>
             </Box>
