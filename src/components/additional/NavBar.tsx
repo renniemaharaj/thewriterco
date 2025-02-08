@@ -30,8 +30,8 @@ const navLinksArray: NavLink[] = [
   { label: "About", href: "#footer", disabled: false },
   { label: "Articles", href: "#articles", disabled: true },
   { label: "KJV", href: "/kjv", disabled: false },
-  { label: "Sources", href: "#footer", disabled: false },
-  { label: "Deducer", href: "/deducer", disabled: false },
+  { label: "Sources", href: "#footer", disabled: true },
+  { label: "Guesser", href: "/deducer", disabled: false },
   { label: "AI", href: "/ai", disabled: false },
 ];
 

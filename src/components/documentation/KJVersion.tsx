@@ -56,22 +56,24 @@ const KJVArguments = () => {
     <Box className="space-y-4 p-4">
       <Flex className="gap-4 !flex-col">
         {kjvArguments.map((argument, index) => (
-          <Collapsible
-            key={index}
-            title={argument.title}
-            children={
-              <Card variant="ghost" key={index} className="p-4 rounded-xl">
-                <strong>{argument.title}:</strong>
-                <ul className="mt-2 space-y-2 list-disc pl-4">
-                  {argument.points.map((point, i) => (
-                    <li key={i}>
-                      <Text size="2">{point}</Text>
-                    </li>
-                  ))}
-                </ul>
-              </Card>
-            }
-          />
+          <Card>
+            <Collapsible
+              key={index}
+              title={argument.title}
+              children={
+                <Card key={index} className="p-4 rounded-xl">
+                  <strong>{argument.title}:</strong>
+                  <ul className="mt-2 space-y-2 list-disc pl-4">
+                    {argument.points.map((point, i) => (
+                      <li key={i}>
+                        <Text size="2">{point}</Text>
+                      </li>
+                    ))}
+                  </ul>
+                </Card>
+              }
+            />
+          </Card>
         ))}
       </Flex>
 
@@ -83,27 +85,30 @@ const KJVArguments = () => {
         Source: Robert Breaker Why King James Only? Youtube Video
       </Link>
       <Separator size="4" className="!my-2" />
-      <Collapsible
-        title="However"
-        children={
-          <Callout.Root>
-            <Callout.Icon>
-              <InfoCircledIcon />
-            </Callout.Icon>
-            <Callout.Text>
-              Our second axiom is not directly derived from the external points
-              made in favor of the KJV. Rather, we adopt the KJV because it best
-              satisfies the constraints of our framework. We believe it to be
-              the most consistent, historically sound, and doctrinally pure
-              source of scripture within Christianity, which we prioritize as
-              the most coherent system answering our four fundamental questions
-              while satisfying our constraints. However, while our framework
-              remains independent of these external considerations, it should
-              still remain consistent with any actual truth, and or corrections.
-            </Callout.Text>
-          </Callout.Root>
-        }
-      />
+      <Card>
+        <Collapsible
+          title="However"
+          children={
+            <Callout.Root>
+              <Callout.Icon>
+                <InfoCircledIcon />
+              </Callout.Icon>
+              <Callout.Text>
+                Our second axiom is not directly derived from the external
+                points made in favor of the KJV. Rather, we adopt the KJV
+                because it best satisfies the constraints of our framework. We
+                believe it to be the most consistent, historically sound, and
+                doctrinally pure source of scripture within Christianity, which
+                we prioritize as the most coherent system answering our four
+                fundamental questions while satisfying our constraints. However,
+                while our framework remains independent of these external
+                considerations, it should still remain consistent with any
+                actual truth, and or corrections.
+              </Callout.Text>
+            </Callout.Root>
+          }
+        />
+      </Card>
     </Box>
   );
 };

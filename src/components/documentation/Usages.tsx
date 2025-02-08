@@ -1,4 +1,4 @@
-import { Box, Callout } from "@radix-ui/themes";
+import { Box, Callout, Card } from "@radix-ui/themes";
 import Strong from "./Strong";
 import { ShieldBanIcon } from "lucide-react";
 import Collapsible from "../Collapsible";
@@ -29,36 +29,52 @@ const Usages = () => {
   return (
     <Box className="space-y-4 p-4">
       {services.map((service, index) => (
-        <Collapsible
-          key={index}
-          title={service.title}
-          children={<Strong point={service.title} content={service.content} />}
-        />
+        <Card>
+          <Collapsible
+            key={index}
+            title={service.title}
+            children={
+              <Card>
+                <Strong point={service.title} content={service.content} />
+              </Card>
+            }
+          />
+        </Card>
       ))}
 
-      <>
-        <Strong
-          point="Cost and restrictions"
-          content="There are no costs associated with using the site. However, restrictions are listed below."
+      <Card>
+        <Collapsible
+          title="Cost and restrictions"
+          children={
+            <Card>
+              <ul className="space-y-2 list-disc pl-4 text-sm">
+                <li>There are no costs, only restrictions on service</li>
+                <li>The tools are provided for educational purposes only.</li>
+                <li>
+                  Our services are not to be used for commercial purposes.
+                </li>
+                <li>Our services are not to be used to form a new religion.</li>
+                <li>
+                  Our services are not to be used to form a religious cult.
+                </li>
+                <li>
+                  Our services are not to be used to create yet another
+                  Christian denomination. Please escape the curse of
+                  denominations which ultimately limit and segregate.
+                </li>
+                <li>
+                  Please do not abuse the generative AI. It is a tool for
+                  exploration and learning. We rate limit requests to prevent
+                  abuse. We prefer not to put the services behind a login. It is
+                  simply not in our interest to do so. We want to provide the
+                  tools for free and open. Porfavor!
+                </li>
+              </ul>
+            </Card>
+          }
         />
-
-        <ul className="space-y-2 list-disc pl-4 text-sm">
-          <li>The tools are provided for educational purposes only.</li>
-          <li>Our services are not to be used for commercial purposes.</li>
-          <li>Our services are not to be used to form a new religion.</li>
-          <li>Our services are not to be used to form a religious cult.</li>
-          <li>
-            Our services are not to be used to create yet another Christian
-            denomination. Please escape the curse of denominations which
-            ultimately limit and segregate.
-          </li>
-          <li>
-            Please do not abuse the generative AI. It is a tool for exploration
-            and learning. We rate limit requests to prevent abuse. We prefer not
-            to put the services behind a login. It is simply not in our interest
-            to do so. We want to provide the tools for free and open. Porfavor!
-          </li>
-        </ul>
+      </Card>
+      <>
         <Callout.Root>
           <Callout.Icon>
             <ShieldBanIcon />

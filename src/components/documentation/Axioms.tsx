@@ -1,4 +1,4 @@
-import { Box, Text } from "@radix-ui/themes";
+import { Box, Card, Text } from "@radix-ui/themes";
 import Strong from "./Strong";
 import Collapsible from "../Collapsible";
 
@@ -154,17 +154,21 @@ const Axioms = () => {
       />
 
       {reasoningForAxioms.map((axiom, index) => (
-        <Collapsible
-          maxHeight="max-h-[400px]"
-          title={axiom.title}
-          children={
-            <Strong
-              key={index}
-              point={axiom.title}
-              content={axiom.description}
-            />
-          }
-        />
+        <Card>
+          <Collapsible
+            maxHeight="max-h-[400px]"
+            title={axiom.title}
+            children={
+              <Card>
+                <Strong
+                  key={index}
+                  point={axiom.title}
+                  content={axiom.description}
+                />
+              </Card>
+            }
+          />
+        </Card>
       ))}
     </Box>
   );
