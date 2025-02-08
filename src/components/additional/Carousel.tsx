@@ -22,113 +22,95 @@ export const Carousel: React.FC<CarouselProps> = ({
   autoScroll = true,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [charge, setCharge] = useState(0);
   const [isStart, setIsStart] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
-  const maxCharge = useRef(777); // Maximum charge for proportional scrolling
+  const currentChildIndexRef = useRef(0);
   const isInView = useRef(false);
 
-  const scrollHandler = () => {
+  const updateScrollStatus = () => {
     if (containerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
-      setIsStart(scrollLeft <= 10);
-      setIsEnd(scrollWidth > scrollLeft + clientWidth + 10);
+      // const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+      setIsStart(currentChildIndexRef.current === 0);
+      setIsEnd(currentChildIndexRef.current === items.length - 1);
     }
   };
 
-  const scrollTo = (direction: "left" | "right") => {
-    if (containerRef.current) {
-      const { clientWidth } = containerRef.current;
-      const scrollAmount = direction === "left" ? -clientWidth : clientWidth;
-      containerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    }
-  };
-
-  // Effect for proportional scrolling based on charge
-  useEffect(() => {
+  const scrollToChild = (direction: "left" | "right") => {
+    if (!containerRef.current) return;
     const carousel = containerRef.current;
-    if (!carousel || charge === 0) return;
+    const children = Array.from(carousel.children);
 
-    const scrollAmount = (charge / maxCharge.current) * carousel.clientWidth;
-    carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    if (children.length === 0) return;
 
-    // Reset charge after handling
-    const resetTimer = setTimeout(() => setCharge(0), 200); // 200ms delay
-    return () => clearTimeout(resetTimer);
-  }, [charge]);
-
-  // Wheel event to update charge
-  useEffect(() => {
-    const carousel = containerRef.current;
-    if (!carousel) return;
-
-    const handleWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        e.preventDefault();
-        const delta = e.deltaY < 0 ? -1 : 1; // Scroll up is left, scroll down is right
-        if (delta > 0) {
-          scrollTo("right");
-        } else {
-          scrollTo("left");
-        }
+    let newIndex = currentChildIndexRef.current;
+    if (direction === "right") {
+      newIndex = children.findIndex(
+        (_, idx) => idx > currentChildIndexRef.current,
+      );
+      if (newIndex === -1) {
+        newIndex = 0; // Restart at beginning
+        setIsEnd(true);
       }
-    };
+    } else {
+      newIndex = children.findIndex(
+        (_, idx) => idx < currentChildIndexRef.current,
+      );
+      if (newIndex === -1) {
+        newIndex = children.length - 1; // Restart at end
+        setIsStart(true);
+      }
+    }
 
-    const handleWheelDebounced = (e: WheelEvent) => {
-      debounce(handleWheel, 90)(e);
-      e.preventDefault();
-    }; // Debounce wheel updates
-    const handleScroll = debounce(scrollHandler, 50); // Debounce scroll updates
+    currentChildIndexRef.current = newIndex;
+    children[newIndex].scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+    updateScrollStatus();
+  };
 
-    carousel.addEventListener("wheel", handleWheelDebounced);
-    carousel.addEventListener("scroll", handleScroll);
-
-    return () => {
-      carousel.removeEventListener("wheel", handleWheelDebounced);
-      carousel.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  // Auto-scroll feature
   useEffect(() => {
     if (!autoScroll || !containerRef.current) return;
-    const carousel = containerRef.current;
-
     const autoScrollInterval = setInterval(() => {
       if (!isInView.current) return;
-      if (carousel.scrollWidth > carousel.clientWidth) {
-        // Get all the child elements of the carousel
-        const carouselItems = Array.from(carousel.children);
-
-        // If there are children in the carousel
-        if (carouselItems.length > 0) {
-          // Pick a random item from the carousel items
-          const randomIndex = Math.floor(Math.random() * carouselItems.length);
-          const randomItem = carouselItems[randomIndex];
-
-          // Scroll the selected item into view smoothly
-          randomItem.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest", // Align the item in the nearest block (vertical positioning)
-            inline: "center", // Align the item to the center horizontally
-          });
-        }
-      }
-    }, 10000); // Every 10 seconds
+      scrollToChild("right");
+    }, 10000);
 
     return () => clearInterval(autoScrollInterval);
   }, [autoScroll]);
 
-  const arrowButtonClassnames =
-    "absolute !scale-75 top-1/2 transform -translate-y-1/2 z-10 p-1 bg-[#3e63dd] rounded-full shadow-md opacity-80 text-white";
+  useEffect(() => {
+    if (!containerRef.current) return;
+    containerRef.current.style.scrollbarWidth = "none";
+  }, [containerRef.current]);
+
+  const handleWheel = (e: WheelEvent) => {
+    e.preventDefault();
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      const direction = e.deltaY < 0 ? "left" : "right";
+      debouncedScroll(direction);
+    }
+  };
+
+  const debouncedScroll = debounce((direction: "left" | "right") => {
+    scrollToChild(direction);
+  }, 90);
 
   useEffect(() => {
-    if (containerRef.current && variant === "no-scrollbar") {
-      containerRef.current.style.scrollbarWidth = "none";
-    }
+    const carousel = containerRef.current;
+    if (!carousel) return;
 
-    // maxCharge.current = containerRef.current?.clientWidth || 777;
-  }, [containerRef]);
+    const handleWheelEvent = (e: WheelEvent) => {
+      e.preventDefault();
+      handleWheel(e);
+    };
+
+    carousel.addEventListener("wheel", handleWheelEvent, { passive: false });
+    return () => {
+      carousel.removeEventListener("wheel", handleWheelEvent);
+    };
+  }, []);
 
   return (
     <div className={classNames("relative w-full", className)} ref={ref}>
@@ -140,10 +122,11 @@ export const Carousel: React.FC<CarouselProps> = ({
           return <></>;
         }}
       </Observer>
+
       {variant === "no-scrollbar" && !isStart && (
         <button
-          className={arrowButtonClassnames + " left-0"}
-          onClick={() => scrollTo("left")}
+          className="absolute !scale-75 left-0 top-1/2 transform -translate-y-1/2 z-10 p-1 bg-[#3e63dd] rounded-full shadow-md opacity-80 text-white"
+          onClick={() => scrollToChild("left")}
         >
           <ChevronLeftIcon className="animate-pulse" />
         </button>
@@ -151,7 +134,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 
       <div
         ref={containerRef}
-        onScroll={scrollHandler}
+        onScroll={debounce(updateScrollStatus, 50)}
         className={classNames("flex overflow-x-auto scroll-smooth", {
           "scrollbar-none": variant === "no-scrollbar",
         })}
@@ -163,10 +146,10 @@ export const Carousel: React.FC<CarouselProps> = ({
         ))}
       </div>
 
-      {variant === "no-scrollbar" && isEnd && (
+      {variant === "no-scrollbar" && !isEnd && (
         <button
-          className={arrowButtonClassnames + " right-0"}
-          onClick={() => scrollTo("right")}
+          className="absolute !scale-75 right-0 top-1/2 transform -translate-y-1/2 z-10 p-1 bg-[#3e63dd] rounded-full shadow-md opacity-80 text-white"
+          onClick={() => scrollToChild("right")}
         >
           <ChevronRightIcon className="animate-pulse" />
         </button>
