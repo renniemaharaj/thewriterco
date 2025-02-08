@@ -79,10 +79,6 @@ const Index: React.FC = () => {
       />
 
       <Separator size={"4"} />
-
-      {/* <Box className="space-y-4 p-4"> */}
-
-      {/* </Box> */}
       <Separator size={"4"} />
       {/* <Footer /> */}
       <Footer />

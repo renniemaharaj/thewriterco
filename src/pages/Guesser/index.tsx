@@ -279,8 +279,8 @@ const Index = () => {
           </Text>
         </Box>
       </Flex>
-      <Separator size="4" className="!my-2" />
-      {/* <Footer /> */}
+      <Separator size={"4"} />
+      <Separator size={"4"} />
       <Footer />
     </Flex>
   );

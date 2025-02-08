@@ -20,7 +20,8 @@ const Index = () => {
       >
         <Menu />
       </Flex>
-      <Separator size="4" className="!my-2" />
+      <Separator size={"4"} />
+      <Separator size={"4"} />
       {/* <Footer /> */}
       <Footer />
     </Flex>

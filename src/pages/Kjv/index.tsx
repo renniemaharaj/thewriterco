@@ -1,4 +1,4 @@
-import { Flex } from "@radix-ui/themes";
+import { Flex, Separator } from "@radix-ui/themes";
 import Sword from "../../components/additional/articles/Sword";
 
 import Ereader from "../../components/additional/Ereader";
@@ -28,6 +28,8 @@ const Index = () => {
       {/* <Ereader /> */}
       <Ereader />
 
+      <Separator size={"4"} />
+      <Separator size={"4"} />
       {/* <Footer /> */}
       <Footer />
     </Flex>

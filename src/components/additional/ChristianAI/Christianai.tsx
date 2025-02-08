@@ -561,7 +561,7 @@ const ChristianAIChatbox = ({
             <Flex
               key={index}
               justify="center"
-              className={`!flex-col max-w-[90%] !gap-4`}
+              className={`!flex-col max-w-[90%] !gap-1`}
             >
               <MessageBlock
                 block={block}
