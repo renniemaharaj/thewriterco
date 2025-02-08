@@ -19,7 +19,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   variant = "default",
   className,
   ref,
-  autoScroll = true,
+  autoScroll = false,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isStart, setIsStart] = useState(true);
