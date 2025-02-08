@@ -1,4 +1,4 @@
-import { Button, Flex, Quote, Separator, Text } from "@radix-ui/themes";
+import { Button, Card, Flex, Quote, Separator, Text } from "@radix-ui/themes";
 import Hero from "../../components/additional/Hero";
 
 import { Carousel } from "../../components/additional/Carousel";
@@ -65,16 +65,17 @@ const Index: React.FC = () => {
         {/* <Hero /> */}
         <Hero />
         <Separator size={"4"} />
-        <Flex className="!w-full">
-          <Carousel
-            autoScroll={true}
-            variant="no-scrollbar"
-            className="flex-[1]"
-            items={carouselItems}
-          />
-          <Flex className="!hidden md:!flex flex-[1] justify-center items-center h-[400px]">
+        <Flex className="!w-full gap-2 !p-2 !h-[400px] !max-h-[400px] !overflow-hidden">
+          <Card className="flex-[1]">
+            <Carousel
+              autoScroll={true}
+              variant="no-scrollbar"
+              items={carouselItems}
+            />
+          </Card>
+          <Card className="flex-[1] !hidden md:!flex" variant="ghost">
             <Menu className="max-w-[400px]" />
-          </Flex>
+          </Card>
         </Flex>
       </>
     </Page>
