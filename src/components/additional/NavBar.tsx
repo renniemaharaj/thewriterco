@@ -102,10 +102,8 @@ const Navbar: React.FC = () => {
 
   return (
     <Box
-      className={`py-4 !rounded-none transition-all shadow-md sticky top-0 z-10 blurred-div !overflow-hidden ${
-        eReaderState.isOpen
-          ? "!z-0 relative left-[50%] translate-x-[-50%] "
-          : "w-full"
+      className={`py-4 !rounded-none transition-all shadow-md sticky top-0 blurred-div !overflow-hidden ${
+        eReaderState.isOpen ? "!z-0  " : "!z-10"
       }`}
     >
       <SearchResults

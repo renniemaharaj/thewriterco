@@ -19,10 +19,7 @@ const companyPhone = "(***) ***-****";
 
 const Footer: React.FC = () => {
   return (
-    <footer
-      id="footer"
-      className="py-16 !max-w-[140%] animate-fade-in bg-[#171918] text-white"
-    >
+    <footer id="footer" className="py-16 !max-w-[140% bg-[#171918] text-white">
       {/* First Column: Information Section */}
 
       {/* <Box className="relative p-4"> */}

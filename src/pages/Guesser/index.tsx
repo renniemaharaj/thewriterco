@@ -7,14 +7,12 @@ import {
 } from "./config";
 import { generatePossibilities, mean } from "./utils";
 import { QueryForm, GameEndNotice } from "./types";
-import { Flex, Box, Button, Text, Link, Separator } from "@radix-ui/themes";
+import { Flex, Box, Button, Text, Link } from "@radix-ui/themes";
 import { AllowedColors } from "../../components/RadixColors";
 import Hint from "../../components/Hint";
-import Navbar from "../../components/additional/NavBar";
 // import Footer from "../../components/Footer";
 import { BrainCircuit } from "lucide-react";
-import Footer from "../../components/Footer";
-import Ereader from "../../components/additional/Ereader";
+import Page from "../../components/Page";
 // import Footer from "../../components/additional/footer";
 
 type Mind = {
@@ -185,10 +183,7 @@ const Index = () => {
     return inferIsGuess(msg) ? "blue" : "";
   };
   return (
-    <Flex className="!w-full !flex-col merriweather-bold !p-0`">
-      {/* <Navbar /> */}
-      <Navbar />
-      <Ereader hidePicker={true} />
+    <Page>
       <Flex
         direction="column"
         align="center"
@@ -279,10 +274,7 @@ const Index = () => {
           </Text>
         </Box>
       </Flex>
-      <Separator size={"4"} />
-      <Separator size={"4"} />
-      <Footer />
-    </Flex>
+    </Page>
   );
 };
 

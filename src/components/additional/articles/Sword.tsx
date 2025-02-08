@@ -73,7 +73,7 @@ const Sword: React.FC<SwordProps> = ({ setEBook, asChild }) => {
     return (
       <Card
         variant="classic"
-        className="animate-fade-in p-4 rounded-lg w-full md:w-1/3 transition-shadow cursor-pointer hover:shadow-lg drop-shadow-md shadow-[gray]"
+        className="rounded-lg w-full md:w-1/3 transition-shadow cursor-pointer hover:shadow-lg drop-shadow-md shadow-[gray]"
         style={{
           //   border: "1px solid var(--gray-a6)",
           backgroundColor: "var(--gray-a3)",

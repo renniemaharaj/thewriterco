@@ -1,12 +1,9 @@
-import { Flex, Separator } from "@radix-ui/themes";
 import Sword from "../../components/additional/articles/Sword";
 
-import Ereader from "../../components/additional/Ereader";
 import { EBook } from "../../app/ereader/types";
 import { useDispatch } from "react-redux";
 import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
-import Navbar from "../../components/additional/NavBar";
-import Footer from "../../components/Footer";
+import Page from "../../components/Page";
 // import Footer from "../../components/additional/footer";
 // import Footer from "../../components/Footer";
 const Index = () => {
@@ -19,20 +16,10 @@ const Index = () => {
     dispatch(setRenderStyle("bible"));
   };
   return (
-    <Flex className="!w-full !flex-col merriweather-bold !p-0`">
-      {/* <Navbar /> */}
-      <Navbar />
-
+    <Page>
       {/* <Sword />*/}
       <Sword setEBook={setEreaderState} />
-      {/* <Ereader /> */}
-      <Ereader />
-
-      <Separator size={"4"} />
-      <Separator size={"4"} />
-      {/* <Footer /> */}
-      <Footer />
-    </Flex>
+    </Page>
   );
 };
 

@@ -1,11 +1,9 @@
 import { Button, Flex, Quote, Separator, Text } from "@radix-ui/themes";
-import Navbar from "../../components/additional/NavBar";
 import Hero from "../../components/additional/Hero";
 
 import { Carousel } from "../../components/additional/Carousel";
 import React from "react";
-import Footer from "../../components/Footer";
-import Ereader from "../../components/additional/Ereader";
+import Page from "../../components/Page";
 // import Footer from "../../components/additional/footer";
 
 const carouselItems = [
@@ -57,32 +55,24 @@ const carouselItems = [
     </Button>
   </Flex>,
 ];
-//Suppress ESLint errors
+
 const Index: React.FC = () => {
   return (
-    <Flex className="!w-full !flex-col merriweather-bold !p-0`">
-      {/* <Navbar /> */}
-      <Navbar />
-
-      <Ereader hidePicker={true} />
-
-      {/* <Hero /> */}
-      <Hero />
-      <Separator size={"4"} />
-      <Carousel
-        variant="no-scrollbar"
-        autoScroll={true}
-        // className=""
-        items={carouselItems.map((item, idx) => (
-          <React.Fragment key={`exe-${idx}`}>{item}</React.Fragment>
-        ))}
-      />
-
-      <Separator size={"4"} />
-      <Separator size={"4"} />
-      {/* <Footer /> */}
-      <Footer />
-    </Flex>
+    <Page>
+      <>
+        {/* <Hero /> */}
+        <Hero />
+        <Separator size={"4"} />
+        <Carousel
+          variant="no-scrollbar"
+          autoScroll={true}
+          // className=""
+          items={carouselItems.map((item, idx) => (
+            <React.Fragment key={`exe-${idx}`}>{item}</React.Fragment>
+          ))}
+        />
+      </>
+    </Page>
   );
 };
 

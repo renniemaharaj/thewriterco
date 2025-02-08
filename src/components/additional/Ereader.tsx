@@ -21,7 +21,7 @@ const Ereader = ({ hidePicker }: { hidePicker?: boolean }) => {
   const currentVerse = eReaderState.currentVerse;
   // Local state
   const [readerState, setRenderState] = useState<"rich" | "bible">(
-    eReaderState.readerStyle
+    eReaderState.readerStyle,
   );
   useEffect(() => {
     document.body.style.overflow = eReaderState.isOpen ? "hidden" : "auto";
@@ -69,7 +69,7 @@ const Ereader = ({ hidePicker }: { hidePicker?: boolean }) => {
       return;
 
     const chapterVerses = Object.keys(
-      eReaderState.eContent.content[currentChapter]
+      eReaderState.eContent.content[currentChapter],
     );
     const currentIndex = chapterVerses.indexOf(currentVerse);
     const newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
@@ -81,7 +81,7 @@ const Ereader = ({ hidePicker }: { hidePicker?: boolean }) => {
       if (prevChapter) {
         handleChapterChange(prevChapter);
         handleVerseChange(
-          Object.keys(eReaderState.eContent.content[prevChapter]).slice(-1)[0]
+          Object.keys(eReaderState.eContent.content[prevChapter]).slice(-1)[0],
         );
       }
     } else if (newIndex >= chapterVerses.length && direction === "next") {
@@ -104,7 +104,7 @@ const Ereader = ({ hidePicker }: { hidePicker?: boolean }) => {
     )
       return [];
     const chapterVerses = Object.keys(
-      eReaderState.eContent.content[currentChapter]
+      eReaderState.eContent.content[currentChapter],
     );
     const currentIndex = chapterVerses.indexOf(currentVerse);
 
@@ -147,7 +147,7 @@ const Ereader = ({ hidePicker }: { hidePicker?: boolean }) => {
 
   return (
     <div
-      className={`${eReaderState.isOpen && "blurred-div"} ereaderBg ${
+      className={`blurred-div ${
         eReaderState.isOpen && "h-full"
       } fixed bottom-0 left-0 ${eReaderState.isOpen ? "w-full " : "w-auto left-[50%] translate-x-[-50%]"} shadow-lg overflow-auto z-20`}
     >
@@ -222,7 +222,7 @@ const Ereader = ({ hidePicker }: { hidePicker?: boolean }) => {
                     Object.keys(
                       typeof eReaderState.eContent.content !== "string"
                         ? eReaderState.eContent.content[currentChapter] || {}
-                        : {}
+                        : {},
                     ).map((verse) => (
                       <Select.Item key={"verse-" + verse} value={verse}>
                         {verse}
@@ -289,7 +289,7 @@ const Ereader = ({ hidePicker }: { hidePicker?: boolean }) => {
                           eReaderState.eContent.content[currentChapter][
                             verse || 1
                           ]
-                        }`
+                        }`,
                     )
                     .join(" ")}
                 </p>

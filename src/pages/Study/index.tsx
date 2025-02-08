@@ -1,17 +1,12 @@
-import { Flex, Separator } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 // import Footer from "../../components/Footer";
-import Navbar from "../../components/additional/NavBar";
 import Menu from "../../components/documentation/Menu";
-import Footer from "../../components/Footer";
-import Ereader from "../../components/additional/Ereader";
+import Page from "../../components/Page";
 // import Footer from "../../components/additional/footer";
 
 const Index = () => {
   return (
-    <Flex className="!w-full  !flex-col merriweather-bold !p-0`">
-      {/* <Navbar /> */}
-      <Navbar />
-      <Ereader hidePicker={true} />
+    <Page>
       <Flex
         direction="column"
         align="center"
@@ -20,11 +15,7 @@ const Index = () => {
       >
         <Menu />
       </Flex>
-      <Separator size={"4"} />
-      <Separator size={"4"} />
-      {/* <Footer /> */}
-      <Footer />
-    </Flex>
+    </Page>
   );
 };
 
