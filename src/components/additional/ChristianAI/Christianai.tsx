@@ -95,6 +95,8 @@ const ChristianAIChatbox = ({
     "Which denomination is right?",
     "Let's study patience",
     "Let's study love",
+    "Infallible responses?",
+    "Substitute for fellowship?",
   ]);
 
   const messageBoxRef = useRef<HTMLDivElement>(null);
@@ -676,6 +678,7 @@ const ChristianAIChatbox = ({
               <Button
                 variant={canvasView ? "soft" : "outline"}
                 onClick={() => setCanvasView(!canvasView)}
+                className="!hidden md:!block"
               >
                 Canvas
               </Button>

@@ -159,13 +159,13 @@ const Axioms = () => {
             maxHeight="max-h-[400px]"
             title={axiom.title}
             children={
-              <Card>
-                <Strong
-                  key={index}
-                  point={axiom.title}
-                  content={axiom.description}
-                />
-              </Card>
+              // <Card>
+              <Strong
+                key={index}
+                point={axiom.title}
+                content={axiom.description}
+              />
+              // </Card>
             }
           />
         </Card>
