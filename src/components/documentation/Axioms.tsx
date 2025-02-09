@@ -148,10 +148,40 @@ export const reasoningForAxioms = [
 const Axioms = () => {
   return (
     <Box className="space-y-4 p-4">
-      <Strong
-        point="Introduction"
-        content="These axioms are assumed as the foundational premises for reasoning I will briefly explain my reasoning for each axiom, but they require no proof. They are assumed as true."
-      />
+      <Card>
+        <Collapsible
+          title="Introduction"
+          maxHeight="max-h-[400px]"
+          children={
+            <Strong
+              point="Introduction"
+              content={
+                <Text>
+                  The following axioms are built on the assumption that{" "}
+                  <strong>God is</strong>. We do not seek to prove His existence
+                  nor do we believe that there is any way for us to do so. We
+                  assume that <strong>God is</strong> for the purpose of this
+                  exploration.
+                  <br />
+                  <br />
+                  The following verbose explanation is there for your own
+                  reasoning.
+                  <br />
+                  <br />
+                  We will construct a system of logic from which we can: explore
+                  the assumption that <strong>God is</strong>; and derive
+                  answers to four fundamental questions concerning the initiator
+                  of creation and creation itself. If we cannot derive
+                  consistent results, then we know that the framework is flawed
+                  and we will abandon it. If we can derive consistent results,
+                  then the framework is stable, much like many concepts in
+                  mathematics.
+                </Text>
+              }
+            />
+          }
+        />
+      </Card>
 
       {reasoningForAxioms.map((axiom, index) => (
         <Card>
