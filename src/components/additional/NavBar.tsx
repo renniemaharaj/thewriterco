@@ -169,8 +169,12 @@ const Navbar: React.FC = () => {
             justify={"center"}
             className="!w-full p-2 !justify-center"
           > */}
-          <Separator size="2" orientation={"vertical"} />
-          <Button className="!sticky !top-0" variant="ghost">
+          <Separator
+            size="2"
+            orientation={"vertical"}
+            className="!hidden md:!block "
+          />
+          <Button className="!hidden md:!block !sticky !top-0" variant="ghost">
             {theme === "dark" ? (
               <SunMoonIcon
                 className="!w-6 !h-6 !text-white animate-pulse"
@@ -208,7 +212,7 @@ const Navbar: React.FC = () => {
 
       {/* Collapsible Menu (Small Screens) */}
       {isMenuOpen && (
-        <Flex className="md:hidden mt-4">
+        <Flex className="md:!hidden mt-4">
           <ul className="space-y-4 px-4 py-2">
             {navLinks.map(
               (link, index) =>
