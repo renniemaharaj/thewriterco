@@ -31,11 +31,13 @@ const Navbar: React.FC = () => {
   const { theme, specifyTheme } = useThemeContext();
   const eReaderState = useSelector((state: RootState) => state.ereader);
 
-  const formRef = useRef<HTMLFormElement>(null);
   const [localSearchState, setLocalSearchState] = useState("");
   const [sendFindReq, { isLoading }] = useSendFindReqMutation();
   const [displayedResults, setDisplayedResults] = useState<Verse[]>([]);
   const [displayResults, setDisplayResults] = useState(false);
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const searchBoxRef = useRef<HTMLInputElement>(null);
 
   const handleFindReq = useCallback(
     async (input: string) => {
@@ -63,14 +65,45 @@ const Navbar: React.FC = () => {
   );
 
   useEffect(() => {
-    const searchBox = formRef.current;
-    if (searchBox) {
-      searchBox.onsubmit = (e) => {
+    const searchBoxForm = formRef.current;
+    if (searchBoxForm) {
+      const onSearchBoxFormSubmit = (e: Event) => {
         e.preventDefault();
         handleFindReq(localSearchState);
       };
+      searchBoxForm.addEventListener("submit", onSearchBoxFormSubmit);
+
+      return () => {
+        searchBoxForm.removeEventListener("submit", onSearchBoxFormSubmit);
+      };
     }
   }, [handleFindReq, localSearchState]);
+
+  useEffect(() => {
+    const searchBox = searchBoxRef.current;
+    if (searchBox) {
+      const onSearchBoxFocus = (e: Event) => {
+        searchBox.style.transition = "width 0.3s";
+        searchBox.style.width = "250px";
+        searchBox.placeholder = "Ask anything in plain English 🧐";
+        e.preventDefault();
+      };
+
+      const onSearchBoxBlur = (e: Event) => {
+        searchBox.style.width = "200px";
+        searchBox.placeholder = "Query relative scripture";
+        e.preventDefault();
+      };
+
+      searchBox.addEventListener("focus", onSearchBoxFocus);
+      searchBox.addEventListener("blur", onSearchBoxBlur);
+
+      return () => {
+        searchBox.removeEventListener("focus", onSearchBoxFocus);
+        searchBox.removeEventListener("blur", onSearchBoxBlur);
+      };
+    }
+  }, [searchBoxRef]);
 
   const linkHoverClassName =
     theme === "light" ? "after:bg-gray-900" : "after:bg-gray-100";
@@ -104,10 +137,12 @@ const Navbar: React.FC = () => {
             className="hidden md:flex items-center gap-3 max-w-lg"
           >
             <TextField.Root
+              ref={searchBoxRef}
               onChange={(e) => setLocalSearchState(e.target.value)}
               value={localSearchState}
               type="text"
-              placeholder="Search the bible in pure English"
+              className="transition-all"
+              placeholder="Query relative scripture"
               size="2"
             />
             <IconButton

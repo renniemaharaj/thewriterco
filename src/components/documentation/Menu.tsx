@@ -165,16 +165,16 @@ const Menu = ({
               </motion.div>
             </Box>
             <Box className="space-y-4 p-4">
-              <Card>
-                <Callout.Root className="mt-5">
-                  <Callout.Icon>
-                    <InfoCircledIcon />
-                  </Callout.Icon>
-                  <Callout.Text>
-                    Verbose reasoning in the "Verbose" tab.
-                  </Callout.Text>
-                </Callout.Root>
-              </Card>
+              {/* <Card> */}
+              <Callout.Root className="mt-5">
+                <Callout.Icon>
+                  <InfoCircledIcon />
+                </Callout.Icon>
+                <Callout.Text>
+                  Verbose reasoning in the "Verbose" tab.
+                </Callout.Text>
+              </Callout.Root>
+              {/* </Card> */}
             </Box>
           </Tabs.Content>
 
