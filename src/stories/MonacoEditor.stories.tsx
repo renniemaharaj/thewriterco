@@ -48,7 +48,7 @@ type Story = StoryObj<ComponentProps<typeof MonacoEditor>>;
 
 export const Reactive: Story = {
   args: {
-    language: "javascript",
+    language: "python",
     code: "const x = 1;",
   },
 };

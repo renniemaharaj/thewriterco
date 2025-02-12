@@ -9,6 +9,17 @@ const config: StorybookConfig = {
     "@chromatic-com/storybook",
     "@storybook/addon-interactions",
   ],
+  // viteFinal: async (config) => {
+  //   // Enable CSS imports in Storybook
+  //   config.css = {
+  //     preprocessorOptions: {
+  //       css: {
+  //         additionalData: `@import "src/styles/global.css";`,
+  //       },
+  //     },
+  //   };
+  //   return config;
+  // },
   framework: {
     name: "@storybook/react-vite",
     options: {},

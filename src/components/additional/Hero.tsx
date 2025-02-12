@@ -5,7 +5,7 @@ import React from "react";
 const Hero: React.FC = () => {
   return (
     <section className="text-center py-16">
-      <h2 className="text-4xl font-bold">
+      <h2 className="text-2xl font-bold">
         Welcome to{" "}
         <span className="w-full text-center">
           The Writer <br />

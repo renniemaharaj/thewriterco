@@ -106,8 +106,7 @@ const Menu = ({
       className={`${className} !mx-auto flex-[2.2] p-2 pt-7 flex-col h-full`}
     >
       <Text
-        className="text-wrap cursor-pointer"
-        size="8"
+        className="text-wrap cursor-pointer text-2xl m-auto"
         weight="bold"
         style={{
           display: "block",
@@ -188,7 +187,7 @@ const Menu = ({
 
           {/* Reasoning Section */}
           <Tabs.Content value="reasoning">
-            <Text size="4" weight="bold">
+            <Text weight="bold" className="text-1xl">
               Reasoning for Axioms
             </Text>
 
@@ -196,7 +195,7 @@ const Menu = ({
 
             <Separator size="4" className="!my-2" />
 
-            <Text size="4" weight="bold">
+            <Text weight="bold" className="text-1xl">
               Considerations for KJV
             </Text>
 
@@ -204,12 +203,12 @@ const Menu = ({
           </Tabs.Content>
           {/* Services Section */}
           <Tabs.Content value="services" className="w-[95%]">
-            <Text size="4" weight="bold">
+            <Text weight="bold" className="text-1xl">
               Services, Usages and Limits
             </Text>
             <Usages />
             <Separator size="4" className="!my-2" />
-            <Text size="4" weight="bold">
+            <Text weight="bold" className="text-1xl">
               Developer Contribute, Issues, and Feedback
             </Text>
             <Contribute />

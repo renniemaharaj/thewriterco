@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 const companyName = "The Writer Company";
-const companyMission = "Bible tools for study and research.";
+const companyMission = "Bible, writing, resources and tools";
 const companyAddress = "Trinidad and Tobago";
 const companyEmail = "rvesprey@gmail.com";
 const companyPhone = "(***) ***-****";
@@ -25,9 +25,7 @@ const Footer: React.FC = () => {
       {/* <Box className="relative p-4"> */}
       <Flex className="w-full !overflow-hidden !items-center !justify-center">
         <Flex className="!flex-col p-10 !items-center !relative !overflow-visible">
-          <Heading size="4" className="text-lg font-bold">
-            {companyName}
-          </Heading>
+          <Heading className="text-2xl font-bold">{companyName}</Heading>
           <Text className="mt-2 text-sm">{companyMission}</Text>
           <Text className="mt-2 text-xs">
             {companyAddress} <br />

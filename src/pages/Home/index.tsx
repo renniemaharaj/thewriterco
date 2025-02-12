@@ -12,8 +12,7 @@ const carouselItems = [
     <Text className="text-2xl font-semibold text-foreground text-center leading-tight">
       Explore the Bible through our <br /> AI-powered study tools
     </Text>
-    <Text className="text-sm text-muted-foreground text-center mt-2"></Text>
-    <Quote className="italic animate-fade-in text-lg r px-6">
+    <Quote className="italic animate-fade-in text-lg px-6">
       Study to shew thyself approved unto God, <br /> a workman that needeth not
       to be ashamed, rightly <br /> dividing the word of truth.
     </Quote>
@@ -32,7 +31,7 @@ const carouselItems = [
   </Flex>,
 
   <Flex className="w-[90%] flex-col items-center  p-8 gap-2">
-    <Text className="text-3xl font-bold text-primary text-center leading-tight ">
+    <Text className="text-2xl font-bold text-primary text-center leading-tight ">
       Reinforce your faith with <br /> reasoning
     </Text>
 

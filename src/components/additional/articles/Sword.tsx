@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Card,
-  Flex,
-  Text,
-  Heading,
-  Section,
-  Tabs,
-  Box,
-} from "@radix-ui/themes";
+import { Flex, Heading, Section, Tabs, Box } from "@radix-ui/themes";
 
 import {
   canonicalGospels,
@@ -21,16 +13,13 @@ import {
   propheticBooks,
 } from "./utils/bible/bibleDivisions";
 import Hint from "../../Hint";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import fetchGitBlob from "./utils/bible/gitgetter";
 import { EBook } from "../../../app/ereader/types";
 import Block from "../../Block";
 import { setOpenState } from "../../../app/ereader/ereaderSlice";
-
-type Article = {
-  title: string;
-  date: string;
-};
+import Book from "../../book/Book";
+import { RootState } from "../../../app/store";
 
 type SwordProps = {
   setEBook: (state: EBook) => void;
@@ -69,28 +58,7 @@ const Sword: React.FC<SwordProps> = ({ setEBook, asChild }) => {
     });
   };
 
-  const ArticleCard = ({ title, date }: Article) => {
-    return (
-      <Card
-        variant="classic"
-        className="rounded-lg w-full md:w-1/3 transition-shadow cursor-pointer hover:shadow-lg drop-shadow-md shadow-[gray]"
-        style={{
-          //   border: "1px solid var(--gray-a6)",
-          backgroundColor: "var(--gray-a3)",
-        }}
-        onClick={() => handleArticleClick({ title, date })}
-      >
-        <Flex direction="column" gap="2">
-          <Heading size="3" weight="bold">
-            {title}
-          </Heading>
-          <Text color="gray" size="2">
-            {date}
-          </Text>
-        </Flex>
-      </Card>
-    );
-  };
+  const eReaderState = useSelector((state: RootState) => state.ereader);
 
   return (
     <>
@@ -102,46 +70,65 @@ const Sword: React.FC<SwordProps> = ({ setEBook, asChild }) => {
               The Word of God - KJV
             </Heading>
             <Hint className="max-w-[450px]">
-              The Writer Company provides the full KJV bible with: AI-integrated
-              tools, freely for consumtion and research purposes.
+              The Writer Company is KJV only. We are dedicated to the
+              preservation of the KJV. We love it's ancient language and all of
+              it's quirks.
             </Hint>
           </>
         )}
 
         <Section className={`container mx-auto ${asChild && "!pt-0"}`}>
-          <Tabs.Root defaultValue="Canonical Gospels">
-            <Tabs.List className="!flex-wrap">
-              {Object.keys(divisions).map((division) => (
-                <Tabs.Trigger key={division} value={division}>
-                  {division}
-                </Tabs.Trigger>
-              ))}
-            </Tabs.List>
-
-            <Box pt="3">
-              {Object.entries(divisions).map(([division, books]) => (
-                <Tabs.Content key={division} value={division}>
-                  <Text size="2" weight="bold" className="mb-4">
+          <Flex className="w-full max-w-[600px] mx-auto">
+            <Tabs.Root defaultValue="Canonical Gospels">
+              <Tabs.List className="!flex-wrap">
+                {Object.keys(divisions).map((division) => (
+                  <Tabs.Trigger key={division} value={division}>
                     {division}
-                  </Text>
-                  <Flex
-                    direction="row"
-                    gap="4"
-                    wrap="wrap"
-                    className="justify-center"
-                  >
-                    {books.map((book) => (
-                      <ArticleCard
-                        key={book}
-                        title={book}
-                        date="Dec 04, 2024" // Static date for demo
-                      />
-                    ))}
-                  </Flex>
-                </Tabs.Content>
-              ))}
-            </Box>
-          </Tabs.Root>
+                  </Tabs.Trigger>
+                ))}
+              </Tabs.List>
+
+              <Box pt="3">
+                {Object.entries(divisions).map(([division, books]) => (
+                  <Tabs.Content key={division} value={division}>
+                    <Flex
+                      direction="row"
+                      gap="3"
+                      wrap="wrap"
+                      className="relative !justify-center"
+                    >
+                      {books.map((book, index) => (
+                        <React.Fragment key={index}>
+                          <Book
+                            title={"Holy Bible"}
+                            division={book}
+                            version="KJV"
+                            className="!w-[6rem] animate-fade-in"
+                            // onOpenClassName={`absolute z-20 translate-x-[-50%] translate-y-[-50%] `}
+                            actionPagesFlipped={
+                              eReaderState.eContent.title === book &&
+                              eReaderState.isOpen
+                            }
+                            onClick={() =>
+                              handleArticleClick({
+                                title: book,
+                                date: Date.now().toString(),
+                              })
+                            }
+                          />
+                        </React.Fragment>
+                        // <ArticleCard
+                        //   key={book}
+                        //   title={book}
+                        //   date="Dec 04, 2024" // Static date for demo
+                        // />
+                      ))}
+                    </Flex>
+                  </Tabs.Content>
+                ))}
+              </Box>
+            </Tabs.Root>
+          </Flex>
         </Section>
       </section>
     </>
