@@ -1,7 +1,7 @@
-import { Box, Callout, Card, Flex, Link, Separator } from "@radix-ui/themes";
+import { Box, Flex, Link, Separator } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes";
 import Collapsible from "../Collapsible";
-import { InfoCircledIcon } from "@radix-ui/react-icons";
+import Strong from "./Strong";
 
 interface KJVPoint {
   title: string;
@@ -53,16 +53,17 @@ const kjvArguments: KJVPoint[] = [
 
 const KJVArguments = () => {
   return (
-    <Box className="space-y-4 p-4">
+    <Box className="space-y-4 !p-1">
       <Flex className="gap-4 !flex-col">
         {kjvArguments.map((argument, index) => (
-          <Card>
-            <Collapsible
-              key={index}
-              title={argument.title}
-              children={
-                <Card key={index} className="p-4 rounded-xl">
-                  <strong>{argument.title}:</strong>
+          // <Card>
+          <Collapsible
+            key={index}
+            title={argument.title}
+            children={
+              <Strong
+                point={argument.title}
+                content={
                   <ul className="mt-2 space-y-2 list-disc pl-4">
                     {argument.points.map((point, i) => (
                       <li key={i}>
@@ -70,10 +71,10 @@ const KJVArguments = () => {
                       </li>
                     ))}
                   </ul>
-                </Card>
-              }
-            />
-          </Card>
+                }
+              />
+            }
+          />
         ))}
       </Flex>
 
@@ -84,31 +85,6 @@ const KJVArguments = () => {
       >
         Source: Robert Breaker Why King James Only? Youtube Video
       </Link>
-      <Separator size="4" className="!my-2" />
-      <Card>
-        <Collapsible
-          title="However"
-          children={
-            <Callout.Root>
-              <Callout.Icon>
-                <InfoCircledIcon />
-              </Callout.Icon>
-              <Callout.Text>
-                Our second axiom is not directly derived from the external
-                points made in favor of the KJV. Rather, we adopt the KJV
-                because it best satisfies the constraints of our framework. We
-                believe it to be the most consistent, historically sound, and
-                doctrinally pure source of scripture within Christianity, which
-                we prioritize as the most coherent system answering our four
-                fundamental questions while satisfying our constraints. However,
-                while our framework remains independent of these external
-                considerations, it should still remain consistent with any
-                actual truth, and or corrections.
-              </Callout.Text>
-            </Callout.Root>
-          }
-        />
-      </Card>
     </Box>
   );
 };

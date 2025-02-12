@@ -1,4 +1,4 @@
-import { Box, Card, Text } from "@radix-ui/themes";
+import { Box, Text } from "@radix-ui/themes";
 import Strong from "./Strong";
 import Collapsible from "../Collapsible";
 
@@ -147,58 +147,57 @@ export const reasoningForAxioms = [
 
 const Axioms = () => {
   return (
-    <Box className="space-y-4 p-4">
-      <Card>
-        <Collapsible
-          title="Introduction"
-          maxHeight="max-h-[400px]"
-          children={
-            <Strong
-              point="Introduction"
-              content={
-                <Text>
-                  The following axioms are built on the assumption that{" "}
-                  <strong>God is</strong>. We do not seek to prove His existence
-                  nor do we believe that there is any way for us to do so. We
-                  assume that <strong>God is</strong> for the purpose of this
-                  exploration.
-                  <br />
-                  <br />
-                  The following verbose explanation is there for your own
-                  reasoning.
-                  <br />
-                  <br />
-                  We will construct a system of logic from which we can: explore
-                  the assumption that <strong>God is</strong>; and derive
-                  answers to four fundamental questions concerning the initiator
-                  of creation and creation itself. If we cannot derive
-                  consistent results, then we know that the framework is flawed
-                  and we will abandon it. If we can derive consistent results,
-                  then the framework is stable, much like many concepts in
-                  mathematics.
-                </Text>
-              }
-            />
-          }
-        />
-      </Card>
-
-      {reasoningForAxioms.map((axiom, index) => (
-        <Card>
-          <Collapsible
-            maxHeight="max-h-[400px]"
-            title={axiom.title}
-            children={
-              // <Card>
-              <Strong
-                key={index}
-                point={axiom.title}
-                content={axiom.description}
-              />
-              // </Card>
+    <Box className="space-y-4 !p-1">
+      {/* <Card> */}
+      <Collapsible
+        title="Introduction"
+        // maxHeight="max-h-[400?px]"
+        children={
+          <Strong
+            point="Introduction"
+            content={
+              <Text>
+                The following axioms are built on the assumption that{" "}
+                <strong>God is</strong>. We do not seek to prove His existence
+                nor do we believe that there is any way for us to do so. We
+                assume that <strong>God is</strong> for the purpose of this
+                exploration.
+                <br />
+                <br />
+                The following verbose explanation is there for your own
+                reasoning.
+                <br />
+                <br />
+                We will construct a system of logic from which we can: explore
+                the assumption that <strong>God is</strong>; and derive answers
+                to four fundamental questions concerning the initiator of
+                creation and creation itself. If we cannot derive consistent
+                results, then we know that the framework is flawed and we will
+                abandon it. If we can derive consistent results, then the
+                framework is stable, much like many concepts in mathematics.
+              </Text>
             }
           />
-        </Card>
+        }
+      />
+      {/* </Card> */}
+
+      {reasoningForAxioms.map((axiom, index) => (
+        // <Card className="!p-1" key={index}>
+        <Collapsible
+          maxHeight="max-h-[400px]"
+          title={axiom.title}
+          children={
+            // <Card>
+            <Strong
+              key={index}
+              point={axiom.title}
+              content={axiom.description}
+            />
+            // </Card>
+          }
+        />
+        // </Card>
       ))}
     </Box>
   );

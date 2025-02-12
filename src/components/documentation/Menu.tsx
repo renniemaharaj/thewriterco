@@ -9,7 +9,6 @@ import Contribute from "./Contribute";
 import {
   Text,
   Flex,
-  Card,
   Tabs,
   Box,
   ScrollArea,
@@ -104,7 +103,7 @@ const Menu = ({
 
   return (
     <ScrollArea
-      className={`${className} !mx-auto flex-[2.2] p-2 pt-7 flex-col h-full`}
+      className={`${className} !mx-auto flex-[2] p-2 pt-7 flex-col h-full`}
     >
       <Text
         className="text-wrap cursor-pointer text-2xl m-auto"
@@ -138,7 +137,7 @@ const Menu = ({
             value="axioms"
             className="!overflow-visible relative"
           >
-            <Box className="space-y-4 p-4">
+            <Box className="space-y-4 !p-1">
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -148,18 +147,18 @@ const Menu = ({
                 <Flex className="!flex-col !gap-4 !p-3 !overflow-hidden">
                   <Frame {...framePostion} />
                   {axioms.map((axiom, index) => (
-                    <Card>
-                      <Collapsible
-                        key={index}
-                        title={axiom.title}
-                        children={
-                          <Strong
-                            point={axiom.title}
-                            content={<Text>{axiom.description}</Text>}
-                          />
-                        }
-                      />
-                    </Card>
+                    // <Card>
+                    <Collapsible
+                      key={index}
+                      title={axiom.title}
+                      children={
+                        <Strong
+                          point={axiom.title}
+                          content={<Text>{axiom.description}</Text>}
+                        />
+                      }
+                    />
+                    // </Card>
                   ))}
                 </Flex>
               </motion.div>
@@ -195,14 +194,14 @@ const Menu = ({
             <KJVersions />
           </Tabs.Content>
           {/* Services Section */}
-          <Tabs.Content value="services" className="w-[95%]">
+          <Tabs.Content value="services">
             <Text weight="bold" className="text-1xl">
               Services, Usages and Limits
             </Text>
             <Usages />
             <Separator size="4" className="!my-2" />
             <Text weight="bold" className="text-1xl">
-              Developer Contribute, Issues, and Feedback
+              Developer Contribute, Issues
             </Text>
             <Contribute />
           </Tabs.Content>

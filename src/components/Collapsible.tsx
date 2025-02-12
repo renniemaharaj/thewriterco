@@ -27,7 +27,7 @@ export default function Collapsible({
       <Button
         variant="soft"
         onClick={() => setOpen(!open)}
-        className="!flex !items-center !justify-between !w-full !p-3 !transition !rounded-t-lg"
+        className="!flex !items-center !justify-between !w-full !p-3 !transition !rounded-full"
         aria-expanded={open}
         aria-controls="collapsible-content"
       >
