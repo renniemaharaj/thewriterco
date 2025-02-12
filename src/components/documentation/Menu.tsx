@@ -23,6 +23,7 @@ import Frame from "../frames/Frame";
 import { FrameBarSetup } from "../frames/types";
 import { frameSetups } from "../frames/frameVarients";
 import { debounce } from "lodash";
+import Strong from "./Strong";
 
 const axioms = [
   {
@@ -152,18 +153,10 @@ const Menu = ({
                         key={index}
                         title={axiom.title}
                         children={
-                          <Card
-                            key={index}
-                            // variant="ghost"
-                            className="!p-2 rounded-xl !my-2 !mx-2"
-                          >
-                            <Text size="2" className="mb-2">
-                              <strong>{axiom.title}:</strong>
-                            </Text>
-                            <Text size="2" className="ml-2">
-                              {axiom.description}
-                            </Text>
-                          </Card>
+                          <Strong
+                            point={axiom.title}
+                            content={<Text>{axiom.description}</Text>}
+                          />
                         }
                       />
                     </Card>
