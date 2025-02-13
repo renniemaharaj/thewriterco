@@ -10,7 +10,7 @@ import {
 } from "swiper/modules"; // Import modules
 import "swiper/css";
 import "swiper/css/pagination";
-import "swiper/css/navigation"; // Import styles for pagination & navigation
+// import "swiper/css/navigation"; // Import styles for pagination & navigation
 import "swiper/css/effect-coverflow"; // Import coverflow effect CSS
 
 import React from "react";
@@ -93,9 +93,9 @@ const Index: React.FC = () => {
             coverflowEffect={{
               rotate: 50,
               stretch: 0,
-              depth: 100,
+              depth: 500,
               modifier: 1,
-              slideShadows: true,
+              slideShadows: false,
             }}
             // navigation={true} // Enables previous/next arrows
             autoplay={{ delay: 10000, disableOnInteraction: false }} // Auto-slide every 3s
