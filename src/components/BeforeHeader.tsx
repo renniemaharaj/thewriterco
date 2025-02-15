@@ -6,6 +6,7 @@ import SideBar from "./SideBar";
 import { useThemeContext } from "./context/useThemeContext";
 import Menu from "./documentation/Menu";
 import { useState } from "react";
+import Hint from "./Hint";
 
 export default function BeforeHeader() {
   const { theme } = useThemeContext();
@@ -18,7 +19,16 @@ export default function BeforeHeader() {
       className="flex-col !w-full relative m-auto !h-[100vh] transition-all"
       childLeft={<></>}
       centerBar={
-        <Menu axiomsMentioned={axiomsMentioned} className="!hidden md:!flex" />
+        <Menu
+          axiomsMentioned={axiomsMentioned}
+          className="!hidden md:!flex"
+          children={
+            <Hint>
+              The reasoning title: is clickable; takes you to the reasoning
+              route
+            </Hint>
+          }
+        />
       }
       childRight={
         /* Chatbox Section */

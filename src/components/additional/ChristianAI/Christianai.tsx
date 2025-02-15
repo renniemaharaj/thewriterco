@@ -320,7 +320,7 @@ const ChristianAIChatbox = ({
   }
 
   function handleSuggestionClick(msg: string) {
-    setSuggestions([]);
+    setSuggestions((prev) => prev.filter((suggestion) => suggestion !== msg));
     handleMessageSend(msg);
   }
 

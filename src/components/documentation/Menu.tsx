@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import KJVersions from "./KJVersion";
 import Usages from "./Usages";
 import Axioms from "./Axioms";
@@ -44,9 +44,11 @@ const axioms = [
 const Menu = ({
   axiomsMentioned,
   className,
+  children,
 }: {
   axiomsMentioned?: boolean;
   className?: string;
+  children?: React.ReactNode;
 }) => {
   const hero = "Reasoning";
 
@@ -117,6 +119,7 @@ const Menu = ({
       >
         {hero}
       </Text>
+      {children}
       <Tabs.Root defaultValue="axioms" className="mt-8">
         <Tabs.List className="flex space-x-4 !shadow-none pb-2">
           <Tabs.Trigger value="axioms" className="px-4 py-2">
