@@ -23,6 +23,7 @@ import { FrameBarSetup } from "../frames/types";
 import { frameSetups } from "../frames/frameVarients";
 import { debounce } from "lodash";
 import Strong from "./Strong";
+import FTEvidence from "./FTEvidence";
 
 const axioms = [
   {
@@ -191,10 +192,18 @@ const Menu = ({
             <Separator size="4" className="!my-2" />
 
             <Text weight="bold" className="text-1xl">
-              Considerations for KJV
+              Arguments for KJV
             </Text>
 
             <KJVersions />
+
+            <Separator size="4" className="!my-2" />
+
+            <Text weight="bold" className="text-1xl">
+              Evidence for Christianity
+            </Text>
+
+            <FTEvidence />
           </Tabs.Content>
           {/* Services Section */}
           <Tabs.Content value="services">

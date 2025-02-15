@@ -1,4 +1,4 @@
-import { Box, Text } from "@radix-ui/themes";
+import { Box, Link, Separator, Text } from "@radix-ui/themes";
 import Strong from "./Strong";
 import Collapsible from "../Collapsible";
 
@@ -199,6 +199,13 @@ const Axioms = () => {
         />
         // </Card>
       ))}
+      <Separator size="4" className="!my-2" />
+      <Link
+        href="https://www.thewriterco.com/reasoning"
+        className="text-center"
+      >
+        Source: The Writer Company
+      </Link>
     </Box>
   );
 };

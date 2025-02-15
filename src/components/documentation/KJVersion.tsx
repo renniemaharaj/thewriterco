@@ -83,7 +83,7 @@ const KJVArguments = () => {
         href="https://www.youtube.com/watch?v=zzMKhuMfLF0&t=2875s"
         className="text-center"
       >
-        Source: Robert Breaker Why King James Only? Youtube Video
+        Source: Why King James Only? Youtube Video (Robert Breaker )
       </Link>
     </Box>
   );
