@@ -2,19 +2,30 @@
 import { Flex } from "@radix-ui/themes";
 import Menu from "../../components/documentation/Menu";
 import Page from "../../components/Page";
+import Hint from "../../components/Hint";
 // import Hint from "../../components/Hint";
 // import Footer from "../../components/additional/footer";
 
 const Index = () => {
   return (
-    <Page>
+    <Page wrapChildren={true}>
       <Flex
         direction="column"
         align="center"
         justify="center"
         className="w-full md:!w-[60%] mx-auto pb-20"
       >
-        <Menu />
+        <Menu
+          children={
+            <Hint className="max-w-[400px] overflow-hidden">
+              We're here to: give reasoning for faith; reinforcement to your
+              shield, 🛡️
+              {/* <br /> */}
+              Wherewith ye shall quench all the fiery darts of the wicked. For
+              his bow is set with a fiery deception 🏹
+            </Hint>
+          }
+        />
       </Flex>
     </Page>
   );

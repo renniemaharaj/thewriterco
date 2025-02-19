@@ -17,7 +17,7 @@ const Index = () => {
     dispatch(setRenderStyle("bible"));
   };
   return (
-    <Page>
+    <Page wrapChildren={true}>
       <Flex
         direction="column"
         align="center"

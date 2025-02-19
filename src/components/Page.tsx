@@ -1,4 +1,4 @@
-import { Flex, IconButton, Separator, Text } from "@radix-ui/themes";
+import { Card, Flex, IconButton, Separator, Text } from "@radix-ui/themes";
 import Navbar from "./additional/NavBar";
 import Ereader from "./additional/Ereader";
 import Footer from "./Footer";
@@ -8,9 +8,11 @@ import { ChevronRightIcon, HomeIcon } from "lucide-react";
 const Page = ({
   children,
   hideBiblePicker = true,
+  wrapChildren = false,
 }: {
   children: ReactNode;
   hideBiblePicker?: boolean;
+  wrapChildren?: boolean;
 }) => {
   useEffect(() => {
     document.body.style.overflowX = "hidden";
@@ -62,7 +64,8 @@ const Page = ({
           justify="center"
           className="w-full md:!w-[80%] mx-auto pb-20"
         >
-          {children}
+          {wrapChildren && <Card className="!p-5">{children}</Card>}
+          {!wrapChildren && children}
         </Flex>
       </Flex>
       <Separator size={"4"} />

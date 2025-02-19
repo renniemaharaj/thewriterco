@@ -191,7 +191,7 @@ const Index = () => {
     return inferIsGuess(msg) ? "blue" : "";
   };
   return (
-    <Page>
+    <Page wrapChildren={true}>
       <Flex
         direction="column"
         align="center"

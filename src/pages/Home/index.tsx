@@ -76,10 +76,10 @@ const Index: React.FC = () => {
     <Page>
       <Hero />
       {/* <Separator size={"4"} /> */}
-      <Flex className="w-full md:!w-[60%]">
+      <Flex className="w-full flex-row md:!w-[60%]">
         <Swiper
           speed={1000}
-          className="flex-[1] !flex"
+          className="flex-[1] !flex p-10"
           spaceBetween={100}
           slidesPerView={1}
           loop={true}
