@@ -1,4 +1,4 @@
-import { Flex, Separator } from "@radix-ui/themes";
+import { Flex, IconButton, Separator, Text } from "@radix-ui/themes";
 import Navbar from "./additional/NavBar";
 import Ereader from "./additional/Ereader";
 import Footer from "./Footer";
@@ -25,8 +25,9 @@ const Page = ({
     setLocationParts(window.location.pathname.split("/"));
   }, []);
 
-  const classNameURL =
-    "text-yellow-500 hover:text-yellow-700 cursor-pointer transition-colors duration-200";
+  const upperCaseFirstLetter = (str: string) =>
+    str.charAt(0).toUpperCase() + str.slice(1);
+
   return (
     <>
       {/* <Navbar /> */}
@@ -34,17 +35,18 @@ const Page = ({
       <section className="p-0 w-full">
         <div className="flex flex-row w-full p-5 gap-2 items-center">
           {locationParts.length > 0 && (
-            <button
+            <IconButton
+              variant="soft"
               onClick={() => (location.href = "/")}
               aria-label="Go to Home"
-              className="hover:scale-105 transition-transform duration-150"
+              className="hover:scale-105 transition-transform duration-150 !cursor-pointer"
             >
-              <HomeIcon className="w-5 h-5 text-yellow-500 hover:text-yellow-700" />
-            </button>
+              <HomeIcon />
+            </IconButton>
           )}
           {locationParts.map((part, index) => (
             <div key={index} className="flex items-center gap-2">
-              <span className={classNameURL}>{part}</span>
+              <Text color="gray">{upperCaseFirstLetter(part)}</Text>
               {index < locationParts.length - 1 && (
                 <ChevronRightIcon className="w-4 h-4 text-gray-400" />
               )}
@@ -54,7 +56,14 @@ const Page = ({
       </section>
       <Ereader hidePicker={hideBiblePicker} />
       <Flex className="!w-full animate-fade-in !flex-col merriweather-bold !p-0">
-        {children}
+        <Flex
+          direction="column"
+          align="center"
+          justify="center"
+          className="w-full md:!w-[80%] mx-auto pb-20"
+        >
+          {children}
+        </Flex>
       </Flex>
       <Separator size={"4"} />
       <Separator size={"4"} />

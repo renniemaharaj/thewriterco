@@ -4,6 +4,7 @@ import { EBook } from "../../app/ereader/types";
 import { useDispatch } from "react-redux";
 import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
 import Page from "../../components/Page";
+import { Flex } from "@radix-ui/themes";
 // import Footer from "../../components/additional/footer";
 // import Footer from "../../components/Footer";
 const Index = () => {
@@ -17,8 +18,15 @@ const Index = () => {
   };
   return (
     <Page>
-      {/* <Sword />*/}
-      <Sword setEBook={setEreaderState} />
+      <Flex
+        direction="column"
+        align="center"
+        justify="center"
+        className="w-full md:!w-[80%] mx-auto"
+      >
+        {/* <Sword />*/}
+        <Sword setEBook={setEreaderState} />
+      </Flex>
     </Page>
   );
 };

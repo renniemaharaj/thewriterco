@@ -87,12 +87,9 @@ const ChristianAIChatbox = ({
   >("shorter");
 
   const [suggestions, setSuggestions] = useState<string[]>([
-    "Who is God?",
     "Why Christianity?",
     "How can I be saved?",
-    "White Jesus?",
     "What is the Gospel?",
-    "Which denomination is right?",
     "Let's study patience",
     "Let's study love",
     "Infallible responses?",

@@ -120,8 +120,7 @@ const Navbar: React.FC = () => {
       />
 
       <Flex
-        justify={"center"}
-        className={`w-full py-2 shadow-md sticky top-0 blurred-div !rounded-none transition-all ${eReaderState.isOpen ? "z-0" : "z-10"}`}
+        className={`w-full !justify-evenly py-2 shadow-md shadow-[gray] sticky top-0 blurred-div !rounded-none transition-all ${eReaderState.isOpen ? "z-0" : "z-10"}`}
       >
         <Flex className="gap-4 flex-row md:flex-row items-center justify-between px-4">
           <Text

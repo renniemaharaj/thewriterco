@@ -15,7 +15,6 @@ import "swiper/css/effect-coverflow"; // Import coverflow effect CSS
 
 import React from "react";
 import Page from "../../components/Page";
-import Menu from "../../components/documentation/Menu";
 
 const flexClassName = "!flex-col items-center justify-center gap-2";
 const textClassName =
@@ -75,43 +74,38 @@ const carouselItems = [
 const Index: React.FC = () => {
   return (
     <Page>
-      <>
-        <Hero />
-        <Separator size={"4"} />
-        <Flex className="!w-full gap-2 !p-2 !h-[400px] !max-h-[400px] ">
-          <Swiper
-            speed={1000}
-            className="flex-[1] !flex"
-            spaceBetween={100}
-            slidesPerView={1}
-            loop={true}
-            effect="coverflow"
-            grabCursor={true}
-            centeredSlides={true}
-            // slidesPerView={2}
-            pagination={{ clickable: true }} // Enables pagination (dots)
-            coverflowEffect={{
-              rotate: 50,
-              stretch: 0,
-              depth: 500,
-              modifier: 1,
-              slideShadows: false,
-            }}
-            // navigation={true} // Enables previous/next arrows
-            autoplay={{ delay: 10000, disableOnInteraction: false }} // Auto-slide every 3s
-            modules={[Pagination, Autoplay, Navigation, EffectCoverflow]} // Include Swiper modules
-          >
-            {carouselItems.map((item, index) => (
-              <SwiperSlide key={index}>
-                <Card key={index}>{item}</Card>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <Card className="flex-[1] !hidden md:!flex" variant="ghost">
-            <Menu className="max-w-[400px]" />
-          </Card>
-        </Flex>
-      </>
+      <Hero />
+      {/* <Separator size={"4"} /> */}
+      <Flex className="w-full md:!w-[60%]">
+        <Swiper
+          speed={1000}
+          className="flex-[1] !flex"
+          spaceBetween={100}
+          slidesPerView={1}
+          loop={true}
+          effect="coverflow"
+          grabCursor={true}
+          centeredSlides={true}
+          // slidesPerView={2}
+          pagination={{ clickable: true }} // Enables pagination (dots)
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 500,
+            modifier: 1,
+            slideShadows: false,
+          }}
+          // navigation={true} // Enables previous/next arrows
+          autoplay={{ delay: 10000, disableOnInteraction: false }} // Auto-slide every 3s
+          modules={[Pagination, Autoplay, Navigation, EffectCoverflow]} // Include Swiper modules
+        >
+          {carouselItems.map((item, index) => (
+            <SwiperSlide key={index}>
+              <Card key={index}>{item}</Card>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Flex>
     </Page>
   );
 };

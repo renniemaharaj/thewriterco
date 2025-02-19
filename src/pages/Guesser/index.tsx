@@ -196,16 +196,16 @@ const Index = () => {
         direction="column"
         align="center"
         // justify="center"
-        className="!w-full !p-10"
+        className="!w-full"
       >
-        <Flex className="w-full flex-col items-center justify-center">
-          <Text className="text-2xl font-semibold text-foreground text-center leading-tight">
-            Be entertained by a binary-search, <br /> range-finder and number
-            guesser.
-          </Text>
-          <Text className="text-sm text-muted-foreground text-center mt-2">
+        <Flex className="w-full flex-col text-center items-center justify-center">
+          <h2 className="text-2xl font-bold">
+            Binary-search, <br /> range-finder,{" "}
+            <span className="w-full text-center">number guesser</span>
+          </h2>
+          <Hint className="text-sm text-muted-foreground text-center mt-2">
             It's just math, with 1/2 teaspoon of chance
-          </Text>
+          </Hint>
         </Flex>
         <Separator size={"1"} />
         {!gamingStatus ? (

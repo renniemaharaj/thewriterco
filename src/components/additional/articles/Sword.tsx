@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Heading, Section, Tabs, Box } from "@radix-ui/themes";
+import { Flex, Tabs, Box } from "@radix-ui/themes";
 
 import {
   canonicalGospels,
@@ -63,74 +63,80 @@ const Sword: React.FC<SwordProps> = ({ setEBook, asChild }) => {
   return (
     <>
       {isFetchingContent && <Block />}
-      <section id="biblical" className={`${!asChild && "py-12"}`}>
+      {/* <section id="biblical" className={`${!asChild && "pb-10"}`}> */}
+
+      {/* <Section className={` mx-auto `}> */}
+      <Flex className="w-full mx-auto pb-10 flex-col items-center text-center">
         {!asChild && (
           <>
-            <Heading size="4" align="center" className="mb-8">
+            <h2 className="text-2xl font-bold">
+              The Word of God{" "}
+              <span className="w-full text-center">
+                <br />- KJV
+              </span>
+            </h2>
+            {/* <Heading size="4" align="center" className="mb-8">
               The Word of God - KJV
-            </Heading>
+            </Heading> */}
             <Hint className="max-w-[450px]">
-              The Writer Company is KJV only. We are dedicated to the
-              preservation of the KJV. We love it's ancient language and all of
-              it's quirks.
+              The Writer Company is KJV only. We are against the subtle
+              conditioning towards an ultimate acceptance of a watered-down
+              bible version. 😬
             </Hint>
           </>
         )}
+        <Tabs.Root defaultValue="Canonical Gospels">
+          <Tabs.List className="!flex-wrap">
+            {Object.keys(divisions).map((division) => (
+              <Tabs.Trigger key={division} value={division}>
+                {division}
+              </Tabs.Trigger>
+            ))}
+          </Tabs.List>
 
-        <Section className={`container mx-auto ${asChild && "!pt-0"}`}>
-          <Flex className="w-full max-w-[600px] mx-auto">
-            <Tabs.Root defaultValue="Canonical Gospels">
-              <Tabs.List className="!flex-wrap">
-                {Object.keys(divisions).map((division) => (
-                  <Tabs.Trigger key={division} value={division}>
-                    {division}
-                  </Tabs.Trigger>
-                ))}
-              </Tabs.List>
-
-              <Box pt="3">
-                {Object.entries(divisions).map(([division, books]) => (
-                  <Tabs.Content key={division} value={division}>
-                    <Flex
-                      direction="row"
-                      gap="3"
-                      wrap="wrap"
-                      className="relative !justify-center"
-                    >
-                      {books.map((book, index) => (
-                        <React.Fragment key={index}>
-                          <Book
-                            title={"Holy Bible"}
-                            division={book}
-                            version="KJV"
-                            className="!w-[6rem] animate-fade-in"
-                            // onOpenClassName={`absolute z-20 translate-x-[-50%] translate-y-[-50%] `}
-                            actionPagesFlipped={
-                              eReaderState.eContent.title === book &&
-                              eReaderState.isOpen
-                            }
-                            onClick={() =>
-                              handleArticleClick({
-                                title: book,
-                                date: Date.now().toString(),
-                              })
-                            }
-                          />
-                        </React.Fragment>
-                        // <ArticleCard
-                        //   key={book}
-                        //   title={book}
-                        //   date="Dec 04, 2024" // Static date for demo
-                        // />
-                      ))}
-                    </Flex>
-                  </Tabs.Content>
-                ))}
-              </Box>
-            </Tabs.Root>
-          </Flex>
-        </Section>
-      </section>
+          <Box pt="3">
+            {Object.entries(divisions).map(([division, books]) => (
+              <Tabs.Content key={division} value={division}>
+                <Flex
+                  direction="row"
+                  gap="3"
+                  wrap="wrap"
+                  className="relative !justify-center"
+                >
+                  {books.map((book, index) => (
+                    <React.Fragment key={index}>
+                      <Book
+                        title={"Holy Bible"}
+                        division={book}
+                        version="KJV"
+                        className="!w-[6rem] animate-fade-in"
+                        // onOpenClassName={`absolute z-20 translate-x-[-50%] translate-y-[-50%] `}
+                        actionPagesFlipped={
+                          eReaderState.eContent.title === book &&
+                          eReaderState.isOpen
+                        }
+                        onClick={() =>
+                          handleArticleClick({
+                            title: book,
+                            date: Date.now().toString(),
+                          })
+                        }
+                      />
+                    </React.Fragment>
+                    // <ArticleCard
+                    //   key={book}
+                    //   title={book}
+                    //   date="Dec 04, 2024" // Static date for demo
+                    // />
+                  ))}
+                </Flex>
+              </Tabs.Content>
+            ))}
+          </Box>
+        </Tabs.Root>
+      </Flex>
+      {/* </Section> */}
+      {/* </section> */}
     </>
   );
 };

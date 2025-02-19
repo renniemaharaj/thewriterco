@@ -1,10 +1,11 @@
 // components/Hero.tsx
 // import { Flex, Quote, Text } from "@radix-ui/themes";
 import React from "react";
+import Hint from "../Hint";
 
 const Hero: React.FC = () => {
   return (
-    <section className="text-center py-16">
+    <section className="text-center pb-10">
       <h2 className="text-2xl font-bold">
         Welcome to{" "}
         <span className="w-full text-center">
@@ -36,6 +37,13 @@ const Hero: React.FC = () => {
           </Quote>
         </Text>
       </Flex> */}
+      <Hint className="max-w-[400px] overflow-hidden">
+        We're here to: give reasoning for faith; reinforcement to your shield,
+        🛡️
+        {/* <br /> */}
+        Wherewith ye shall quench all the fiery darts of the wicked. For his bow
+        is set with a fiery deception 🏹
+      </Hint>
     </section>
   );
 };
