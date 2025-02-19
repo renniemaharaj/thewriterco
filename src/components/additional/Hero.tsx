@@ -1,5 +1,5 @@
 // components/Hero.tsx
-import { Flex, Quote, Text } from "@radix-ui/themes";
+// import { Flex, Quote, Text } from "@radix-ui/themes";
 import React from "react";
 
 const Hero: React.FC = () => {
@@ -12,7 +12,7 @@ const Hero: React.FC = () => {
           Company
         </span>
       </h2>
-      <Flex justify={"center"} className="w-full p-1">
+      {/* <Flex justify={"center"} className="w-full p-1">
         <Text>
           <br />
           <br />
@@ -35,7 +35,7 @@ const Hero: React.FC = () => {
             They shall bear witness that time reveals the hands of God.
           </Quote>
         </Text>
-      </Flex>
+      </Flex> */}
     </section>
   );
 };

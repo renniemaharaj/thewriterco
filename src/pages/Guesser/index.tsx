@@ -7,7 +7,15 @@ import {
 } from "./config";
 import { generatePossibilities, mean } from "./utils";
 import { QueryForm, GameEndNotice } from "./types";
-import { Flex, Box, Button, Text, Link } from "@radix-ui/themes";
+import {
+  Flex,
+  Box,
+  Button,
+  Text,
+  Link,
+  Quote,
+  Separator,
+} from "@radix-ui/themes";
 import { AllowedColors } from "../../components/RadixColors";
 import Hint from "../../components/Hint";
 // import Footer from "../../components/Footer";
@@ -187,10 +195,10 @@ const Index = () => {
       <Flex
         direction="column"
         align="center"
-        justify="center"
+        // justify="center"
         className="!w-full !p-10"
       >
-        <Flex className="w-full flex-col items-center justify-center p-8">
+        <Flex className="w-full flex-col items-center justify-center">
           <Text className="text-2xl font-semibold text-foreground text-center leading-tight">
             Be entertained by a binary-search, <br /> range-finder and number
             guesser.
@@ -199,12 +207,13 @@ const Index = () => {
             It's just math, with 1/2 teaspoon of chance
           </Text>
         </Flex>
+        <Separator size={"1"} />
         {!gamingStatus ? (
           <Flex className="!flex-col gap-1">
-            <Text className="mb-4 !w-[400px] !text-wrap">
-              "I can guess any natural number you think of from the range (0,∞)"
-              - Rennie
-            </Text>
+            <Quote className="italic animate-fade-in">
+              I can guess any natural number you think of
+              <br /> from the range (0,∞)
+            </Quote>
             <Flex className="!gap-4">
               <Button
                 onClick={beginGame}

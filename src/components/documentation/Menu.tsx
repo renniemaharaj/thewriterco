@@ -1,4 +1,3 @@
-import React, { useEffect, useRef, useState } from "react";
 import KJVersions from "./KJVersion";
 import Usages from "./Usages";
 import Axioms from "./Axioms";
@@ -18,10 +17,6 @@ import {
 
 import { motion } from "framer-motion";
 
-import Frame from "../frames/Frame";
-import { FrameBarSetup } from "../frames/types";
-import { frameSetups } from "../frames/frameVarients";
-import { debounce } from "lodash";
 import Strong from "./Strong";
 import FTEvidence from "./FTEvidence";
 
@@ -43,7 +38,6 @@ const axioms = [
 ];
 
 const Menu = ({
-  axiomsMentioned,
   className,
   children,
 }: {
@@ -52,57 +46,6 @@ const Menu = ({
   children?: React.ReactNode;
 }) => {
   const hero = "Reasoning";
-
-  const [framePostion, setFramePosition] = useState<FrameBarSetup>(
-    frameSetups.CornersNorthEastSM,
-  );
-
-  const axiomParentRef = useRef<HTMLDivElement>(null);
-
-  const highlightAxioms = () => {
-    setTimeout(() => {
-      setFramePosition(frameSetups.CornersSouthEastSM);
-      setTimeout(() => {
-        setFramePosition(frameSetups.CornersNorthEastSM);
-      }, 350);
-    }, 1000);
-  };
-
-  useEffect(() => {
-    highlightAxioms();
-  }, []);
-
-  const debounceHighlightAxioms = debounce(() => {
-    highlightAxioms();
-  }, 100);
-
-  useEffect(() => {
-    const handleMouseOver = () => {
-      setFramePosition(frameSetups.CenteredSM);
-    };
-
-    const handleMouseLeave = () => {
-      setFramePosition(frameSetups.CornersNorthEastSM);
-    };
-
-    const parent = axiomParentRef.current;
-
-    if (parent) {
-      parent.addEventListener("mouseover", handleMouseOver);
-      parent.addEventListener("mouseleave", handleMouseLeave);
-    }
-
-    return () => {
-      if (parent) {
-        parent.removeEventListener("mouseover", handleMouseOver);
-        parent.removeEventListener("mouseleave", handleMouseLeave);
-      }
-    };
-  }, [axiomParentRef, setFramePosition]);
-
-  useEffect(() => {
-    debounceHighlightAxioms();
-  }, [axiomsMentioned]);
 
   return (
     <ScrollArea
@@ -137,19 +80,22 @@ const Menu = ({
         <Box pt="3">
           {/* Axioms Section */}
           <Tabs.Content
-            ref={axiomParentRef}
+            // ref={axiomParentRef}
             value="axioms"
             className="!overflow-visible relative"
           >
-            <Box className="space-y-4 !p-1">
+            <Box className="space-y-4 ">
+              <Text weight="bold" className="text-1xl">
+                Grounding Axioms
+              </Text>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 className="!gap-4 relative !overflow-hidden"
               >
-                <Flex className="!flex-col !gap-4 !p-3 !overflow-hidden">
-                  <Frame {...framePostion} />
+                <Flex className="!flex-col !gap-4 !overflow-hidden">
+                  {/* <Frame {...framePostion} /> */}
                   {axioms.map((axiom, index) => (
                     // <Card>
                     <Collapsible

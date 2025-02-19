@@ -22,12 +22,7 @@ export default function BeforeHeader() {
         <Menu
           axiomsMentioned={axiomsMentioned}
           className="!hidden md:!flex"
-          children={
-            <Hint>
-              The reasoning title: is clickable; takes you to the reasoning
-              route
-            </Hint>
-          }
+          children={<Hint>Click reasoning to go to the reasoning route.</Hint>}
         />
       }
       childRight={

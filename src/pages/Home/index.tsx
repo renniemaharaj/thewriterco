@@ -82,7 +82,7 @@ const Index: React.FC = () => {
           <Swiper
             speed={1000}
             className="flex-[1] !flex"
-            spaceBetween={50}
+            spaceBetween={100}
             slidesPerView={1}
             loop={true}
             effect="coverflow"
