@@ -1,5 +1,5 @@
 import { Button, Card, Flex, Quote, Separator, Text } from "@radix-ui/themes";
-import Hero from "../../components/additional/Hero";
+import Hero from "../../components/Hero";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
@@ -14,7 +14,7 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow"; // Import coverflow effect CSS
 
 import React from "react";
-import Page from "../../components/Page";
+import Page from "../../components/page/Page";
 
 const flexClassName = "!flex-col items-center justify-center gap-2";
 const textClassName =

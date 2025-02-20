@@ -2,19 +2,15 @@ import { Button, Card, Flex } from "@radix-ui/themes";
 import { ArrowUpIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
-interface ChatboxProps {
+interface InputProps {
   handleRecieve: (input: string) => void;
   disabled: boolean;
   children?: React.ReactNode;
 }
 
-const Chatbox: React.FC<ChatboxProps> = ({
-  handleRecieve,
-  disabled,
-  children,
-}) => {
+const Input: React.FC<InputProps> = ({ handleRecieve, disabled, children }) => {
   const [message, setMessage] = useState("");
-  const [chatboxFocus, setChatboxFocus] = useState(false);
+  const [InputFocus, setInputFocus] = useState(false);
 
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
 
@@ -51,20 +47,20 @@ const Chatbox: React.FC<ChatboxProps> = ({
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.addEventListener("focus", () => {
-        setChatboxFocus(true);
+        setInputFocus(true);
       });
       textAreaRef.current.addEventListener("blur", () => {
-        setChatboxFocus(false);
+        setInputFocus(false);
       });
     }
 
     return () => {
       if (textAreaRef.current) {
         textAreaRef.current.removeEventListener("focus", () => {
-          setChatboxFocus(true);
+          setInputFocus(true);
         });
         textAreaRef.current.removeEventListener("blur", () => {
-          setChatboxFocus(false);
+          setInputFocus(false);
         });
       }
     };
@@ -77,7 +73,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
     // <Flex className="!h-[25vh] !w-full">
     <Card
       className={`${
-        chatboxFocus ? " border-[#978365] " : "border-transparent"
+        InputFocus ? " border-[#978365] " : "border-transparent"
       } !absolute left-[50%] translate-x-[-50%] !bottom-0 !h-auto !w-[90%] border-2 outline-none !flex !flex-col !gap-2 mt-4 `}
     >
       {/* <Flex> */}
@@ -108,4 +104,4 @@ const Chatbox: React.FC<ChatboxProps> = ({
   );
 };
 
-export default Chatbox;
+export default Input;

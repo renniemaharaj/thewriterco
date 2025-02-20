@@ -1,8 +1,8 @@
 import { Button, Dialog, Flex, Text } from "@radix-ui/themes";
-import Hint from "../Hint";
+import Hint from "./Hint";
 // import { Scripture } from "./NavBar";
-import fetchGitBlob from "./articles/utils/bible/gitgetter";
-import { Verse } from "./ChristianAI/types";
+import fetchGitBlob from "./bible/utils/gitgetter";
+import { Verse } from "./ai/types";
 
 import {
   setEBook,
@@ -10,8 +10,8 @@ import {
   setGlobalCurrentVerse,
   setOpenState,
   setRenderStyle,
-} from "../../app/ereader/ereaderSlice";
-import { EBook } from "../../app/ereader/types";
+} from "../app/ereader/ereaderSlice";
+import { EBook } from "../app/ereader/types";
 import { useDispatch } from "react-redux";
 
 const SearchResults = ({

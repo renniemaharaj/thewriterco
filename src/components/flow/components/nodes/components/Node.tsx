@@ -1,6 +1,6 @@
 import { Handle as ReactHandle } from "@xyflow/react";
 // import { Flex, Text } from "@radix-ui/themes";
-import { useThemeContext } from "../../../../context/useThemeContext";
+import { useThemeContext } from "../../../../context/theme/useThemeContext";
 import { Handle } from "../types";
 
 export function Node({

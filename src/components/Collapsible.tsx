@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Button, Flex, ScrollArea } from "@radix-ui/themes";
 import { motion } from "framer-motion";
-import { useThemeContext } from "./context/useThemeContext";
+import { useThemeContext } from "./context/theme/useThemeContext";
 
 type CollapsibleProps = {
   title: ReactNode;

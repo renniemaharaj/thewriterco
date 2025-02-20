@@ -1,5 +1,5 @@
 import { createContext, ReactNode } from "react";
-import useTheme from "../hooks/useTheme";
+import useTheme from "../../hooks/useTheme";
 
 import { ThemeContextType } from "./types";
 

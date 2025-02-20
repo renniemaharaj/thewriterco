@@ -8,14 +8,14 @@ import {
   Button,
 } from "@radix-ui/themes";
 import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
-import { useThemeContext } from "../context/useThemeContext";
+import { useThemeContext } from "../context/theme/useThemeContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { ScanSearchIcon, SunIcon, SunMoonIcon } from "lucide-react";
 import SearchLoading from "../SearchLoading";
 import { useSendFindReqMutation } from "../../app/api/apiSlice";
-import SearchResults from "./SearchResults";
-import { ResponseBlock, Scripture, Verse } from "./ChristianAI/types";
+import SearchResults from "../SearchResults";
+import { ResponseBlock, Scripture, Verse } from "../ai/types";
 
 const navLinks = [
   { label: "About", href: "#footer" },

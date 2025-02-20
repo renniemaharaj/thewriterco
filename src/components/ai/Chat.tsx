@@ -13,11 +13,11 @@ import {
   Badge,
 } from "@radix-ui/themes";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useSendAskReqMutation } from "../../../app/api/apiSlice";
+import { useSendAskReqMutation } from "../../app/api/apiSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../app/store";
-import Chatbox from "../Chatbox";
-import { useThemeContext } from "../../context/useThemeContext";
+import { RootState } from "../../app/store.ts";
+import Chatbox from "./Input.tsx";
+import { useThemeContext } from "../context/theme/useThemeContext.tsx";
 
 import {
   ChevronDownIcon,
@@ -33,27 +33,27 @@ import {
   MarkupResponse,
   ResponseBlock,
   Scripture,
-} from "./types";
-import Flow from "../../flow/Flow.tsx";
+} from "./types.ts";
+import Flow from "../flow/Flow.tsx";
 import { Node } from "@xyflow/react";
 import { Carousel } from "../Carousel.tsx";
 import React from "react";
-import fetchGitBlob from "../articles/utils/bible/gitgetter.ts";
+import fetchGitBlob from "../bible/utils/gitgetter.ts";
 import {
   setEBook,
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
   setOpenState,
   setRenderStyle,
-} from "../../../app/ereader/ereaderSlice.ts";
-import { EBook } from "../../../app/ereader/types.ts";
+} from "../../app/ereader/ereaderSlice.ts";
+import { EBook } from "../../app/ereader/types.ts";
 
 import * as msgpack from "@msgpack/msgpack";
 import { fromByteArray } from "base64-js";
 // import { Scripture } from "../NavBar.tsx";
-import MonacoEditor from "../../MonacoEditor.tsx";
+import MonacoEditor from "../MonacoEditor.tsx";
 
-const ChristianAIChatbox = ({
+const Chat = ({
   className,
   highlightAxioms,
   // suspendsAxioms,
@@ -695,4 +695,4 @@ const ChristianAIChatbox = ({
   );
 };
 
-export default ChristianAIChatbox;
+export default Chat;

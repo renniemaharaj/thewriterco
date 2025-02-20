@@ -1,7 +1,7 @@
 // import Footer from "../../components/Footer";
 import { Flex } from "@radix-ui/themes";
-import Menu from "../../components/documentation/Menu";
-import Page from "../../components/Page";
+import Menu from "../../components/docs/Menu";
+import Page from "../../components/page/Page";
 import Hint from "../../components/Hint";
 // import Hint from "../../components/Hint";
 // import Footer from "../../components/additional/footer";

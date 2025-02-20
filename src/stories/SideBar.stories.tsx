@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps } from "react";
 import { Theme } from "@radix-ui/themes";
-import { useThemeContext } from "../components/context/useThemeContext";
+import { useThemeContext } from "../components/context/theme/useThemeContext";
 import SideBar from "../components/SideBar";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "../components/context/ThemeProvider";

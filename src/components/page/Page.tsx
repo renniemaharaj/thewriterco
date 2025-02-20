@@ -1,6 +1,6 @@
 import { Card, Flex, IconButton, Separator, Text } from "@radix-ui/themes";
-import Navbar from "./additional/NavBar";
-import Ereader from "./additional/Ereader";
+import Navbar from "./NavBar";
+import Ereader from "../bible/Ereader";
 import Footer from "./Footer";
 import { ReactNode, useEffect, useState } from "react";
 import { ChevronRightIcon, HomeIcon } from "lucide-react";

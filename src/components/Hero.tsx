@@ -1,7 +1,7 @@
 // components/Hero.tsx
 // import { Flex, Quote, Text } from "@radix-ui/themes";
 import React from "react";
-import Hint from "../Hint";
+import Hint from "./Hint";
 
 const Hero: React.FC = () => {
   return (

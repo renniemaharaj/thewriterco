@@ -11,15 +11,15 @@ import {
   historicalBooks,
   wisdomBooks,
   propheticBooks,
-} from "./utils/bible/bibleDivisions";
-import Hint from "../../Hint";
+} from "./configuration";
+import Hint from "../Hint";
 import { useDispatch, useSelector } from "react-redux";
-import fetchGitBlob from "./utils/bible/gitgetter";
-import { EBook } from "../../../app/ereader/types";
-import Block from "../../Block";
-import { setOpenState } from "../../../app/ereader/ereaderSlice";
-import Book from "../../book/Book";
-import { RootState } from "../../../app/store";
+import fetchGitBlob from "./utils/gitgetter";
+import { EBook } from "../../app/ereader/types";
+import Block from "../Block";
+import { setOpenState } from "../../app/ereader/ereaderSlice";
+import Book from "../book/Book";
+import { RootState } from "../../app/store";
 
 type SwordProps = {
   setEBook: (state: EBook) => void;

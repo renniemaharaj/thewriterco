@@ -1,35 +1,21 @@
 import { ErrorBoundary } from "react-error-boundary";
 import { Route, Routes } from "react-router-dom";
-import { MsalProvider } from "@azure/msal-react";
-import { PublicClientApplication } from "@azure/msal-browser";
 import { Theme } from "@radix-ui/themes";
 
 // Import components
 import PersistLogin from "./components/PersistLogin";
 import ErrorFallback from "./components/ErrorBoundary";
 import { RequireAuth } from "./components/RequireAuth";
-import { ThemeProvider } from "./components/context/ThemeProvider";
-import { useThemeContext } from "./components/context/useThemeContext";
+import { ThemeProvider } from "./components/context/theme/ThemeProvider";
+import { useThemeContext } from "./components/context/theme/useThemeContext";
 
 // Import pages
-import Home from "./pages/Home";
+import Home from "./pages/home";
 import NoPage from "./pages/404";
-import Welcome from "./pages/Welcome";
-import AI from "./pages/AI";
-import Kjv from "./pages/Kjv";
-import Study from "./pages/Study";
-import Guesser from "./pages/Guesser";
-
-// MSAL Configuration
-const msalConfig = {
-  auth: {
-    clientId: "YOUR_CLIENT_ID",
-    authority: "https://login.microsoftonline.com/common",
-    redirectUri: "http://localhost:3000",
-  },
-};
-
-const msalInstance = new PublicClientApplication(msalConfig);
+import AI from "./pages/ai";
+import Kjv from "./pages/kjv";
+import Study from "./pages/study";
+import Guesser from "./pages/guesser";
 
 // Custom route types
 type CustomRoute = {
@@ -37,6 +23,7 @@ type CustomRoute = {
   element: JSX.Element;
 };
 
+// Index route type
 type IndexRoute = {
   index: true;
   element: JSX.Element;
@@ -48,18 +35,6 @@ const publicRoutes: (CustomRoute | IndexRoute)[] = [
     index: true,
     element: <Home />,
   },
-  // {
-  //   path: "signup",
-  //   element: <Signup />,
-  // },
-  // {
-  //   path: "login",
-  //   element: <Login />,
-  // },
-  // {
-  //   path: "recover",
-  //   element: <Recover />,
-  // },
   {
     path: "*",
     element: <NoPage />,
@@ -83,12 +58,7 @@ const publicRoutes: (CustomRoute | IndexRoute)[] = [
 ];
 
 // List of protected routes
-const protectedRoutes: CustomRoute[] = [
-  {
-    path: "boarding",
-    element: <Welcome />,
-  },
-];
+const protectedRoutes: CustomRoute[] = [];
 
 function App() {
   return (
@@ -112,35 +82,33 @@ function AppContent() {
       scaling="110%"
       grayColor="sage"
     >
-      <MsalProvider instance={msalInstance}>
-        <Routes>
-          {/* Public Routes */}
-          {publicRoutes.map((route, index) =>
-            "index" in route ? (
-              <Route key={"pub-route-" + index} index element={route.element} />
-            ) : (
+      <Routes>
+        {/* Public Routes */}
+        {publicRoutes.map((route, index) =>
+          "index" in route ? (
+            <Route key={"pub-route-" + index} index element={route.element} />
+          ) : (
+            <Route
+              key={"pub-route-" + index}
+              path={route.path}
+              element={route.element}
+            />
+          ),
+        )}
+
+        {/* Protected Routes and Login Persistent Routes */}
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth />}>
+            {protectedRoutes.map((route, index) => (
               <Route
-                key={"pub-route-" + index}
+                key={"priv-route-" + index}
                 path={route.path}
                 element={route.element}
               />
-            ),
-          )}
-
-          {/* Protected Routes and Login Persistent Routes */}
-          <Route element={<PersistLogin />}>
-            <Route element={<RequireAuth />}>
-              {protectedRoutes.map((route, index) => (
-                <Route
-                  key={"priv-route-" + index}
-                  path={route.path}
-                  element={route.element}
-                />
-              ))}
-            </Route>
+            ))}
           </Route>
-        </Routes>
-      </MsalProvider>
+        </Route>
+      </Routes>
     </Theme>
   );
 }

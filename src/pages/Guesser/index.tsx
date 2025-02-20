@@ -4,9 +4,9 @@ import {
   defaultForceGuess,
   rangeStart,
   rangeEnd,
-} from "./config";
-import { generatePossibilities, mean } from "./utils";
-import { QueryForm, GameEndNotice } from "./types";
+} from "./config.ts";
+import { generatePossibilities, mean } from "./utils.ts";
+import { QueryForm, GameEndNotice } from "./types.ts";
 import {
   Flex,
   Box,
@@ -20,7 +20,7 @@ import { AllowedColors } from "../../components/RadixColors";
 import Hint from "../../components/Hint";
 // import Footer from "../../components/Footer";
 import { BrainCircuit } from "lucide-react";
-import Page from "../../components/Page";
+import Page from "../../components/page/Page";
 // import Footer from "../../components/additional/footer";
 
 type Mind = {

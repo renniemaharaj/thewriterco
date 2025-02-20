@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
-import { useThemeContext } from "./context/useThemeContext";
+import { useThemeContext } from "./context/theme/useThemeContext";
 import { editor } from "monaco-editor";
 import { debounce } from "lodash";
 

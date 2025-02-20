@@ -1,9 +1,9 @@
-import Sword from "../../components/additional/articles/Sword";
+import Bible from "../../components/bible/Bible";
 
 import { EBook } from "../../app/ereader/types";
 import { useDispatch } from "react-redux";
 import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
-import Page from "../../components/Page";
+import Page from "../../components/page/Page";
 import { Flex } from "@radix-ui/themes";
 // import Footer from "../../components/additional/footer";
 // import Footer from "../../components/Footer";
@@ -25,7 +25,7 @@ const Index = () => {
         className="w-full md:!w-[80%] mx-auto"
       >
         {/* <Sword />*/}
-        <Sword setEBook={setEreaderState} />
+        <Bible setEBook={setEreaderState} />
       </Flex>
     </Page>
   );

@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "../app/store";
 import { ThemeProvider } from "../components/context/ThemeProvider";
 import { Theme } from "@radix-ui/themes";
-import { useThemeContext } from "../components/context/useThemeContext";
+import { useThemeContext } from "../components/context/theme/useThemeContext.tsx";
 import { fn } from "@storybook/test";
 
 // Functional component to properly use the theme context and hook

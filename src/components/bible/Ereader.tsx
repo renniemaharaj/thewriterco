@@ -3,7 +3,7 @@ import { Button, Flex, IconButton, Select, Dialog } from "@radix-ui/themes";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import Sword from "./articles/Sword";
+import Bible from "./Bible";
 import { EBook } from "../../app/ereader/types";
 import {
   setEBook,
@@ -132,7 +132,7 @@ const Ereader = ({ hidePicker }: { hidePicker?: boolean }) => {
             Explore the various districts of the Holy Bible KJV
           </Dialog.Title>
           <Flex direction="column" gap="3">
-            <Sword asChild setEBook={setEreaderState} />
+            <Bible asChild setEBook={setEreaderState} />
           </Flex>
 
           <Flex gap="3" mt="4" justify="end">

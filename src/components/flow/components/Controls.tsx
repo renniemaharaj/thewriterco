@@ -1,5 +1,5 @@
 import { ControlButton } from "@xyflow/react";
-import { useThemeContext } from "../../context/useThemeContext";
+import { useThemeContext } from "../../context/theme/useThemeContext";
 
 import { SunMediumIcon, SunMoonIcon } from "lucide-react";
 import { Tooltip } from "@radix-ui/themes";

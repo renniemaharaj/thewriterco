@@ -16,7 +16,7 @@ import CustomControls from "./components/Controls";
 import { Box } from "@radix-ui/themes";
 
 import { nodeData } from "./config";
-import { useThemeContext } from "../context/useThemeContext";
+import { useThemeContext } from "../context/theme/useThemeContext";
 import ResourceMonitor from "./components/ResourceMonitor";
 import { cloneDeep } from "lodash";
 

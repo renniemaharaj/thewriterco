@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import "./styles.css";
 
 import pageArt from "../../assets/BIBLE_PAGE_ART_V2.jpg";
-import { useThemeContext } from "../context/useThemeContext";
+import { useThemeContext } from "../context/theme/useThemeContext";
 
 export type BookProps = {
   actionPagesFlipped?: boolean;

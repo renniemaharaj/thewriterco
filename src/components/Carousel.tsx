@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { debounce } from "lodash";
-import { Observer } from "../observer/Observer";
 
 type CarouselVariant = "default" | "no-scrollbar";
 
@@ -19,13 +18,11 @@ export const Carousel: React.FC<CarouselProps> = ({
   variant = "default",
   className,
   ref,
-  autoScroll = false,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isStart, setIsStart] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const currentChildIndexRef = useRef(0);
-  const isInView = useRef(false);
 
   const updateScrollStatus = () => {
     if (containerRef.current) {
@@ -71,16 +68,6 @@ export const Carousel: React.FC<CarouselProps> = ({
   };
 
   useEffect(() => {
-    if (!autoScroll || !containerRef.current) return;
-    const autoScrollInterval = setInterval(() => {
-      if (!isInView.current) return;
-      scrollToChild("right");
-    }, 10000);
-
-    return () => clearInterval(autoScrollInterval);
-  }, [autoScroll]);
-
-  useEffect(() => {
     if (!containerRef.current) return;
     containerRef.current.style.scrollbarWidth = "none";
   }, [containerRef.current]);
@@ -114,15 +101,6 @@ export const Carousel: React.FC<CarouselProps> = ({
 
   return (
     <div className={classNames("relative w-full", className)} ref={ref}>
-      <Observer
-        options={{ root: ref?.current, rootMargin: "0px", threshold: 1.0 }}
-      >
-        {({ isIntersecting }) => {
-          isInView.current = isIntersecting;
-          return <></>;
-        }}
-      </Observer>
-
       {variant === "no-scrollbar" && !isStart && (
         <button
           className="absolute !scale-75 left-0 top-1/2 transform -translate-y-1/2 z-10 p-1 bg-[#3e63dd] rounded-full shadow-md opacity-80 text-white"
