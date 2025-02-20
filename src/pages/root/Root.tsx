@@ -15,6 +15,7 @@ import "swiper/css/effect-coverflow"; // Import coverflow effect CSS
 
 import React from "react";
 import Page from "../../components/page/Page";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 const flexClassName = "!flex-col items-center justify-center gap-2";
 const textClassName =
@@ -67,6 +68,24 @@ const carouselItems = [
       onClick={() => (location.href = "/reasoning")}
     >
       Explore reasoning
+    </Button>
+  </Flex>,
+  <Flex className={flexClassName}>
+    <Text className={textClassName}>
+      Contribute on <br /> Github
+    </Text>
+    <Quote className={quoteClassName}>
+      We'd love to have you contribute to our open-source project.
+    </Quote>
+    <Separator size={"1"} />
+    <GitHubLogoIcon />{" "}
+    <Button
+      variant="soft"
+      onClick={() =>
+        (window.location.href = "https://github.com/renniemaharaj/thewriterco")
+      }
+    >
+      React Front-End
     </Button>
   </Flex>,
 ];
