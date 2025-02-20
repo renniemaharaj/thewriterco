@@ -86,14 +86,14 @@
   backdrop-filter: blur(10px); /* Blurs the content behind */
   -webkit-backdrop-filter: blur(10px); /* For Safari support */
   border-radius: 12px; /* Optional, for rounded corners */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional, for aesthetics */
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); Optional, for aesthetics */
 }
 
 .blurred-div-light {
   backdrop-filter: blur(2px); /* Blurs the content behind */
   -webkit-backdrop-filter: blur(2px); /* For Safari support */
   border-radius: 12px; /* Optional, for rounded corners */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional, for aesthetics */
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); Optional, for aesthetics */
 }
 
 .animate-fade-in {

@@ -109,7 +109,7 @@ function AppContent() {
       accentColor={"gold"}
       radius="full"
       panelBackground="translucent"
-      scaling="100%"
+      scaling="110%"
       grayColor="sage"
     >
       <MsalProvider instance={msalInstance}>
@@ -124,7 +124,7 @@ function AppContent() {
                 path={route.path}
                 element={route.element}
               />
-            )
+            ),
           )}
 
           {/* Protected Routes and Login Persistent Routes */}
