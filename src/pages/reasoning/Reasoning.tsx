@@ -6,7 +6,7 @@ import Hint from "../../components/Hint";
 // import Hint from "../../components/Hint";
 // import Footer from "../../components/additional/footer";
 
-const Index = () => {
+const Reasoning = () => {
   return (
     <Page wrapChildren={true}>
       <Flex
@@ -31,4 +31,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Reasoning;

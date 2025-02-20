@@ -71,7 +71,7 @@ const carouselItems = [
   </Flex>,
 ];
 
-const Index: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <Page>
       <Hero />
@@ -110,4 +110,4 @@ const Index: React.FC = () => {
   );
 };
 
-export default Index;
+export default Home;

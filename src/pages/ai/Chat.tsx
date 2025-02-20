@@ -6,7 +6,7 @@ import Hint from "../../components/Hint";
 import { useThemeContext } from "../../components/context/theme/useThemeContext";
 import Chat from "../../components/ai/Chat";
 
-const Index = () => {
+const AI = () => {
   const { theme } = useThemeContext();
 
   return (
@@ -42,4 +42,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default AI;

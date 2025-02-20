@@ -10,12 +10,12 @@ import { ThemeProvider } from "./components/context/theme/ThemeProvider";
 import { useThemeContext } from "./components/context/theme/useThemeContext";
 
 // Import pages
-import Home from "./pages/home/index";
-import NoPage from "./pages/404/index";
-import AI from "./pages/ai/index";
-import Kjv from "./pages/kjv/index";
-import Study from "./pages/study/index";
-import Guesser from "./pages/guesser/index";
+import Home from "./pages/home/Home";
+import NoPage from "./pages/noPage/NoPage";
+import AI from "./pages/ai/Chat";
+import Kjv from "./pages/kjv/KJV";
+import Study from "./pages/reasoning/Reasoning";
+import Guesser from "./pages/guesser/Guesser";
 
 // Custom route types
 type CustomRoute = {

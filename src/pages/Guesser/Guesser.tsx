@@ -16,11 +16,11 @@ import {
   Quote,
   Separator,
 } from "@radix-ui/themes";
-import { AllowedColors } from "../../components/RadixColors";
-import Hint from "../../components/Hint";
+import { AllowedColors } from "../../components/RadixColors.ts";
+import Hint from "../../components/Hint.tsx";
 // import Footer from "../../components/Footer";
 import { BrainCircuit } from "lucide-react";
-import Page from "../../components/page/Page";
+import Page from "../../components/page/Page.tsx";
 // import Footer from "../../components/additional/footer";
 
 type Mind = {
@@ -29,7 +29,7 @@ type Mind = {
   reveal: boolean;
 };
 
-const Index = () => {
+const Guesser = () => {
   const [workingRange, setWorkingRange] = useState([rangeStart, rangeEnd]);
   const [gamingStatus, setGamingStatus] = useState(false);
   const [queryForm, setQueryForm] = useState<QueryForm>(defaultQueryForm);
@@ -287,4 +287,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Guesser;

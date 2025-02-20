@@ -7,7 +7,7 @@ import Page from "../../components/page/Page";
 import { Flex } from "@radix-ui/themes";
 // import Footer from "../../components/additional/footer";
 // import Footer from "../../components/Footer";
-const Index = () => {
+const KJV = () => {
   const dispatch = useDispatch();
   const setEreaderState = (eBook: EBook) => {
     // Dispatch to Redux store
@@ -31,4 +31,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default KJV;
