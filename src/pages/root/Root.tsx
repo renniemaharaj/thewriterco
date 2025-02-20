@@ -71,7 +71,7 @@ const carouselItems = [
   </Flex>,
 ];
 
-const Home: React.FC = () => {
+const Root: React.FC = () => {
   return (
     <Page>
       <Hero />
@@ -110,4 +110,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Root;

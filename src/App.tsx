@@ -10,12 +10,12 @@ import { ThemeProvider } from "./components/context/theme/ThemeProvider";
 import { useThemeContext } from "./components/context/theme/useThemeContext";
 
 // Import pages
-import Home from "./pages/home/Home";
+import Root from "./pages/root/Root";
 import NoPage from "./pages/noPage/NoPage";
 import AI from "./pages/ai/Chat";
 import Kjv from "./pages/kjv/KJV";
 import Study from "./pages/reasoning/Reasoning";
-import Guesser from "./pages/guesser/Guesser";
+import Number from "./pages/number/Number";
 
 // Custom route types
 type CustomRoute = {
@@ -33,7 +33,7 @@ type IndexRoute = {
 const publicRoutes: (CustomRoute | IndexRoute)[] = [
   {
     index: true,
-    element: <Home />,
+    element: <Root />,
   },
   {
     path: "*",
@@ -41,7 +41,7 @@ const publicRoutes: (CustomRoute | IndexRoute)[] = [
   },
   {
     path: "deducer",
-    element: <Guesser />,
+    element: <Number />,
   },
   {
     path: "ai",

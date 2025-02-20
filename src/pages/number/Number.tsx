@@ -29,7 +29,7 @@ type Mind = {
   reveal: boolean;
 };
 
-const Guesser = () => {
+const Number = () => {
   const [workingRange, setWorkingRange] = useState([rangeStart, rangeEnd]);
   const [gamingStatus, setGamingStatus] = useState(false);
   const [queryForm, setQueryForm] = useState<QueryForm>(defaultQueryForm);
@@ -287,4 +287,4 @@ const Guesser = () => {
   );
 };
 
-export default Guesser;
+export default Number;
