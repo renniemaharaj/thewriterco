@@ -4,7 +4,7 @@ import { Theme } from "@radix-ui/themes";
 import { useThemeContext } from "../components/context/theme/useThemeContext";
 import SideBar from "../components/SideBar";
 import { Provider } from "react-redux";
-import { ThemeProvider } from "../components/context/ThemeProvider";
+import { ThemeProvider } from "../components/context/theme/ThemeProvider";
 import "@radix-ui/themes/styles.css"; // Import the Radix Theme styles
 import { store } from "../app/store";
 

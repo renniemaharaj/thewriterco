@@ -4,7 +4,7 @@ import MonacoEditor from "../components/MonacoEditor.tsx";
 import "@radix-ui/themes/styles.css"; // Import the Radix Theme styles
 import { Provider } from "react-redux";
 import { store } from "../app/store";
-import { ThemeProvider } from "../components/context/ThemeProvider";
+import { ThemeProvider } from "../components/context/theme/ThemeProvider";
 import { Theme } from "@radix-ui/themes";
 import { useThemeContext } from "../components/context/theme/useThemeContext.tsx";
 import { fn } from "@storybook/test";
