@@ -1,11 +1,10 @@
-import { describe, it, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "../utils/test-utils";
 import App from "../App";
+import { describe, test, expect } from "vitest";
 
-describe("App", () => {
-  it("should render without 404", () => {
-    const { container } = render(<App />);
-    expect(container).toBeTruthy();
-    expect(container.innerHTML).not.toContain("404");
+describe("App component", () => {
+  test("renders Home component on default route", () => {
+    render(<App />, { route: "/" });
+    expect(screen.getByText(/TheWriterCo/i)).toBeInTheDocument();
   });
 });
