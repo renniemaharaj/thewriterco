@@ -87,6 +87,15 @@ const carouselItems = [
     >
       React Front-End
     </Button>
+    <Button
+      variant="soft"
+      onClick={() =>
+        (window.location.href =
+          "https://github.com/renniemaharaj/thewriterco-auth-go")
+      }
+    >
+      Golang Back-End
+    </Button>
   </Flex>,
 ];
 
