@@ -362,11 +362,11 @@ const Chat = ({
         }}
       >
         {block.sender === "User" && (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: (block.content as MarkupResponse).markupContent,
-            }}
-          />
+          <Card className="!border-none !outline-none whitespace-pre-wrap">
+            {/* <pre className="whitespace-pre-wrap !text-left"> */}
+            {(block.content as MarkupResponse).markupContent}
+            {/* </pre> */}
+          </Card>
         )}
         {block.sender === "System" && (
           <Card className="text-red-500 !flex !flex-col !items-center !gap-2 max-w-[300px]">
