@@ -1,7 +1,8 @@
 import { Flex, Text, Button, Quote, Separator } from "@radix-ui/themes";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
-const flexClassName = "!flex-col items-center justify-center gap-2";
+const flexClassName =
+  "!flex-col !items-center !justify-center gap-2 w-full h-[300px]";
 const textClassName =
   "text-bold font-semibold text-foreground text-center leading-tight";
 const quoteClassName = "italic animate-fade-in px-6";
@@ -11,14 +12,10 @@ export const swiperSlides = [
     <Text className={textClassName}>
       Explore the Bible through our <br /> AI-powered study tools
     </Text>
-    <Quote className={quoteClassName}>
-      Study to shew thyself approved unto God, <br /> a workman that needeth not
-      to be ashamed, rightly <br /> dividing the word of truth.
-    </Quote>
     <Separator size={"1"} />
     <Quote className={quoteClassName}>
-      And take the helmet of salvation, and the sword of the Spirit, <br />
-      which is the word of God:
+      Study to shew thyself approved unto God, <br /> a workman that needeth not
+      to be ashamed, rightly dividing the word of truth.
     </Quote>
     <Button
       variant="soft"
@@ -33,13 +30,6 @@ export const swiperSlides = [
     <Text className={textClassName}>
       Reinforce your faith with <br /> reasoning
     </Text>
-
-    <Quote className={quoteClassName}>
-      But sanctify the Lord God in your hearts,
-      <br /> and be ready always to give an answer to every man <br /> who
-      asketh you a reason for the hope that is in you, with <br /> meekness and
-      fear.
-    </Quote>
     <Separator size={"1"} />
     <Quote className={quoteClassName}>
       Above all, taking the shield of faith,

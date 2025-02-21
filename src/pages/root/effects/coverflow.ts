@@ -10,7 +10,7 @@ export const coverflow = {
   effect: "coverflow",
   centeredSlides: true,
   coverflowEffect: {
-    rotate: 50,
+    rotate: 150,
     stretch: 0,
     depth: 100,
     modifier: 1,

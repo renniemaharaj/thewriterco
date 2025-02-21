@@ -13,10 +13,13 @@ const Root: React.FC = () => {
     <Page>
       <Hero />
       {/* <Separator size={"4"} /> */}
-      <Flex className="w-full flex-row md:!w-[80%]">
-        <Swiper {...swiperProps} slidesPerView={2}>
+      <Flex className="relative w-full flex-row md:!w-[70%]">
+        <Swiper {...swiperProps} slidesPerView="auto">
           {swiperSlides.map((item, index) => (
-            <SwiperSlide key={index}>
+            <SwiperSlide
+              key={index}
+              className="flex justify-center items-center"
+            >
               <Card key={index}>{item}</Card>
             </SwiperSlide>
           ))}
