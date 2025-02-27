@@ -1,7 +1,6 @@
 import {
   Flex,
   Button,
-  ScrollArea,
   Card,
   Skeleton,
   Text,
@@ -16,14 +15,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useSendAskReqMutation } from "../../app/api/apiSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store.ts";
-import Chatbox from "./Input.tsx";
 import { useThemeContext } from "../context/theme/useThemeContext.tsx";
 
 import {
-  ChevronDownIcon,
-  ChevronUpIcon,
+  BookTextIcon,
   EllipsisVerticalIcon,
-  PlayCircleIcon,
   ShieldAlertIcon,
 } from "lucide-react";
 import {
@@ -36,7 +32,6 @@ import {
 } from "./types.ts";
 import Flow from "../flow/Flow.tsx";
 import { Node } from "@xyflow/react";
-import { Carousel } from "../Carousel.tsx";
 import React from "react";
 import fetchGitBlob from "../bible/utils/gitgetter.ts";
 import {
@@ -52,31 +47,25 @@ import * as msgpack from "@msgpack/msgpack";
 import { fromByteArray } from "base64-js";
 // import { Scripture } from "../NavBar.tsx";
 import MonacoEditor from "../MonacoEditor.tsx";
+import Input from "./Input.tsx";
 
 const Chat = ({
   className,
   highlightAxioms,
   // suspendsAxioms,
+  scrollMessageBoxToBottom,
 }: {
   className?: string;
   highlightAxioms: () => void;
   // suspendsAxioms: () => void;
+  scrollMessageBoxToBottom: () => void;
 }) => {
   const { theme } = useThemeContext();
 
   const dispatch = useDispatch();
   const [sendAskReq] = useSendAskReqMutation();
 
-  const [messageBlocks, setMessageBlocks] = useState<Block[]>([
-    {
-      sender: "AI",
-      type: "markup",
-      content: {
-        type: "markup",
-        markupContent: "Hi! 🙏 How may I be of service to you?",
-      },
-    },
-  ]);
+  const [messageBlocks, setMessageBlocks] = useState<Block[]>([]);
   // const [executables, setExecutables] = useState<Executable[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [canvasView, setCanvasView] = useState(false);
@@ -96,16 +85,7 @@ const Chat = ({
     "Substitute for fellowship?",
   ]);
 
-  const messageBoxRef = useRef<HTMLDivElement>(null);
-
   const eReaderState = useSelector((state: RootState) => state.ereader);
-
-  const scrollMessageBoxToBottom = () => {
-    messageBoxRef.current?.scrollTo({
-      top: messageBoxRef.current.scrollHeight,
-      behavior: "smooth",
-    });
-  };
 
   function setSystemMessage(content: string) {
     setMessageBlocks((prev) => [
@@ -236,6 +216,43 @@ const Chat = ({
       },
     ]);
 
+    if (msg.startsWith("/")) {
+      const command = msg.split(" ")[0].slice(1);
+      // const args = msg.split(" ").slice(1);
+      switch (command) {
+        case "clear":
+          setMessageBlocks([]);
+          return;
+        case "help":
+          setMessageBlocks((prev) => [
+            ...prev,
+            {
+              sender: "System",
+              type: "markup",
+              content: {
+                type: "markup",
+                markupContent: "Commands: /clear, /help",
+              },
+            },
+          ]);
+          return;
+        default:
+          setMessageBlocks((prev) => [
+            ...prev,
+            {
+              sender: "System",
+              type: "markup",
+              content: {
+                type: "markup",
+                markupContent:
+                  "Unknown command. Use /help for available commands.",
+              },
+            },
+          ]);
+          return;
+      }
+    }
+
     if (Conversational && conversationTokens > 10000) {
       setSystemMessage("Conversation limit reached, please start a new chat.");
       return;
@@ -328,11 +345,8 @@ const Chat = ({
   }, [messageBlocks]);
 
   useEffect(() => {
-    if (messageBlocks.length) {
-      const lastMessage = messageBlocks[messageBlocks.length - 1];
-      if (lastMessage.sender === "AI") {
-        scrollMessageBoxToBottom();
-      }
+    if (messageBlocks.length > 0) {
+      scrollMessageBoxToBottom();
     }
 
     computeTokens().then((tokens) => {
@@ -340,133 +354,138 @@ const Chat = ({
     });
   }, [messageBlocks]);
 
-  // const [frameSetup] = useState(frameSetups.Top);
-
   const MessageBlock = ({
     block,
+    onAnimated,
   }: {
     block: Block;
-    animate: boolean;
     onAnimated: () => void;
   }) => {
+    useEffect(() => {
+      onAnimated();
+    }, []);
     return (
-      <Flex
-        direction="column"
-        justify={block.sender === "User" ? "end" : "start"}
-        className={`${
-          block.sender === "User" ? "text-right !self-end" : "text-left"
-        } min-h-10 max-w-[90%] !text-sm !max-h-fit !overflow-hidden !p-2 opacity-0 animate-fade-in`}
-        style={{
-          animationDuration: "0.5s",
-          animationFillMode: "forwards",
-        }}
-      >
-        {block.sender === "User" && (
-          <Card className="!border-none !outline-none whitespace-pre-wrap">
-            {/* <pre className="whitespace-pre-wrap !text-left"> */}
-            {(block.content as MarkupResponse).markupContent}
-            {/* </pre> */}
-          </Card>
-        )}
-        {block.sender === "System" && (
-          <Card className="text-red-500 !flex !flex-col !items-center !gap-2 max-w-[300px]">
-            <Flex className="!gap-2">
-              <Flex>
-                <ShieldAlertIcon />
+      <Flex justify="center" className={`!flex-col max-w-[90%] !gap-1`}>
+        <Flex
+          direction="column"
+          justify={block.sender === "User" ? "end" : "start"}
+          className={`${
+            block.sender === "User" ? "text-right !self-end" : "text-left"
+          } max-w-[90%] !text-sm !max-h-fit !overflow-hidden !p-2 opacity-0 animate-fade-in`}
+          style={{
+            animationDuration: "0.5s",
+            animationFillMode: "forwards",
+          }}
+        >
+          {block.sender === "User" && (
+            <Card className="!border-none !outline-none whitespace-pre-wrap">
+              {/* <pre className="whitespace-pre-wrap !text-left"> */}
+              {(block.content as MarkupResponse).markupContent}
+              {/* </pre> */}
+            </Card>
+          )}
+          {block.sender === "System" && (
+            <Card className="text-red-500 !flex !flex-col !items-center !gap-2 max-w-[300px]">
+              <Flex className="!gap-2">
+                <Flex>
+                  <ShieldAlertIcon />
+                </Flex>
+                <Text>{(block.content as MarkupResponse).markupContent}</Text>
               </Flex>
-              <Text>{(block.content as MarkupResponse).markupContent}</Text>
-            </Flex>
 
-            <Flex className="!flex-row !gap-2">
-              <Button
-                variant="soft"
-                onClick={() => {
-                  handleMessageSend(
-                    (
-                      messageBlocks[messageBlocks.length - 1]
-                        .content as MarkupResponse
-                    ).markupContent,
-                  );
-                  setMessageBlocks((prev) => prev.slice(0, -2));
-                }}
-                className="mt-2"
-              >
-                Retry
-              </Button>
-              <Button
-                variant="soft"
-                onClick={() => {
-                  setMessageBlocks([]);
-                }}
-                className="mt-2"
-              >
-                New Chat
-              </Button>
-            </Flex>
-          </Card>
-        )}
-        {block.sender === "AI" && block.type === "markup" && (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: (block.content as MarkupResponse).markupContent,
-            }}
-          />
-        )}
-        {block.sender === "AI" && block.type === "code" && (
-          <Card className="!p-1">
-            <Flex className="!flex-row !gap-1 !mb-2">
-              <Badge variant="soft" className="!mr-2">
-                {(block.content as Code).filename}
-              </Badge>
-              {/* <Badge variant="soft">{(block.content as Code).language}</Badge> */}
-            </Flex>
-            <MonacoEditor
-              language={(block.content as Code).language || "plaintext"}
-              code={(block.content as Code).codeContent}
-              height={(block.content as Code).editorHeight || 400}
+              <Flex className="!flex-row !gap-2">
+                <Button
+                  variant="soft"
+                  onClick={() => {
+                    handleMessageSend(
+                      (
+                        messageBlocks[messageBlocks.length - 1]
+                          .content as MarkupResponse
+                      ).markupContent,
+                    );
+                    setMessageBlocks((prev) => prev.slice(0, -2));
+                  }}
+                  className="mt-2"
+                >
+                  Retry
+                </Button>
+                <Button
+                  variant="soft"
+                  onClick={() => {
+                    setMessageBlocks([]);
+                  }}
+                  className="mt-2"
+                >
+                  New Chat
+                </Button>
+              </Flex>
+            </Card>
+          )}
+          {block.sender === "AI" && block.type === "markup" && (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: (block.content as MarkupResponse).markupContent,
+              }}
             />
-          </Card>
-        )}
+          )}
+          {block.sender === "AI" && block.type === "code" && (
+            <Card className="!p-1">
+              <Flex className="!flex-row !gap-1 !mb-2">
+                <Badge variant="soft" className="!mr-2">
+                  {(block.content as Code).filename}
+                </Badge>
+                {/* <Badge variant="soft">{(block.content as Code).language}</Badge> */}
+              </Flex>
+              <MonacoEditor
+                language={(block.content as Code).language || "plaintext"}
+                code={(block.content as Code).codeContent}
+                height={(block.content as Code).editorHeight || 400}
+              />
+            </Card>
+          )}
 
-        {block.sender === "AI" && block.type === "scripture" && (
-          <Carousel
-            variant="no-scrollbar"
-            className="max-w-[300px]"
-            items={(block.content as Scripture).verses.map((verse, idx) => (
-              <React.Fragment key={`verse-${idx}`}>
-                <Tooltip content={verse.verseContent}>
-                  <Button
-                    variant="ghost"
-                    size="1"
-                    className="animate-pulse !font-bold"
-                    onClick={() => {
-                      fetchGitBlob(verse.book).then((content) => {
-                        dispatch(
-                          setEBook({
-                            title: verse.book,
-                            content: JSON.parse(content),
-                            date: new Date().toDateString(),
-                          } as EBook),
-                        );
-                        dispatch(setRenderStyle("bible"));
-                        dispatch(
-                          setGlobalCurrentChapter(verse.chapterNo.toString()),
-                        );
-                        dispatch(
-                          setGlobalCurrentVerse(verse.verseNo.toString()),
-                        );
-                        setTimeout(() => dispatch(setOpenState(true)), 100);
-                      });
-                    }}
-                  >
-                    <PlayCircleIcon /> {verse.book} {verse.chapterNo}:
-                    {verse.verseNo}
-                  </Button>
-                </Tooltip>
-              </React.Fragment>
-            ))}
-          />
-        )}
+          {block.sender === "AI" && block.type === "scripture" && (
+            <Card size="1">
+              <Flex className="!flex-row !gap-2 flex-wrap">
+                {(block.content as Scripture).verses.map((verse, idx) => (
+                  <React.Fragment key={`verse-${idx}`}>
+                    <Tooltip content={verse.verseContent}>
+                      <IconButton
+                        variant="ghost"
+                        size="1"
+                        className="animate-pulse !font-bold"
+                        onClick={() => {
+                          fetchGitBlob(verse.book).then((content) => {
+                            dispatch(
+                              setEBook({
+                                title: verse.book,
+                                content: JSON.parse(content),
+                                date: new Date().toDateString(),
+                              } as EBook),
+                            );
+                            dispatch(setRenderStyle("bible"));
+                            dispatch(
+                              setGlobalCurrentChapter(
+                                verse.chapterNo.toString(),
+                              ),
+                            );
+                            dispatch(
+                              setGlobalCurrentVerse(verse.verseNo.toString()),
+                            );
+                            setTimeout(() => dispatch(setOpenState(true)), 100);
+                          });
+                        }}
+                      >
+                        <BookTextIcon /> {verse.book} {verse.chapterNo} :
+                        {verse.verseNo}
+                      </IconButton>
+                    </Tooltip>
+                  </React.Fragment>
+                ))}
+              </Flex>
+            </Card>
+          )}
+        </Flex>
       </Flex>
     );
   };
@@ -487,135 +506,107 @@ const Chat = ({
     );
   };
 
-  const scrollScrollArea = (direction: "up" | "down") => {
-    if (messageBoxRef.current) {
-      const scrollY = messageBoxRef.current.scrollTop;
-      const scrollAmount = 300;
+  const countMessageBlocks = useCallback(() => {
+    return messageBlocks.length;
+  }, [messageBlocks]);
 
-      if (direction === "up") {
-        messageBoxRef.current.scrollTo({
-          top: scrollY - scrollAmount,
-          behavior: "smooth",
-        });
-      } else {
-        messageBoxRef.current.scrollTo({
-          top: scrollY + scrollAmount,
-          behavior: "smooth",
-        });
+  const chatRef = useRef<HTMLDivElement>(null);
+  const [chatBoxRespectiveWidth, setChatBoxRespectiveWidth] = useState(0);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (chatRef.current) {
+        setChatBoxRespectiveWidth(chatRef.current.offsetWidth);
       }
+    };
+
+    updateWidth(); // Initial width calculation
+
+    const resizeObserver = new ResizeObserver(updateWidth);
+
+    if (chatRef.current) {
+      resizeObserver.observe(chatRef.current);
     }
-  };
-  const arrowButtonClassnames =
-    "absolute right-3 !scale-75 transform -translate-y-1/2 z-10 p-1 bg-[#6a6052] rounded-full shadow-md opacity-80 text-white";
 
-  const BtnScrollUp = () => (
-    <button
-      className={arrowButtonClassnames + " !bottom-2/4"}
-      onClick={() => scrollScrollArea("up")}
-    >
-      <ChevronUpIcon />
-    </button>
-  );
+    return () => resizeObserver.disconnect();
+  }, []);
 
-  const BtnScrollDown = () => (
-    <button
-      className={arrowButtonClassnames + " !top-2/4"}
-      onClick={() => scrollScrollArea("down")}
-    >
-      <ChevronDownIcon />
-    </button>
-  );
-
-  const ScrollAreaComponent = useCallback(() => {
+  const ViewContainer = useCallback(() => {
     return (
-      <ScrollArea
-        ref={messageBoxRef}
-        className={`${className} !top-0 !h-[70vh] ${isTyping && "animate-pulse"}`}
+      <Flex
+        className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit pb-[150px]`}
       >
-        {canvasView && (
-          <>
-            <BtnScrollUp />
-            <BtnScrollDown />
-          </>
+        {messageBlocks.length === 0 && (
+          <Flex
+            className={`${!canvasView && "absolute top-[50%] translate-y-[-50%]"} gap-1 px-8 mb-4 !justify-center !flex-wrap `}
+          >
+            {suggestions.map((msg, index) => (
+              <Button
+                key={index}
+                variant="soft"
+                className="cursor-pointer"
+                onClick={() => handleSuggestionClick(msg)}
+                disabled={isTyping}
+              >
+                {msg}
+              </Button>
+            ))}
+          </Flex>
         )}
 
-        <Flex className="gap-1 mb-4 !flex-wrap">
-          {suggestions.map((msg, index) => (
-            <Button
-              key={index}
-              variant="soft"
-              className="cursor-pointer"
-              onClick={() => handleSuggestionClick(msg)}
-              disabled={isTyping}
-            >
-              {msg}
-            </Button>
-          ))}
-        </Flex>
-        <Flex
-          direction="column"
-          className={`m-[1rem] box-content !scroll-smooth gap-6`}
-        >
-          {messageBlocks.map((block, index) => (
-            <Flex
-              key={index}
-              justify="center"
-              className={`!flex-col max-w-[90%] !gap-1`}
-            >
-              <MessageBlock
-                block={block}
-                animate={index === messageBlocks.length - 1}
-                onAnimated={scrollMessageBoxToBottom}
-              />
-            </Flex>
-          ))}
+        {messageBlocks.map((block, index) => (
+          <React.Fragment key={index}>
+            <MessageBlock
+              block={block}
+              // animate={index === messageBlocks.length - 1}
+              onAnimated={scrollMessageBoxToBottom}
+            />
+          </React.Fragment>
+        ))}
 
-          {isTyping && (
-            <Flex justify="center" className="text-gray-500 italic !flex-col">
-              <SkeletonTextBlock />
-            </Flex>
-          )}
-        </Flex>
-
-        {/* </Flex> */}
-      </ScrollArea>
+        {isTyping && (
+          <Flex justify="center" className="text-gray-500 italic !flex-col">
+            <SkeletonTextBlock />
+          </Flex>
+        )}
+      </Flex>
     );
   }, [messageBlocks, canvasView]);
 
   //Build node from scroll area
-  const scrollAreaToNode = useCallback(
+  const MessageContainerNode = useCallback(
     () =>
       ({
         id: "scroll-area",
         type: "scrollArea",
         data: {
           label: "Scroll Area",
-          children: <ScrollAreaComponent />,
+          children: <ViewContainer />,
         },
         position: { x: 0, y: 0 },
       }) as Node,
     [messageBlocks, canvasView],
   );
 
-  const countMessageBlocks = useCallback(() => {
-    return messageBlocks.length;
-  }, [messageBlocks]);
-
   return (
-    <Flex className={`relative ${className} !flex-col !h-[100vh] `}>
+    <Flex ref={chatRef} className={`${className}`}>
       {/* <Card className="bg-red-400 !top-0" variant="ghost"> */}
       {canvasView ? (
-        <Flow
-          nodes={[scrollAreaToNode()]}
-          messageBlocksCount={countMessageBlocks()}
-        />
+        <div className="!w-full !h-[75vh]">
+          <Flow
+            nodes={[MessageContainerNode()]}
+            messageBlocksCount={countMessageBlocks()}
+          />
+        </div>
       ) : (
-        <ScrollAreaComponent />
+        <ViewContainer />
       )}
-      {/* <Frame {...frameSetup} /> */}
-      <Chatbox
+
+      <Input
         disabled={isTyping}
         handleRecieve={(text: string) => handleMessageSend(text)}
+        className="!absolute !bottom-[10px] blurred-div"
+        style={{ width: chatBoxRespectiveWidth }}
         children={
           <Flex gap="2" className="!flex-row">
             <Flex align={"center"} className="!p-1 gap-2 !flex-wrap">
@@ -675,7 +666,7 @@ const Chat = ({
               <Button
                 variant={canvasView ? "soft" : "outline"}
                 onClick={() => setCanvasView(!canvasView)}
-                className="!hidden md:!block"
+                // className="!hidden md:!block"
               >
                 Canvas
               </Button>

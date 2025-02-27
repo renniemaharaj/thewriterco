@@ -1,22 +1,32 @@
-import { Flex } from "@radix-ui/themes";
+import { Flex, IconButton } from "@radix-ui/themes";
 import Ereader from "../../components/bible/Ereader";
 import SideBar from "../../components/SideBar";
 import Menu from "../../components/docs/Menu";
 import Hint from "../../components/Hint";
 import { useThemeContext } from "../../components/context/theme/useThemeContext";
 import Chat from "../../components/ai/Chat";
+import { CircleFadingPlusIcon } from "lucide-react";
+import { useRef } from "react";
 
 const AI = () => {
   const { theme } = useThemeContext();
 
+  const messageBoxRef = useRef<HTMLDivElement>(null);
+
+  const scrollMessageBoxToBottom = () => {
+    messageBoxRef.current?.scrollTo({
+      top: messageBoxRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <Flex className="!w-full !flex-col merriweather-bold !p-0`">
+    <Flex className="!w-[100vw] !flex-col merriweather-bold !p-0`">
       {/* <BeforeHeader /> */}
       <SideBar
-        variant="right"
-        className="flex-col !w-full relative m-auto !h-[100vh] transition-all"
-        childLeft={<></>}
-        centerBar={
+        variant="center"
+        className="flex-col relative m-auto !w-[100vw] !h-[100vh] transition-all gap-1"
+        childLeft={
           <Menu
             className="!hidden md:!flex"
             children={
@@ -24,14 +34,29 @@ const AI = () => {
             }
           />
         }
+        centerBar={
+          <Flex
+            className={`${theme === "dark" ? "bg-[#171918]" : "border"} !flex-col justify-center items-center pt-2`}
+          >
+            <IconButton
+              size="2"
+              variant="soft"
+              onClick={() => (location.href = "/ai")}
+            >
+              <CircleFadingPlusIcon />
+            </IconButton>
+          </Flex>
+        }
         childRight={
           /* Chatbox Section */
           <Flex
-            className={`${theme === "dark" ? "bg-[#171918]" : "border"} p-2 !flex !flex-[5] !flex-col border-not-rounded`}
+            ref={messageBoxRef}
+            className={`${theme === "dark" ? "bg-[#171918]" : "border"}  p-1 !flex w-[100%] md:!min-w-[70%] !overflow-auto`}
           >
             <Chat
               highlightAxioms={() => {}}
-              className="sm:!w-[100%] md:!w-[85%] !p-0 mx-auto !rounded-none"
+              className="!w-full mx-auto sm:!w-[100%] md:!w-[90%]"
+              scrollMessageBoxToBottom={scrollMessageBoxToBottom}
             />
           </Flex>
         }

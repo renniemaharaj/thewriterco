@@ -74,7 +74,7 @@ function FlowComponent({
   }, [messageBlocksCount, onFitView]);
 
   return (
-    <Box className={`w-auto h-[60vh] !flex-col ${width} ${height}`}>
+    <Box className={`w-auto h-full !flex-col ${width} ${height}`}>
       <ReactFlow
         nodes={nodesLocal}
         onNodesChange={onNodesChange}

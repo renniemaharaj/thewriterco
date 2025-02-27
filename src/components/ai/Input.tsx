@@ -7,9 +7,17 @@ interface InputProps {
   handleRecieve: (input: string) => void;
   disabled: boolean;
   children?: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
-const Input: React.FC<InputProps> = ({ handleRecieve, disabled, children }) => {
+const Input: React.FC<InputProps> = ({
+  handleRecieve,
+  disabled,
+  children,
+  className,
+  style,
+}) => {
   const [message, setMessage] = useState("");
   const [inputFocus, setInputFocus] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -43,9 +51,10 @@ const Input: React.FC<InputProps> = ({ handleRecieve, disabled, children }) => {
 
   return (
     <Card
-      className={`${
+      style={style}
+      className={`${className} ${
         inputFocus ? "border-[#978365]" : "border-transparent"
-      } !absolute left-[50%] translate-x-[-50%] !bottom-0 !h-auto w-[100%] md:!w-[90%] border-2 outline-none !flex !flex-col !gap-2 mt-4`}
+      } w-[100%] border-2 outline-none !flex !flex-col !gap-2 `}
     >
       <Flex align="center" className="flex gap-2 !w-full !justify-evenly">
         <TextareaAutosize

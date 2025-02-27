@@ -49,7 +49,7 @@ const Menu = ({
 
   return (
     <ScrollArea
-      className={`${className} !mx-auto flex-[2] p-2 pt-7 flex-col h-full`}
+      className={`${className} !flex !mx-auto p-2 pt-7 flex-col h-full`}
     >
       <Text
         className="text-wrap cursor-pointer text-2xl m-auto"
@@ -64,8 +64,8 @@ const Menu = ({
         {hero}
       </Text>
       {children}
-      <Tabs.Root defaultValue="axioms" className="mt-8">
-        <Tabs.List className="flex space-x-4 !shadow-none pb-2">
+      <Tabs.Root defaultValue="axioms" className="mt-8 !max-w-[100%]">
+        <Tabs.List className="!flex !flex-wrap space-x-4 !shadow-none pb-2">
           <Tabs.Trigger value="axioms" className="px-4 py-2">
             Axioms
           </Tabs.Trigger>
@@ -77,14 +77,14 @@ const Menu = ({
           </Tabs.Trigger>
         </Tabs.List>
 
-        <Box pt="3">
+        <Box pt="3" className="space-y-4 max-w-[100%]">
           {/* Axioms Section */}
           <Tabs.Content
             // ref={axiomParentRef}
             value="axioms"
-            className="!overflow-visible relative"
+            className="relative"
           >
-            <Box className="space-y-4 ">
+            <Box>
               <Text weight="bold" className="text-1xl">
                 Grounding Axioms
               </Text>
