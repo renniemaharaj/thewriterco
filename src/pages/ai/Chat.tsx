@@ -6,11 +6,14 @@ import Hint from "../../components/Hint";
 import { useThemeContext } from "../../components/context/theme/useThemeContext";
 import Chat from "../../components/ai/Chat";
 import { CircleFadingPlusIcon } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const AI = () => {
   const { theme } = useThemeContext();
 
+  const [orientation, setOrientation] = useState<"horizontal" | "vertical">(
+    "horizontal",
+  );
   const messageBoxRef = useRef<HTMLDivElement>(null);
 
   const scrollMessageBoxToBottom = () => {
@@ -20,12 +23,27 @@ const AI = () => {
     });
   };
 
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (entries[0].contentRect.width < 768) {
+        setOrientation("vertical");
+      } else {
+        setOrientation("horizontal");
+      }
+    });
+
+    resizeObserver.observe(document.body);
+
+    return () => resizeObserver.disconnect();
+  }, []);
+
   return (
     <Flex className="!w-[100vw] !flex-col merriweather-bold !p-0`">
       {/* <BeforeHeader /> */}
       <SideBar
         variant="center"
         className="flex-col relative m-auto !w-[100vw] !h-[100vh] transition-all gap-1"
+        orientation={orientation}
         childLeft={
           <Menu
             className="!hidden md:!flex"
@@ -36,7 +54,7 @@ const AI = () => {
         }
         centerBar={
           <Flex
-            className={`${theme === "dark" ? "bg-[#171918]" : "border"} !flex-col justify-center items-center pt-2`}
+            className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${orientation === "horizontal" ? "justify-center pt-2" : ""}  items-center !flex-col`}
           >
             <IconButton
               size="2"

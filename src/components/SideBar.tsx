@@ -6,6 +6,7 @@ const SideBar = ({
   childRight,
   className,
   variant,
+  orientation,
   width,
   height,
 }: {
@@ -15,6 +16,7 @@ const SideBar = ({
   childRight?: React.ReactNode;
   className?: string;
   variant: "left" | "center" | "right";
+  orientation: "vertical" | "horizontal";
 
   width?: string;
   height?: string;
@@ -25,7 +27,7 @@ const SideBar = ({
       height={height}
       // align={"start"}
       justify={"center"}
-      className={`!flex-row ${className}`}
+      className={`${orientation === "horizontal" ? "!flex-row" : "!flex-col"} ${className}`}
     >
       {/** Left */}
       {variant === "center" && childLeft}

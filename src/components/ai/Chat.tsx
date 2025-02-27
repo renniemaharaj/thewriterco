@@ -489,6 +489,7 @@ const Chat = ({
       </Flex>
     );
   };
+
   const SkeletonTextBlock = () => {
     const [blockMounted, setBlockMounted] = useState(false);
 
@@ -496,12 +497,20 @@ const Chat = ({
       setTimeout(() => setBlockMounted(true), 100);
     }, []);
 
-    const baseClassName = "w-0 h-4 rounded mb-2 !transition-all !duration-900";
+    const baseClassName =
+      "w-3/4 h-4 rounded mb-2 opacity-0 transition-opacity duration-700";
+
     return (
       <>
-        <Skeleton className={`${blockMounted && "!w-3/4"} ${baseClassName}`} />
-        <Skeleton className={`${blockMounted && "!w-2/4"} ${baseClassName}`} />
-        <Skeleton className={`${blockMounted && "!w-1/4"} ${baseClassName}`} />
+        <Skeleton
+          className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-[70%] delay-100`}
+        />
+        <Skeleton
+          className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-2/4 delay-200`}
+        />
+        <Skeleton
+          className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-1/4 delay-300`}
+        />
       </>
     );
   };
@@ -538,7 +547,7 @@ const Chat = ({
       >
         {messageBlocks.length === 0 && (
           <Flex
-            className={`${!canvasView && "absolute top-[50%] translate-y-[-50%]"} gap-1 px-8 mb-4 !justify-center !flex-wrap `}
+            className={`${!canvasView && "md:!absolute md:!top-[50%] md:!translate-y-[-50%]"} gap-1 px-8 mb-4 !justify-center !flex-wrap `}
           >
             {suggestions.map((msg, index) => (
               <Button
@@ -605,7 +614,7 @@ const Chat = ({
       <Input
         disabled={isTyping}
         handleRecieve={(text: string) => handleMessageSend(text)}
-        className="!absolute !bottom-[2px] blurred-div"
+        className="!absolute bottom-[2px] md:!bottom-[10px] blurred-div"
         style={{ width: chatBoxRespectiveWidth }}
         children={
           <Flex gap="2" className="!flex-row">
