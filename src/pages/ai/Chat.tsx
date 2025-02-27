@@ -53,6 +53,9 @@ const AI = () => {
             ref={messageBoxRef}
             className={`${theme === "dark" ? "bg-[#171918]" : "border"}  p-1 !flex w-[100%] md:!min-w-[70%] !overflow-auto`}
           >
+            <span className="text-[0.6rem] text-gray-600 absolute top-1 left-1 z-20">
+              Discern generated content!
+            </span>
             <Chat
               highlightAxioms={() => {}}
               className="!w-full mx-auto sm:!w-[100%] md:!w-[90%]"

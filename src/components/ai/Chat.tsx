@@ -605,7 +605,7 @@ const Chat = ({
       <Input
         disabled={isTyping}
         handleRecieve={(text: string) => handleMessageSend(text)}
-        className="!absolute !bottom-[10px] blurred-div"
+        className="!absolute !bottom-[2px] blurred-div"
         style={{ width: chatBoxRespectiveWidth }}
         children={
           <Flex gap="2" className="!flex-row">
