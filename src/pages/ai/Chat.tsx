@@ -5,8 +5,15 @@ import Menu from "../../components/docs/Menu";
 import Hint from "../../components/Hint";
 import { useThemeContext } from "../../components/context/theme/useThemeContext";
 import Chat from "../../components/ai/Chat";
-import { CircleFadingPlusIcon } from "lucide-react";
+import {
+  CircleFadingPlusIcon,
+  FullscreenIcon,
+  MaximizeIcon,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { setMessageBoxMode } from "../../app/chat/chatSlice";
 
 const AI = () => {
   const { theme } = useThemeContext();
@@ -14,6 +21,11 @@ const AI = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">(
     "horizontal",
   );
+
+  const dispatch = useDispatch();
+
+  const chatState = useSelector((state: RootState) => state.chat);
+
   const messageBoxRef = useRef<HTMLDivElement>(null);
 
   const scrollMessageBoxToBottom = () => {
@@ -54,7 +66,7 @@ const AI = () => {
         }
         centerBar={
           <Flex
-            className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${orientation === "horizontal" ? "justify-center pt-2" : ""}  items-center !flex-col`}
+            className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}   !items-center gap-2`}
           >
             <IconButton
               size="2"
@@ -62,6 +74,26 @@ const AI = () => {
               onClick={() => (location.href = "/ai")}
             >
               <CircleFadingPlusIcon />
+            </IconButton>
+
+            <IconButton
+              size="2"
+              variant="soft"
+              onClick={() =>
+                dispatch(
+                  setMessageBoxMode(
+                    chatState.messageBoxMode === "hidden"
+                      ? "visible"
+                      : "hidden",
+                  ),
+                )
+              }
+            >
+              {chatState.messageBoxMode === "hidden" ? (
+                <MaximizeIcon />
+              ) : (
+                <FullscreenIcon />
+              )}
             </IconButton>
           </Flex>
         }

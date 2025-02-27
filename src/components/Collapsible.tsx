@@ -31,7 +31,7 @@ export default function Collapsible({
         aria-expanded={open}
         aria-controls="collapsible-content"
       >
-        <span className="font-semibold">{title}</span>
+        <span className="font-semibold ">{title}</span>
         <ChevronDown
           className={`transition-transform ${open ? "rotate-180" : ""}`}
         />

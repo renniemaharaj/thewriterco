@@ -25,7 +25,6 @@ import {
 import {
   Block,
   Code,
-  Exchange,
   MarkupResponse,
   ResponseBlock,
   Scripture,
@@ -48,16 +47,25 @@ import { fromByteArray } from "base64-js";
 // import { Scripture } from "../NavBar.tsx";
 import MonacoEditor from "../MonacoEditor.tsx";
 import Input from "./Input.tsx";
+import {
+  addMessage,
+  clearMessages,
+  setConversationMode,
+  setConversationTokens,
+  setResponseConstraint,
+  setViewMode,
+  spliceMessage,
+} from "../../app/chat/chatSlice.ts";
+import { buildConversation } from "./utils.ts";
+import { initialSuggestions } from "./configuration.ts";
 
 const Chat = ({
   className,
   highlightAxioms,
-  // suspendsAxioms,
   scrollMessageBoxToBottom,
 }: {
   className?: string;
   highlightAxioms: () => void;
-  // suspendsAxioms: () => void;
   scrollMessageBoxToBottom: () => void;
 }) => {
   const { theme } = useThemeContext();
@@ -65,71 +73,16 @@ const Chat = ({
   const dispatch = useDispatch();
   const [sendAskReq] = useSendAskReqMutation();
 
-  const [messageBlocks, setMessageBlocks] = useState<Block[]>([]);
-  // const [executables, setExecutables] = useState<Executable[]>([]);
   const [isTyping, setIsTyping] = useState(false);
-  const [canvasView, setCanvasView] = useState(false);
-  const [Conversational, setConversational] = useState(true);
-  const [conversationTokens, setConversationTokens] = useState<number>(0);
-  const [responseConstraint, setResponseConstraint] = useState<
-    "short" | "shorter" | "detailed"
-  >("shorter");
 
-  const [suggestions, setSuggestions] = useState<string[]>([
-    "Why Christianity?",
-    "How can I be saved?",
-    "What is the Gospel?",
-    "Let's study patience",
-    "Let's study love",
-    "Infallible responses?",
-    "Substitute for fellowship?",
-  ]);
+  const [suggestions, setSuggestions] = useState<string[]>(initialSuggestions);
 
   const eReaderState = useSelector((state: RootState) => state.ereader);
 
-  function setSystemMessage(content: string) {
-    setMessageBlocks((prev) => [
-      ...prev,
-      {
-        sender: "System" as const,
-        type: "markup",
-        content: {
-          type: "markup",
-          markupContent: content,
-        },
-      },
-    ]);
-  }
+  const chatState = useSelector((state: RootState) => state.chat);
 
-  // Build conversation for AI
-  async function buildConversation(
-    primaryBlocks: Block[],
-    additionalExchange?: Exchange,
-  ): Promise<Exchange[]> {
-    const conversation = primaryBlocks.map((block) => {
-      if (block.type === "markup") {
-        return {
-          sender: block.sender,
-          content: (block.content as MarkupResponse).markupContent,
-        };
-      } else if (block.type === "code") {
-        return {
-          sender: block.sender,
-          content: (block.content as Code).codeContent,
-        };
-      } else {
-        return {
-          sender: block.sender,
-          content: (block.content as Scripture).verses.toString(),
-        };
-      }
-    });
-
-    if (additionalExchange) {
-      conversation.push(additionalExchange);
-    }
-
-    return conversation;
+  function dispatchAddMessage(content: Block) {
+    dispatch(addMessage(content));
   }
 
   // Parse AI response
@@ -147,15 +100,11 @@ const Chat = ({
         const regex = /axioms?/gi;
         switch (block.type) {
           case "markup":
-            // Append AI markup response
-            setMessageBlocks((prev) => [
-              ...prev,
-              {
-                sender: "AI" as const,
-                type: "markup",
-                content: block.content as MarkupResponse,
-              },
-            ]);
+            dispatchAddMessage({
+              sender: "AI",
+              type: "markup",
+              content: block.content as MarkupResponse,
+            });
 
             // Detect mention of axioms
             if ((block.content as MarkupResponse).markupContent.match(regex)) {
@@ -165,26 +114,21 @@ const Chat = ({
 
           case "scripture":
             // Process scripture content
-            setMessageBlocks((prev) => [
-              ...prev,
-              {
-                sender: "AI" as const,
-                type: "scripture",
-                content: block.content as Scripture,
-              },
-            ]);
+            dispatchAddMessage({
+              sender: "AI",
+              type: "scripture",
+              content: block.content as Scripture,
+            });
+
             break;
 
           case "code":
             // Process code content
-            setMessageBlocks((prev) => [
-              ...prev,
-              {
-                sender: "AI" as const,
-                type: "code",
-                content: block.content as Code,
-              },
-            ]);
+            dispatchAddMessage({
+              sender: "AI",
+              type: "code",
+              content: block.content as Code,
+            });
             break;
 
           default:
@@ -195,7 +139,14 @@ const Chat = ({
       return true;
     } catch (error) {
       if (data.response) {
-        setSystemMessage(data.response);
+        dispatchAddMessage({
+          sender: "System",
+          type: "markup",
+          content: {
+            type: "markup",
+            markupContent: data.response,
+          },
+        });
       }
       console.error("Error parsing AI response:", error);
     }
@@ -204,57 +155,58 @@ const Chat = ({
   async function handleMessageSend(msg: string) {
     if (!msg.trim()) return;
 
-    setMessageBlocks((prev) => [
-      ...prev,
-      {
-        sender: "User",
+    dispatchAddMessage({
+      sender: "User",
+      type: "markup",
+      content: {
         type: "markup",
-        content: {
-          type: "markup",
-          markupContent: msg,
-        },
+        markupContent: msg,
       },
-    ]);
+    });
 
     if (msg.startsWith("/")) {
       const command = msg.split(" ")[0].slice(1);
       // const args = msg.split(" ").slice(1);
       switch (command) {
         case "clear":
-          setMessageBlocks([]);
+          dispatch(clearMessages());
+
           return;
         case "help":
-          setMessageBlocks((prev) => [
-            ...prev,
-            {
-              sender: "System",
+          dispatchAddMessage({
+            sender: "System",
+            type: "markup",
+            content: {
               type: "markup",
-              content: {
-                type: "markup",
-                markupContent: "Commands: /clear, /help",
-              },
+              markupContent: "Commands: /clear, /help",
             },
-          ]);
+          });
+
           return;
         default:
-          setMessageBlocks((prev) => [
-            ...prev,
-            {
-              sender: "System",
+          dispatchAddMessage({
+            sender: "System",
+            type: "markup",
+            content: {
               type: "markup",
-              content: {
-                type: "markup",
-                markupContent:
-                  "Unknown command. Use /help for available commands.",
-              },
+              markupContent:
+                "Unknown command. Use /help for available commands.",
             },
-          ]);
+          });
+
           return;
       }
     }
 
-    if (Conversational && conversationTokens > 10000) {
-      setSystemMessage("Conversation limit reached, please start a new chat.");
+    if (chatState.conversationTokens > 10000) {
+      dispatchAddMessage({
+        sender: "System",
+        type: "markup",
+        content: {
+          type: "markup",
+          markupContent: "Conversation limit reached, please start a new chat.",
+        },
+      });
       return;
     }
 
@@ -268,7 +220,7 @@ const Chat = ({
     // Attach date & time
     const attachedLocalTime = `-@here Note user's local time for context: ${new Date().toLocaleString()}`;
     const attachedCurrentDate = `-@here Note user's current date for context: ${new Date().toDateString()}`;
-    const attachedResponseConstraint = `-@here Note user's chosen response-constraint for appropriate response length: ${responseConstraint}`;
+    const attachedResponseConstraint = `-@here Note user's chosen response-constraint for appropriate response length: ${chatState.responseConstraint || "Short"}`;
     const additionalContext = [
       attachedTheme,
       attachedBookState,
@@ -285,8 +237,8 @@ const Chat = ({
 
     let conversation;
 
-    if (Conversational) {
-      conversation = await buildConversation(messageBlocks, {
+    if (chatState.conversationMode === "exchange") {
+      conversation = await buildConversation(chatState.messages, {
         sender: "User",
         content: msg,
       });
@@ -313,10 +265,15 @@ const Chat = ({
       }).unwrap();
     } catch (error) {
       console.error(error);
-
-      setSystemMessage(
-        "A connection error occurred or you are required to wait 15 seconds.",
-      );
+      dispatchAddMessage({
+        sender: "System",
+        type: "markup",
+        content: {
+          type: "markup",
+          markupContent:
+            "A connection error occurred or you are required to wait 15 seconds.",
+        },
+      });
       setIsTyping(false);
       return; // Exit early to prevent further execution
     }
@@ -325,9 +282,15 @@ const Chat = ({
       await parseAIResponse(data);
     } catch (error) {
       console.error(error);
-      setSystemMessage(
-        data.response || "An error occurred while processing the response.",
-      );
+      dispatchAddMessage({
+        sender: "System",
+        type: "markup",
+        content: {
+          type: "markup",
+          markupContent:
+            "An error occurred while processing the response. Please try again.",
+        },
+      });
     } finally {
       setIsTyping(false);
     }
@@ -339,20 +302,20 @@ const Chat = ({
   }
 
   const computeTokens = useCallback(async () => {
-    const conversation = await buildConversation(messageBlocks);
+    const conversation = await buildConversation(chatState.messages);
     const msgPackData = msgpack.encode(conversation);
     return msgPackData.length;
-  }, [messageBlocks]);
+  }, [chatState.messages]);
 
   useEffect(() => {
-    if (messageBlocks.length > 0) {
+    if (chatState.messages.length > 0) {
       scrollMessageBoxToBottom();
     }
 
     computeTokens().then((tokens) => {
-      setConversationTokens(tokens);
+      dispatch(setConversationTokens(tokens));
     });
-  }, [messageBlocks]);
+  }, [chatState.messages]);
 
   const MessageBlock = ({
     block,
@@ -397,22 +360,20 @@ const Chat = ({
                 <Button
                   variant="soft"
                   onClick={() => {
-                    handleMessageSend(
-                      (
-                        messageBlocks[messageBlocks.length - 1]
-                          .content as MarkupResponse
-                      ).markupContent,
-                    );
-                    setMessageBlocks((prev) => prev.slice(0, -2));
+                    const lastmessageContent = chatState.messages[
+                      chatState.messages.length - 2
+                    ].content as MarkupResponse;
+                    handleMessageSend(lastmessageContent.markupContent);
+                    dispatch(spliceMessage(chatState.messages.length - 2));
                   }}
                   className="mt-2"
                 >
-                  Retry
+                  Resend
                 </Button>
                 <Button
                   variant="soft"
                   onClick={() => {
-                    setMessageBlocks([]);
+                    dispatch(clearMessages());
                   }}
                   className="mt-2"
                 >
@@ -516,8 +477,8 @@ const Chat = ({
   };
 
   const countMessageBlocks = useCallback(() => {
-    return messageBlocks.length;
-  }, [messageBlocks]);
+    return chatState.messages.length;
+  }, [chatState.messages]);
 
   const chatRef = useRef<HTMLDivElement>(null);
   const [chatBoxRespectiveWidth, setChatBoxRespectiveWidth] = useState(0);
@@ -545,10 +506,8 @@ const Chat = ({
       <Flex
         className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit pb-[150px]`}
       >
-        {messageBlocks.length === 0 && (
-          <Flex
-            className={`${!canvasView && "md:!absolute md:!top-[50%] md:!translate-y-[-50%]"} gap-1 px-8 mb-4 !justify-center !flex-wrap `}
-          >
+        {chatState.messages.length === 0 && (
+          <Flex className={`gap-1 px-8 mb-4 pt-2 !justify-center !flex-wrap`}>
             {suggestions.map((msg, index) => (
               <Button
                 key={index}
@@ -563,13 +522,9 @@ const Chat = ({
           </Flex>
         )}
 
-        {messageBlocks.map((block, index) => (
+        {chatState.messages.map((block, index) => (
           <React.Fragment key={index}>
-            <MessageBlock
-              block={block}
-              // animate={index === messageBlocks.length - 1}
-              onAnimated={scrollMessageBoxToBottom}
-            />
+            <MessageBlock block={block} onAnimated={scrollMessageBoxToBottom} />
           </React.Fragment>
         ))}
 
@@ -580,7 +535,7 @@ const Chat = ({
         )}
       </Flex>
     );
-  }, [messageBlocks, canvasView]);
+  }, [chatState, chatState.messages, chatState.viewMode, isTyping]);
 
   //Build node from scroll area
   const MessageContainerNode = useCallback(
@@ -594,13 +549,14 @@ const Chat = ({
         },
         position: { x: 0, y: 0 },
       }) as Node,
-    [messageBlocks, canvasView],
+    [chatState.messages, chatState.viewMode],
   );
 
   return (
     <Flex ref={chatRef} className={`${className}`}>
       {/* <Card className="bg-red-400 !top-0" variant="ghost"> */}
-      {canvasView ? (
+      {/* {canvasView ? ( */}
+      {chatState.viewMode === "canvas" ? (
         <div className="!w-full !h-[75vh]">
           <Flow
             nodes={[MessageContainerNode()]}
@@ -614,7 +570,7 @@ const Chat = ({
       <Input
         disabled={isTyping}
         handleRecieve={(text: string) => handleMessageSend(text)}
-        className="!absolute bottom-[2px] md:!bottom-[10px] blurred-div"
+        className={`!absolute ${chatState.messageBoxMode === "hidden" && "!hidden"} bottom-[2px] md:!bottom-[10px] blurred-div`}
         style={{ width: chatBoxRespectiveWidth }}
         children={
           <Flex gap="2" className="!flex-row">
@@ -634,11 +590,15 @@ const Chat = ({
                     <SegmentedControl.Root
                       variant="classic"
                       size={"2"}
-                      defaultValue={responseConstraint}
+                      defaultValue={chatState.responseConstraint}
+                      // defaultValue={responseConstraint}
                     >
                       <SegmentedControl.Item
                         value="shorter"
-                        onClick={() => setResponseConstraint("shorter")}
+                        // onClick={() => setResponseConstraint("shorter")}
+                        onClick={() =>
+                          dispatch(setResponseConstraint("shorter"))
+                        }
                       >
                         <Tooltip content="Shorter responses, best for quick replies">
                           <Text>1</Text>
@@ -647,7 +607,8 @@ const Chat = ({
 
                       <SegmentedControl.Item
                         value="short"
-                        onClick={() => setResponseConstraint("short")}
+                        // onClick={() => setResponseConstraint("short")}
+                        onClick={() => dispatch(setResponseConstraint("short"))}
                       >
                         <Tooltip content="Short responses, great for quick replies">
                           <Text>2</Text>
@@ -656,7 +617,10 @@ const Chat = ({
 
                       <SegmentedControl.Item
                         value="detailed"
-                        onClick={() => setResponseConstraint("detailed")}
+                        // onClick={() => setResponseConstraint("detailed")}
+                        onClick={() =>
+                          dispatch(setResponseConstraint("detailed"))
+                        }
                       >
                         <Tooltip content="Regular responses, best for detailed replies">
                           <Text>3</Text>
@@ -673,18 +637,33 @@ const Chat = ({
                 Bible
               </Button>
               <Button
-                variant={canvasView ? "soft" : "outline"}
-                onClick={() => setCanvasView(!canvasView)}
-                // className="!hidden md:!block"
+                variant={chatState.viewMode === "canvas" ? "soft" : "outline"}
+                onClick={() =>
+                  dispatch(
+                    setViewMode(
+                      chatState.viewMode === "canvas" ? "standard" : "canvas",
+                    ),
+                  )
+                }
               >
                 Canvas
               </Button>
               <Button
-                variant={Conversational ? "soft" : "outline"}
-                onClick={() => setConversational(!Conversational)}
+                variant={
+                  chatState.conversationMode === "exchange" ? "soft" : "outline"
+                }
+                onClick={() =>
+                  dispatch(
+                    setConversationMode(
+                      chatState.conversationMode === "exchange"
+                        ? "none"
+                        : "exchange",
+                    ),
+                  )
+                }
               >
-                {Conversational
-                  ? "Conversation (" + conversationTokens + " / 10k)"
+                {chatState.conversationMode === "exchange"
+                  ? "Conversation (" + chatState.conversationTokens + " / 10k)"
                   : "Conversation"}
               </Button>
             </Flex>
