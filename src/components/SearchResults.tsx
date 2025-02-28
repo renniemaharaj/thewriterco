@@ -1,7 +1,7 @@
 import { Button, Dialog, Flex, Text } from "@radix-ui/themes";
 import Hint from "./Hint";
 // import { Scripture } from "./NavBar";
-import fetchGitBlob from "./hooks/data/gitGetter";
+// import fetchGitBlob from "./hooks/data/gitGetter";
 import { Verse } from "./ai/types";
 
 import {
@@ -13,6 +13,7 @@ import {
 } from "../app/ereader/ereaderSlice";
 import { EBook } from "../app/ereader/types";
 import { useDispatch } from "react-redux";
+import fetchGitBlob, { kjvRepoUrl } from "./hooks/data/gitFetcher";
 
 const SearchResults = ({
   displayResults,
@@ -46,25 +47,27 @@ const SearchResults = ({
             gap="2"
             className="mb-4 cursor-pointer hover:animate-pulse"
             onClick={() => {
-              fetchGitBlob((result as Verse).book).then((content) => {
-                dispatch(
-                  setEBook({
-                    title: (result as Verse).book,
-                    content: JSON.parse(content),
-                    date: new Date().toDateString(),
-                  } as EBook),
-                );
-                dispatch(setRenderStyle("bible"));
-                dispatch(
-                  setGlobalCurrentChapter(
-                    (result as Verse).chapterNo.toString(),
-                  ),
-                );
-                dispatch(
-                  setGlobalCurrentVerse((result as Verse).verseNo.toString()),
-                );
-                setTimeout(() => dispatch(setOpenState(true)), 100);
-              });
+              fetchGitBlob(kjvRepoUrl, (result as Verse).book, "json").then(
+                (content) => {
+                  dispatch(
+                    setEBook({
+                      title: (result as Verse).book,
+                      content: JSON.parse(content),
+                      date: new Date().toDateString(),
+                    } as EBook),
+                  );
+                  dispatch(setRenderStyle("bible"));
+                  dispatch(
+                    setGlobalCurrentChapter(
+                      (result as Verse).chapterNo.toString(),
+                    ),
+                  );
+                  dispatch(
+                    setGlobalCurrentVerse((result as Verse).verseNo.toString()),
+                  );
+                  setTimeout(() => dispatch(setOpenState(true)), 100);
+                },
+              );
             }}
           >
             <Flex justify="between">

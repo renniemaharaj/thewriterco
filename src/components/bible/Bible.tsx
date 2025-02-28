@@ -14,7 +14,7 @@ import {
 } from "./config";
 import Hint from "../Hint";
 import { useDispatch, useSelector } from "react-redux";
-import fetchGitBlob, { kjvRepoUrl } from "../hooks/data/gitGetter";
+import fetchGitBlob, { kjvRepoUrl } from "../hooks/data/gitFetcher";
 import { EBook } from "../../app/ereader/types";
 import Block from "../Block";
 import { setOpenState } from "../../app/ereader/ereaderSlice";

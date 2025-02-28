@@ -41,7 +41,7 @@ import {
 import Flow from "../flow/Flow.tsx";
 import { Node } from "@xyflow/react";
 import React from "react";
-import fetchGitBlob, { kjvRepoUrl } from "../hooks/data/gitGetter.ts";
+import fetchGitBlob, { kjvRepoUrl } from "../hooks/data/gitFetcher.ts";
 import {
   setEBook,
   setGlobalCurrentChapter,

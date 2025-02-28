@@ -25,7 +25,7 @@ import { RootState } from "../../app/store";
 import { setMessageBoxMode } from "../../app/chat/chatSlice";
 import fetchGitBlob, {
   templateRepoUrl,
-} from "../../components/hooks/data/gitGetter";
+} from "../../components/hooks/data/gitFetcher";
 import Collapsible from "../../components/Collapsible";
 
 const AI = () => {
