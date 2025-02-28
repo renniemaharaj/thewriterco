@@ -9,6 +9,7 @@ import {
   MapPin,
   Mail,
   Phone,
+  HandCoinsIcon,
 } from "lucide-react";
 
 const companyName = "The Writer Company";
@@ -135,9 +136,22 @@ const Footer: React.FC = () => {
               Email: {companyEmail}
             </Link>
           </Flex>
+
           <Flex className="items-center gap-2 text-sm mt-2">
             <Phone className="h-5 w-5 text-primary" />
             <Text>Phone: {companyPhone}</Text>
+          </Flex>
+          <Heading size="4" className="text-md font-bold mb-4 mt-4">
+            Support Us
+          </Heading>
+          <Flex className="items-center gap-2 text-sm mt-2">
+            <HandCoinsIcon className="h-5 w-5 text-primary" />
+            <Link
+              href="https://paypal.me/newrennie"
+              className="!text-gray-300 hover:!text-white"
+            >
+              Paypal Contribute
+            </Link>
           </Flex>
         </div>
       </Flex>
