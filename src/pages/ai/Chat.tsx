@@ -1,4 +1,4 @@
-import { Flex, IconButton } from "@radix-ui/themes";
+import { Flex, IconButton, Tooltip } from "@radix-ui/themes";
 import Ereader from "../../components/bible/Ereader";
 import SideBar from "../../components/SideBar";
 import Menu from "../../components/docs/Menu";
@@ -9,11 +9,13 @@ import {
   CircleFadingPlusIcon,
   FullscreenIcon,
   MaximizeIcon,
+  SparkleIcon,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { setMessageBoxMode } from "../../app/chat/chatSlice";
+import { summaryTemplate } from "./template";
 
 const AI = () => {
   const { theme } = useThemeContext();
@@ -26,6 +28,9 @@ const AI = () => {
 
   const chatState = useSelector((state: RootState) => state.chat);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const chatRef = useRef<any>(null);
+
   const messageBoxRef = useRef<HTMLDivElement>(null);
 
   const scrollMessageBoxToBottom = () => {
@@ -34,6 +39,67 @@ const AI = () => {
       behavior: "smooth",
     });
   };
+
+  function getSummarizeInstructions() {
+    return (
+      summaryTemplate +
+      "\n" +
+      "-@here Please summarize this conversation and generate the presented document using the attached template." +
+      "\n" +
+      "-@here In addition to the template, please include instructions on how to use the document, download, save as study_name.html, and open in a browser."
+    );
+  }
+
+  const PanelBar = (
+    <Flex
+      className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}   !items-center gap-2`}
+    >
+      <Tooltip content="Start a new conversation">
+        <IconButton
+          size="2"
+          variant="soft"
+          onClick={() => (location.href = "/ai")}
+        >
+          <CircleFadingPlusIcon />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip content="Toggle input visibility">
+        <IconButton
+          size="2"
+          variant="soft"
+          onClick={() =>
+            dispatch(
+              setMessageBoxMode(
+                chatState.messageBoxMode === "hidden" ? "visible" : "hidden",
+              ),
+            )
+          }
+        >
+          {chatState.messageBoxMode === "hidden" ? (
+            <MaximizeIcon />
+          ) : (
+            <FullscreenIcon />
+          )}
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip content="Request summarized document">
+        <IconButton
+          size="2"
+          variant="soft"
+          onClick={() =>
+            chatRef.current?.handleMessageSend(
+              getSummarizeInstructions(),
+              false,
+            )
+          }
+        >
+          <SparkleIcon />
+        </IconButton>
+      </Tooltip>
+    </Flex>
+  );
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
@@ -64,39 +130,7 @@ const AI = () => {
             }
           />
         }
-        centerBar={
-          <Flex
-            className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}   !items-center gap-2`}
-          >
-            <IconButton
-              size="2"
-              variant="soft"
-              onClick={() => (location.href = "/ai")}
-            >
-              <CircleFadingPlusIcon />
-            </IconButton>
-
-            <IconButton
-              size="2"
-              variant="soft"
-              onClick={() =>
-                dispatch(
-                  setMessageBoxMode(
-                    chatState.messageBoxMode === "hidden"
-                      ? "visible"
-                      : "hidden",
-                  ),
-                )
-              }
-            >
-              {chatState.messageBoxMode === "hidden" ? (
-                <MaximizeIcon />
-              ) : (
-                <FullscreenIcon />
-              )}
-            </IconButton>
-          </Flex>
-        }
+        centerBar={PanelBar}
         childRight={
           /* Chatbox Section */
           <Flex
@@ -110,6 +144,7 @@ const AI = () => {
               highlightAxioms={() => {}}
               className="!w-full mx-auto sm:!w-[100%] md:!w-[90%]"
               scrollMessageBoxToBottom={scrollMessageBoxToBottom}
+              ref={chatRef}
             />
           </Flex>
         }

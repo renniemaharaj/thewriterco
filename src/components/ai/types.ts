@@ -53,6 +53,7 @@ type Scripture = {
 type Code = {
   language: string;
   filename: string;
+  mimeType: string;
   codeContent: string;
   editorHeight: number;
 };
