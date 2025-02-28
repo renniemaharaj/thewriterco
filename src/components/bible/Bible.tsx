@@ -11,10 +11,10 @@ import {
   historicalBooks,
   wisdomBooks,
   propheticBooks,
-} from "./configuration";
+} from "./config";
 import Hint from "../Hint";
 import { useDispatch, useSelector } from "react-redux";
-import fetchGitBlob from "./utils/gitgetter";
+import fetchGitBlob, { kjvRepoUrl } from "../hooks/data/gitGetter";
 import { EBook } from "../../app/ereader/types";
 import Block from "../Block";
 import { setOpenState } from "../../app/ereader/ereaderSlice";
@@ -39,6 +39,7 @@ const divisions = {
 const Sword: React.FC<SwordProps> = ({ setEBook, asChild }) => {
   const dispatch = useDispatch();
   const [isFetchingContent, setIsFetchingContent] = React.useState(false);
+
   const handleArticleClick = ({
     title,
     date,
@@ -47,7 +48,7 @@ const Sword: React.FC<SwordProps> = ({ setEBook, asChild }) => {
     date: string;
   }) => {
     setIsFetchingContent(true);
-    fetchGitBlob(title).then((content) => {
+    fetchGitBlob(kjvRepoUrl, title, "json").then((content) => {
       setTimeout(() => dispatch(setOpenState(true)), 100);
       setEBook({
         title,

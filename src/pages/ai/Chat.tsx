@@ -1,4 +1,12 @@
-import { Flex, IconButton, Tooltip } from "@radix-ui/themes";
+import {
+  Button,
+  Dialog,
+  Flex,
+  IconButton,
+  Tooltip,
+  Text,
+  Select,
+} from "@radix-ui/themes";
 import Ereader from "../../components/bible/Ereader";
 import SideBar from "../../components/SideBar";
 import Menu from "../../components/docs/Menu";
@@ -7,19 +15,23 @@ import { useThemeContext } from "../../components/context/theme/useThemeContext"
 import Chat from "../../components/ai/Chat";
 import {
   CircleFadingPlusIcon,
+  FileCode2,
   FullscreenIcon,
   MaximizeIcon,
-  SparkleIcon,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { setMessageBoxMode } from "../../app/chat/chatSlice";
-import { summaryTemplate } from "./template";
+import fetchGitBlob, {
+  templateRepoUrl,
+} from "../../components/hooks/data/gitGetter";
+import Collapsible from "../../components/Collapsible";
 
 const AI = () => {
   const { theme } = useThemeContext();
 
+  const [summaryVisible, setSummaryVisible] = useState(false);
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">(
     "horizontal",
   );
@@ -33,6 +45,12 @@ const AI = () => {
 
   const messageBoxRef = useRef<HTMLDivElement>(null);
 
+  const [selectedTemplate, setSelectedTemplate] = useState<string>("default"); // Default to the first template
+
+  const [templates, setTemplates] = useState<
+    { id: number; name: string; description: string }[]
+  >([]);
+
   const scrollMessageBoxToBottom = () => {
     messageBoxRef.current?.scrollTo({
       top: messageBoxRef.current.scrollHeight,
@@ -40,14 +58,44 @@ const AI = () => {
     });
   };
 
-  function getSummarizeInstructions() {
-    return (
-      summaryTemplate +
-      "\n" +
-      "-@here Please summarize this conversation and generate the presented document using the attached template." +
-      "\n" +
-      "-@here In addition to the template, please include instructions on how to use the document, download, save as study_name.html, and open in a browser."
-    );
+  async function fetchTemplateCatalogue() {
+    fetchGitBlob(templateRepoUrl, "catalogue", "json")
+      .then((content) => {
+        const catalogue = JSON.parse(content);
+        setTemplates(catalogue.templates);
+      })
+      .catch((error) => console.error(error));
+  }
+
+  async function getTemplateContent(template: string) {
+    return fetchGitBlob(templateRepoUrl, template, "html")
+      .then((content) => {
+        return content;
+      })
+      .catch((error) => console.error(error));
+  }
+
+  function displaySummaizerDialog() {
+    setSummaryVisible(true);
+  }
+
+  async function requestSummarizedDocument() {
+    getTemplateContent(selectedTemplate).then((content) => {
+      chatRef.current?.handleMessageSend(
+        content + "\n" + getRequestInstructions(),
+        false,
+      );
+    });
+  }
+
+  function getRequestInstructions() {
+    const instructions = ` 
+        -@here Please summarize this conversation and generate the presented document using the attached template.
+        "-@here In addition to the template, please include instructions on how to use the document, download file from code block interface editor, or copy code directly, save as study_name.html, and open in a browser.
+        "-@here If there was little to no conversation, please provide a brief summary of the template and its intended use. Please decline or ask to confirm if the conversation has little to no content.
+        `;
+
+    return instructions;
   }
 
   const PanelBar = (
@@ -84,18 +132,13 @@ const AI = () => {
         </IconButton>
       </Tooltip>
 
-      <Tooltip content="Request summarized document">
+      <Tooltip content="Request web page study on current conversation">
         <IconButton
           size="2"
           variant="soft"
-          onClick={() =>
-            chatRef.current?.handleMessageSend(
-              getSummarizeInstructions(),
-              false,
-            )
-          }
+          onClick={() => displaySummaizerDialog()}
         >
-          <SparkleIcon />
+          <FileCode2 />
         </IconButton>
       </Tooltip>
     </Flex>
@@ -113,6 +156,10 @@ const AI = () => {
     resizeObserver.observe(document.body);
 
     return () => resizeObserver.disconnect();
+  }, []);
+
+  useEffect(() => {
+    fetchTemplateCatalogue();
   }, []);
 
   return (
@@ -151,6 +198,76 @@ const AI = () => {
       />
       {/* <Ereader /> */}
       <Ereader hidePicker={true} />
+      {/* Summary Menu */}
+      <Dialog.Root
+        open={summaryVisible}
+        onOpenChange={(open) => {
+          setSummaryVisible(open);
+        }}
+      >
+        <Dialog.Content maxWidth="450px">
+          <Dialog.Title>Request Study Document</Dialog.Title>
+          <Dialog.Description size="2" mb="4">
+            Request a study based on your current conversation
+          </Dialog.Description>
+          <Flex direction="column" gap="3">
+            <Flex direction="column" gap="2">
+              <Text as="label" size="2" mb="1" weight="bold">
+                Select Template:
+              </Text>
+              <Select.Root
+                value={selectedTemplate}
+                onValueChange={(value) => setSelectedTemplate(value)}
+              >
+                <Select.Trigger />
+                <Select.Content>
+                  {templates.map((template) => (
+                    <Tooltip key={template.id} content={template.description}>
+                      <Select.Item
+                        value={template.name.toString().toLowerCase()}
+                      >
+                        <Text size="2">{template.name}</Text>
+                      </Select.Item>
+                    </Tooltip>
+                  ))}
+                </Select.Content>
+              </Select.Root>
+            </Flex>
+
+            {/* <Hint> */}
+            <Collapsible title="Important">
+              <Flex direction="column" className="text-white pl-5 space-y-2">
+                <Text size={"1"}>
+                  Ensure your conversation is complete before requesting. The
+                  document will be generated as a static web page
+                </Text>
+                <Text size={"1"}>
+                  You can download and open the file directly in your browser.
+                </Text>
+              </Flex>
+            </Collapsible>
+          </Flex>
+          {/* </Hint> */}
+
+          <Flex gap="3" mt="4" justify="end">
+            <Dialog.Close>
+              <Button variant="soft" color="gray">
+                Cancel
+              </Button>
+            </Dialog.Close>
+            <Dialog.Close>
+              <Button
+                onClick={() => {
+                  requestSummarizedDocument();
+                  setSummaryVisible(false);
+                }}
+              >
+                Request
+              </Button>
+            </Dialog.Close>
+          </Flex>
+        </Dialog.Content>
+      </Dialog.Root>
     </Flex>
   );
 };

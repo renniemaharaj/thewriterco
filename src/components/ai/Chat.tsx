@@ -41,7 +41,7 @@ import {
 import Flow from "../flow/Flow.tsx";
 import { Node } from "@xyflow/react";
 import React from "react";
-import fetchGitBlob from "../bible/utils/gitgetter.ts";
+import fetchGitBlob, { kjvRepoUrl } from "../hooks/data/gitGetter.ts";
 import {
   setEBook,
   setGlobalCurrentChapter,
@@ -440,28 +440,32 @@ const Chat = forwardRef(
                           size="1"
                           className="animate-pulse !font-bold"
                           onClick={() => {
-                            fetchGitBlob(verse.book).then((content) => {
-                              dispatch(
-                                setEBook({
-                                  title: verse.book,
-                                  content: JSON.parse(content),
-                                  date: new Date().toDateString(),
-                                } as EBook),
-                              );
-                              dispatch(setRenderStyle("bible"));
-                              dispatch(
-                                setGlobalCurrentChapter(
-                                  verse.chapterNo.toString(),
-                                ),
-                              );
-                              dispatch(
-                                setGlobalCurrentVerse(verse.verseNo.toString()),
-                              );
-                              setTimeout(
-                                () => dispatch(setOpenState(true)),
-                                100,
-                              );
-                            });
+                            fetchGitBlob(kjvRepoUrl, verse.book, "json").then(
+                              (content) => {
+                                dispatch(
+                                  setEBook({
+                                    title: verse.book,
+                                    content: JSON.parse(content),
+                                    date: new Date().toDateString(),
+                                  } as EBook),
+                                );
+                                dispatch(setRenderStyle("bible"));
+                                dispatch(
+                                  setGlobalCurrentChapter(
+                                    verse.chapterNo.toString(),
+                                  ),
+                                );
+                                dispatch(
+                                  setGlobalCurrentVerse(
+                                    verse.verseNo.toString(),
+                                  ),
+                                );
+                                setTimeout(
+                                  () => dispatch(setOpenState(true)),
+                                  100,
+                                );
+                              },
+                            );
                           }}
                         >
                           <BookTextIcon /> {verse.book} {verse.chapterNo} :
@@ -491,7 +495,7 @@ const Chat = forwardRef(
       return (
         <>
           <Skeleton
-            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-[70%] delay-100`}
+            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-[70%] mt-5 delay-100`}
           />
           <Skeleton
             className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-2/4 delay-200`}

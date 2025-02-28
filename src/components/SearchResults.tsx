@@ -1,7 +1,7 @@
 import { Button, Dialog, Flex, Text } from "@radix-ui/themes";
 import Hint from "./Hint";
 // import { Scripture } from "./NavBar";
-import fetchGitBlob from "./bible/utils/gitgetter";
+import fetchGitBlob from "./hooks/data/gitGetter";
 import { Verse } from "./ai/types";
 
 import {
