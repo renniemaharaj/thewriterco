@@ -177,10 +177,10 @@ const Chat = forwardRef(
       }
     }
 
-    async function handleMessageSend(msg: string, dispatchMessage = true) {
+    async function handleMessageSend(msg: string, defaultSending = true) {
       if (!msg.trim()) return;
 
-      if (dispatchMessage) {
+      if (defaultSending) {
         dispatchAddMessage({
           sender: "User",
           type: "markup",
@@ -191,7 +191,7 @@ const Chat = forwardRef(
         });
       }
 
-      if (chatState.conversationTokens > 10000) {
+      if (chatState.conversationTokens > 10000 && !defaultSending) {
         dispatchAddMessage({
           sender: "System",
           type: "markup",
