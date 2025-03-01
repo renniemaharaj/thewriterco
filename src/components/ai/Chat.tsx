@@ -191,7 +191,7 @@ const Chat = forwardRef(
         });
       }
 
-      if (chatState.conversationTokens > 10000 && !defaultSending) {
+      if (chatState.conversationTokens > 10000 && defaultSending) {
         dispatchAddMessage({
           sender: "System",
           type: "markup",
