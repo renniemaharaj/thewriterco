@@ -97,8 +97,11 @@ const Chat = forwardRef(
     const chatState = useSelector((state: RootState) => state.chat);
 
     // const [chatState, setChatState] = useState(getInitialChatState());
-    const [, setValue] = useLocalStorage("chatData", chatState);
+    const [storedValue, setValue] = useLocalStorage("chatData", chatState);
 
+    useEffect(() => {
+      console.log("chatState", JSON.stringify(chatState.messages));
+    }, [storedValue]);
     // Update local storage when chat state changes
     useEffect(() => {
       setValue(chatState);
