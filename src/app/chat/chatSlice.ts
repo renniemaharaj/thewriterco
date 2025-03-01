@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { initialState } from "./config";
+// import { initialState } from "./config";
 import { Block } from "../../components/ai/types";
+import { getInitialChatState } from "./utils";
 
 const ereaderSlice = createSlice({
   name: "chat",
-  initialState,
+  initialState: getInitialChatState(),
   reducers: {
     // Add a new message to the chat
     addMessage(state, action: PayloadAction<Block>) {

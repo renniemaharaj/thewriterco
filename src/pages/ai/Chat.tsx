@@ -22,7 +22,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { setMessageBoxMode } from "../../app/chat/chatSlice";
+import { clearMessages, setMessageBoxMode } from "../../app/chat/chatSlice";
 import fetchGitBlob, {
   templateRepoUrl,
 } from "../../components/hooks/data/gitFetcher";
@@ -106,7 +106,7 @@ const AI = () => {
         <IconButton
           size="2"
           variant="soft"
-          onClick={() => (location.href = "/ai")}
+          onClick={() => dispatch(clearMessages())}
         >
           <CircleFadingPlusIcon />
         </IconButton>

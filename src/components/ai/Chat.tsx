@@ -67,6 +67,7 @@ import {
 } from "../../app/chat/chatSlice.ts";
 import { buildConversation } from "./utils.ts";
 import { initialSuggestions } from "./configuration.ts";
+import useLocalStorage from "../hooks/useLocalStorage.ts";
 
 const Chat = forwardRef(
   (
@@ -94,6 +95,14 @@ const Chat = forwardRef(
     const eReaderState = useSelector((state: RootState) => state.ereader);
 
     const chatState = useSelector((state: RootState) => state.chat);
+
+    // const [chatState, setChatState] = useState(getInitialChatState());
+    const [, setValue] = useLocalStorage("chatData", chatState);
+
+    // Update local storage when chat state changes
+    useEffect(() => {
+      setValue(chatState);
+    }, [chatState]);
 
     function dispatchAddMessage(content: Block) {
       dispatch(addMessage(content));
@@ -604,7 +613,7 @@ const Chat = forwardRef(
         <Input
           disabled={isTyping}
           handleRecieve={(text: string) => handleMessageSend(text)}
-          className={`!absolute ${chatState.messageBoxMode === "hidden" && "!hidden"} bottom-[2px] md:!bottom-[10px] blurred-div`}
+          className={`!absolute ${chatState.messageBoxMode === "hidden" && "!hidden"} bottom-[2px] md:!bottom-[10px] blurred-div animate-fade-in`}
           style={{ width: chatBoxRespectiveWidth }}
           children={
             <Flex gap="2" className="!flex-row">
