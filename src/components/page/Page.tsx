@@ -34,7 +34,7 @@ const Page = ({
     <>
       {/* <Navbar /> */}
       <Navbar />
-      <section className="p-0 w-full">
+      <section className="p-2 w-full">
         <div className="flex flex-row w-full p-5 gap-2 items-center">
           {locationParts.length > 0 && (
             <IconButton
@@ -57,7 +57,7 @@ const Page = ({
         </div>
       </section>
       <Ereader hidePicker={hideBiblePicker} />
-      <Flex className="!w-full animate-fade-in !flex-col merriweather-bold !p-0">
+      <Flex className="!w-full animate-fade-in !flex-col merriweather-bold !p-2">
         <Flex
           direction="column"
           align="center"

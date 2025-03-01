@@ -47,6 +47,25 @@ export const swiperSlides = [
 
   <Flex className={flexClassName}>
     <Text className={textClassName}>
+      Convert your conversations to bible studies <br />
+      as web pages, with our tools
+    </Text>
+    <Separator size={"1"} />
+    <Quote className={quoteClassName}>
+      Study to shew thyself approved unto God, <br /> a workman that needeth not
+      to be ashamed, rightly dividing the word of truth.
+    </Quote>
+    <Button
+      variant="soft"
+      className="mt-5 px-6 py-3 text-lg font-medium rounded-lg"
+      onClick={() => (location.href = "/doc/studydocument")}
+    >
+      Learn More
+    </Button>
+  </Flex>,
+
+  <Flex className={flexClassName}>
+    <Text className={textClassName}>
       Open source on <br /> Github
     </Text>
     <GitHubLogoIcon /> <Separator size={"1"} />

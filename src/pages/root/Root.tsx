@@ -11,7 +11,22 @@ import { swiperProps } from "./config.swiper";
 const Root: React.FC = () => {
   return (
     <Page>
-      <Hero />
+      <Hero
+        header="Welcome to"
+        subHeader={
+          <>
+            The Writer <br />
+            Company
+          </>
+        }
+        hint={
+          <>
+            We're here to: give reasoning for faith; reinforcement to your
+            shield, 🛡️ Wherewith ye shall quench all the fiery darts of the
+            wicked. For his bow is set with a fiery deception 🏹
+          </>
+        }
+      />
       {/* <Separator size={"4"} /> */}
       <Flex className="relative w-full flex-row md:!w-[70%]">
         <Swiper {...swiperProps} slidesPerView="auto">
