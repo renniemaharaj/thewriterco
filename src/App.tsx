@@ -16,7 +16,8 @@ import AI from "./pages/ai/Chat";
 import Kjv from "./pages/kjv/KJV";
 import Study from "./pages/reasoning/Reasoning";
 import Number from "./pages/number/Number";
-import Builder from "./pages/doc/studyBuilder/Builder";
+import Guide from "./pages/doc/studyDocument/Guide";
+import Example from "./pages/doc/studyDocument/Example";
 
 // Custom route types
 type CustomRoute = {
@@ -58,7 +59,11 @@ const publicRoutes: (CustomRoute | IndexRoute)[] = [
   },
   {
     path: "doc/studydocument",
-    element: <Builder />,
+    element: <Guide />,
+  },
+  {
+    path: "doc/studydocument/example",
+    element: <Example />,
   },
 ];
 

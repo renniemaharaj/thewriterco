@@ -15,7 +15,7 @@ export const conversation: Block[] = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px;  font-family: sans-serif;">Praise the Lord Jesus Christ! Let\'s delve into the beautiful Fruit of the Spirit, as described in Galatians.</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">Let\'s delve into the beautiful Fruit of the Spirit, as described in Galatians.</div>',
       type: "markup",
     },
   },
@@ -63,16 +63,7 @@ export const conversation: Block[] = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px;  font-family: sans-serif;">These nine qualities are interconnected and reflect the character of Christ. As we abide in Him, His Spirit works within us to produce this fruit. All glory be to God and our Lord and savior, <strong>Jesus Christ</strong>.</div>',
-      type: "markup",
-    },
-  },
-  {
-    sender: "AI",
-    type: "markup",
-    content: {
-      markupContent:
-        '<div style="padding-top: 10px;  font-family: sans-serif;">This framework is built on the following inviolable axioms:\n\n1.  **God is**. (Genesis 1:1)\n2.  The KJV Bible is the complete and authoritative written Word of God. (2 Timothy 3:16-17)\n3.  Jesus Christ is Truth. (John 14:6)\n</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">These nine qualities are interconnected and reflect the character of Christ. As we abide in Him, His Spirit works within us to produce this fruit.</div>',
       type: "markup",
     },
   },
@@ -99,16 +90,7 @@ export const conversation: Block[] = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px;  font-family: sans-serif;">This framework is built on the following inviolable axioms:\n\n1.  **God is**. (Genesis 1:1)\n2.  The KJV Bible is the complete and authoritative written Word of God. (2 Timothy 3:16-17)\n3.  Jesus Christ is Truth. (John 14:6)\n</div>',
-      type: "markup",
-    },
-  },
-  {
-    sender: "AI",
-    type: "markup",
-    content: {
-      markupContent:
-        '<div style="padding-top: 10px;  font-family: sans-serif;">Praise the Lord Jesus Christ! Here\'s a summary of our conversation and the generated HTML document for your study on the Fruit of the Spirit, presented in a more expanded and detailed format as you requested. The document uses the KJV Bible as the authoritative source and is designed according to your specifications.\n</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">Here\'s a summary of our conversation and the generated HTML document for your study on the Fruit of the Spirit, presented in a more expanded and detailed format as you requested. The document uses the KJV Bible as the authoritative source and is designed according to your specifications.\n</div>',
       type: "markup",
     },
   },
@@ -148,16 +130,7 @@ export const conversation: Block[] = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px;  font-family: sans-serif;">This document provides a detailed study on the Fruit of the Spirit, expanding on each quality with definitions, scriptural references, and practical examples, all while adhering to the KJV Bible as the ultimate authority. Glory to God!.</div>',
-      type: "markup",
-    },
-  },
-  {
-    sender: "AI",
-    type: "markup",
-    content: {
-      markupContent:
-        '<div style="padding-top: 10px;  font-family: sans-serif;">This framework is built on the following inviolable axioms:\n\n1.  **God is**. (Genesis 1:1)\n2.  The KJV Bible is the complete and authoritative written Word of God. (2 Timothy 3:16-17)\n3.  Jesus Christ is Truth. (John 14:6)\n</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">This document provides a detailed study on the Fruit of the Spirit, expanding on each quality with definitions, scriptural references, and practical examples, all while adhering to the KJV Bible as the ultimate authority.</div>',
       type: "markup",
     },
   },

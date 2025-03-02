@@ -10,11 +10,8 @@ import {
   Flex,
   Box,
 } from "@radix-ui/themes";
-import { conversation } from "./conversation";
-import React from "react";
-import Message from "../../../components/ai/Message";
 
-const Builder = () => {
+const Guide = () => {
   return (
     <Page wrapChildren>
       <Hero
@@ -177,6 +174,11 @@ const Builder = () => {
           </ol>
         </Box>
 
+        <Box className="p-4">
+          <Heading size="4">Example</Heading>
+          <Link href="/doc/studyDocument/example">Example document</Link>
+        </Box>
+
         <Callout.Root variant="soft" className="p-4">
           <Callout.Icon>
             <InfoCircledIcon />
@@ -187,24 +189,9 @@ const Builder = () => {
             self-hosting.
           </Callout.Text>
         </Callout.Root>
-        <Box className="p-4">
-          <Heading size="4">
-            The following conversation was used to generate a study document:
-          </Heading>
-          <br />
-          {/* <Card> */}
-          <Flex className={`flex-col !w-full !h-fit pb-[150px]`}>
-            {conversation.map((block, index) => (
-              <React.Fragment key={index}>
-                <Message block={block} />
-              </React.Fragment>
-            ))}
-          </Flex>
-          {/* </Card> */}
-        </Box>
       </Flex>
     </Page>
   );
 };
 
-export default Builder;
+export default Guide;
