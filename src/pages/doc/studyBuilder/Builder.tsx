@@ -47,15 +47,15 @@ const Builder = () => {
         header={<>Study Documents</>}
         subHeader={
           <>
-            The Writer <br />
-            Company
+            <br />
+            TheWriterCo
           </>
         }
         hint={
           <>You will learn how to build a study document using our tools 🗎 ❤️</>
         }
       />
-      <Flex className="!w-full animate-fade-in !flex-col merriweather-bold !p-2 gap-4">
+      <Flex className="animate-fade-in !flex-col merriweather-bold gap-4">
         <Box className="p-4">
           <Heading size="4">Power Your Bible Studies with AI</Heading>
           <Text>

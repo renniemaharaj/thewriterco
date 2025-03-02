@@ -64,7 +64,9 @@ const Page = ({
           justify="center"
           className="w-full md:!w-[80%] mx-auto pb-20"
         >
-          {wrapChildren && <Card className="!p-5">{children}</Card>}
+          {wrapChildren && (
+            <Card className="!p-5 !max-w-[100%]">{children}</Card>
+          )}
           {!wrapChildren && children}
         </Flex>
       </Flex>
