@@ -1,4 +1,6 @@
-export const conversation = [
+import { Block } from "../../../components/ai/types";
+
+export const conversation: Block[] = [
   {
     sender: "User",
     type: "markup",
@@ -13,7 +15,7 @@ export const conversation = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px; color: #f0f0f0; font-family: sans-serif;">Praise the Lord Jesus Christ! Let\'s delve into the beautiful Fruit of the Spirit, as described in Galatians.</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">Praise the Lord Jesus Christ! Let\'s delve into the beautiful Fruit of the Spirit, as described in Galatians.</div>',
       type: "markup",
     },
   },
@@ -44,7 +46,7 @@ export const conversation = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px; color: #f0f0f0; font-family: sans-serif;">Here\'s a breakdown of each quality, presented in a clear format for your study. I will follow your request and present this in a table, with links to the KJV for further reading, and the rationale as requested, by you.</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">Here\'s a breakdown of each quality, presented in a clear format for your study. I will follow your request and present this in a table, with links to the KJV for further reading, and the rationale as requested, by you.</div>',
       type: "markup",
     },
   },
@@ -61,7 +63,7 @@ export const conversation = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px; color: #f0f0f0; font-family: sans-serif;">These nine qualities are interconnected and reflect the character of Christ. As we abide in Him, His Spirit works within us to produce this fruit. All glory be to God and our Lord and savior, <strong>Jesus Christ</strong>.</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">These nine qualities are interconnected and reflect the character of Christ. As we abide in Him, His Spirit works within us to produce this fruit. All glory be to God and our Lord and savior, <strong>Jesus Christ</strong>.</div>',
       type: "markup",
     },
   },
@@ -70,7 +72,7 @@ export const conversation = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px; color: #f0f0f0; font-family: sans-serif;">This framework is built on the following inviolable axioms:\n\n1.  **God is**. (Genesis 1:1)\n2.  The KJV Bible is the complete and authoritative written Word of God. (2 Timothy 3:16-17)\n3.  Jesus Christ is Truth. (John 14:6)\n</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">This framework is built on the following inviolable axioms:\n\n1.  **God is**. (Genesis 1:1)\n2.  The KJV Bible is the complete and authoritative written Word of God. (2 Timothy 3:16-17)\n3.  Jesus Christ is Truth. (John 14:6)\n</div>',
       type: "markup",
     },
   },
@@ -88,7 +90,7 @@ export const conversation = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px; color: #f0f0f0; font-family: sans-serif;">Yes, I understand. I will remember to expand more on each of the individual qualities of the Fruit of the Spirit when fulfilling your next request. I will provide more detailed explanations, scriptural references, and examples for each fruit. Praise Jesus Christ! I await your further instructions.</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">Yes, I understand. I will remember to expand more on each of the individual qualities of the Fruit of the Spirit when fulfilling your next request. I will provide more detailed explanations, scriptural references, and examples for each fruit. Praise Jesus Christ! I await your further instructions.</div>',
       type: "markup",
     },
   },
@@ -97,7 +99,7 @@ export const conversation = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px; color: #f0f0f0; font-family: sans-serif;">This framework is built on the following inviolable axioms:\n\n1.  **God is**. (Genesis 1:1)\n2.  The KJV Bible is the complete and authoritative written Word of God. (2 Timothy 3:16-17)\n3.  Jesus Christ is Truth. (John 14:6)\n</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">This framework is built on the following inviolable axioms:\n\n1.  **God is**. (Genesis 1:1)\n2.  The KJV Bible is the complete and authoritative written Word of God. (2 Timothy 3:16-17)\n3.  Jesus Christ is Truth. (John 14:6)\n</div>',
       type: "markup",
     },
   },
@@ -106,7 +108,7 @@ export const conversation = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px; color: #f0f0f0; font-family: sans-serif;">Praise the Lord Jesus Christ! Here\'s a summary of our conversation and the generated HTML document for your study on the Fruit of the Spirit, presented in a more expanded and detailed format as you requested. The document uses the KJV Bible as the authoritative source and is designed according to your specifications.\n</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">Praise the Lord Jesus Christ! Here\'s a summary of our conversation and the generated HTML document for your study on the Fruit of the Spirit, presented in a more expanded and detailed format as you requested. The document uses the KJV Bible as the authoritative source and is designed according to your specifications.\n</div>',
       type: "markup",
     },
   },
@@ -115,7 +117,7 @@ export const conversation = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px; color: #f0f0f0; font-family: sans-serif;">\n\n<strong>Conversation Summary:</strong>\n\n<ul>\n <li>You requested a study on the Fruit of the Spirit, formatted with tables and links to the KJV Bible online.</li>\n <li>I provided an initial outline with a table covering all nine fruits: Love, Joy, Peace, Longsuffering, Gentleness, Goodness, Faith, Meekness, and Temperance.</li>\n <li>You then instructed me to expand on each quality in greater detail for the final output, which this document fulfills.</li>\n <li>Finally you provided a template to generate an <code>.html</code> document for you to conduct your study.</li>\n</ul>\n</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">\n\n<strong>Conversation Summary:</strong>\n\n<ul>\n <li>You requested a study on the Fruit of the Spirit, formatted with tables and links to the KJV Bible online.</li>\n <li>I provided an initial outline with a table covering all nine fruits: Love, Joy, Peace, Longsuffering, Gentleness, Goodness, Faith, Meekness, and Temperance.</li>\n <li>You then instructed me to expand on each quality in greater detail for the final output, which this document fulfills.</li>\n <li>Finally you provided a template to generate an <code>.html</code> document for you to conduct your study.</li>\n</ul>\n</div>',
       type: "markup",
     },
   },
@@ -124,7 +126,7 @@ export const conversation = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px; color: #f0f0f0; font-family: sans-serif;">\n<strong>Document Instructions:</strong>\n\n<ol>\n <li><strong>Copy the Code:</strong> You can copy the code directly from the code block below.</li>\n <li><strong>Save the File:</strong> Paste the code into a text editor and save the file with a <code>.html</code> extension (e.g., <code>study_on_fruit_of_the_spirit.html</code>).</li>\n <li><strong>Open in Browser:</strong> Open the saved HTML file in any web browser (Chrome, Firefox, Safari, etc.).</li>\n <li><strong>Interact:</strong> Click on the study points to expand and collapse the content. Use the Table of Contents to navigate between sections.</li>\n</ol>\n</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">\n<strong>Document Instructions:</strong>\n\n<ol>\n <li><strong>Copy the Code:</strong> You can copy the code directly from the code block below.</li>\n <li><strong>Save the File:</strong> Paste the code into a text editor and save the file with a <code>.html</code> extension (e.g., <code>study_on_fruit_of_the_spirit.html</code>).</li>\n <li><strong>Open in Browser:</strong> Open the saved HTML file in any web browser (Chrome, Firefox, Safari, etc.).</li>\n <li><strong>Interact:</strong> Click on the study points to expand and collapse the content. Use the Table of Contents to navigate between sections.</li>\n</ol>\n</div>',
       type: "markup",
     },
   },
@@ -146,7 +148,7 @@ export const conversation = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px; color: #f0f0f0; font-family: sans-serif;">This document provides a detailed study on the Fruit of the Spirit, expanding on each quality with definitions, scriptural references, and practical examples, all while adhering to the KJV Bible as the ultimate authority. Glory to God!.</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">This document provides a detailed study on the Fruit of the Spirit, expanding on each quality with definitions, scriptural references, and practical examples, all while adhering to the KJV Bible as the ultimate authority. Glory to God!.</div>',
       type: "markup",
     },
   },
@@ -155,7 +157,7 @@ export const conversation = [
     type: "markup",
     content: {
       markupContent:
-        '<div style="padding-top: 10px; color: #f0f0f0; font-family: sans-serif;">This framework is built on the following inviolable axioms:\n\n1.  **God is**. (Genesis 1:1)\n2.  The KJV Bible is the complete and authoritative written Word of God. (2 Timothy 3:16-17)\n3.  Jesus Christ is Truth. (John 14:6)\n</div>',
+        '<div style="padding-top: 10px;  font-family: sans-serif;">This framework is built on the following inviolable axioms:\n\n1.  **God is**. (Genesis 1:1)\n2.  The KJV Bible is the complete and authoritative written Word of God. (2 Timothy 3:16-17)\n3.  Jesus Christ is Truth. (John 14:6)\n</div>',
       type: "markup",
     },
   },

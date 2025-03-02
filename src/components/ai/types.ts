@@ -51,6 +51,7 @@ type Scripture = {
 };
 
 type Code = {
+  type: "code";
   language: string;
   filename: string;
   mimeType: string;
