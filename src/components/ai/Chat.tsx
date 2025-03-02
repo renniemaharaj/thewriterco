@@ -330,7 +330,7 @@ const Chat = forwardRef(
         onAnimated();
       }, []);
       return (
-        <Flex justify="center" className={`!flex-col max-w-[90%] !gap-1`}>
+        <Flex justify="center" className={`!flex-col !w-full !gap-1`}>
           <Flex
             direction="column"
             justify={block.sender === "User" ? "end" : "start"}

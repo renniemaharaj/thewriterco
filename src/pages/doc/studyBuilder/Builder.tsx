@@ -9,9 +9,38 @@ import {
   Callout,
   Flex,
   Box,
+  Card,
+  Button,
+  Badge,
+  IconButton,
+  Tooltip,
 } from "@radix-ui/themes";
+import { conversation } from "./conversation";
+import React from "react";
+import { Code, MarkupResponse, Scripture } from "../../../components/ai/types";
+import {
+  BookTextIcon,
+  CopyIcon,
+  DownloadIcon,
+  ShieldAlertIcon,
+} from "lucide-react";
+import MonacoEditor from "../../../components/MonacoEditor";
+import fetchGitBlob, {
+  kjvRepoUrl,
+} from "../../../components/hooks/data/gitFetcher";
+import { useDispatch } from "react-redux";
+import {
+  setEBook,
+  setGlobalCurrentChapter,
+  setGlobalCurrentVerse,
+  setOpenState,
+  setRenderStyle,
+} from "../../../app/ereader/ereaderSlice";
+import { EBook } from "../../../app/ereader/types";
 
 const Builder = () => {
+  const dispatch = useDispatch();
+
   return (
     <Page wrapChildren>
       <Hero
@@ -184,6 +213,177 @@ const Builder = () => {
             self-hosting.
           </Callout.Text>
         </Callout.Root>
+        <Box className="p-4">
+          <Heading size="4">
+            The following conversation was used to generate a study document:
+          </Heading>
+          <br />
+          <Card>
+            <Flex className={`flex-col !w-full !h-fit pb-[150px]`}>
+              {conversation.map((block, index) => (
+                <React.Fragment key={index}>
+                  <Flex justify="center" className={`!flex-col !w-full !gap-1`}>
+                    <Flex
+                      direction="column"
+                      justify={block.sender === "User" ? "end" : "start"}
+                      className={`${
+                        block.sender === "User"
+                          ? "text-right !self-end"
+                          : "text-left"
+                      } max-w-[90%] !text-sm !max-h-fit !overflow-hidden !p-2 opacity-0 animate-fade-in`}
+                      style={{
+                        animationDuration: "0.5s",
+                        animationFillMode: "forwards",
+                      }}
+                    >
+                      {block.sender === "User" && (
+                        <Card className="!border-none !outline-none whitespace-pre-wrap">
+                          {/* <pre className="whitespace-pre-wrap !text-left"> */}
+                          {(block.content as MarkupResponse).markupContent}
+                          {/* </pre> */}
+                        </Card>
+                      )}
+                      {block.sender === "System" && (
+                        <Card className="text-red-500 !flex !flex-col !items-center !gap-2 max-w-[300px]">
+                          <Flex className="!gap-2">
+                            <Flex>
+                              <ShieldAlertIcon />
+                            </Flex>
+                            <Text>
+                              {(block.content as MarkupResponse).markupContent}
+                            </Text>
+                          </Flex>
+
+                          <Flex className="!flex-row !gap-2">
+                            <Button variant="soft" disabled className="mt-2">
+                              Resend
+                            </Button>
+                            <Button variant="soft" disabled className="mt-2">
+                              New Chat
+                            </Button>
+                          </Flex>
+                        </Card>
+                      )}
+                      {block.sender === "AI" && block.type === "markup" && (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: (block.content as MarkupResponse)
+                              .markupContent,
+                          }}
+                        />
+                      )}
+                      {block.sender === "AI" && block.type === "code" && (
+                        <Card className="!p-1">
+                          <Flex className="!flex-row !gap-2 !mb-2 !justify-between">
+                            <Badge variant="soft" className="!mr-2">
+                              {(block.content as Code).filename}
+                            </Badge>
+                            <Flex className="!flex-row !gap-2 !mb-2">
+                              <IconButton
+                                variant="soft"
+                                size="1"
+                                onClick={() => {
+                                  navigator.clipboard.writeText(
+                                    (block.content as Code).codeContent,
+                                  );
+                                }}
+                              >
+                                <CopyIcon className="scale-50" />
+                              </IconButton>
+                              <IconButton
+                                variant="soft"
+                                size="1"
+                                onClick={() => {
+                                  const blob = new Blob(
+                                    [(block.content as Code).codeContent],
+                                    {
+                                      type:
+                                        (block.content as Code).mimeType ||
+                                        "text/plain",
+                                    },
+                                  );
+                                  const url = URL.createObjectURL(blob);
+                                  const a = document.createElement("a");
+                                  a.href = url;
+                                  a.download = (block.content as Code).filename;
+                                  a.click();
+                                }}
+                              >
+                                <DownloadIcon className="scale-50" />
+                              </IconButton>
+                            </Flex>
+
+                            {/* <Badge variant="soft">{(block.content as Code).language}</Badge> */}
+                          </Flex>
+                          <MonacoEditor
+                            language={
+                              (block.content as Code).language || "plaintext"
+                            }
+                            code={(block.content as Code).codeContent}
+                            height={(block.content as Code).editorHeight || 400}
+                          />
+                        </Card>
+                      )}
+
+                      {block.sender === "AI" && block.type === "scripture" && (
+                        <Card size="1">
+                          <Flex className="!flex-row !gap-2 flex-wrap">
+                            {(block.content as Scripture).verses.map(
+                              (verse, idx) => (
+                                <React.Fragment key={`verse-${idx}`}>
+                                  <Tooltip content={verse.verseContent}>
+                                    <IconButton
+                                      variant="ghost"
+                                      size="1"
+                                      className="animate-pulse !font-bold"
+                                      onClick={() => {
+                                        fetchGitBlob(
+                                          kjvRepoUrl,
+                                          verse.book,
+                                          "json",
+                                        ).then((content) => {
+                                          dispatch(
+                                            setEBook({
+                                              title: verse.book,
+                                              content: JSON.parse(content),
+                                              date: new Date().toDateString(),
+                                            } as EBook),
+                                          );
+                                          dispatch(setRenderStyle("bible"));
+                                          dispatch(
+                                            setGlobalCurrentChapter(
+                                              verse.chapterNo.toString(),
+                                            ),
+                                          );
+                                          dispatch(
+                                            setGlobalCurrentVerse(
+                                              verse.verseNo.toString(),
+                                            ),
+                                          );
+                                          setTimeout(
+                                            () => dispatch(setOpenState(true)),
+                                            100,
+                                          );
+                                        });
+                                      }}
+                                    >
+                                      <BookTextIcon /> {verse.book}{" "}
+                                      {verse.chapterNo} :{verse.verseNo}
+                                    </IconButton>
+                                  </Tooltip>
+                                </React.Fragment>
+                              ),
+                            )}
+                          </Flex>
+                        </Card>
+                      )}
+                    </Flex>
+                  </Flex>
+                </React.Fragment>
+              ))}
+            </Flex>
+          </Card>
+        </Box>
       </Flex>
     </Page>
   );
