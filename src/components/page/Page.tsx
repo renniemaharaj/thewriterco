@@ -34,8 +34,8 @@ const Page = ({
     <>
       {/* <Navbar /> */}
       <Navbar />
-      <section className="p-2 w-full">
-        <div className="flex flex-row w-full p-5 gap-2 items-center">
+      <section className="p-2 w-full max-w-full">
+        <div className="flex flex-row w-full max-w-full overflow-clip p-5 gap-2 items-center ">
           {locationParts.length > 0 && (
             <IconButton
               variant="soft"

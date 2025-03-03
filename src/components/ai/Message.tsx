@@ -43,7 +43,7 @@ const Message: React.FC<MessageProps> = ({ block }) => {
           block.sender === "User"
             ? "text-right !self-end  rounded-2xl"
             : "text-left  rounded-xl"
-        } max-w-[90%] !text-sm !max-h-fit !overflow-hidden !p-3 opacity-0 animate-fade-in`}
+        } !text-sm !max-h-fit !overflow-hidden !p-3 opacity-0 animate-fade-in`}
         style={{
           animationDuration: "0.5s",
           animationFillMode: "forwards",

@@ -30,7 +30,6 @@ const MonacoEditor = ({
 
   const setEditorValue = (code: string) => {
     if (editorRef.current && !ignoreChangeRef.current) {
-      console.log("CUpdating editor", code);
       const currentModel = editorRef.current.getModel();
       const currentValue = currentModel?.getValue();
 
@@ -49,7 +48,6 @@ const MonacoEditor = ({
 
   useEffect(() => {
     if (!editorRef.current) console.log("Editor not mounted yet");
-    console.log("Updating code content", code);
     setCodeContent(code);
   }, [code, setCodeContent]); // Runs whenever `code` changes
 

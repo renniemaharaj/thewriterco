@@ -245,7 +245,7 @@ const AI = () => {
 
             {/* <Hint> */}
             <Collapsible title="Important">
-              <Flex direction="column" className="text-white pl-5 space-y-2">
+              <Flex direction="column" className="pl-5 space-y-2">
                 <Text size={"1"}>
                   Ensure your conversation is complete before requesting. The
                   document will be generated as a static web page

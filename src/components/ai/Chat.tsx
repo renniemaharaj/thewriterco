@@ -78,11 +78,8 @@ const Chat = forwardRef(
     const chatState = useSelector((state: RootState) => state.chat);
 
     // const [chatState, setChatState] = useState(getInitialChatState());
-    const [storedValue, setValue] = useLocalStorage("chatData", chatState);
+    const [, setValue] = useLocalStorage("chatData", chatState);
 
-    useEffect(() => {
-      console.log("chatState", JSON.stringify(chatState.messages));
-    }, [storedValue]);
     // Update local storage when chat state changes
     useEffect(() => {
       setValue(chatState);
@@ -226,9 +223,6 @@ const Chat = forwardRef(
           content: msg,
         });
       }
-
-      console.log("conversation", conversation);
-      // return;
 
       const msgPackData = msgpack.encode(conversation);
       const base64String = fromByteArray(new Uint8Array(msgPackData));
