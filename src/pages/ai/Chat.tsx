@@ -90,10 +90,19 @@ const AI = () => {
 
   function getRequestInstructions() {
     const instructions = ` 
-        -@here Please summarize this conversation and generate the presented document using the attached template.
-        "-@here In addition to the template, please include instructions on how to use the document, download file from code block interface editor, or copy code directly, save as study_name.html, and open in a browser.
-        "-@here If there was little to no conversation, please provide a brief summary of the template and its intended use. Please decline or ask to confirm if the conversation has little to no content.
-        `;
+      -@here Please analyze conversation with the user and generate a document using the provided template.
+      Include the following:
+      1. A comprehensive summary of discussion
+      2. The document formatted according to the template
+      3. Clear instructions for:
+         - Downloading the document
+         - Saving it as study_name.html
+         - Opening it in a browser
+      
+      Note: If conversation lacks substantial content, please:
+      - Provide a brief overview of the template's purpose
+      - Request confirmation before proceeding with document generation
+      `;
 
     return instructions;
   }
