@@ -8,7 +8,11 @@ import Hint from "../../components/Hint";
 
 const Reasoning = () => {
   return (
-    <Page wrapChildren={true}>
+    <Page
+      wrapChildren={true}
+      title="Rationale"
+      description="Reasoning for faith"
+    >
       <Flex
         direction="column"
         align="center"

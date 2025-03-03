@@ -8,7 +8,11 @@ import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 const Example = () => {
   return (
-    <Page wrapChildren>
+    <Page
+      wrapChildren
+      title="Study Documents Example"
+      description="Example of a study document"
+    >
       <Hero
         header={<>Study Documents</>}
         subHeader={

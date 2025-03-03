@@ -27,6 +27,7 @@ import fetchGitBlob, {
   templateRepoUrl,
 } from "../../components/hooks/data/gitFetcher";
 import Collapsible from "../../components/Collapsible";
+import { Helmet } from "react-helmet-async";
 
 const AI = () => {
   const { theme } = useThemeContext();
@@ -173,6 +174,13 @@ const AI = () => {
 
   return (
     <Flex className="!w-[100vw] !flex-col merriweather-bold !p-0`">
+      <Helmet>
+        <title>{`TheWriterCo - AI`}</title>
+        <meta
+          name="description"
+          content={"Study the bible with with TheWriterCo's AI and tools."}
+        />
+      </Helmet>
       {/* <BeforeHeader /> */}
       <SideBar
         variant="center"

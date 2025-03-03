@@ -13,7 +13,11 @@ import {
 
 const Guide = () => {
   return (
-    <Page wrapChildren>
+    <Page
+      wrapChildren
+      title="Study Documents Guide"
+      description="Learn how to build study documents using our tools"
+    >
       <Hero
         header={<>Study Documents</>}
         subHeader={

@@ -10,7 +10,7 @@ import { swiperProps } from "./config.swiper";
 
 const Root: React.FC = () => {
   return (
-    <Page>
+    <Page title="Home" description="Welcome to The Writer Company">
       <Hero
         header="Welcome to"
         subHeader={

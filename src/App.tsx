@@ -2,6 +2,8 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Route, Routes } from "react-router-dom";
 import { Theme } from "@radix-ui/themes";
 
+import { HelmetProvider } from "react-helmet-async";
+
 // Import components
 import PersistLogin from "./components/PersistLogin";
 import ErrorFallback from "./components/ErrorBoundary";
@@ -95,33 +97,35 @@ function AppContent() {
       scaling="110%"
       grayColor="sage"
     >
-      <Routes>
-        {/* Public Routes */}
-        {publicRoutes.map((route, index) =>
-          "index" in route ? (
-            <Route key={"pub-route-" + index} index element={route.element} />
-          ) : (
-            <Route
-              key={"pub-route-" + index}
-              path={route.path}
-              element={route.element}
-            />
-          ),
-        )}
-
-        {/* Protected Routes and Login Persistent Routes */}
-        <Route element={<PersistLogin />}>
-          <Route element={<RequireAuth />}>
-            {protectedRoutes.map((route, index) => (
+      <HelmetProvider>
+        <Routes>
+          {/* Public Routes */}
+          {publicRoutes.map((route, index) =>
+            "index" in route ? (
+              <Route key={"pub-route-" + index} index element={route.element} />
+            ) : (
               <Route
-                key={"priv-route-" + index}
+                key={"pub-route-" + index}
                 path={route.path}
                 element={route.element}
               />
-            ))}
+            ),
+          )}
+
+          {/* Protected Routes and Login Persistent Routes */}
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth />}>
+              {protectedRoutes.map((route, index) => (
+                <Route
+                  key={"priv-route-" + index}
+                  path={route.path}
+                  element={route.element}
+                />
+              ))}
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      </HelmetProvider>
     </Theme>
   );
 }

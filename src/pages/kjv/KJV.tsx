@@ -17,7 +17,11 @@ const KJV = () => {
     dispatch(setRenderStyle("bible"));
   };
   return (
-    <Page wrapChildren={true}>
+    <Page
+      wrapChildren={true}
+      title="KJV Bible"
+      description="Read the KJV Bible"
+    >
       <Flex
         direction="column"
         align="center"

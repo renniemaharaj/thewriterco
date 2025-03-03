@@ -4,15 +4,20 @@ import Ereader from "../bible/Ereader";
 import Footer from "./Footer";
 import { ReactNode, useEffect, useState } from "react";
 import { ChevronRightIcon, HomeIcon } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 const Page = ({
   children,
   hideBiblePicker = true,
   wrapChildren = false,
+  title,
+  description,
 }: {
   children: ReactNode;
   hideBiblePicker?: boolean;
   wrapChildren?: boolean;
+  title?: string;
+  description?: string;
 }) => {
   useEffect(() => {
     document.body.style.overflowX = "hidden";
@@ -32,6 +37,13 @@ const Page = ({
 
   return (
     <>
+      <Helmet>
+        {title !== "" && <title>{`TheWriterCo - ${title}`}</title>}
+        {description !== "" && (
+          <meta name="description" content={description} />
+        )}
+      </Helmet>
+
       {/* <Navbar /> */}
       <Navbar />
       <section className="p-2 w-full max-w-full">

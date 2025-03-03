@@ -191,7 +191,11 @@ const Number = () => {
     return inferIsGuess(msg) ? "blue" : "";
   };
   return (
-    <Page wrapChildren={true}>
+    <Page
+      wrapChildren={true}
+      title="Number Guesser"
+      description="Guess any number from 0 to infinity"
+    >
       <Flex
         direction="column"
         align="center"
