@@ -143,6 +143,7 @@ const Message: React.FC<MessageProps> = ({ block }) => {
               language={(block.content as Code).language || "plaintext"}
               code={(block.content as Code).codeContent}
               height={(block.content as Code).editorHeight || 400}
+              editable={false}
             />
           </Card>
         )}
