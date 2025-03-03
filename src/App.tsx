@@ -10,14 +10,17 @@ import { ThemeProvider } from "./components/context/theme/ThemeProvider";
 import { useThemeContext } from "./components/context/theme/useThemeContext";
 
 // Import pages
+import { lazy } from "react";
 import Root from "./pages/root/Root";
 import NoPage from "./pages/noPage/NoPage";
-import AI from "./pages/ai/Chat";
-import Kjv from "./pages/kjv/KJV";
 import Study from "./pages/reasoning/Reasoning";
-import Number from "./pages/number/Number";
-import Guide from "./pages/doc/studyDocument/Guide";
-import Example from "./pages/doc/studyDocument/Example";
+
+// Lazy loaded components
+const AI = lazy(() => import("./pages/ai/Chat"));
+const Number = lazy(() => import("./pages/number/Number"));
+const Guide = lazy(() => import("./pages/doc/studyDocument/Guide"));
+const Example = lazy(() => import("./pages/doc/studyDocument/Example"));
+const Kjv = lazy(() => import("./pages/kjv/KJV"));
 
 // Custom route types
 type CustomRoute = {
