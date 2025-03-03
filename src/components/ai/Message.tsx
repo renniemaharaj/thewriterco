@@ -38,9 +38,9 @@ const Message: React.FC<MessageProps> = ({ block }) => {
     <Flex justify="center" className="!flex-col !max-w-full">
       <Flex
         direction="column"
-        justify={block.sender === "User" ? "end" : "start"}
+        justify={block.role === "user" ? "end" : "start"}
         className={`${
-          block.sender === "User"
+          block.role === "user"
             ? "text-right !self-end  rounded-2xl"
             : "text-left  rounded-xl"
         } !text-sm !max-h-fit !overflow-hidden !p-3 opacity-0 animate-fade-in`}
@@ -49,7 +49,7 @@ const Message: React.FC<MessageProps> = ({ block }) => {
           animationFillMode: "forwards",
         }}
       >
-        {block.sender === "User" && (
+        {block.role === "user" && (
           <Card className="!border-none !outline-none whitespace-pre-wrap">
             <Flex className="items-center !justify-end gap-2">
               <Text className="text-xs font-bold se">User</Text>
@@ -59,7 +59,7 @@ const Message: React.FC<MessageProps> = ({ block }) => {
           </Card>
         )}
 
-        {block.sender === "System" && (
+        {block.role === "system" && (
           <Card
             variant="ghost"
             className="text-red-500 !flex !flex-col !items-center !gap-2 max-w-[300px]"
@@ -84,7 +84,7 @@ const Message: React.FC<MessageProps> = ({ block }) => {
           </Card>
         )}
 
-        {block.sender === "AI" && block.type === "markup" && (
+        {block.role === "model" && block.type === "markup" && (
           <Card
             variant="ghost"
             className="!border-none !outline-none !p-0 !gap-1"
@@ -100,7 +100,7 @@ const Message: React.FC<MessageProps> = ({ block }) => {
           </Card>
         )}
 
-        {block.sender === "AI" && block.type === "code" && (
+        {block.role === "model" && block.type === "code" && (
           <Card className="!p-3">
             <Flex className="!flex-row !gap-2 !mb-2 !justify-between">
               <Badge variant="soft" className="!mr-2">
@@ -148,7 +148,7 @@ const Message: React.FC<MessageProps> = ({ block }) => {
           </Card>
         )}
 
-        {block.sender === "AI" && block.type === "scripture" && (
+        {block.role === "model" && block.type === "scripture" && (
           <Card variant="ghost" size="1" className=" p-3 rounded-xl">
             <Flex className="!flex-row !gap-2 flex-wrap">
               {(block.content as Scripture).verses.map((verse, idx) => (

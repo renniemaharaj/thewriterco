@@ -2,7 +2,7 @@ import { Block } from "../../../components/ai/types";
 
 export const conversation: Block[] = [
   {
-    sender: "User",
+    role: "user",
     type: "markup",
     content: {
       type: "markup",
@@ -11,7 +11,7 @@ export const conversation: Block[] = [
     },
   },
   {
-    sender: "AI",
+    role: "model",
     type: "markup",
     content: {
       markupContent:
@@ -20,7 +20,7 @@ export const conversation: Block[] = [
     },
   },
   {
-    sender: "AI",
+    role: "model",
     type: "scripture",
     content: {
       type: "scripture",
@@ -42,7 +42,7 @@ export const conversation: Block[] = [
     },
   },
   {
-    sender: "AI",
+    role: "model",
     type: "markup",
     content: {
       markupContent:
@@ -51,7 +51,7 @@ export const conversation: Block[] = [
     },
   },
   {
-    sender: "AI",
+    role: "model",
     type: "markup",
     content: {
       markupContent: "<code><- Table Excluded from Extract-></code>",
@@ -59,7 +59,7 @@ export const conversation: Block[] = [
     },
   },
   {
-    sender: "AI",
+    role: "model",
     type: "markup",
     content: {
       markupContent:
@@ -68,7 +68,7 @@ export const conversation: Block[] = [
     },
   },
   {
-    sender: "User",
+    role: "user",
     type: "markup",
     content: {
       type: "markup",
@@ -77,7 +77,7 @@ export const conversation: Block[] = [
     },
   },
   {
-    sender: "AI",
+    role: "model",
     type: "markup",
     content: {
       markupContent:
@@ -86,7 +86,7 @@ export const conversation: Block[] = [
     },
   },
   {
-    sender: "AI",
+    role: "model",
     type: "markup",
     content: {
       markupContent:
@@ -95,7 +95,7 @@ export const conversation: Block[] = [
     },
   },
   {
-    sender: "AI",
+    role: "model",
     type: "markup",
     content: {
       markupContent:
@@ -104,7 +104,7 @@ export const conversation: Block[] = [
     },
   },
   {
-    sender: "AI",
+    role: "model",
     type: "markup",
     content: {
       markupContent:
@@ -113,7 +113,7 @@ export const conversation: Block[] = [
     },
   },
   {
-    sender: "AI",
+    role: "model",
     type: "code",
     content: {
       codeContent:
@@ -126,7 +126,7 @@ export const conversation: Block[] = [
     },
   },
   {
-    sender: "AI",
+    role: "model",
     type: "markup",
     content: {
       markupContent:

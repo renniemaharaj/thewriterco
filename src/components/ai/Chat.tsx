@@ -105,7 +105,7 @@ const Chat = forwardRef(
           switch (block.type) {
             case "markup":
               dispatchAddMessage({
-                sender: "AI",
+                role: "model",
                 type: "markup",
                 content: block.content as MarkupResponse,
               });
@@ -121,7 +121,7 @@ const Chat = forwardRef(
             case "scripture":
               // Process scripture content
               dispatchAddMessage({
-                sender: "AI",
+                role: "model",
                 type: "scripture",
                 content: block.content as Scripture,
               });
@@ -131,7 +131,7 @@ const Chat = forwardRef(
             case "code":
               // Process code content
               dispatchAddMessage({
-                sender: "AI",
+                role: "model",
                 type: "code",
                 content: block.content as Code,
               });
@@ -146,7 +146,7 @@ const Chat = forwardRef(
       } catch (error) {
         if (data.response) {
           dispatchAddMessage({
-            sender: "System",
+            role: "system",
             type: "markup",
             content: {
               type: "markup",
@@ -163,7 +163,7 @@ const Chat = forwardRef(
 
       if (defaultSending) {
         dispatchAddMessage({
-          sender: "User",
+          role: "user",
           type: "markup",
           content: {
             type: "markup",
@@ -174,7 +174,7 @@ const Chat = forwardRef(
 
       if (chatState.conversationTokens > 10000 && defaultSending) {
         dispatchAddMessage({
-          sender: "System",
+          role: "system",
           type: "markup",
           content: {
             type: "markup",
@@ -214,12 +214,12 @@ const Chat = forwardRef(
 
       if (chatState.conversationMode === "exchange") {
         conversation = await buildConversation(chatState.messages, {
-          sender: "User",
+          role: "user",
           content: msg,
         });
       } else {
         conversation = await buildConversation([], {
-          sender: "User",
+          role: "user",
           content: msg,
         });
       }
@@ -238,7 +238,7 @@ const Chat = forwardRef(
       } catch (error) {
         console.error(error);
         dispatchAddMessage({
-          sender: "System",
+          role: "system",
           type: "markup",
           content: {
             type: "markup",
@@ -255,7 +255,7 @@ const Chat = forwardRef(
       } catch (error) {
         console.error(error);
         dispatchAddMessage({
-          sender: "System",
+          role: "system",
           type: "markup",
           content: {
             type: "markup",

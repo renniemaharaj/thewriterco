@@ -8,17 +8,17 @@ export async function buildConversation(
   const conversation = primaryBlocks.map((block) => {
     if (block.type === "markup") {
       return {
-        sender: block.sender,
+        role: block.role,
         content: (block.content as MarkupResponse).markupContent,
       };
     } else if (block.type === "code") {
       return {
-        sender: block.sender,
+        role: block.role,
         content: (block.content as Code).codeContent,
       };
     } else {
       return {
-        sender: block.sender,
+        role: block.role,
         content: (block.content as Scripture).verses.toString(),
       };
     }

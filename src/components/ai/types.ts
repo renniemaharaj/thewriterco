@@ -2,10 +2,6 @@ type Executable = {
   jsxTrigger: React.ReactNode;
 };
 
-// interface BlockElement {
-//   jsxElem: React.ReactNode;
-// }
-
 type Context = {
   book: string;
   chapter: string | null;
@@ -20,7 +16,7 @@ interface TaskAlterBookState {
 }
 
 type Exchange = {
-  sender: "User" | "AI" | "System";
+  role: "user" | "model" | "system";
   content: string;
 };
 
@@ -30,7 +26,7 @@ type ResponseBlock = {
 };
 
 interface Block extends ResponseBlock {
-  sender: "User" | "AI" | "System";
+  role: "user" | "model" | "system";
 }
 
 type MarkupResponse = {
