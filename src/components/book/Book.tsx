@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import "./styles.css";
 
-import pageArt from "../../assets/BIBLE_PAGE_ART_V2.jpg";
+import pageArt from "../../assets/Bible_Page_Art.jpg";
 import { useThemeContext } from "../context/theme/useThemeContext";
 
 export type BookProps = {
