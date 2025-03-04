@@ -149,6 +149,8 @@ const Navbar: React.FC = () => {
               type="submit"
               aria-label="Search"
               variant="soft"
+              // highContrast
+              className={`${theme === "dark" ? "!text-white" : "!text-yellow-400"}`}
             >
               <ScanSearchIcon width="18" height="18" />
             </IconButton>

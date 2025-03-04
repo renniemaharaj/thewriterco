@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import { ReactNode, useEffect, useState } from "react";
 import { ChevronRightIcon, HomeIcon } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import { useThemeContext } from "../context/theme/useThemeContext";
 
 const Page = ({
   children,
@@ -19,6 +20,8 @@ const Page = ({
   title?: string;
   description?: string;
 }) => {
+  const { theme } = useThemeContext();
+
   useEffect(() => {
     document.body.style.overflowX = "hidden";
     return () => {
@@ -53,7 +56,7 @@ const Page = ({
               variant="soft"
               onClick={() => (location.href = "/")}
               aria-label="Go to Home"
-              className="hover:scale-105 transition-transform duration-150 !cursor-pointer"
+              className={`${theme === "dark" ? "!text-white" : "!text-yellow-400"} hover:scale-105 transition-transform duration-150 !cursor-pointer`}
             >
               <HomeIcon />
             </IconButton>
