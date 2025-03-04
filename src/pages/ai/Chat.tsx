@@ -6,6 +6,7 @@ import {
   Tooltip,
   Text,
   Select,
+  Link,
 } from "@radix-ui/themes";
 import Ereader from "../../components/bible/Ereader";
 import SideBar from "../../components/SideBar";
@@ -26,7 +27,6 @@ import { clearMessages, setMessageBoxMode } from "../../app/chat/chatSlice";
 import fetchGitBlob, {
   templateRepoUrl,
 } from "../../components/hooks/data/gitFetcher";
-import Collapsible from "../../components/Collapsible";
 import { Helmet } from "react-helmet-async";
 import { toggleFlowSlice } from "../../app/flow/flowSlice";
 
@@ -231,7 +231,8 @@ const AI = () => {
         <Dialog.Content maxWidth="450px">
           <Dialog.Title>Request Study Document</Dialog.Title>
           <Dialog.Description size="2" mb="4">
-            Request a study based on your current conversation
+            Request a study based on your current conversation{" "}
+            <Link href="/doc/studyDocument">Study Document</Link>
           </Dialog.Description>
           <Flex direction="column" gap="3">
             <Flex direction="column" gap="2">
@@ -256,19 +257,6 @@ const AI = () => {
                 </Select.Content>
               </Select.Root>
             </Flex>
-
-            {/* <Hint> */}
-            <Collapsible title="Important">
-              <Flex direction="column" className="pl-5 space-y-2">
-                <Text size={"1"}>
-                  Ensure your conversation is complete before requesting. The
-                  document will be generated as a static web page
-                </Text>
-                <Text size={"1"}>
-                  You can download and open the file directly in your browser.
-                </Text>
-              </Flex>
-            </Collapsible>
           </Flex>
           {/* </Hint> */}
 
