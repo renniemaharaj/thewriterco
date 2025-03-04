@@ -14,10 +14,10 @@ import Hint from "../../components/Hint";
 import { useThemeContext } from "../../components/context/theme/useThemeContext";
 import Chat from "../../components/ai/Chat";
 import {
-  CircleFadingPlusIcon,
   FileCode2,
   FullscreenIcon,
   MaximizeIcon,
+  Rotate3DIcon,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -112,17 +112,17 @@ const AI = () => {
     <Flex
       className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}   !items-center gap-2`}
     >
-      <Tooltip content="Start a new conversation">
+      <Tooltip content="rotate perspective">
         <IconButton
           size="2"
           variant="soft"
           onClick={() => dispatch(clearMessages())}
         >
-          <CircleFadingPlusIcon />
+          <Rotate3DIcon />
         </IconButton>
       </Tooltip>
 
-      <Tooltip content="Toggle input visibility">
+      <Tooltip content="toggle ui">
         <IconButton
           size="2"
           variant="soft"
@@ -142,7 +142,7 @@ const AI = () => {
         </IconButton>
       </Tooltip>
 
-      <Tooltip content="Request web page study on current conversation">
+      <Tooltip content="request study">
         <IconButton
           size="2"
           variant="soft"
