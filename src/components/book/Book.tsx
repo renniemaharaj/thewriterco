@@ -34,12 +34,19 @@ export default function Book({
 
   const { theme } = useThemeContext();
 
+  const returnPages = useCallback(() => {
+    if (!bookRef.current) return;
+    bookRef.current
+      .querySelectorAll(".flip")
+      .forEach((page) => page.classList.remove("flip"));
+  }, []);
+
   const cleanupPages = useCallback(() => {
     if (!bookRef.current || isBookOpenRef.current) return;
     returnPages();
-  }, []);
+  }, [returnPages]);
 
-  const flipPages = () => {
+  const flipPages = useCallback(() => {
     if (!bookRef.current) return;
     const pages = bookRef.current.querySelectorAll(".pages");
     const pagesToFlip = Array.from(pages).slice(0, pages.length / 2);
@@ -49,26 +56,19 @@ export default function Book({
     });
 
     setTimeout(() => cleanupPages(), pagesToFlip.length * 100);
-  };
+  }, [cleanupPages]);
 
-  const returnPages = () => {
-    if (!bookRef.current) return;
-    bookRef.current
-      .querySelectorAll(".flip")
-      .forEach((page) => page.classList.remove("flip"));
-  };
-
-  const openBook = () => {
+  const openBook = useCallback(() => {
     isBookOpenRef.current = true;
     setIsBookOpen(true); // Triggers re-render
     flipPages();
-  };
+  }, [flipPages]);
 
-  const closeBook = () => {
+  const closeBook = useCallback(() => {
     isBookOpenRef.current = false;
     setIsBookOpen(false); // Triggers re-render
     returnPages();
-  };
+  }, [returnPages]);
 
   useEffect(() => {
     if (actionPagesFlipped) {
@@ -76,7 +76,7 @@ export default function Book({
     } else {
       closeBook();
     }
-  }, [actionPagesFlipped]);
+  }, [actionPagesFlipped, openBook, closeBook]);
 
   return (
     <div

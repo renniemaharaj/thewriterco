@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ReactFlow,
   // Background,
@@ -52,18 +52,20 @@ function FlowComponent({
   //   [nodes]
   // );
 
-  const fitViewOptionsConfig = {
-    padding: 10,
-    minZoom: 0.8,
-    duration: 500,
-    nodes: nodesLocal,
-  };
+  const fitViewOptionsConfig = useMemo(() => {
+    return {
+      padding: 10,
+      minZoom: 0.8,
+      duration: 500,
+      nodes: nodesLocal,
+    };
+  }, [nodesLocal]);
 
   const { fitView } = useReactFlow();
 
-  const onFitView = () => {
+  const onFitView = useCallback(() => {
     fitView(fitViewOptionsConfig); // Smooth transition with 1-second duration
-  };
+  }, [fitView, fitViewOptionsConfig]);
 
   const messageBlocksCountRef = useRef(messageBlocksCount);
 

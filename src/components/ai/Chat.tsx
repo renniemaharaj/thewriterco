@@ -83,200 +83,224 @@ const Chat = forwardRef(
     // Update local storage when chat state changes
     useEffect(() => {
       setValue(chatState);
-    }, [chatState]);
+    }, [chatState, setValue]);
 
-    function dispatchAddMessage(content: Block) {
-      dispatch(addMessage(content));
-    }
+    const dispatchAddMessage = useCallback(
+      (content: Block) => {
+        dispatch(addMessage(content));
+      },
+      [dispatch],
+    );
 
     // Parse AI response
-    async function parseAIResponse(data: { response: string }) {
-      try {
-        const genaiResponse = JSON.parse(data.response);
+    const parseAIResponse = useCallback(
+      async (data: { response: string }) => {
+        try {
+          const genaiResponse = JSON.parse(data.response);
 
-        // Ensure responseBlocks exist
-        if (!genaiResponse.responseBlocks) {
-          throw new Error("Invalid AI response format: Missing responseBlocks");
+          // Ensure responseBlocks exist
+          if (!genaiResponse.responseBlocks) {
+            throw new Error(
+              "Invalid AI response format: Missing responseBlocks",
+            );
+          }
+
+          // Iterate through responseBlocks and handle different content types
+          genaiResponse.responseBlocks.forEach((block: ResponseBlock) => {
+            const regex = /axioms?/gi;
+            switch (block.type) {
+              case "markup":
+                dispatchAddMessage({
+                  role: "model",
+                  type: "markup",
+                  content: block.content as MarkupResponse,
+                });
+
+                // Detect mention of axioms
+                if (
+                  (block.content as MarkupResponse).markupContent.match(regex)
+                ) {
+                  highlightAxioms();
+                }
+                break;
+
+              case "scripture":
+                // Process scripture content
+                dispatchAddMessage({
+                  role: "model",
+                  type: "scripture",
+                  content: block.content as Scripture,
+                });
+
+                break;
+
+              case "code":
+                // Process code content
+                dispatchAddMessage({
+                  role: "model",
+                  type: "code",
+                  content: block.content as Code,
+                });
+                break;
+
+              default:
+                console.warn(`Unknown response block type: ${block.type}`);
+            }
+          });
+
+          return true;
+        } catch (error) {
+          if (data.response) {
+            dispatchAddMessage({
+              role: "system",
+              type: "markup",
+              content: {
+                type: "markup",
+                markupContent: data.response,
+              },
+            });
+          }
+          console.error("Error parsing AI response:", error);
+        }
+      },
+      [dispatchAddMessage, highlightAxioms],
+    );
+
+    const handleMessageSend = useCallback(
+      async (msg: string, defaultSending = true) => {
+        if (!msg.trim()) return;
+
+        if (defaultSending) {
+          dispatchAddMessage({
+            role: "user",
+            type: "markup",
+            content: {
+              type: "markup",
+              markupContent: msg,
+            },
+          });
         }
 
-        // Iterate through responseBlocks and handle different content types
-        genaiResponse.responseBlocks.forEach((block: ResponseBlock) => {
-          const regex = /axioms?/gi;
-          switch (block.type) {
-            case "markup":
-              dispatchAddMessage({
-                role: "model",
-                type: "markup",
-                content: block.content as MarkupResponse,
-              });
-
-              // Detect mention of axioms
-              if (
-                (block.content as MarkupResponse).markupContent.match(regex)
-              ) {
-                highlightAxioms();
-              }
-              break;
-
-            case "scripture":
-              // Process scripture content
-              dispatchAddMessage({
-                role: "model",
-                type: "scripture",
-                content: block.content as Scripture,
-              });
-
-              break;
-
-            case "code":
-              // Process code content
-              dispatchAddMessage({
-                role: "model",
-                type: "code",
-                content: block.content as Code,
-              });
-              break;
-
-            default:
-              console.warn(`Unknown response block type: ${block.type}`);
-          }
-        });
-
-        return true;
-      } catch (error) {
-        if (data.response) {
+        if (chatState.conversationTokens > 10000 && defaultSending) {
           dispatchAddMessage({
             role: "system",
             type: "markup",
             content: {
               type: "markup",
-              markupContent: data.response,
+              markupContent:
+                "Conversation limit reached, please start a new chat.",
             },
           });
+          return;
         }
-        console.error("Error parsing AI response:", error);
-      }
-    }
 
-    async function handleMessageSend(msg: string, defaultSending = true) {
-      if (!msg.trim()) return;
+        scrollMessageBoxToBottom();
+        setIsTyping(true);
 
-      if (defaultSending) {
-        dispatchAddMessage({
-          role: "user",
-          type: "markup",
-          content: {
+        // Attach additional context to the message
+        const attachedTheme = `-@here Note user's theme for appropriate styling: ${theme} mode`;
+        const attachedBookState = `-@here Note user's current book state for your knowledge: ${eReaderState.eContent.title} ${eReaderState.currentChapter}:${eReaderState.currentVerse}`;
+
+        // Attach date & time
+        const attachedLocalTime = `-@here Note user's local time for context: ${new Date().toLocaleString()}`;
+        const attachedCurrentDate = `-@here Note user's current date for context: ${new Date().toDateString()}`;
+        const attachedResponseConstraint = `-@here Note user's chosen response-constraint for appropriate response length: ${chatState.responseConstraint || "Short"}`;
+        const additionalContext = [
+          attachedTheme,
+          attachedBookState,
+          attachedLocalTime,
+          attachedCurrentDate,
+          attachedResponseConstraint,
+        ];
+
+        // Build ask schema
+        const askSchema = {
+          conversation: "",
+          additionalContext,
+        };
+
+        let conversation;
+
+        if (chatState.conversationMode === "exchange") {
+          conversation = await buildConversation(chatState.messages, {
+            role: "user",
+            content: msg,
+          });
+        } else {
+          conversation = await buildConversation([], {
+            role: "user",
+            content: msg,
+          });
+        }
+
+        const msgPackData = msgpack.encode(conversation);
+        const base64String = fromByteArray(new Uint8Array(msgPackData));
+
+        askSchema.conversation = base64String;
+
+        let data = { response: "" };
+
+        try {
+          data = await sendAskReq({
+            message: JSON.stringify(askSchema),
+          }).unwrap();
+        } catch (error) {
+          console.error(error);
+          dispatchAddMessage({
+            role: "system",
             type: "markup",
-            markupContent: msg,
-          },
-        });
-      }
+            content: {
+              type: "markup",
+              markupContent:
+                "A connection error occurred or you are required to wait 15 seconds.",
+            },
+          });
+          setIsTyping(false);
+          return; // Exit early to prevent further execution
+        }
 
-      if (chatState.conversationTokens > 10000 && defaultSending) {
-        dispatchAddMessage({
-          role: "system",
-          type: "markup",
-          content: {
+        try {
+          await parseAIResponse(data);
+        } catch (error) {
+          console.error(error);
+          dispatchAddMessage({
+            role: "system",
             type: "markup",
-            markupContent:
-              "Conversation limit reached, please start a new chat.",
-          },
-        });
-        return;
-      }
-
-      scrollMessageBoxToBottom();
-      setIsTyping(true);
-
-      // Attach additional context to the message
-      const attachedTheme = `-@here Note user's theme for appropriate styling: ${theme} mode`;
-      const attachedBookState = `-@here Note user's current book state for your knowledge: ${eReaderState.eContent.title} ${eReaderState.currentChapter}:${eReaderState.currentVerse}`;
-
-      // Attach date & time
-      const attachedLocalTime = `-@here Note user's local time for context: ${new Date().toLocaleString()}`;
-      const attachedCurrentDate = `-@here Note user's current date for context: ${new Date().toDateString()}`;
-      const attachedResponseConstraint = `-@here Note user's chosen response-constraint for appropriate response length: ${chatState.responseConstraint || "Short"}`;
-      const additionalContext = [
-        attachedTheme,
-        attachedBookState,
-        attachedLocalTime,
-        attachedCurrentDate,
-        attachedResponseConstraint,
-      ];
-
-      // Build ask schema
-      const askSchema = {
-        conversation: "",
-        additionalContext,
-      };
-
-      let conversation;
-
-      if (chatState.conversationMode === "exchange") {
-        conversation = await buildConversation(chatState.messages, {
-          role: "user",
-          content: msg,
-        });
-      } else {
-        conversation = await buildConversation([], {
-          role: "user",
-          content: msg,
-        });
-      }
-
-      const msgPackData = msgpack.encode(conversation);
-      const base64String = fromByteArray(new Uint8Array(msgPackData));
-
-      askSchema.conversation = base64String;
-
-      let data = { response: "" };
-
-      try {
-        data = await sendAskReq({
-          message: JSON.stringify(askSchema),
-        }).unwrap();
-      } catch (error) {
-        console.error(error);
-        dispatchAddMessage({
-          role: "system",
-          type: "markup",
-          content: {
-            type: "markup",
-            markupContent:
-              "A connection error occurred or you are required to wait 15 seconds.",
-          },
-        });
-        setIsTyping(false);
-        return; // Exit early to prevent further execution
-      }
-
-      try {
-        await parseAIResponse(data);
-      } catch (error) {
-        console.error(error);
-        dispatchAddMessage({
-          role: "system",
-          type: "markup",
-          content: {
-            type: "markup",
-            markupContent:
-              "An error occurred while processing the response. Please try again.",
-          },
-        });
-      } finally {
-        setIsTyping(false);
-      }
-    }
+            content: {
+              type: "markup",
+              markupContent:
+                "An error occurred while processing the response. Please try again.",
+            },
+          });
+        } finally {
+          setIsTyping(false);
+        }
+      },
+      [
+        chatState,
+        dispatchAddMessage,
+        eReaderState,
+        sendAskReq,
+        theme,
+        scrollMessageBoxToBottom,
+        parseAIResponse,
+      ],
+    );
 
     // Expose methods to parent via ref
     useImperativeHandle(ref, () => ({
       handleMessageSend,
     }));
 
-    function handleSuggestionClick(msg: string) {
-      setSuggestions((prev) => prev.filter((suggestion) => suggestion !== msg));
-      handleMessageSend(msg);
-    }
+    const handleSuggestionClick = useCallback(
+      (msg: string) => {
+        setSuggestions((prev) =>
+          prev.filter((suggestion) => suggestion !== msg),
+        );
+        handleMessageSend(msg);
+      },
+      [handleMessageSend, setSuggestions],
+    );
 
     const computeTokens = useCallback(async () => {
       const conversation = await buildConversation(chatState.messages);
@@ -292,7 +316,7 @@ const Chat = forwardRef(
       computeTokens().then((tokens) => {
         dispatch(setConversationTokens(tokens));
       });
-    }, [chatState.messages]);
+    }, [chatState.messages, computeTokens, dispatch, scrollMessageBoxToBottom]);
 
     const MessageBlock = ({
       block,
@@ -303,7 +327,7 @@ const Chat = forwardRef(
     }) => {
       useEffect(() => {
         onAnimated();
-      }, []);
+      }, [onAnimated]);
       return <Message block={block} />;
     };
 
@@ -394,7 +418,13 @@ const Chat = forwardRef(
           )}
         </Flex>
       );
-    }, [chatState, chatState.messages, chatState.viewMode, isTyping]);
+    }, [
+      chatState,
+      isTyping,
+      suggestions,
+      handleSuggestionClick,
+      scrollMessageBoxToBottom,
+    ]);
 
     //Build node from scroll area
     const MessageContainerNode = useCallback(
@@ -408,7 +438,7 @@ const Chat = forwardRef(
           },
           position: { x: 0, y: 0 },
         }) as Node,
-      [chatState.messages, chatState.viewMode],
+      [ViewContainer],
     );
 
     return (

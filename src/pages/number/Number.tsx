@@ -56,7 +56,7 @@ const Number = () => {
       });
     }, 1000);
     return () => clearInterval(thinkingMind);
-  }, [queriesRequired.current, possibilities.current]);
+  }, [gamingStatus]);
 
   useEffect(() => {
     possibilities.current = generatePossibilities(

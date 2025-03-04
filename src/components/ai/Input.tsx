@@ -40,12 +40,13 @@ const Input: React.FC<InputProps> = ({
     const handleFocus = () => setInputFocus(true);
     const handleBlur = () => setInputFocus(false);
 
-    textAreaRef.current?.addEventListener("focus", handleFocus);
-    textAreaRef.current?.addEventListener("blur", handleBlur);
+    const shallowTextAreaRef = textAreaRef.current;
+    shallowTextAreaRef?.addEventListener("focus", handleFocus);
+    shallowTextAreaRef?.addEventListener("blur", handleBlur);
 
     return () => {
-      textAreaRef.current?.removeEventListener("focus", handleFocus);
-      textAreaRef.current?.removeEventListener("blur", handleBlur);
+      shallowTextAreaRef?.removeEventListener("focus", handleFocus);
+      shallowTextAreaRef?.removeEventListener("blur", handleBlur);
     };
   }, []);
 
