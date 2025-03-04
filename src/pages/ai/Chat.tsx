@@ -113,7 +113,7 @@ const AI = () => {
     <Flex
       className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}   !items-center gap-2`}
     >
-      <Tooltip content="Delete Chat">
+      <Tooltip content="delete chat">
         <IconButton
           size="2"
           variant="soft"
