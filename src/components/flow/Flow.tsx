@@ -19,20 +19,22 @@ import { nodeData } from "./config";
 import { useThemeContext } from "../context/theme/useThemeContext";
 import ResourceMonitor from "./components/ResourceMonitor";
 import { cloneDeep } from "lodash";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
-function FlowComponent({
+const FlowComponent = ({
   nodes,
-  messageBlocksCount,
   width,
   height,
 }: {
   nodes: Node[];
-  messageBlocksCount: number;
   width?: string;
   height?: string;
-}) {
+}) => {
   const { theme } = useThemeContext();
   const nodeTypes = useRef(nodeData).current;
+
+  const flowState = useSelector((state: RootState) => state.flow);
 
   const [nodesLocal, setNodesLocal] = useState<Node[]>(nodes);
 
@@ -48,9 +50,6 @@ function FlowComponent({
         return updatedNodes;
       });
     };
-  // ,
-  //   [nodes]
-  // );
 
   const fitViewOptionsConfig = useMemo(() => {
     return {
@@ -59,7 +58,7 @@ function FlowComponent({
       duration: 500,
       nodes: nodesLocal,
     };
-  }, [nodesLocal]);
+  }, [nodesLocal, flowState]);
 
   const { fitView } = useReactFlow();
 
@@ -67,13 +66,11 @@ function FlowComponent({
     fitView(fitViewOptionsConfig); // Smooth transition with 1-second duration
   }, [fitView, fitViewOptionsConfig]);
 
-  const messageBlocksCountRef = useRef(messageBlocksCount);
-
   useEffect(() => {
-    if (messageBlocksCountRef.current === messageBlocksCount) return;
-    messageBlocksCountRef.current = messageBlocksCount;
-    onFitView();
-  }, [messageBlocksCount, onFitView]);
+    setTimeout(() => {
+      fitView(fitViewOptionsConfig);
+    }, 500);
+  }, [flowState]);
 
   return (
     <Box className={`w-auto h-full !flex-col ${width} ${height}`}>
@@ -100,7 +97,7 @@ function FlowComponent({
       </ReactFlow>
     </Box>
   );
-}
+};
 
 // HOC to wrap FlowComponent with ReactFlowProvider
 function withReactFlowProvider(

@@ -28,6 +28,7 @@ import fetchGitBlob, {
 } from "../../components/hooks/data/gitFetcher";
 import Collapsible from "../../components/Collapsible";
 import { Helmet } from "react-helmet-async";
+import { toggleFlowSlice } from "../../app/flow/flowSlice";
 
 const AI = () => {
   const { theme } = useThemeContext();
@@ -116,7 +117,12 @@ const AI = () => {
         <IconButton
           size="2"
           variant="soft"
-          onClick={() => dispatch(clearMessages())}
+          onClick={() => {
+            {
+              dispatch(clearMessages());
+              dispatch(toggleFlowSlice());
+            }
+          }}
         >
           <Rotate3DIcon />
         </IconButton>
@@ -201,9 +207,9 @@ const AI = () => {
             ref={messageBoxRef}
             className={`${theme === "dark" ? "bg-[#171918]" : "border"}  p-1 !flex w-[100%] md:!min-w-[70%] !overflow-auto`}
           >
-            <span className="text-[0.6rem] text-gray-600 absolute top-1 left-1 z-20">
+            {/* <span className="text-[0.6rem] text-gray-600 absolute top-1 left-1 z-20">
               Discern generated content!
-            </span>
+            </span> */}
             <Chat
               highlightAxioms={() => {}}
               className="!w-full mx-auto sm:!w-[100%] md:!w-[90%]"

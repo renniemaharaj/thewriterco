@@ -49,6 +49,7 @@ import { buildConversation } from "./utils.ts";
 import { initialSuggestions } from "./configuration.ts";
 import useLocalStorage from "../hooks/useLocalStorage.ts";
 import Message from "./Message.tsx";
+import { toggleFlowSlice } from "../../app/flow/flowSlice.ts";
 
 const Chat = forwardRef(
   (
@@ -316,6 +317,8 @@ const Chat = forwardRef(
       computeTokens().then((tokens) => {
         dispatch(setConversationTokens(tokens));
       });
+
+      dispatch(toggleFlowSlice());
     }, [chatState.messages, computeTokens, dispatch, scrollMessageBoxToBottom]);
 
     const MessageBlock = ({

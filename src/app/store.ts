@@ -4,6 +4,7 @@ import authReducer from "./api/auth/authSlice";
 // import flowReducer from "./flow/flowSlice"; // Import the new slice
 import ereaderSlice from "./ereader/ereaderSlice";
 import chatSlice from "./chat/chatSlice";
+import flowSlice from "./flow/flowSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     // flow: flowReducer, // Added the flow reducer here
     ereader: ereaderSlice.reducer,
     chat: chatSlice.reducer,
+    flow: flowSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
