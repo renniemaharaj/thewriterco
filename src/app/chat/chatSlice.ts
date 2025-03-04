@@ -31,9 +31,6 @@ const ereaderSlice = createSlice({
     setViewMode(state, action: PayloadAction<"standard" | "canvas">) {
       state.viewMode = action.payload;
     },
-    toggleViewModeUpdate(state) {
-      state.viewModeUpdateToggle = !state.viewModeUpdateToggle;
-    },
     // Set the conversation mode of the chat
     setConversationMode(state, action: PayloadAction<"none" | "exchange">) {
       state.conversationMode = action.payload;
@@ -59,7 +56,6 @@ export const {
   clearMessages,
   setOrientation,
   setViewMode,
-  toggleViewModeUpdate,
   setConversationMode,
   setResponseConstraint,
   setConversationTokens,
