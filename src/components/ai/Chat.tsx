@@ -182,17 +182,19 @@ const Chat = forwardRef(
           });
         }
 
-        if (chatState.conversationTokens > 10000 && defaultSending) {
-          dispatchAddMessage({
-            role: "system",
-            type: "markup",
-            content: {
+        if (chatState.conversationTokens > 10000) {
+          if (defaultSending || chatState.conversationMode !== "none") {
+            dispatchAddMessage({
+              role: "system",
               type: "markup",
-              markupContent:
-                "Conversation limit reached, please start a new chat.",
-            },
-          });
-          return;
+              content: {
+                type: "markup",
+                markupContent:
+                  "Conversation limit reached, please start a new chat.",
+              },
+            });
+            return;
+          }
         }
 
         scrollMessageBoxToBottom();
