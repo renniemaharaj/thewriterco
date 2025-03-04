@@ -14,12 +14,7 @@ import Menu from "../../components/docs/Menu";
 import Hint from "../../components/Hint";
 import { useThemeContext } from "../../components/context/theme/useThemeContext";
 import Chat from "../../components/ai/Chat";
-import {
-  FileCode2,
-  FullscreenIcon,
-  MaximizeIcon,
-  Rotate3DIcon,
-} from "lucide-react";
+import { FileCode2, FullscreenIcon, MaximizeIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
@@ -29,6 +24,7 @@ import fetchGitBlob, {
 } from "../../components/hooks/data/gitFetcher";
 import { Helmet } from "react-helmet-async";
 import { toggleFlowSlice } from "../../app/flow/flowSlice";
+import { TrashIcon } from "@radix-ui/react-icons";
 
 const AI = () => {
   const { theme } = useThemeContext();
@@ -113,7 +109,7 @@ const AI = () => {
     <Flex
       className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}   !items-center gap-2`}
     >
-      <Tooltip content="rotate perspective">
+      <Tooltip content="Delete Chat">
         <IconButton
           size="2"
           variant="soft"
@@ -124,7 +120,7 @@ const AI = () => {
             }
           }}
         >
-          <Rotate3DIcon />
+          <TrashIcon />
         </IconButton>
       </Tooltip>
 
