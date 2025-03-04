@@ -56,7 +56,7 @@ const Page = ({
               variant="soft"
               onClick={() => (location.href = "/")}
               aria-label="Go to Home"
-              className={`${theme === "dark" ? "!text-white" : "!text-yellow-400"} hover:scale-105 transition-transform duration-150 !cursor-pointer`}
+              className={`${theme === "dark" ? "!text-white" : "!text-yellow-400"}`}
             >
               <HomeIcon />
             </IconButton>
