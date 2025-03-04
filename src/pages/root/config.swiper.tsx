@@ -8,7 +8,7 @@ import "swiper/css/autoplay";
 export const swiperProps = {
   ...coverflow,
   grabCursor: true,
-  speed: 1000,
+  speed: 800,
   pagination: { clickable: true },
   autoplay: { delay: 10000, disableOnInteraction: false },
 };
