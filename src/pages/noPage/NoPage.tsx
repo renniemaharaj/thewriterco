@@ -38,21 +38,24 @@ export default function NoPage() {
           onClick={() => (window.location.href = "/")}
           variant="soft"
           aria-label="Go to Homepage"
+          className="!w-full"
         >
           Go Home
         </Button>
 
-        <Flex gap="3">
+        <Flex gap="3" className="!w-full">
           <Button
             onClick={() => (window.location.href = "/ai")}
-            variant="ghost"
+            variant="soft"
+            className="!flex-1"
             aria-label="Visit TheWriterCo AI"
           >
             TheWriterCo AI
           </Button>
           <Button
             onClick={() => (window.location.href = "/reasoning")}
-            variant="ghost"
+            variant="soft"
+            className="!flex-1"
             aria-label="Read Rationale"
           >
             Rationale

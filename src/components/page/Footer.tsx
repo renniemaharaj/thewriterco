@@ -1,5 +1,13 @@
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { Heading, Text, Flex, Link, TextField, Button } from "@radix-ui/themes";
+import {
+  Heading,
+  Text,
+  Flex,
+  Link,
+  TextField,
+  Button,
+  Separator,
+} from "@radix-ui/themes";
 import {
   Facebook,
   //   Instagram,
@@ -11,6 +19,9 @@ import {
   Phone,
   HandCoinsIcon,
 } from "lucide-react";
+import Hero from "../Hero";
+import Hint from "../Hint";
+import { useThemeContext } from "../context/theme/useThemeContext";
 
 const companyName = "The Writer Company";
 const companyMission =
@@ -20,22 +31,32 @@ const companyEmail = "rvesprey@gmail.com";
 const companyPhone = "(***) ***-****";
 
 const Footer: React.FC = () => {
+  const { theme } = useThemeContext();
   return (
-    <footer id="footer" className="py-16 !max-w-[140% bg-[#171918] text-white">
+    <footer
+      id="footer"
+      className="flex !flex-col !gap-5 py-16 !max-w-[140% bg-[#171918] text-white"
+    >
       {/* First Column: Information Section */}
-
-      {/* <Box className="relative p-4"> */}
-      <Flex className="w-full !overflow-hidden !items-center !justify-center">
-        <Flex className="!flex-col p-10 !items-center !relative !overflow-visible">
-          <Heading className="text-2xl font-bold">{companyName}</Heading>
-          <Text className="mt-2 text-sm">{companyMission}</Text>
-          <Text className="mt-2 text-xs">
-            {companyAddress} <br />
-          </Text>
-        </Flex>
-      </Flex>
+      <Hero
+        header={companyName}
+        className="!text-center max-w-[500px] mx-auto"
+        subHeader={
+          <div>
+            <Link
+              size="2"
+              href="/office"
+              className={`${theme === "dark" ? "!text-white" : "!text-yellow-400"}`}
+            >
+              {companyAddress}
+            </Link>
+            <br />
+            <Hint>{companyMission}</Hint>
+          </div>
+        }
+      />
+      <Separator size={"1"} className="mx-auto" />
       {/* </Box> */}
-
       <Flex className="max-w-7xl !flex-wrap mx-auto flex !gap-10 w-full !text-center !items-center !justify-center p-1">
         {/* Second Column: Support Section */}
         <Flex className="!flex-col">
@@ -99,18 +120,6 @@ const Footer: React.FC = () => {
             <Link href="https://www.facebook.com/profile.php?id=61571490380198">
               <Facebook className="h-5 w-5 text-gray-300 hover:!text-white" />
             </Link>
-            {/* <Link href="#">
-            <Twitter className="h-5 w-5 text-gray-300 hover:text-white" />
-          </Link>
-          <Link href="#">
-            <Instagram className="h-5 w-5 text-gray-300 hover:text-white" />
-          </Link>
-          <Link href="#">
-            <Linkedin className="h-5 w-5 text-gray-300 hover:text-white" />
-          </Link>
-          <Link href="#">
-            <Youtube className="h-5 w-5 text-gray-300 hover:text-white" />
-          </Link> */}
           </Flex>
         </Flex>
 
@@ -123,7 +132,10 @@ const Footer: React.FC = () => {
             <MapPin className="h-5 w-5 text-primary" />
             <Text>
               {companyAddress && (
-                <Link href="#" className="!text-gray-300 hover:!text-white">
+                <Link
+                  href="/office"
+                  className={`${theme === "dark" ? "!text-white" : "!text-yellow-400"}`}
+                >
                   {companyAddress}
                 </Link>
               )}
@@ -148,7 +160,7 @@ const Footer: React.FC = () => {
         <div className="basis-[100%]" />
         {/* Fifth Column: Support */}
         <Flex className="!flex-col">
-          <Heading size="4" className="text-md font-bold mb-4 mt-4">
+          <Heading size="4" className="text-md font-bold">
             Support Us
           </Heading>
           <Flex className="items-center gap-2 text-sm mt-2">
