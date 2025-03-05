@@ -441,7 +441,7 @@ const Chat = forwardRef(
         {/* <Card className="bg-red-400 !top-0" variant="ghost"> */}
         {/* {canvasView ? ( */}
         {chatState.viewMode === "canvas" ? (
-          <div className="!w-full h-[50vh] md:!h-[75vh]">
+          <div className="!w-full h-[99vh]">
             <Flow
               nodes={[MessageContainerNode()]}
               messageBlocksCount={countMessageBlocks()}

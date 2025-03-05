@@ -1,7 +1,10 @@
 import { Button, Card, Flex, IconButton } from "@radix-ui/themes";
 import { ArrowUpIcon } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import TextareaAutosize from "react-textarea-autosize";
+import { RootState } from "../../app/store";
+import { useThemeContext } from "../context/theme/useThemeContext";
 
 interface InputProps {
   handleRecieve: (input: string) => void;
@@ -22,6 +25,10 @@ const Input: React.FC<InputProps> = ({
   const [inputFocus, setInputFocus] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const { theme } = useThemeContext();
+
+  const chatSlice = useSelector((state: RootState) => state.chat);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (disabled) return;
@@ -44,17 +51,23 @@ const Input: React.FC<InputProps> = ({
     const shallowTextAreaRef = textAreaRef.current;
     shallowTextAreaRef?.addEventListener("focus", handleFocus);
     shallowTextAreaRef?.addEventListener("blur", handleBlur);
+    shallowTextAreaRef?.removeEventListener("mouseleave", handleBlur);
 
     const shallowWrapperRef = wrapperRef.current;
     shallowWrapperRef?.addEventListener("focus", handleFocus);
     shallowWrapperRef?.addEventListener("click", handleFocus);
     shallowWrapperRef?.addEventListener("mousedown", handleFocus);
-    shallowTextAreaRef?.addEventListener("mouseover", handleFocus);
+
+    shallowWrapperRef?.addEventListener("mouseleave", handleBlur);
+    // shallowTextAreaRef?.addEventListener("mouseover", handleFocus);
+
+    shallowWrapperRef?.addEventListener("mouseenter", handleFocus);
     shallowWrapperRef?.addEventListener("touchstart", handleFocus);
 
     return () => {
       shallowTextAreaRef?.removeEventListener("focus", handleFocus);
       shallowTextAreaRef?.removeEventListener("blur", handleBlur);
+      shallowTextAreaRef?.removeEventListener("mouseleave", handleBlur);
 
       shallowWrapperRef?.removeEventListener("focus", handleFocus);
       shallowWrapperRef?.removeEventListener("click", handleFocus);
@@ -70,8 +83,8 @@ const Input: React.FC<InputProps> = ({
       ref={wrapperRef}
       className={`${className} ${
         inputFocus
-          ? "border-[#978365]"
-          : "border-transparent !w-[10%] max-w-[64px] aspect-square"
+          ? "border-[#978365] border-2"
+          : `border-transparent !w-[10%] max-w-[64px] aspect-square !opacity-40 ${chatSlice.viewMode === "canvas" ? "ml-12" : ""}`
       } w-[100%] outline-none !flex !flex-col !gap-2
        `}
     >
@@ -79,11 +92,12 @@ const Input: React.FC<InputProps> = ({
         <Flex
           align={"center"}
           justify={"center"}
-          className="blurred-div w-full h-full rounded-full overflow-hidden absolute top-0 left-0"
+          className="w-full h-full rounded-full overflow-hidden absolute top-0 left-0"
         >
           <IconButton
             variant="soft"
-            className="!absolute top-0 right-0"
+            className={`${theme === "dark" ? "!text-white" : "!text-yellow-400"}`}
+            // highContrast
             onClick={() => {
               textAreaRef.current?.focus();
             }}
@@ -93,7 +107,10 @@ const Input: React.FC<InputProps> = ({
         </Flex>
       )}
 
-      <Flex align="center" className="flex gap-2 !w-full !justify-evenly">
+      <Flex
+        align="center"
+        className={`flex gap-2 !w-full !justify-evenly ${inputFocus ? "!opacity-100" : "!opacity-0"}`}
+      >
         <TextareaAutosize
           ref={textAreaRef}
           disabled={disabled}
