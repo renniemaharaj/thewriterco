@@ -1,4 +1,4 @@
-import { Button, Card, Flex } from "@radix-ui/themes";
+import { Button, Card, Flex, IconButton } from "@radix-ui/themes";
 import { ArrowUpIcon } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
@@ -21,6 +21,7 @@ const Input: React.FC<InputProps> = ({
   const [message, setMessage] = useState("");
   const [inputFocus, setInputFocus] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (disabled) return;
@@ -44,19 +45,54 @@ const Input: React.FC<InputProps> = ({
     shallowTextAreaRef?.addEventListener("focus", handleFocus);
     shallowTextAreaRef?.addEventListener("blur", handleBlur);
 
+    const shallowWrapperRef = wrapperRef.current;
+    shallowWrapperRef?.addEventListener("focus", handleFocus);
+    shallowWrapperRef?.addEventListener("click", handleFocus);
+    shallowWrapperRef?.addEventListener("mousedown", handleFocus);
+    shallowTextAreaRef?.addEventListener("mouseover", handleFocus);
+    shallowWrapperRef?.addEventListener("touchstart", handleFocus);
+
     return () => {
       shallowTextAreaRef?.removeEventListener("focus", handleFocus);
       shallowTextAreaRef?.removeEventListener("blur", handleBlur);
+
+      shallowWrapperRef?.removeEventListener("focus", handleFocus);
+      shallowWrapperRef?.removeEventListener("click", handleFocus);
+      shallowWrapperRef?.removeEventListener("mousedown", handleFocus);
+      shallowTextAreaRef?.removeEventListener("mouseover", handleFocus);
+      shallowWrapperRef?.removeEventListener("touchstart", handleFocus);
     };
   }, []);
 
   return (
     <Card
       style={style}
+      ref={wrapperRef}
       className={`${className} ${
-        inputFocus ? "border-[#978365]" : "border-transparent"
-      } w-[100%] border-2 outline-none !flex !flex-col !gap-2 `}
+        inputFocus
+          ? "border-[#978365]"
+          : "border-transparent !w-[10%] max-w-[64px] aspect-square"
+      } w-[100%] outline-none !flex !flex-col !gap-2
+       `}
     >
+      {!inputFocus && (
+        <Flex
+          align={"center"}
+          justify={"center"}
+          className="blurred-div w-full h-full rounded-full overflow-hidden absolute top-0 left-0"
+        >
+          <IconButton
+            variant="soft"
+            className="!absolute top-0 right-0"
+            onClick={() => {
+              textAreaRef.current?.focus();
+            }}
+          >
+            <ArrowUpIcon className="mx-auto" />
+          </IconButton>
+        </Flex>
+      )}
+
       <Flex align="center" className="flex gap-2 !w-full !justify-evenly">
         <TextareaAutosize
           ref={textAreaRef}
