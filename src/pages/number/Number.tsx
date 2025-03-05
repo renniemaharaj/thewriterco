@@ -7,20 +7,13 @@ import {
 } from "./config.ts";
 import { generatePossibilities, mean } from "./utils.ts";
 import { QueryForm, GameEndNotice } from "./types.ts";
-import {
-  Flex,
-  Box,
-  Button,
-  Text,
-  Link,
-  Quote,
-  Separator,
-} from "@radix-ui/themes";
+import { Flex, Box, Button, Text, Link, Quote } from "@radix-ui/themes";
 import { AllowedColors } from "../../components/RadixColors.ts";
 import Hint from "../../components/Hint.tsx";
 // import Footer from "../../components/Footer";
 import { BrainCircuit } from "lucide-react";
 import Page from "../../components/page/Page.tsx";
+import Hero from "../../components/Hero.tsx";
 // import Footer from "../../components/additional/footer";
 
 type Mind = {
@@ -195,6 +188,17 @@ const Number = () => {
       wrapChildren={true}
       title="Number Guesser"
       description="Guess any number from 0 to infinity"
+      hero={
+        <Hero
+          header="Binary-search,"
+          subHeader={
+            <>
+              range-finder, <br /> number guesser
+            </>
+          }
+          hint={<Text>It's just math, with 1/2 teaspoon of chance</Text>}
+        />
+      }
     >
       <Flex
         direction="column"
@@ -202,16 +206,6 @@ const Number = () => {
         // justify="center"
         className="!w-full"
       >
-        <Flex className="w-full flex-col text-center items-center justify-center">
-          <h2 className="text-2xl font-bold">
-            Binary-search, <br /> range-finder,{" "}
-            <span className="w-full text-center">number guesser</span>
-          </h2>
-          <Hint className="text-sm text-muted-foreground text-center mt-2">
-            It's just math, with 1/2 teaspoon of chance
-          </Hint>
-        </Flex>
-        <Separator size={"1"} />
         {!gamingStatus ? (
           <Flex className="!flex-col gap-1">
             <Quote className="italic animate-fade-in">

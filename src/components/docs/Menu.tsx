@@ -39,32 +39,13 @@ const axioms = [
 
 const Menu = ({
   className,
-  children,
 }: {
   axiomsMentioned?: boolean;
   className?: string;
-  children?: React.ReactNode;
 }) => {
-  const hero = "Reasoning";
-
   return (
-    <ScrollArea
-      className={`${className} !flex !mx-auto p-2 pt-7 flex-col h-full`}
-    >
-      <Text
-        className="text-wrap cursor-pointer text-2xl m-auto"
-        weight="bold"
-        style={{
-          display: "block",
-          textAlign: "center",
-          transition: "300ms",
-        }}
-        onClick={() => (location.href = "/reasoning")}
-      >
-        {hero}
-      </Text>
-      {children}
-      <Tabs.Root defaultValue="axioms" className="mt-8 !max-w-[100%]">
+    <ScrollArea className={`${className} !flex !mx-auto p-2 flex-col h-full`}>
+      <Tabs.Root defaultValue="axioms" className="!max-w-[100%]">
         <Tabs.List className="!flex !flex-wrap space-x-4 !shadow-none pb-2">
           <Tabs.Trigger value="axioms" className="px-4 py-2">
             Axioms

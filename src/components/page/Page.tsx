@@ -84,9 +84,10 @@ const Page = ({
         className={`!w-full md:!w-[80%] !flex-col !mx-auto pb-20  ${className}`}
       >
         {wrapChildren && (
-          <Card className={`!p-5 !max-w-[100%]${className}`}>
-            <Flex className="!flex-col !gap-10">
+          <Card className={`!p-5 !max-w-full ${className}`}>
+            <Flex className="!flex-col !gap-10  !w-full !max-w-full">
               {hero}
+              <Separator size={"2"} className="mx-auto" />
               {children}
             </Flex>
           </Card>

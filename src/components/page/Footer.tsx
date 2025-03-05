@@ -13,7 +13,8 @@ import {
 } from "lucide-react";
 
 const companyName = "The Writer Company";
-const companyMission = "Bible, writing, resources and tools";
+const companyMission =
+  "Bible, writing, resources and open source biblical tools.";
 const companyAddress = "Trinidad and Tobago";
 const companyEmail = "rvesprey@gmail.com";
 const companyPhone = "(***) ***-****";
@@ -35,9 +36,9 @@ const Footer: React.FC = () => {
       </Flex>
       {/* </Box> */}
 
-      <Flex className="max-w-7xl !flex-wrap mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 w-full !items-center !justify-center p-1">
+      <Flex className="max-w-7xl !flex-wrap mx-auto flex !gap-10 w-full !text-center !items-center !justify-center p-1">
         {/* Second Column: Support Section */}
-        <div className="hidden md:block">
+        <Flex className="!flex-col">
           <Heading size="4" className="text-md font-bold mb-4">
             Support
           </Heading>
@@ -70,10 +71,10 @@ const Footer: React.FC = () => {
             <Button className="bg-primary text-sm mt-4">Donate Now</Button>
           </li> */}
           </ul>
-        </div>
+        </Flex>
 
         {/* Third Column: Stay Connected */}
-        <div>
+        <Flex className="!flex-col">
           <Heading size="4" className="text-md font-bold mb-4">
             Stay Connected
           </Heading>
@@ -87,7 +88,7 @@ const Footer: React.FC = () => {
               placeholder="Enter your email"
               // className="text-black"
             />
-            <Button size="2" variant="solid" highContrast>
+            <Button size="2" variant="solid" highContrast disabled>
               Sign Up
             </Button>
           </Flex>
@@ -111,20 +112,21 @@ const Footer: React.FC = () => {
             <Youtube className="h-5 w-5 text-gray-300 hover:text-white" />
           </Link> */}
           </Flex>
-        </div>
+        </Flex>
 
         {/* Fourth Column: Contact Information */}
-        <div>
+        <Flex className="!flex-col">
           <Heading size="4" className="text-md font-bold mb-4">
             Contact Us
           </Heading>
           <Flex className="items-start gap-2 text-sm">
             <MapPin className="h-5 w-5 text-primary" />
             <Text>
-              {companyAddress} <br />
-              <Link href="#" className="!text-gray-300 hover:!text-white">
-                Get Directions
-              </Link>
+              {companyAddress && (
+                <Link href="#" className="!text-gray-300 hover:!text-white">
+                  {companyAddress}
+                </Link>
+              )}
             </Text>
           </Flex>
           <Flex className="items-center gap-2 text-sm mt-2">
@@ -141,6 +143,11 @@ const Footer: React.FC = () => {
             <Phone className="h-5 w-5 text-primary" />
             <Text>Phone: {companyPhone}</Text>
           </Flex>
+        </Flex>
+
+        <div className="basis-[100%]" />
+        {/* Fifth Column: Support */}
+        <Flex className="!flex-col">
           <Heading size="4" className="text-md font-bold mb-4 mt-4">
             Support Us
           </Heading>
@@ -153,7 +160,7 @@ const Footer: React.FC = () => {
               Paypal Contribute
             </Link>
           </Flex>
-        </div>
+        </Flex>
       </Flex>
 
       {/* Footer Bottom Section */}

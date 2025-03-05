@@ -12,19 +12,21 @@ const Example = () => {
       wrapChildren
       title="Study Documents Example"
       description="Example of a study document"
+      hero={
+        <Hero
+          header={<>Study Documents</>}
+          subHeader={
+            <>
+              <br />
+              TheWriterCo
+            </>
+          }
+          hint={
+            <>This is an example of context building and study document 🗎 ❤️</>
+          }
+        />
+      }
     >
-      <Hero
-        header={<>Study Documents</>}
-        subHeader={
-          <>
-            <br />
-            TheWriterCo
-          </>
-        }
-        hint={
-          <>This is an example of context building and study document 🗎 ❤️</>
-        }
-      />
       <Box className="p-4">
         <br />
         {/* <Card> */}

@@ -12,7 +12,6 @@ import {
   wisdomBooks,
   propheticBooks,
 } from "./config";
-import Hint from "../Hint";
 import { useDispatch, useSelector } from "react-redux";
 import fetchGitBlob, { kjvRepoUrl } from "../hooks/data/gitFetcher";
 import { EBook } from "../../app/ereader/types";
@@ -36,7 +35,7 @@ const divisions = {
   "Wisdom Books": wisdomBooks,
   "Prophetic Books": propheticBooks,
 };
-const Sword: React.FC<SwordProps> = ({ setEBook, asChild }) => {
+const Sword: React.FC<SwordProps> = ({ setEBook }) => {
   const dispatch = useDispatch();
   const [isFetchingContent, setIsFetchingContent] = React.useState(false);
 
@@ -68,24 +67,6 @@ const Sword: React.FC<SwordProps> = ({ setEBook, asChild }) => {
 
       {/* <Section className={` mx-auto `}> */}
       <Flex className="w-full mx-auto pb-10 flex-col items-center text-center">
-        {!asChild && (
-          <>
-            <h2 className="text-2xl font-bold">
-              The Word of God{" "}
-              <span className="w-full text-center">
-                <br />- KJV
-              </span>
-            </h2>
-            {/* <Heading size="4" align="center" className="mb-8">
-              The Word of God - KJV
-            </Heading> */}
-            <Hint className="max-w-[450px]">
-              The Writer Company is KJV only. We are against the subtle
-              conditioning towards an ultimate acceptance of a watered-down
-              bible version. 😬
-            </Hint>
-          </>
-        )}
         <Tabs.Root defaultValue="Canonical Gospels">
           <Tabs.List className="!flex-wrap">
             {Object.keys(divisions).map((division) => (

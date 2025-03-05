@@ -4,7 +4,8 @@ import { EBook } from "../../app/ereader/types";
 import { useDispatch } from "react-redux";
 import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
 import Page from "../../components/page/Page";
-import { Flex } from "@radix-ui/themes";
+import { Flex, Text } from "@radix-ui/themes";
+import Hero from "../../components/Hero";
 // import Footer from "../../components/additional/footer";
 // import Footer from "../../components/Footer";
 const KJV = () => {
@@ -21,6 +22,19 @@ const KJV = () => {
       wrapChildren={true}
       title="KJV Bible"
       description="Read the KJV Bible"
+      hero={
+        <Hero
+          header="The Word of God"
+          subHeader="KJV"
+          hint={
+            <Text>
+              The Writer Company is KJV only. We are against the subtle
+              conditioning towards an ultimate acceptance of a watered-down
+              bible version. 😬
+            </Text>
+          }
+        />
+      }
     >
       <Flex
         direction="column"

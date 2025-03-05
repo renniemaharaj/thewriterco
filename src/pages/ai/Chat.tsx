@@ -11,12 +11,12 @@ import {
 import Ereader from "../../components/bible/Ereader";
 import SideBar from "../../components/SideBar";
 import Menu from "../../components/docs/Menu";
-import Hint from "../../components/Hint";
 import { useThemeContext } from "../../components/context/theme/useThemeContext";
 import Chat from "../../components/ai/Chat";
 import {
   FileCode2,
   FullscreenIcon,
+  HomeIcon,
   MaximizeIcon,
   Trash2Icon,
 } from "lucide-react";
@@ -113,6 +113,18 @@ const AI = () => {
     <Flex
       className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}   !items-center gap-2`}
     >
+      {/* <Flex> */}
+      <Tooltip content="go home">
+        <IconButton
+          variant="soft"
+          onClick={() => (location.href = "/")}
+          aria-label="Go to Home"
+        >
+          <HomeIcon />
+        </IconButton>
+      </Tooltip>
+
+      {/* </Flex> */}
       <Tooltip content="delete chat">
         <IconButton
           size="2"
@@ -192,14 +204,7 @@ const AI = () => {
         variant="center"
         className="flex-col relative m-auto !w-[100vw] !h-[100vh] transition-all gap-1"
         orientation={orientation}
-        childLeft={
-          <Menu
-            className="!hidden md:!flex"
-            children={
-              <Hint>Click reasoning to go to the reasoning route.</Hint>
-            }
-          />
-        }
+        childLeft={<Menu className="!hidden md:!flex" />}
         centerBar={PanelBar}
         childRight={
           /* Chatbox Section */

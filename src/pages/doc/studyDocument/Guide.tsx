@@ -17,19 +17,23 @@ const Guide = () => {
       wrapChildren
       title="Study Documents Guide"
       description="Learn how to build study documents using our tools"
+      hero={
+        <Hero
+          header={<>Study Documents</>}
+          subHeader={
+            <>
+              <br />
+              TheWriterCo
+            </>
+          }
+          hint={
+            <>
+              You will learn how to build a study document using our tools 🗎 ❤️
+            </>
+          }
+        />
+      }
     >
-      <Hero
-        header={<>Study Documents</>}
-        subHeader={
-          <>
-            <br />
-            TheWriterCo
-          </>
-        }
-        hint={
-          <>You will learn how to build a study document using our tools 🗎 ❤️</>
-        }
-      />
       <Flex className="animate-fade-in !flex-col merriweather-bold gap-4">
         <Box className="p-4">
           <Heading size="4">Power Your Bible Studies with AI</Heading>
