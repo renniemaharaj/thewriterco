@@ -81,13 +81,14 @@ const Page = ({
         direction="column"
         align="center"
         justify="center"
-        className={`!w-full md:!w-[80%] !flex-col !mx-auto pb-20 ${className}`}
+        className={`!w-full md:!w-[80%] !flex-col !mx-auto pb-20  ${className}`}
       >
         {wrapChildren && (
-          <Card className={`!p-5 !max-w-[100%] gap-5 ${className}`}>
-            {[hero, children].map((child, index) => (
-              <div key={index}>{child}</div>
-            ))}
+          <Card className={`!p-5 !max-w-[100%]${className}`}>
+            <Flex className="!flex-col !gap-10">
+              {hero}
+              {children}
+            </Flex>
           </Card>
         )}
         {!wrapChildren && [hero, <div>{children}</div>]}

@@ -71,7 +71,7 @@ const Root: React.FC = () => {
           </Swiper>
         </Flex>
         <Separator size="4" className="m-4" />
-        <Flex className="!relative w-full !flex-row !justify-center gap-5 mx-auto">
+        <Flex className="!relative w-full !flex-row !justify-center !items-center gap-5 mx-auto">
           <Text className="!text-center !text-lg !font-bold">
             TheWriterCo AI
           </Text>
@@ -90,7 +90,7 @@ const Root: React.FC = () => {
             </IconButton>
           </Tooltip>
           <Link href="/ai" className="!text-center !text-lg !font-bold">
-            Study
+            Go
           </Link>
         </Flex>
 
