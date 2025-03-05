@@ -9,14 +9,18 @@ import { useThemeContext } from "../context/theme/useThemeContext";
 
 const Page = ({
   children,
+  hero,
   hideBiblePicker = true,
   wrapChildren = false,
+  className,
   title,
   description,
 }: {
   children: ReactNode;
+  hero?: ReactNode;
   hideBiblePicker?: boolean;
   wrapChildren?: boolean;
+  className?: string;
   title?: string;
   description?: string;
 }) => {
@@ -72,19 +76,23 @@ const Page = ({
         </div>
       </section>
       <Ereader hidePicker={hideBiblePicker} />
-      <Flex className="!w-full animate-fade-in !flex-col merriweather-bold !p-2">
-        <Flex
-          direction="column"
-          align="center"
-          justify="center"
-          className="w-full md:!w-[80%] mx-auto pb-20"
-        >
-          {wrapChildren && (
-            <Card className="!p-5 !max-w-[100%]">{children}</Card>
-          )}
-          {!wrapChildren && children}
-        </Flex>
+      {/* <Flex className="!w-full animate-fade-in !flex-col merriweather-bold !p-2"> */}
+      <Flex
+        direction="column"
+        align="center"
+        justify="center"
+        className={`!w-full md:!w-[80%] !flex-col !mx-auto pb-20 ${className}`}
+      >
+        {wrapChildren && (
+          <Card className={`!p-5 !max-w-[100%] gap-5 ${className}`}>
+            {[hero, children].map((child, index) => (
+              <div key={index}>{child}</div>
+            ))}
+          </Card>
+        )}
+        {!wrapChildren && [hero, <div>{children}</div>]}
       </Flex>
+      {/* </Flex> */}
       <Separator size={"4"} />
       <Separator size={"4"} />
       {/* <Footer /> */}

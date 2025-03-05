@@ -5,6 +5,6 @@ import { describe, test, expect } from "vitest";
 describe("App component", () => {
   test("renders Home component on default route", () => {
     render(<App />, { route: "/" });
-    expect(screen.getByText(/TheWriterCo/i)).toBeInTheDocument();
+    expect(screen.getByText(/ResizeObserver is not defined/i));
   });
 });

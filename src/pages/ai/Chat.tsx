@@ -211,7 +211,6 @@ const AI = () => {
               Discern generated content!
             </span> */}
             <Chat
-              highlightAxioms={() => {}}
               className="!w-full mx-auto sm:!w-[100%] md:!w-[90%]"
               scrollMessageBoxToBottom={scrollMessageBoxToBottom}
               ref={chatRef}

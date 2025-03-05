@@ -55,11 +55,9 @@ const Chat = forwardRef(
   (
     {
       className,
-      highlightAxioms,
       scrollMessageBoxToBottom,
     }: {
       className?: string;
-      highlightAxioms: () => void;
       scrollMessageBoxToBottom: () => void;
     },
     ref,
@@ -108,7 +106,6 @@ const Chat = forwardRef(
 
           // Iterate through responseBlocks and handle different content types
           genaiResponse.responseBlocks.forEach((block: ResponseBlock) => {
-            const regex = /axioms?/gi;
             switch (block.type) {
               case "markup":
                 dispatchAddMessage({
@@ -116,13 +113,6 @@ const Chat = forwardRef(
                   type: "markup",
                   content: block.content as MarkupResponse,
                 });
-
-                // Detect mention of axioms
-                if (
-                  (block.content as MarkupResponse).markupContent.match(regex)
-                ) {
-                  highlightAxioms();
-                }
                 break;
 
               case "scripture":
@@ -164,7 +154,7 @@ const Chat = forwardRef(
           console.error("Error parsing AI response:", error);
         }
       },
-      [dispatchAddMessage, highlightAxioms],
+      [dispatchAddMessage],
     );
 
     const handleMessageSend = useCallback(

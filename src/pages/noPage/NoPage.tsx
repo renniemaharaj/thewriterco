@@ -8,24 +8,25 @@ export default function NoPage() {
       wrapChildren
       title="404 - Page Not Found"
       description="Page not found"
+      hero={
+        <Hero
+          header="Welcome to"
+          subHeader={
+            <>
+              The Writer <br />
+              Company
+            </>
+          }
+          hint={
+            <>
+              We're here to give reasoning for faith; reinforcement to your
+              shield 🛡️ Wherewith ye shall quench all the fiery darts of the
+              wicked. For his bow is set with a fiery deception 🏹
+            </>
+          }
+        />
+      }
     >
-      <Hero
-        header="Welcome to"
-        subHeader={
-          <>
-            The Writer <br />
-            Company
-          </>
-        }
-        hint={
-          <>
-            We're here to give reasoning for faith; reinforcement to your shield
-            🛡️ Wherewith ye shall quench all the fiery darts of the wicked. For
-            his bow is set with a fiery deception 🏹
-          </>
-        }
-      />
-
       <Text as="div" color="red" className="!w-full !text-center animate-pulse">
         Oops! This page doesn't exist 😔
       </Text>
