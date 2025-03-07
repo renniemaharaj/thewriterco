@@ -1,14 +1,4 @@
-import {
-  Flex,
-  Button,
-  Skeleton,
-  Text,
-  Tooltip,
-  SegmentedControl,
-  IconButton,
-  Popover,
-  Separator,
-} from "@radix-ui/themes";
+import { Flex, Button, Skeleton } from "@radix-ui/themes";
 import {
   useCallback,
   useImperativeHandle,
@@ -22,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store.ts";
 import { useThemeContext } from "../context/theme/useThemeContext.tsx";
 
-import { EllipsisVerticalIcon } from "lucide-react";
 import {
   Block,
   Code,
@@ -42,7 +31,6 @@ import {
   addMessage,
   setConversationMode,
   setConversationTokens,
-  setResponseConstraint,
   setViewMode,
 } from "../../app/chat/chatSlice.ts";
 import { buildConversation } from "./utils.ts";
@@ -191,25 +179,25 @@ const Chat = forwardRef(
         setIsTyping(true);
 
         // Attach additional context to the message
-        const attachedTheme = `-@here Note user's theme for appropriate styling: ${theme} mode`;
-        const attachedBookState = `-@here Note user's current book state for your knowledge: ${eReaderState.eContent.title} ${eReaderState.currentChapter}:${eReaderState.currentVerse}`;
+        const attachedTheme = `-@here: ${theme}`;
+        const attachedBookState = `-@here: ${eReaderState.eContent.title} ${eReaderState.currentChapter}:${eReaderState.currentVerse}`;
 
         // Attach date & time
-        const attachedLocalTime = `-@here Note user's local time for context: ${new Date().toLocaleString()}`;
-        const attachedCurrentDate = `-@here Note user's current date for context: ${new Date().toDateString()}`;
-        const attachedResponseConstraint = `-@here Note user's chosen response-constraint for appropriate response length: ${chatState.responseConstraint || "Short"}`;
-        const additionalContext = [
-          attachedTheme,
-          attachedBookState,
-          attachedLocalTime,
-          attachedCurrentDate,
-          attachedResponseConstraint,
+        const attachedLocalTime = `-@here: ${new Date().toLocaleString()}`;
+        const attachedCurrentDate = `-@here: ${new Date().toDateString()}`;
+        const attachedResponseConstraint = `-@here: ${chatState.responseConstraint || "Short"} from: shortest | short | detailed`;
+        const context = [
+          { themeMode: attachedTheme },
+          { bookState: attachedBookState },
+          { localTime: attachedLocalTime },
+          { currentDate: attachedCurrentDate },
+          { responseConstraint: attachedResponseConstraint },
         ];
 
         // Build ask schema
         const askSchema = {
-          conversation: "",
-          additionalContext,
+          encoded: "",
+          context,
         };
 
         let conversation;
@@ -229,7 +217,7 @@ const Chat = forwardRef(
         const msgPackData = msgpack.encode(conversation);
         const base64String = fromByteArray(new Uint8Array(msgPackData));
 
-        askSchema.conversation = base64String;
+        askSchema.encoded = base64String;
 
         let data = { response: "" };
 
@@ -459,63 +447,6 @@ const Chat = forwardRef(
           children={
             <Flex gap="2" className="!flex-row">
               <Flex align={"center"} className="!p-1 gap-2 !flex-wrap">
-                <Popover.Root>
-                  <Popover.Trigger>
-                    <IconButton variant="soft">
-                      <EllipsisVerticalIcon className="scale-75" />
-                    </IconButton>
-                  </Popover.Trigger>
-                  <Popover.Content>
-                    <Text className="!w-full !text-center text-sm">
-                      Response Length
-                    </Text>
-                    <Separator size="4" className="!my-2" />
-                    <Flex gap="3">
-                      <SegmentedControl.Root
-                        variant="classic"
-                        size={"2"}
-                        defaultValue={chatState.responseConstraint}
-                        // defaultValue={responseConstraint}
-                      >
-                        <SegmentedControl.Item
-                          value="shorter"
-                          // onClick={() => setResponseConstraint("shorter")}
-                          onClick={() =>
-                            dispatch(setResponseConstraint("shorter"))
-                          }
-                        >
-                          <Tooltip content="Shorter responses, best for quick replies">
-                            <Text>1</Text>
-                          </Tooltip>
-                        </SegmentedControl.Item>
-
-                        <SegmentedControl.Item
-                          value="short"
-                          // onClick={() => setResponseConstraint("short")}
-                          onClick={() =>
-                            dispatch(setResponseConstraint("short"))
-                          }
-                        >
-                          <Tooltip content="Short responses, great for quick replies">
-                            <Text>2</Text>
-                          </Tooltip>
-                        </SegmentedControl.Item>
-
-                        <SegmentedControl.Item
-                          value="detailed"
-                          // onClick={() => setResponseConstraint("detailed")}
-                          onClick={() =>
-                            dispatch(setResponseConstraint("detailed"))
-                          }
-                        >
-                          <Tooltip content="Regular responses, best for detailed replies">
-                            <Text>3</Text>
-                          </Tooltip>
-                        </SegmentedControl.Item>
-                      </SegmentedControl.Root>
-                    </Flex>
-                  </Popover.Content>
-                </Popover.Root>
                 <Button
                   variant={"outline"}
                   onClick={() => dispatch(setOpenState(true))}

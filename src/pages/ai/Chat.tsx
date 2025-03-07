@@ -2,11 +2,14 @@ import {
   Button,
   Dialog,
   Flex,
-  IconButton,
-  Tooltip,
-  Text,
   Select,
   Link,
+  SegmentedControl,
+  Popover,
+  Separator,
+  Tooltip,
+  IconButton,
+  Text,
 } from "@radix-ui/themes";
 import Ereader from "../../components/bible/Ereader";
 import SideBar from "../../components/SideBar";
@@ -14,6 +17,7 @@ import Menu from "../../components/docs/Menu";
 import { useThemeContext } from "../../components/context/theme/useThemeContext";
 import Chat from "../../components/ai/Chat";
 import {
+  EllipsisVerticalIcon,
   FileCode2,
   FullscreenIcon,
   HomeIcon,
@@ -23,7 +27,11 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { clearMessages, setMessageBoxMode } from "../../app/chat/chatSlice";
+import {
+  clearMessages,
+  setMessageBoxMode,
+  setResponseConstraint,
+} from "../../app/chat/chatSlice";
 import fetchGitBlob, {
   templateRepoUrl,
 } from "../../components/hooks/data/gitFetcher";
@@ -123,6 +131,56 @@ const AI = () => {
           <HomeIcon />
         </IconButton>
       </Tooltip>
+
+      <Popover.Root>
+        <Popover.Trigger>
+          <IconButton variant="soft">
+            <EllipsisVerticalIcon className="scale-75" />
+          </IconButton>
+        </Popover.Trigger>
+        <Popover.Content>
+          <Text className="!w-full !text-center text-sm">Response Length</Text>
+          <Separator size="4" className="!my-2" />
+          <Flex gap="3">
+            <SegmentedControl.Root
+              variant="classic"
+              size={"2"}
+              defaultValue={chatState.responseConstraint}
+              // defaultValue={responseConstraint}
+            >
+              <SegmentedControl.Item
+                value="shorter"
+                // onClick={() => setResponseConstraint("shorter")}
+                onClick={() => dispatch(setResponseConstraint("shorter"))}
+              >
+                <Tooltip content="Shorter responses, best for quick replies">
+                  <Text>1</Text>
+                </Tooltip>
+              </SegmentedControl.Item>
+
+              <SegmentedControl.Item
+                value="short"
+                // onClick={() => setResponseConstraint("short")}
+                onClick={() => dispatch(setResponseConstraint("short"))}
+              >
+                <Tooltip content="Short responses, great for quick replies">
+                  <Text>2</Text>
+                </Tooltip>
+              </SegmentedControl.Item>
+
+              <SegmentedControl.Item
+                value="detailed"
+                // onClick={() => setResponseConstraint("detailed")}
+                onClick={() => dispatch(setResponseConstraint("detailed"))}
+              >
+                <Tooltip content="Regular responses, best for detailed replies">
+                  <Text>3</Text>
+                </Tooltip>
+              </SegmentedControl.Item>
+            </SegmentedControl.Root>
+          </Flex>
+        </Popover.Content>
+      </Popover.Root>
 
       {/* </Flex> */}
       <Tooltip content="delete chat">
