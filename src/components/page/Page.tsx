@@ -81,7 +81,7 @@ const Page = ({
         direction="column"
         align="center"
         justify="center"
-        className={`!w-full md:!w-[80%] !flex-col !mx-auto pb-20  ${className}`}
+        className={`!w-full md:!w-[90%] !flex-col !mx-auto pb-20  ${className}`}
       >
         {wrapChildren && (
           <Card className={`!p-5 !max-w-full ${className}`}>

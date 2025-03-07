@@ -15,7 +15,7 @@ import { ScanSearchIcon, SunIcon, SunMoonIcon } from "lucide-react";
 import SearchLoading from "../SearchLoading";
 import { useSendFindReqMutation } from "../../app/api/apiSlice";
 import SearchResults from "../SearchResults";
-import { ResponseBlock, Scripture, Verse } from "../ai/types";
+import { Block, ResponseBlock, Scripture } from "../ai/types";
 
 const navLinks = [
   { label: "About", href: "#footer" },
@@ -25,6 +25,14 @@ const navLinks = [
   { label: "Guesser", href: "/deducer" },
   { label: "AI", href: "/ai" },
 ];
+const emptyBlock: Block = {
+  role: "system",
+  type: "scripture",
+  content: {
+    type: "scripture",
+    verses: [],
+  },
+};
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,7 +41,7 @@ const Navbar: React.FC = () => {
 
   const [localSearchState, setLocalSearchState] = useState("");
   const [sendFindReq, { isLoading }] = useSendFindReqMutation();
-  const [displayedResults, setDisplayedResults] = useState<Verse[]>([]);
+  const [block, setBlock] = useState<Block>(emptyBlock);
   const [displayResults, setDisplayResults] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -51,13 +59,25 @@ const Navbar: React.FC = () => {
 
         genaiResponse.responseBlocks.forEach((block: ResponseBlock) => {
           if (block.type === "scripture") {
-            setDisplayedResults((block.content as Scripture).verses);
+            setBlock({
+              role: "model",
+              type: "scripture",
+              content: block.content as Scripture,
+            });
             setDisplayResults(true);
           }
         });
       } catch (error) {
         console.error("Error during find request:", error);
-        setDisplayedResults([]);
+        setBlock({
+          role: "model",
+          type: "scripture",
+          content: {
+            type: "scripture",
+            verses: [],
+          },
+        });
+
         setDisplayResults(true);
       }
     },
@@ -115,7 +135,7 @@ const Navbar: React.FC = () => {
     <>
       <SearchResults
         displayResults={displayResults}
-        displayedResults={displayedResults}
+        block={block}
         onOpenChange={setDisplayResults}
       />
 

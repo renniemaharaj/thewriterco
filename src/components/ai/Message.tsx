@@ -150,7 +150,7 @@ const Message: React.FC<MessageProps> = ({ block }) => {
 
         {block.role === "model" && block.type === "scripture" && (
           <Card variant="ghost" size="1" className=" p-3 rounded-xl">
-            <Flex className="!flex-row !gap-2 flex-wrap">
+            <Flex className="!flex-row !gap-3 !justify-center !items-center !flex-wrap">
               {(block.content as Scripture).verses.map((verse, idx) => (
                 <React.Fragment key={`verse-${idx}`}>
                   <Tooltip content={verse.verseContent}>
