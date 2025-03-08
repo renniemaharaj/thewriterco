@@ -1,10 +1,7 @@
-import { Button, Card, Flex, IconButton } from "@radix-ui/themes";
+import { Button, Card, Flex } from "@radix-ui/themes";
 import { ArrowUpIcon } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import TextareaAutosize from "react-textarea-autosize";
-import { RootState } from "../../app/store";
-import { useThemeContext } from "../context/theme/useThemeContext";
 
 interface InputProps {
   handleRecieve: (input: string) => void;
@@ -25,10 +22,6 @@ const Input: React.FC<InputProps> = ({
   const [inputFocus, setInputFocus] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
-
-  const { theme } = useThemeContext();
-
-  const chatSlice = useSelector((state: RootState) => state.chat);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (disabled) return;
@@ -77,44 +70,14 @@ const Input: React.FC<InputProps> = ({
     };
   }, []);
 
-  return (
-    <Card
-      style={style}
-      ref={wrapperRef}
-      className={`
-        ${className} 
-      
-        ${
-          inputFocus
-            ? "border-[#978365] border-2 w-[100%] !opacity-100"
-            : "!w-[64px] !h-[64px] !opacity-95 outline-none !flex !flex-col !gap-2"
-        }
-       
-        ${chatSlice.viewMode === "canvas" ? "ml-12 mb-[1rem]" : ""}`}
-    >
-      {!inputFocus && (
-        <Flex
-          align={"center"}
-          justify={"center"}
-          className="w-full h-full rounded-full overflow-hidden absolute top-0 left-0"
-        >
-          <IconButton
-            variant="soft"
-            className={`${theme === "dark" ? "!text-white" : "!text-yellow-400"}`}
-            // highContrast
-            onClick={() => {
-              textAreaRef.current?.focus();
-            }}
-          >
-            <ArrowUpIcon className="mx-auto" />
-          </IconButton>
-        </Flex>
-      )}
+  const cardClassName = `
+    ${className} 
+    border-[#978365] border-2 w-[100%]
+    ${inputFocus ? "!opacity-100 " : "!opacity-0"}`;
 
-      <Flex
-        align="center"
-        className={`flex gap-2 !w-full !justify-evenly ${inputFocus ? "!opacity-100" : "!opacity-0"}`}
-      >
+  return (
+    <Card style={style} ref={wrapperRef} className={cardClassName}>
+      <Flex align="center" className={`flex gap-2 !w-full !justify-evenly`}>
         <TextareaAutosize
           ref={textAreaRef}
           disabled={disabled}
