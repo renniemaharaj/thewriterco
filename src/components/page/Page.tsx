@@ -55,8 +55,8 @@ const Page = ({
       {/* <Navbar /> */}
       <Navbar />
       <section className="p-2 w-full max-w-full">
-        <Card className="!flex !flex-row !w-full !h-14 !max-w-full !overflow-clip p-5 !gap-2 !items-center ">
-          {locationParts.length > 0 && (
+        <Card className="!flex !flex-row !w-full !items-center !h-14 !gap-2 !max-w-full">
+          {locationParts.length > 1 && (
             <IconButton
               variant="soft"
               onClick={() => (location.href = "/")}
@@ -66,13 +66,21 @@ const Page = ({
               <HomeIcon />
             </IconButton>
           )}
+
           {locationParts.map((part, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <Text color="gray">{upperCaseFirstLetter(part)}</Text>
+            <>
+              {part.trim() !== "" && (
+                <Flex className="!overflow-clip !gap-2 !items-center !justify-center shadow-sm shadow-[gray] rounded-full px-2 py-1">
+                  <Text color="gray" size={"1"}>
+                    {upperCaseFirstLetter(part)}
+                  </Text>
+                </Flex>
+              )}
+
               {index < locationParts.length - 1 && (
                 <ChevronRightIcon className="w-4 h-4 text-gray-400" />
               )}
-            </div>
+            </>
           ))}
         </Card>
       </section>
