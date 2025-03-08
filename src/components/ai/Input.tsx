@@ -84,7 +84,7 @@ const Input: React.FC<InputProps> = ({
       className={`${className} ${
         inputFocus
           ? "border-[#978365] border-2"
-          : `border-transparent !w-[10%] max-w-[64px] aspect-square !opacity-40 ${chatSlice.viewMode === "canvas" ? "ml-12" : ""}`
+          : `border-transparent !w-[10%] max-w-[64px] max-h-[64px] aspect-square !opacity-40 ${chatSlice.viewMode === "canvas" ? "ml-12" : ""}`
       } w-[100%] outline-none !flex !flex-col !gap-2
        `}
     >
