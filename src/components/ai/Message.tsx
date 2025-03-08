@@ -1,5 +1,4 @@
 import {
-  Badge,
   Blockquote,
   Button,
   Card,
@@ -8,15 +7,9 @@ import {
   Text,
   Tooltip,
 } from "@radix-ui/themes";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { Block, Code, MarkupResponse, Scripture } from "./types";
-import {
-  BookTextIcon,
-  CopyIcon,
-  DownloadIcon,
-  ShieldAlertIcon,
-} from "lucide-react";
-import MonacoEditor from "../MonacoEditor";
+import { BookTextIcon, ShieldAlertIcon } from "lucide-react";
 import fetchGitBlob, { kjvRepoUrl } from "../hooks/data/gitFetcher";
 import { useDispatch } from "react-redux";
 import {
@@ -28,11 +21,21 @@ import {
 } from "../../app/ereader/ereaderSlice";
 import { EBook } from "../../app/ereader/types";
 import { clearMessages } from "../../app/chat/chatSlice";
+import Collapsible from "../Collapsible";
+import Editor from "./Editor";
 
 type MessageProps = {
   block: Block;
 };
+
 const Message: React.FC<MessageProps> = ({ block }) => {
+  const [collapseCode, setCollapseCode] = useState(true);
+  const CodeBlock = useCallback(
+    ({ block }: { block: Block }) => {
+      return collapseCode ? <></> : <Editor block={block} />;
+    },
+    [collapseCode],
+  );
   const dispatch = useDispatch();
   return (
     <Flex justify="center" className="!flex-col !max-w-full">
@@ -101,53 +104,14 @@ const Message: React.FC<MessageProps> = ({ block }) => {
         )}
 
         {block.role === "model" && block.type === "code" && (
-          <Card className="!p-3">
-            <Flex className="!flex-row !gap-2 !mb-2 !justify-between">
-              <Badge variant="soft" className="!mr-2">
-                {(block.content as Code).filename}
-              </Badge>
-              <Flex className="!flex-row !gap-2 !mb-2">
-                <IconButton
-                  variant="soft"
-                  size="1"
-                  onClick={() => {
-                    navigator.clipboard.writeText(
-                      (block.content as Code).codeContent,
-                    );
-                  }}
-                >
-                  <CopyIcon className="scale-50" />
-                </IconButton>
-                <IconButton
-                  variant="soft"
-                  size="1"
-                  onClick={() => {
-                    const blob = new Blob(
-                      [(block.content as Code).codeContent],
-                      {
-                        type: (block.content as Code).mimeType || "text/plain",
-                      },
-                    );
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement("a");
-                    a.href = url;
-                    a.download = (block.content as Code).filename;
-                    a.click();
-                  }}
-                >
-                  <DownloadIcon className="scale-50" />
-                </IconButton>
-              </Flex>
-            </Flex>
-            <MonacoEditor
-              language={(block.content as Code).language || "plaintext"}
-              code={(block.content as Code).codeContent}
-              height={(block.content as Code).editorHeight || 400}
-              editable={false}
-            />
-          </Card>
+          <Collapsible
+            title={(block.content as Code).filename}
+            onOpen={() => setCollapseCode(false)}
+            onClose={() => setCollapseCode(true)}
+          >
+            <CodeBlock block={block} />
+          </Collapsible>
         )}
-
         {block.role === "model" && block.type === "scripture" && (
           <Card variant="ghost" size="1" className=" p-3 rounded-xl">
             <Flex className="!flex-row !gap-3 !justify-center !items-center !flex-wrap">
