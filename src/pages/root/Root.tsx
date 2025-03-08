@@ -95,6 +95,21 @@ const Root: React.FC = () => {
           </Link>
         </Flex>
 
+        <Card className="!flex !flex-col !gap-2 !w-full mx-auto !min-h-fit !static">
+          <Text className="!text-center !text-lg !font-bold">
+            Powered by our open source, Google Gemini, Pool Go Manager
+          </Text>
+
+          <Text className="!text-center !text-md">
+            A Go-based pool manager for handling multiple Google Gemini API keys
+            efficiently. This package provides thread-safe API key management
+            and session handling for Google's Gemini AI models.{" "}
+            <Link href="https://github.com/renniemaharaj/google-gemini-pool">
+              Go
+            </Link>
+          </Text>
+        </Card>
+
         {/* <Flex className="!w-full md:!w-[70%] mx-auto "> */}
         <Card className="!w-full mx-auto !min-h-fit !static">
           <Flex className="!w-full md:!w-[70%] max-w-[700px] !h-[400px] mx-auto overflow-auto">
