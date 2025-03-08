@@ -19,6 +19,7 @@ import { motion } from "framer-motion";
 
 import Strong from "./Strong";
 import FTEvidence from "./FTEvidence";
+import { ReactNode } from "react";
 
 const axioms = [
   {
@@ -39,12 +40,15 @@ const axioms = [
 
 const Menu = ({
   className,
+  routeChildren,
 }: {
-  axiomsMentioned?: boolean;
   className?: string;
+  routeChildren?: (content: ReactNode) => void;
 }) => {
   return (
-    <ScrollArea className={`${className} !flex !mx-auto p-2 flex-col h-full`}>
+    <ScrollArea
+      className={`${className} !flex !mx-auto p-2 flex-col h-full max-h-[100vh] !sticky !top-0`}
+    >
       <Tabs.Root defaultValue="axioms" className="!max-w-[100%]">
         <Tabs.List className="!flex !flex-wrap space-x-4 !shadow-none pb-2">
           <Tabs.Trigger value="axioms" className="px-4 py-2">
@@ -82,6 +86,11 @@ const Menu = ({
                     <Collapsible
                       key={index}
                       title={axiom.title}
+                      handledChildren={routeChildren ? true : false}
+                      onOpen={(content: ReactNode) => {
+                        // setRouteChildren(axiom.description);
+                        routeChildren?.(content);
+                      }}
                       children={
                         <Strong
                           point={axiom.title}
@@ -114,7 +123,7 @@ const Menu = ({
               Reasoning for Axioms
             </Text>
 
-            <Axioms />
+            <Axioms routeChildren={routeChildren} />
 
             <Separator size="4" className="!my-2" />
 
@@ -122,7 +131,7 @@ const Menu = ({
               Arguments for KJV
             </Text>
 
-            <KJVersions />
+            <KJVersions routeChildren={routeChildren} />
 
             <Separator size="4" className="!my-2" />
 
@@ -130,19 +139,19 @@ const Menu = ({
               Evidence for Christianity
             </Text>
 
-            <FTEvidence />
+            <FTEvidence routeChildren={routeChildren} />
           </Tabs.Content>
           {/* Services Section */}
           <Tabs.Content value="services">
             <Text weight="bold" className="text-1xl">
               Services, Usages and Limits
             </Text>
-            <Usages />
+            <Usages routeChildren={routeChildren} />
             <Separator size="4" className="!my-2" />
             <Text weight="bold" className="text-1xl">
               Developer Contribute, Issues
             </Text>
-            <Contribute />
+            <Contribute routeChildren={routeChildren} />
           </Tabs.Content>
         </Box>
       </Tabs.Root>

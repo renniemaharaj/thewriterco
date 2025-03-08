@@ -2,6 +2,7 @@ import { Box, Flex, Link, Separator } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes";
 import Collapsible from "../Collapsible";
 import Strong from "./Strong";
+import { ReactNode } from "react";
 
 interface KJVPoint {
   title: string;
@@ -51,7 +52,11 @@ const kjvArguments: KJVPoint[] = [
   },
 ];
 
-const KJVArguments = () => {
+const KJVArguments = ({
+  routeChildren,
+}: {
+  routeChildren?: (content: ReactNode) => void;
+}) => {
   return (
     <Box className="space-y-4 !p-1">
       <Flex className="gap-4 !flex-col">
@@ -60,6 +65,11 @@ const KJVArguments = () => {
           <Collapsible
             key={index}
             title={argument.title}
+            handledChildren={routeChildren ? true : false}
+            onOpen={(content: ReactNode) => {
+              // setRouteChildren(axiom.description);
+              routeChildren?.(content);
+            }}
             children={
               <Strong
                 point={argument.title}

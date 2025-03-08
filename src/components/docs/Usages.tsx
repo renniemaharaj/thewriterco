@@ -2,6 +2,7 @@ import { Box, Callout } from "@radix-ui/themes";
 import Strong from "./Strong";
 import { ShieldBanIcon } from "lucide-react";
 import Collapsible from "../Collapsible";
+import { ReactNode } from "react";
 
 const services: { title: string; content: string }[] = [
   {
@@ -25,7 +26,11 @@ const services: { title: string; content: string }[] = [
       "A canvas view that allows you to explore the bible in a visual way. This is not yet fully implemented, but will be a way to explore the bible visually, beginning with a genealogy tree for displaying generations in the bible by search.",
   },
 ];
-const Usages = () => {
+const Usages = ({
+  routeChildren,
+}: {
+  routeChildren?: (content: ReactNode) => void;
+}) => {
   return (
     <Box className="space-y-4 !p-1">
       {services.map((service, index) => (
@@ -33,6 +38,11 @@ const Usages = () => {
         <Collapsible
           key={index}
           title={service.title}
+          handledChildren={routeChildren ? true : false}
+          onOpen={(content: ReactNode) => {
+            // setRouteChildren(axiom.description);
+            routeChildren?.(content);
+          }}
           children={
             // <Card>
             <Strong point={service.title} content={service.content} />
@@ -45,6 +55,11 @@ const Usages = () => {
       {/* <Card> */}
       <Collapsible
         title="Cost and restrictions"
+        handledChildren={routeChildren ? true : false}
+        onOpen={(content: ReactNode) => {
+          // setRouteChildren(axiom.description);
+          routeChildren?.(content);
+        }}
         children={
           // <Card>
           <ul className="space-y-2 list-disc pl-4 text-sm">

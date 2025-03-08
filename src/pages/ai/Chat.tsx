@@ -37,14 +37,15 @@ import fetchGitBlob, {
 } from "../../components/hooks/data/gitFetcher";
 import { Helmet } from "react-helmet-async";
 import { toggleFlowSlice } from "../../app/flow/flowSlice";
+import Sizer from "../../components/page/Sizer";
 
 const AI = () => {
   const { theme } = useThemeContext();
 
   const [summaryVisible, setSummaryVisible] = useState(false);
-  const [orientation, setOrientation] = useState<"horizontal" | "vertical">(
-    "horizontal",
-  );
+
+  const chatData = useSelector((state: RootState) => state.chat);
+  // const { orientation } = chatData;
 
   const dispatch = useDispatch();
 
@@ -119,8 +120,9 @@ const AI = () => {
 
   const PanelBar = (
     <Flex
-      className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}   !items-center gap-2`}
+      className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${chatData.orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}   !items-center gap-2`}
     >
+      <Sizer />
       {/* <Flex> */}
       <Tooltip content="go home">
         <IconButton
@@ -231,20 +233,6 @@ const AI = () => {
   );
 
   useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
-      if (entries[0].contentRect.width < 768) {
-        setOrientation("vertical");
-      } else {
-        setOrientation("horizontal");
-      }
-    });
-
-    resizeObserver.observe(document.body);
-
-    return () => resizeObserver.disconnect();
-  }, []);
-
-  useEffect(() => {
     fetchTemplateCatalogue();
   }, []);
 
@@ -261,7 +249,7 @@ const AI = () => {
       <SideBar
         variant="center"
         className="flex-col relative m-auto !w-[100vw] !h-[100vh] transition-all gap-1"
-        orientation={orientation}
+        orientation={chatData.orientation}
         childLeft={<Menu className="!hidden md:!flex" />}
         centerBar={PanelBar}
         childRight={

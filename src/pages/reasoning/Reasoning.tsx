@@ -1,45 +1,46 @@
 // import Footer from "../../components/Footer";
-import { Flex } from "@radix-ui/themes";
+import { Box, Flex } from "@radix-ui/themes";
 import Menu from "../../components/docs/Menu";
 import Page from "../../components/page/Page";
-import Hero from "../../components/Hero";
+import SideBar from "../../components/SideBar";
+import { useThemeContext } from "../../components/context/theme/useThemeContext";
+import { ReactNode, useState } from "react";
 // import Hint from "../../components/Hint";
 // import Footer from "../../components/additional/footer";
 
 const Reasoning = () => {
+  const { theme } = useThemeContext();
+  const [routeChildren, setRouteChildren] = useState<ReactNode | null>(null);
+
   return (
     <Page
-      wrapChildren={true}
+      // wrapChildren={true}
       title="Rationale"
       description="Reasoning for faith"
-      hero={
-        <Hero
-          header="TheWriterCo"
-          subHeader={
-            <>
-              axioms, <br /> rationale
-            </>
-          }
-          hint={
-            <>
-              We're here to: give reasoning for faith; reinforcement to your
-              shield, 🛡️
-              {/* <br /> */}
-              Wherewith ye shall quench all the fiery darts of the wicked. For
-              his bow is set with a fiery deception 🏹
-            </>
-          }
-        />
-      }
     >
-      <Flex
-        direction="column"
-        align="center"
-        justify="center"
-        className="w-full md:!w-[60%] mx-auto pb-20"
-      >
-        <Menu />
-      </Flex>
+      {/* <BeforeHeader /> */}
+      <SideBar
+        variant="center"
+        className="flex-col !relative flex-wrap md:!flex-nowrap !m-auto !w-[100vw] !p-2 transition-all gap-1"
+        orientation={"horizontal"}
+        childLeft={<Menu routeChildren={setRouteChildren} />}
+        centerBar={<></>}
+        childRight={
+          /* Chatbox Section */
+          <Flex
+            // ref={messageBoxRef}
+            className={`${theme === "dark" ? "bg-[#171918]" : "border"} !flex md:!min-w-[70%]`}
+          >
+            {routeChildren && (
+              // <Card className="!p-1 !mx-auto">
+              <Box className="space-y-4 space-x-4 !p-1 max-w-[500px] !mx-auto">
+                {routeChildren}
+              </Box>
+              // </Card>
+            )}
+          </Flex>
+        }
+      />
     </Page>
   );
 };

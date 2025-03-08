@@ -1,16 +1,20 @@
 import { ReactNode, useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { Button, Flex, ScrollArea } from "@radix-ui/themes";
+import { Button, Callout, Flex, ScrollArea } from "@radix-ui/themes";
 import { motion } from "framer-motion";
 import { useThemeContext } from "./context/theme/useThemeContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 type CollapsibleProps = {
   title: ReactNode;
   children: React.ReactNode;
   maxHeight?: string;
   className?: string;
-  onOpen?: () => void;
+  onOpen?: (content: ReactNode) => void;
   onClose?: () => void;
+  handledChildren?: boolean;
 };
 
 export default function Collapsible({
@@ -20,15 +24,19 @@ export default function Collapsible({
   className,
   onOpen,
   onClose,
+  handledChildren,
 }: CollapsibleProps) {
   const [open, setOpen] = useState(false);
   const { theme } = useThemeContext();
 
+  const { orientation } = useSelector((state: RootState) => state.chat);
+
   useEffect(() => {
-    if (open && onOpen) onOpen();
+    if (open && onOpen) onOpen(children);
 
     if (!open && onClose) onClose();
   }, [open]);
+
   return (
     <div
       className={`${theme === "light" && "border"} ${className} w-full rounded-lg shadow-sm`}
@@ -59,7 +67,18 @@ export default function Collapsible({
           scrollbars="vertical"
           className={`overflow-auto transition-all duration-300 max-h-[${maxHeight}]`}
         >
-          <Flex className="p-4">{children}</Flex>
+          <Flex className="p-4">
+            {handledChildren && orientation === "horizontal" ? (
+              <Callout.Root size={"1"} className="mt-5">
+                <Callout.Icon>
+                  <InfoCircledIcon />
+                </Callout.Icon>
+                <Callout.Text>Content routed out</Callout.Text>
+              </Callout.Root>
+            ) : (
+              children
+            )}
+          </Flex>
         </ScrollArea>
       </motion.div>
     </div>

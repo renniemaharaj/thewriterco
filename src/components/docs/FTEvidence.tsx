@@ -2,6 +2,7 @@ import { Box, Flex, Link, Separator } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes";
 import Collapsible from "../Collapsible";
 import Strong from "./Strong";
+import { ReactNode } from "react";
 
 interface FTEvidence {
   title: string;
@@ -48,7 +49,11 @@ const ftevidence: FTEvidence[] = [
   },
 ];
 
-const FTEvidence = () => {
+const FTEvidence = ({
+  routeChildren,
+}: {
+  routeChildren?: (content: ReactNode) => void;
+}) => {
   return (
     <Box className="space-y-4 !p-1">
       <Flex className="gap-4 !flex-col">
@@ -57,6 +62,11 @@ const FTEvidence = () => {
           <Collapsible
             key={index}
             title={argument.title}
+            handledChildren={routeChildren ? true : false}
+            onOpen={(content: ReactNode) => {
+              // setRouteChildren(axiom.description);
+              routeChildren?.(content);
+            }}
             children={
               <Strong
                 point={argument.title}

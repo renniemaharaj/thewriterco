@@ -1,12 +1,22 @@
 import { Box, Link, Text } from "@radix-ui/themes";
 import Collapsible from "../Collapsible";
+import { ReactNode } from "react";
 
-const Contribute = () => {
+const Contribute = ({
+  routeChildren,
+}: {
+  routeChildren?: (content: ReactNode) => void;
+}) => {
   return (
     <Box className="space-y-4 !p-1">
       {/* <Card> */}
       <Collapsible
         title="Developers Contribute"
+        handledChildren={routeChildren ? true : false}
+        onOpen={(content: ReactNode) => {
+          // setRouteChildren(axiom.description);
+          routeChildren?.(content);
+        }}
         children={
           <Text size="2" className="!p-2">
             We are aiming to make this project completely open source soon, but
@@ -21,6 +31,11 @@ const Contribute = () => {
       {/* <Card> */}
       <Collapsible
         title="Issues, Bugs, and Feedback"
+        handledChildren={routeChildren ? true : false}
+        onOpen={(content: ReactNode) => {
+          // setRouteChildren(axiom.description);
+          routeChildren?.(content);
+        }}
         children={
           <Text size="2" className="!p-2">
             Please do report all issues and bugs to us. Your feedback is also

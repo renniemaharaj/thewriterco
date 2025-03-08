@@ -6,6 +6,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { ChevronRightIcon, HomeIcon } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { useThemeContext } from "../context/theme/useThemeContext";
+import Sizer from "./Sizer";
 
 const Page = ({
   children,
@@ -50,7 +51,7 @@ const Page = ({
           <meta name="description" content={description} />
         )}
       </Helmet>
-
+      <Sizer />
       {/* <Navbar /> */}
       <Navbar />
       <section className="p-2 w-full max-w-full">
