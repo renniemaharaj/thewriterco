@@ -55,7 +55,7 @@ const Page = ({
       {/* <Navbar /> */}
       <Navbar />
       <section className="p-2 w-full max-w-full">
-        <Card className="!flex !flex-row !w-full !max-w-full !overflow-clip p-5 !gap-2 !items-center ">
+        <Card className="!flex !flex-row !w-full !h-14 !max-w-full !overflow-clip p-5 !gap-2 !items-center ">
           {locationParts.length > 0 && (
             <IconButton
               variant="soft"
