@@ -1,4 +1,4 @@
-import { Flex, Button, Skeleton } from "@radix-ui/themes";
+import { Flex, Button, Skeleton, Card } from "@radix-ui/themes";
 import {
   useCallback,
   useImperativeHandle,
@@ -366,7 +366,7 @@ const Chat = forwardRef(
 
     const ViewContainer = useCallback(() => {
       return (
-        <Flex
+        <Card
           className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit`}
         >
           {chatState.messages.length === 0 && (
@@ -399,7 +399,7 @@ const Chat = forwardRef(
               <SkeletonTextBlock />
             </Flex>
           )}
-        </Flex>
+        </Card>
       );
     }, [
       chatState,
@@ -429,12 +429,12 @@ const Chat = forwardRef(
         {/* <Card className="bg-red-400 !top-0" variant="ghost"> */}
         {/* {canvasView ? ( */}
         {chatState.viewMode === "canvas" ? (
-          <div className="!w-full h-[99vh]">
+          <Card className="!w-full h-[99vh]">
             <Flow
               nodes={[MessageContainerNode()]}
               messageBlocksCount={countMessageBlocks()}
             />
-          </div>
+          </Card>
         ) : (
           <ViewContainer />
         )}
