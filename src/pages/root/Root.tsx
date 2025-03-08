@@ -97,7 +97,7 @@ const Root: React.FC = () => {
 
         <Card className="!flex !flex-col !gap-2 !w-full mx-auto !min-h-fit !static">
           <Text className="!text-center !text-lg !font-bold">
-            Powered by our open source, Google Gemini, Pool Go Manager
+            Powered by our open source, Google Gemini-Pool, Go Manager
           </Text>
 
           <Text className="!text-center !text-md">
