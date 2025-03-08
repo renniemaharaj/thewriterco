@@ -5,12 +5,16 @@ import Page from "../../components/page/Page";
 import SideBar from "../../components/SideBar";
 import { useThemeContext } from "../../components/context/theme/useThemeContext";
 import { ReactNode, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 // import Hint from "../../components/Hint";
 // import Footer from "../../components/additional/footer";
 
 const Reasoning = () => {
   const { theme } = useThemeContext();
   const [routeChildren, setRouteChildren] = useState<ReactNode | null>(null);
+
+  const { orientation } = useSelector((state: RootState) => state.chat);
 
   return (
     <Page
@@ -34,7 +38,7 @@ const Reasoning = () => {
             {routeChildren && (
               // <Card className="!p-1 !mx-auto">
               <Box className="space-y-4 space-x-4 !p-1 max-w-[500px] !mx-auto">
-                {routeChildren}
+                {orientation === "horizontal" && routeChildren}
               </Box>
               // </Card>
             )}
