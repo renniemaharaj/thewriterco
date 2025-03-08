@@ -9,12 +9,11 @@ const MonacoEditor = ({
   language,
   code,
   onChange,
-  editable = true, // Default to editable
+  editable = true,
 }: {
   height: number;
   language: string;
   code: string;
-  variant?: "1" | "2" | "3";
   onChange?: (value: string) => void;
   editable?: boolean;
 }) => {
@@ -22,6 +21,7 @@ const MonacoEditor = ({
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [codeContent, setCodeContent] = useState(code);
   const ignoreChangeRef = useRef(false);
+
   const onEditorMount = (editor: editor.IStandaloneCodeEditor) => {
     editorRef.current = editor;
     editor.focus();
@@ -32,12 +32,8 @@ const MonacoEditor = ({
     if (editorRef.current && !ignoreChangeRef.current) {
       const currentModel = editorRef.current.getModel();
       const currentValue = currentModel?.getValue();
-
-      // Update editor content only if the new code is different
       if (!code) editorRef.current.setValue("");
-      if (currentValue === code) return;
-      if (code && currentValue !== code) editorRef.current.setValue(code);
-      // debounceIgnoreChange(false);
+      if (currentValue !== code) editorRef.current.setValue(code);
     }
   };
 
@@ -49,13 +45,14 @@ const MonacoEditor = ({
   useEffect(() => {
     if (!editorRef.current) console.log("Editor not mounted yet");
     setCodeContent(code);
-  }, [code, setCodeContent]); // Runs whenever `code` changes
+  }, [code]);
 
   const debounceClearIgnoreChange = useRef(
     debounce(() => {
       ignoreChangeRef.current = false;
     }, 500),
   );
+
   const debounceSendChanges = useRef(
     debounce((value: string) => {
       ignoreChangeRef.current = true;
@@ -63,26 +60,29 @@ const MonacoEditor = ({
         onChange(value);
         debounceClearIgnoreChange.current();
       }
-    }),
+    }, 300),
   );
 
   return (
-    <Editor
-      height={height}
-      width="100%"
-      language=""
-      defaultLanguage={language}
-      // value={code}
-      theme={theme === "dark" ? "vs-dark" : "vs-light"}
-      onMount={onEditorMount}
-      options={{
-        readOnly: !editable,
-      }}
-      className="!overflow-hidden p-1"
-      onChange={(value) => {
-        debounceSendChanges.current(value ?? "");
-      }}
-    />
+    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+      <Editor
+        height={height}
+        width="100%"
+        language={language}
+        theme={theme === "dark" ? "vs-dark" : "vs-light"}
+        onMount={onEditorMount}
+        options={{
+          readOnly: !editable,
+          padding: { top: 10, bottom: 10 }, // Adds internal padding
+          minimap: { enabled: false }, // Hides minimap
+          fontSize: 14, // Adjusts font size
+          lineNumbersMinChars: 3, // Adjusts left gutter space
+        }}
+        onChange={(value) => {
+          debounceSendChanges.current(value ?? "");
+        }}
+      />
+    </div>
   );
 };
 
