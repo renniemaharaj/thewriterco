@@ -442,7 +442,7 @@ const Chat = forwardRef(
         <Input
           disabled={isTyping}
           handleRecieve={(text: string) => handleMessageSend(text)}
-          className={`!absolute ${chatState.messageBoxMode === "hidden" && "!hidden"} bottom-[2px] md:!bottom-[10px] blurred-div animate-fade-in`}
+          className={`!absolute ${chatState.messageBoxMode === "hidden" && "!hidden"} bottom-[2px] blurred-div animate-fade-in`}
           style={{ width: chatBoxRespectiveWidth }}
           children={
             <Flex gap="2" className="!flex-row">
