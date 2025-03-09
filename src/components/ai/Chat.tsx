@@ -367,7 +367,7 @@ const Chat = forwardRef(
     const ViewContainer = useCallback(() => {
       return (
         <Card
-          className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-32`}
+          className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-32 my-auto`}
         >
           {chatState.messages.length === 0 && (
             <Flex className={`gap-1 px-8 mb-4 pt-2 !justify-center !flex-wrap`}>
