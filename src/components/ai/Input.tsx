@@ -72,8 +72,9 @@ const Input: React.FC<InputProps> = ({
 
   const cardClassName = `
     ${className} 
+    ${inputFocus ? "border-[#978365]" : "border-transparent"}
     border-[#978365] border-2 w-[100%]
-    ${inputFocus ? "!opacity-100 " : "!opacity-0"}`;
+    `;
 
   return (
     <Card style={style} ref={wrapperRef} className={cardClassName}>
@@ -81,7 +82,7 @@ const Input: React.FC<InputProps> = ({
         <TextareaAutosize
           ref={textAreaRef}
           disabled={disabled}
-          className="scrollbar-hide flex-1 border-none outline-none resize-none text-sm p-2 bg-transparent max-h-[150px]"
+          className="scrollbar-hide flex-1 border-none outline-none resize-none text-sm p-2 bg-transparent !h-28"
           placeholder="What would you like help with?"
           minRows={1}
           maxRows={6}

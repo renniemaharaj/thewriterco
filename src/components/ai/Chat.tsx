@@ -367,7 +367,7 @@ const Chat = forwardRef(
     const ViewContainer = useCallback(() => {
       return (
         <Card
-          className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit`}
+          className={`${isTyping && "animate-pulse"}flex-col !w-full !h-fit !pb-30`}
         >
           {chatState.messages.length === 0 && (
             <Flex className={`gap-1 px-8 mb-4 pt-2 !justify-center !flex-wrap`}>
@@ -429,7 +429,7 @@ const Chat = forwardRef(
         {/* <Card className="bg-red-400 !top-0" variant="ghost"> */}
         {/* {canvasView ? ( */}
         {chatState.viewMode === "canvas" ? (
-          <Card className="!w-full h-[99vh]">
+          <Card className="!w-full h-[99vh] !pb-28">
             <Flow
               nodes={[MessageContainerNode()]}
               messageBlocksCount={countMessageBlocks()}
