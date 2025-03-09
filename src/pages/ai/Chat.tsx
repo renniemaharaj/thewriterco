@@ -256,7 +256,7 @@ const AI = () => {
           /* Chatbox Section */
           <Flex
             ref={messageBoxRef}
-            className={`${theme === "dark" ? "bg-[#171918]" : "border"}  p-1 !flex w-[100%] md:!min-w-[70%] !overflow-auto`}
+            className={`${theme === "dark" ? "bg-[#171918]" : "border"} !flex w-[100%] md:!min-w-[70%] !h-[100vh] !overflow-auto`}
           >
             {/* <span className="text-[0.6rem] text-gray-600 absolute top-1 left-1 z-20">
               Discern generated content!
