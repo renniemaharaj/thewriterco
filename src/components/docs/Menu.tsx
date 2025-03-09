@@ -67,9 +67,9 @@ const Menu = ({
           <Tabs.Content
             // ref={axiomParentRef}
             value="axioms"
-            className="relative"
+            className="relative !flex flex-col !gap-2"
           >
-            <Box>
+            <Box className="!flex flex-col !gap-2">
               <Text weight="bold" className="text-1xl">
                 Grounding Axioms
               </Text>
@@ -118,7 +118,7 @@ const Menu = ({
           </Tabs.Content>
 
           {/* Reasoning Section */}
-          <Tabs.Content value="reasoning">
+          <Tabs.Content value="reasoning" className="!flex flex-col !gap-2">
             <Text weight="bold" className="text-1xl">
               Reasoning for Axioms
             </Text>
@@ -142,7 +142,7 @@ const Menu = ({
             <FTEvidence routeChildren={routeChildren} />
           </Tabs.Content>
           {/* Services Section */}
-          <Tabs.Content value="services">
+          <Tabs.Content value="services" className="!flex flex-col !gap-2">
             <Text weight="bold" className="text-1xl">
               Services, Usages and Limits
             </Text>

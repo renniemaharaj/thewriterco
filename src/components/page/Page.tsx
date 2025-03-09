@@ -70,7 +70,7 @@ const Page = ({
           {locationParts.map((part, index) => (
             <>
               {part.trim() !== "" && (
-                <Flex className="!overflow-clip !gap-2 !items-center !justify-center shadow-sm shadow-[gray] rounded-full px-2 py-1">
+                <Flex className="!overflow-clip !gap-2 !items-center !justify-centers rounded-full px-2 py-1">
                   <Text color="gray" size={"1"}>
                     {upperCaseFirstLetter(part)}
                   </Text>
