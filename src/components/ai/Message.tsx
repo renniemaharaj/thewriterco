@@ -46,7 +46,7 @@ const Message: React.FC<MessageProps> = ({ block }) => {
           block.role === "user"
             ? "text-right !self-end  rounded-2xl"
             : "text-left  rounded-xl"
-        } !text-sm !max-h-fit !overflow-hidden !p-3 opacity-0 animate-fade-in`}
+        } !text-sm !max-h-fit !overflow-hidden !p-3`}
         style={{
           animationDuration: "0.5s",
           animationFillMode: "forwards",
