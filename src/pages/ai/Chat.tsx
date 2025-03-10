@@ -112,7 +112,8 @@ const AI = () => {
       
       Note: If conversation lacks substantial content, please:
       - Provide a brief overview of the template's purpose
-      - Request confirmation before proceeding with document generation
+
+      Ensure to respond through the appropriate schemas!
       `;
 
     return instructions;
