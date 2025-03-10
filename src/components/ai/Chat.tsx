@@ -184,20 +184,17 @@ const Chat = forwardRef(
         // Attach date & time
         const attachedLocalTime = `${new Date().toLocaleString()}`;
         const attachedCurrentDate = `${new Date().toDateString()}`;
-
-        const attachedResponseConstraint =
-          chatState.responseConstraint === "shorter"
-            ? "1/3"
-            : chatState.responseConstraint === "short"
-              ? "2/3"
-              : "3/3";
-
+        const attachedResponseConstraint = chatState.responseConstraint;
         const context = [
-          { themeMode: "satisfy both light and dark" },
+          { themeMode: "should support both light and dark modes" },
           { bookState: attachedBookState },
           { localTime: attachedLocalTime },
           { currentDate: attachedCurrentDate },
           { responseConstraint: attachedResponseConstraint },
+          {
+            constraintInstruction:
+              "responseConstraint is a value from the union: shorter | short | detailed where detailed is 70+ words",
+          },
         ];
 
         // Build ask schema
@@ -373,7 +370,7 @@ const Chat = forwardRef(
     const ViewContainer = useCallback(() => {
       return (
         <Card
-          className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-32 my-auto !transition-all !duration-1000`}
+          className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-32 my-auto`}
         >
           {chatState.messages.length === 0 && (
             <Flex className={`gap-1 px-8 mb-4 pt-2 !justify-center !flex-wrap`}>
