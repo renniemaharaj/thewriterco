@@ -179,15 +179,21 @@ const Chat = forwardRef(
         setIsTyping(true);
 
         // Attach additional context to the message
-        const attachedTheme = `-@here: ${theme}`;
-        const attachedBookState = `-@here: ${eReaderState.eContent.title} ${eReaderState.currentChapter}:${eReaderState.currentVerse}`;
+        const attachedBookState = `${eReaderState.eContent.title} ${eReaderState.currentChapter}:${eReaderState.currentVerse}`;
 
         // Attach date & time
-        const attachedLocalTime = `-@here: ${new Date().toLocaleString()}`;
-        const attachedCurrentDate = `-@here: ${new Date().toDateString()}`;
-        const attachedResponseConstraint = `-@here: ${chatState.responseConstraint || "Short"} from: shortest | short | detailed`;
+        const attachedLocalTime = `${new Date().toLocaleString()}`;
+        const attachedCurrentDate = `${new Date().toDateString()}`;
+
+        const attachedResponseConstraint =
+          chatState.responseConstraint === "shorter"
+            ? "1/3"
+            : chatState.responseConstraint === "short"
+              ? "2/3"
+              : "3/3";
+
         const context = [
-          { themeMode: attachedTheme },
+          { themeMode: "satisfy both light and dark" },
           { bookState: attachedBookState },
           { localTime: attachedLocalTime },
           { currentDate: attachedCurrentDate },
@@ -367,7 +373,7 @@ const Chat = forwardRef(
     const ViewContainer = useCallback(() => {
       return (
         <Card
-          className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-32 my-auto`}
+          className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-32 my-auto !transition-all !duration-1000`}
         >
           {chatState.messages.length === 0 && (
             <Flex className={`gap-1 px-8 mb-4 pt-2 !justify-center !flex-wrap`}>
