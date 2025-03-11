@@ -91,7 +91,7 @@ const Guide = () => {
         <Content header="Getting Started">
           <List
             list={[
-              "Install the package using Go modules: `go get github.com/TheWriterCo/google-gemini-pool`",
+              "Install the package using Go modules: `go get github.com/renniemaharaj/google-gemini-pool`",
               "Import the package into your Go project.",
               "Initialize the API key manager and configure your pool.",
             ]}
@@ -104,7 +104,7 @@ const Guide = () => {
 
 import (
   "fmt"
-  "github.com/TheWriterCo/google-gemini-pool"
+  "github.com/renniemaharaj/google-gemini-pool"
 )
 
 func main() {
