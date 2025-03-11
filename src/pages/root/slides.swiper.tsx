@@ -58,7 +58,7 @@ export const swiperSlides = [
     <Button
       variant="soft"
       className="mt-5 px-6 py-3 text-lg font-medium rounded-lg"
-      onClick={() => (location.href = "/doc/studydocument")}
+      onClick={() => (location.href = "/doc/studyDocument")}
     >
       Learn More
     </Button>

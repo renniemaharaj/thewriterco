@@ -113,8 +113,9 @@ const Root: React.FC = () => {
               and session wrapping for Google's Gemini AI models. Featuring
               queue-based retrying, exponential backoff and custom validation,
               and is written in Go for performance{" "}
+              <Link href="/doc/geminiPool">Learn More</Link> or{" "}
               <Link href="https://github.com/renniemaharaj/google-gemini-pool">
-                Go
+                Source
               </Link>
             </Text>
             {/* </Card> */}
