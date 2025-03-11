@@ -9,6 +9,7 @@ export const swiperProps = {
   ...coverflow,
   grabCursor: true,
   speed: 800,
-  pagination: { clickable: true },
+  pagination: { clickable: true, dynamicBullets: true },
+  navigation: true,
   autoplay: { delay: 10000, disableOnInteraction: false },
 };
