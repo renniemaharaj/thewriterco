@@ -116,8 +116,11 @@ var GEMINI_API_KEYS_POOL = []transformer.API{
     },
 }
 
+// Create a new pool instance
+pool := pool.Instance{}
+
 // Loads from GEMINI_API_KEYS_POOL environment variable & pushes all to pool
-pool.InitializePool() 
+pool.InitializePool()
 
 // Push one (1) single transformer.API key to channel
 myGeminiKey := transformer.API{
