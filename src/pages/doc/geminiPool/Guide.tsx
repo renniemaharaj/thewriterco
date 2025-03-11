@@ -1,11 +1,12 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import Hero from "../../../components/Hero";
 import Page from "../../../components/page/Page";
-import { Link, Text, Blockquote, Callout, Flex } from "@radix-ui/themes";
-import Content from "../Content";
-import BreakII from "../BreakII";
-import List from "../List";
-import Snippet from "../Snippet";
+import { Link, Text, Blockquote, Callout } from "@radix-ui/themes";
+import Content from "../../../components/docs/Content";
+import BreakII from "../../../components/docs/BreakII";
+import List from "../../../components/docs/List";
+import Snippet from "../../../components/docs/Snippet";
+import GuideTemplate from "../../../components/docs/GuideTemplate";
 
 const Guide = () => {
   return (
@@ -31,7 +32,7 @@ const Guide = () => {
         />
       }
     >
-      <Flex className="!flex-col merriweather-bold gap-4">
+      <GuideTemplate>
         <Content header="Introduction to Google Gemini-Pool">
           <Text>
             Limited to google gemini api keys? I know, renting a GPU is
@@ -188,7 +189,7 @@ fmt.Println(response)
             policies when using multiple keys.
           </Callout.Text>
         </Callout.Root>
-      </Flex>
+      </GuideTemplate>
     </Page>
   );
 };

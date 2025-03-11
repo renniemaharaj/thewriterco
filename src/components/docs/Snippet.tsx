@@ -4,7 +4,7 @@ import {
   dracula,
   solarizedlight,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { useThemeContext } from "../../components/context/theme/useThemeContext";
+import { useThemeContext } from "../context/theme/useThemeContext";
 
 export type SnippetProps = {
   code: string;

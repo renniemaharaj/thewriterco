@@ -22,7 +22,6 @@ const AI = lazy(() => import("./pages/ai/Chat"));
 const Number = lazy(() => import("./pages/number/Number"));
 const Guide = lazy(() => import("./pages/doc/studyDocument/Guide"));
 const GeminiPool = lazy(() => import("./pages/doc/geminiPool/Guide"));
-const Example = lazy(() => import("./pages/doc/studyDocument/Example"));
 const Kjv = lazy(() => import("./pages/kjv/KJV"));
 
 // Custom route types
@@ -66,10 +65,6 @@ const publicRoutes: (CustomRoute | IndexRoute)[] = [
   {
     path: "doc/studyDocument",
     element: <Guide />,
-  },
-  {
-    path: "doc/studyDocument/example",
-    element: <Example />,
   },
   {
     path: "doc/geminiPool",

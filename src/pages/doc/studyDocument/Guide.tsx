@@ -1,18 +1,11 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import Hero from "../../../components/Hero";
 import Page from "../../../components/page/Page";
-import {
-  Link,
-  Text,
-  Heading,
-  Blockquote,
-  Callout,
-  Flex,
-  Box,
-} from "@radix-ui/themes";
-import Content from "../Content";
-import BreakII from "../BreakII";
-import List from "../List";
+import { Link, Text, Blockquote, Callout } from "@radix-ui/themes";
+import Content from "../../../components/docs/Content";
+import BreakII from "../../../components/docs/BreakII";
+import List from "../../../components/docs/List";
+import GuideTemplate from "../../../components/docs/GuideTemplate";
 
 const Guide = () => {
   return (
@@ -37,7 +30,7 @@ const Guide = () => {
         />
       }
     >
-      <Flex className="!flex-col merriweather-bold gap-4">
+      <GuideTemplate>
         <Content header="Power Your Bible Studies with AI">
           <Text>
             The Writer Company AI helps you study the Bible with AI-powered
@@ -141,28 +134,12 @@ const Guide = () => {
             <InfoCircledIcon />
           </Callout.Icon>
           <Callout.Text>
-            <strong>Note:</strong> Conversations have a token limit to ensure
-            efficient processing. Documentation on token usage will be released
-            soon.
-          </Callout.Text>
-        </Callout.Root>
-
-        <Box className="p-4">
-          <Heading size="4">Example</Heading>
-          <Link href="/doc/studyDocument/example">Example document</Link>
-        </Box>
-
-        <Callout.Root variant="soft" className="p-4">
-          <Callout.Icon>
-            <InfoCircledIcon />
-          </Callout.Icon>
-          <Callout.Text>
             <strong>Tip:</strong> If you plan to host study documents on your
             own server, a future guide will provide instructions on
             self-hosting.
           </Callout.Text>
         </Callout.Root>
-      </Flex>
+      </GuideTemplate>
     </Page>
   );
 };
