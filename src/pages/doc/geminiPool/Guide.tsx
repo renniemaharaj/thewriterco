@@ -176,6 +176,7 @@ fmt.Println(response)
               "Handling rate limits dynamically",
               "Logging and monitoring API key usage",
               "Structured inputs and output validation",
+              "A ready-to-go example-chat application!",
             ]}
           />
         </Content>
