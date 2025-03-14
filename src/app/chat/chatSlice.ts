@@ -19,6 +19,12 @@ const ereaderSlice = createSlice({
     setMessageBoxMode(state, action: PayloadAction<"hidden" | "visible">) {
       state.messageBoxMode = action.payload;
     },
+    // Remove all system messages from the chat
+    nukeSystemMessages(state) {
+      state.messages = state.messages.filter(
+        (message) => message.role !== "system",
+      );
+    },
     // Clear all messages from the chat
     clearMessages(state) {
       state.messages = [];
@@ -53,6 +59,7 @@ export const {
   addMessage,
   spliceMessage,
   setMessageBoxMode,
+  nukeSystemMessages,
   clearMessages,
   setOrientation,
   setViewMode,

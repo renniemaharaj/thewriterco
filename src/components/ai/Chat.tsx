@@ -29,6 +29,7 @@ import { fromByteArray } from "base64-js";
 import Input from "./Input.tsx";
 import {
   addMessage,
+  nukeSystemMessages,
   setConversationMode,
   setConversationTokens,
   setViewMode,
@@ -36,7 +37,7 @@ import {
 import { buildConversation } from "./utils.ts";
 import { initialSuggestions } from "./configuration.ts";
 import useLocalStorage from "../hooks/useLocalStorage.ts";
-import Message from "./Message.tsx";
+import Message, { MessageAction } from "./Message.tsx";
 import { toggleFlowSlice } from "../../app/flow/flowSlice.ts";
 
 const Chat = forwardRef(
@@ -304,6 +305,19 @@ const Chat = forwardRef(
       dispatch(toggleFlowSlice());
     }, [chatState.messages, computeTokens, dispatch, scrollMessageBoxToBottom]);
 
+    const handleActions = (action: MessageAction) => {
+      alert("Action: " + action);
+      switch (action) {
+        case "fix":
+          handleMessageSend(
+            "-@here Respond correctly, in defined schema. Validation failing.",
+          );
+          dispatch(nukeSystemMessages());
+
+          break;
+      }
+    };
+
     const MessageBlock = ({
       block,
       onAnimated,
@@ -314,7 +328,16 @@ const Chat = forwardRef(
       useEffect(() => {
         onAnimated();
       }, [onAnimated]);
-      return <Message block={block} />;
+      return (
+        <Message
+          block={block}
+          handleAction={
+            block.role === "system"
+              ? (action: MessageAction) => handleActions(action)
+              : () => {}
+          }
+        />
+      );
     };
 
     const SkeletonTextBlock = () => {

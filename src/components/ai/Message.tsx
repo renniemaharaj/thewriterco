@@ -24,11 +24,14 @@ import { clearMessages } from "../../app/chat/chatSlice";
 import Collapsible from "../Collapsible";
 import Editor from "./Editor";
 
+export type MessageAction = "fix" | "new";
+
 type MessageProps = {
   block: Block;
+  handleAction?: (action: MessageAction) => void;
 };
 
-const Message: React.FC<MessageProps> = ({ block }) => {
+const Message: React.FC<MessageProps> = ({ block, handleAction }) => {
   const [collapseCode, setCollapseCode] = useState(true);
   const CodeBlock = useCallback(
     ({ block }: { block: Block }) => {
@@ -73,8 +76,12 @@ const Message: React.FC<MessageProps> = ({ block }) => {
             </Flex>
 
             <Flex className="!flex-row !gap-2">
-              <Button variant="soft" disabled className="mt-2">
-                Resend
+              <Button
+                variant="soft"
+                className="mt-2"
+                onClick={() => handleAction?.("fix")}
+              >
+                Fix
               </Button>
               <Button
                 variant="soft"
@@ -112,6 +119,7 @@ const Message: React.FC<MessageProps> = ({ block }) => {
             <CodeBlock block={block} />
           </Collapsible>
         )}
+
         {block.role === "model" && block.type === "scripture" && (
           <Card variant="ghost" size="1" className=" p-3 rounded-xl">
             <Flex className="!flex-row !gap-3 !justify-center !items-center !flex-wrap">
