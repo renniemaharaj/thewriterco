@@ -306,7 +306,6 @@ const Chat = forwardRef(
     }, [chatState.messages, computeTokens, dispatch, scrollMessageBoxToBottom]);
 
     const handleActions = (action: MessageAction) => {
-      alert("Action: " + action);
       switch (action) {
         case "fix":
           handleMessageSend(
