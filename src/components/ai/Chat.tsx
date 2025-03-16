@@ -359,6 +359,7 @@ const Chat = forwardRef(
         case "fix":
           handleMessageSend(
             "-@here Respond correctly, in defined schema. Validation failing.",
+            false,
           );
           dispatch(nukeSystemMessages());
 
