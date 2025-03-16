@@ -196,7 +196,15 @@ const Number = () => {
               range-finder, <br /> number guesser
             </>
           }
-          hint={<Text>It's just math, with 1/2 teaspoon of chance</Text>}
+          hint={
+            <>
+              {" "}
+              <Text>It's just math, with 1/2 teaspoon of chance</Text>{" "}
+              <Link href="https:///www.github.com/renniemaharaj/int-deduce-go">
+                Go Package
+              </Link>
+            </>
+          }
         />
       }
     >

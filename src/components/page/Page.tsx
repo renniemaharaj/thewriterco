@@ -7,6 +7,7 @@ import { ChevronRightIcon, HomeIcon } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { useThemeContext } from "../context/theme/useThemeContext";
 import Sizer from "./Sizer";
+import React from "react";
 
 const Page = ({
   children,
@@ -68,7 +69,7 @@ const Page = ({
           )}
 
           {locationParts.map((part, index) => (
-            <>
+            <React.Fragment key={`part-${index}`}>
               {part.trim() !== "" && (
                 <Flex className="!overflow-clip !gap-2 !items-center !justify-centers rounded-full px-2 py-1">
                   <Text color="gray" size={"1"}>
@@ -80,7 +81,7 @@ const Page = ({
               {index < locationParts.length - 1 && (
                 <ChevronRightIcon className="w-4 h-4 text-gray-400" />
               )}
-            </>
+            </React.Fragment>
           ))}
         </Card>
       </section>

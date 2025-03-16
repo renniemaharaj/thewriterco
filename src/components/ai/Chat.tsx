@@ -29,6 +29,7 @@ import { fromByteArray } from "base64-js";
 import Input from "./Input.tsx";
 import {
   addMessage,
+  clearMessages,
   nukeSystemMessages,
   setConversationMode,
   setConversationTokens,
@@ -39,6 +40,7 @@ import { initialSuggestions } from "./configuration.ts";
 import useLocalStorage from "../hooks/useLocalStorage.ts";
 import Message, { MessageAction } from "./Message.tsx";
 import { toggleFlowSlice } from "../../app/flow/flowSlice.ts";
+import { getInitialChatState } from "../../app/chat/utils.ts";
 
 const Chat = forwardRef(
   (
@@ -57,6 +59,7 @@ const Chat = forwardRef(
     const [sendAskReq] = useSendAskReqMutation();
 
     const [isTyping, setIsTyping] = useState(false);
+    const [maxTokens, setMaxTokens] = useState(10000);
 
     const [suggestions, setSuggestions] =
       useState<string[]>(initialSuggestions);
@@ -146,9 +149,55 @@ const Chat = forwardRef(
       [dispatchAddMessage],
     );
 
+    const handleCommand = useCallback(
+      (command: string, args: string[]) => {
+        switch (command) {
+          case "clear":
+            dispatch(clearMessages());
+            break;
+
+          case "nuke":
+            dispatch(nukeSystemMessages());
+            break;
+
+          case "reset":
+            dispatch(clearMessages());
+            setValue(getInitialChatState());
+            location.reload();
+            break;
+
+          case "tokens":
+            if (args.length > 0) {
+              const newMaxTokens = parseInt(args[0]);
+              if (newMaxTokens > 0) {
+                setMaxTokens(newMaxTokens);
+              }
+            }
+            break;
+          default:
+            dispatchAddMessage({
+              role: "system",
+              type: "markup",
+              content: {
+                type: "markup",
+                markupContent: "Unknown command.",
+              },
+            });
+        }
+      },
+      [dispatch, dispatchAddMessage],
+    );
+
     const handleMessageSend = useCallback(
       async (msg: string, defaultSending = true) => {
         if (!msg.trim()) return;
+
+        // Handle commands
+        if (msg.startsWith("/")) {
+          const arg = msg.replace("/", "").split(" ");
+          handleCommand(arg[0], arg.slice(1));
+          return;
+        }
 
         if (defaultSending) {
           dispatchAddMessage({
@@ -161,8 +210,8 @@ const Chat = forwardRef(
           });
         }
 
-        if (chatState.conversationTokens > 10000) {
-          if (defaultSending || chatState.conversationMode !== "none") {
+        if (chatState.conversationTokens > maxTokens) {
+          if (defaultSending && chatState.conversationMode !== "none") {
             dispatchAddMessage({
               role: "system",
               type: "markup",
@@ -509,7 +558,9 @@ const Chat = forwardRef(
                   {chatState.conversationMode === "exchange"
                     ? "Conversation (" +
                       chatState.conversationTokens +
-                      " / 10k)"
+                      " / " +
+                      maxTokens +
+                      ")"
                     : "Conversation"}
                 </Button>
               </Flex>
