@@ -231,15 +231,10 @@ const Chat = forwardRef(
         // Attach additional context to the message
         const attachedBookState = `${eReaderState.eContent.title} ${eReaderState.currentChapter}:${eReaderState.currentVerse}`;
 
-        // Attach date & time
-        const attachedLocalTime = `${new Date().toLocaleString()}`;
-        const attachedCurrentDate = `${new Date().toDateString()}`;
         const attachedResponseConstraint = chatState.responseConstraint;
         const context = [
           { themeMode: "should support both light and dark modes" },
           { bookState: attachedBookState },
-          { localTime: attachedLocalTime },
-          { currentDate: attachedCurrentDate },
           { responseConstraint: attachedResponseConstraint },
           {
             constraintInstruction:
@@ -314,6 +309,7 @@ const Chat = forwardRef(
         chatState,
         dispatchAddMessage,
         eReaderState,
+        maxTokens,
         sendAskReq,
         theme,
         scrollMessageBoxToBottom,
