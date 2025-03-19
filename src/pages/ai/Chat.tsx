@@ -10,6 +10,7 @@ import {
   Tooltip,
   IconButton,
   Text,
+  TextField,
 } from "@radix-ui/themes";
 import Ereader from "../../components/bible/Ereader";
 import SideBar from "../../components/SideBar";
@@ -43,6 +44,8 @@ const AI = () => {
   const { theme } = useThemeContext();
 
   const [summaryVisible, setSummaryVisible] = useState(false);
+
+  const [authorValue, setAuthorValue] = useState("");
 
   const chatData = useSelector((state: RootState) => state.chat);
   // const { orientation } = chatData;
@@ -114,6 +117,8 @@ const AI = () => {
       - Provide a brief overview of the template's purpose
 
       Ensure to respond through the appropriate schemas!
+
+      Please add author: ${authorValue || "Anonymous"}.
       `;
 
     return instructions;
@@ -308,6 +313,11 @@ const AI = () => {
                 </Select.Content>
               </Select.Root>
             </Flex>
+            <TextField.Root
+              placeholder="Author's Name"
+              value={authorValue}
+              onChange={(e) => setAuthorValue(e.target.value)}
+            />
           </Flex>
           {/* </Hint> */}
 
