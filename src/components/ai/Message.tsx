@@ -63,7 +63,7 @@ const Message: React.FC<MessageProps> = ({ block, handleAction }) => {
           <Avatar
             color="gold"
             size={"1"}
-            className={`h-6 w-6 relative ml-2`}
+            className={`h-6 w-6 relative ml-2 !my-10`}
             fallback="M"
           >
             {"M"}
