@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Blockquote,
   Button,
   Card,
@@ -41,7 +42,10 @@ const Message: React.FC<MessageProps> = ({ block, handleAction }) => {
   );
   const dispatch = useDispatch();
   return (
-    <Flex justify="center" className="!flex-col !max-w-full">
+    <Card
+      variant="ghost"
+      className="!flex-col !max-w-full !text-xs !justify-center !my-10 !p-1 "
+    >
       <Flex
         direction="column"
         justify={block.role === "user" ? "end" : "start"}
@@ -55,13 +59,25 @@ const Message: React.FC<MessageProps> = ({ block, handleAction }) => {
           animationFillMode: "forwards",
         }}
       >
+        {block.role === "model" && (
+          <Avatar
+            color="gold"
+            size={"1"}
+            className={`h-6 w-6 relative ml-2`}
+            fallback="M"
+          >
+            {"M"}
+          </Avatar>
+        )}
+
         {block.role === "user" && (
-          <Card className="!border-none !outline-none whitespace-pre-wrap">
-            <Flex className="items-center !justify-end gap-2">
-              <Text className="text-xs font-bold se">User</Text>
-              {/* <Avatar className="h-6 w-6 bg-blue-500 text-white">U</Avatar> */}
-            </Flex>
-            <Text>{(block.content as MarkupResponse).markupContent}</Text>
+          <Card
+            variant="ghost"
+            className="!border-none !outline-none whitespace-pre-wrap !justify-end !flex"
+          >
+            <Text className="!mr-0">
+              {(block.content as MarkupResponse).markupContent}
+            </Text>
           </Card>
         )}
 
@@ -164,7 +180,7 @@ const Message: React.FC<MessageProps> = ({ block, handleAction }) => {
           </Card>
         )}
       </Flex>
-    </Flex>
+    </Card>
   );
 };
 
