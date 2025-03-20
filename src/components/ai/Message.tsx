@@ -42,10 +42,7 @@ const Message: React.FC<MessageProps> = ({ block, handleAction }) => {
   );
   const dispatch = useDispatch();
   return (
-    <Card
-      variant="ghost"
-      className="!flex !flex-col !w-full !mx-auto !justify-center"
-    >
+    <Card variant="ghost" className="!flex !flex-col !w-full !justify-center">
       <Flex
         direction="column"
         justify={block.role === "user" ? "end" : "start"}
@@ -117,7 +114,7 @@ const Message: React.FC<MessageProps> = ({ block, handleAction }) => {
           >
             <Blockquote>
               <div
-                className=" p-3 rounded-xl whitespace-pre-wrap"
+                className="p-3 rounded-xl whitespace-pre-wrap"
                 dangerouslySetInnerHTML={{
                   __html: (block.content as MarkupResponse).markupContent,
                 }}

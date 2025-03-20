@@ -400,23 +400,23 @@ const Chat = forwardRef(
       }, []);
 
       const baseClassName =
-        "w-3/4 h-4 rounded mb-2 opacity-0 transition-opacity duration-700";
+        "w-3/4 !h-4 rounded mb-2 opacity-0 transition-opacity duration-700";
 
       return (
         <Card
           variant="ghost"
-          className="!flex !flex-col !max-w-full !text-xs !justify-center !my-10 !p-1 "
+          className="!border-none !w-full !mx-auto !outline-none !p-0"
         >
-          <Avatar
-            color="gold"
-            size={"1"}
-            className={`h-6 w-6 relative ml-2 !my-10 !animate-bounce`}
-            fallback="M"
-          >
-            {"M"}
-          </Avatar>
+          <Blockquote className="p-3 rounded-xl whitespace-pre-wrap">
+            <Avatar
+              color="gold"
+              size={"1"}
+              className={`h-6 w-6 relative ml-2 !my-10 !animate-pulse`}
+              fallback="M"
+            >
+              {"M"}
+            </Avatar>
 
-          <Blockquote>
             <Skeleton
               className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-[70%] mt-5 delay-100`}
             />
@@ -479,17 +479,21 @@ const Chat = forwardRef(
 
           {chatState.messages.map((block, index) => (
             <React.Fragment key={index}>
-              <MessageBlock
-                block={block}
-                onAnimated={scrollMessageBoxToBottom}
-              />
+              <Flex className="w-[99%] !max-auto !mx-auto">
+                <MessageBlock
+                  block={block}
+                  onAnimated={scrollMessageBoxToBottom}
+                />
+              </Flex>
             </React.Fragment>
           ))}
 
           {isTyping && (
-            <Flex justify="center" className="text-gray-500 italic !flex-col">
-              <SkeletonTextBlock />
-            </Flex>
+            <React.Fragment>
+              <Flex className="w-[99%] !mx-auto !my-10">
+                <SkeletonTextBlock />
+              </Flex>
+            </React.Fragment>
           )}
         </Card>
       );
