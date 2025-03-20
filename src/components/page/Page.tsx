@@ -1,13 +1,11 @@
-import { Card, Flex, IconButton, Separator, Text } from "@radix-ui/themes";
+import { Card, Flex, Separator } from "@radix-ui/themes";
 import Navbar from "./NavBar";
 import Ereader from "../bible/Ereader";
 import Footer from "./Footer";
-import { ReactNode, useEffect, useState } from "react";
-import { ChevronRightIcon, HomeIcon } from "lucide-react";
+import { ReactNode, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { useThemeContext } from "../context/theme/useThemeContext";
 import Sizer from "./Sizer";
-import React from "react";
+import LocationTile from "./LocationTile";
 
 const Page = ({
   children,
@@ -26,23 +24,12 @@ const Page = ({
   title?: string;
   description?: string;
 }) => {
-  const { theme } = useThemeContext();
-
   useEffect(() => {
     document.body.style.overflowX = "hidden";
     return () => {
       document.body.style.overflowX = "hidden";
     };
   }, []);
-
-  const [locationParts, setLocationParts] = useState<string[]>([]);
-
-  useEffect(() => {
-    setLocationParts(window.location.pathname.split("/"));
-  }, []);
-
-  const upperCaseFirstLetter = (str: string) =>
-    str.charAt(0).toUpperCase() + str.slice(1);
 
   return (
     <>
@@ -56,34 +43,7 @@ const Page = ({
       {/* <Navbar /> */}
       <Navbar />
       <section className="p-2 w-full max-w-full">
-        <Card className="!flex !flex-row !w-full !items-center !h-14 !gap-2 !max-w-full">
-          {locationParts.length > 1 && (
-            <IconButton
-              variant="soft"
-              onClick={() => (location.href = "/")}
-              aria-label="Go to Home"
-              className={`${theme === "dark" ? "!text-white" : "!text-yellow-400"}`}
-            >
-              <HomeIcon />
-            </IconButton>
-          )}
-
-          {locationParts.map((part, index) => (
-            <React.Fragment key={`part-${index}`}>
-              {part.trim() !== "" && (
-                <Flex className="!overflow-clip !gap-2 !items-center !justify-centers rounded-full px-2 py-1">
-                  <Text color="gray" size={"1"}>
-                    {upperCaseFirstLetter(part)}
-                  </Text>
-                </Flex>
-              )}
-
-              {index < locationParts.length - 1 && (
-                <ChevronRightIcon className="w-4 h-4 text-gray-400" />
-              )}
-            </React.Fragment>
-          ))}
-        </Card>
+        <LocationTile />
       </section>
       <Ereader hidePicker={hideBiblePicker} />
       {/* <Flex className="!w-full animate-fade-in !flex-col merriweather-bold !p-2"> */}
