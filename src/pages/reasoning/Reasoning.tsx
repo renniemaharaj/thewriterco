@@ -37,7 +37,7 @@ const Reasoning = () => {
           >
             {routeChildren && (
               // <Card className="!p-1 !mx-auto">
-              <Box className="space-y-4 space-x-4 !p-1 max-w-[500px] !mx-auto">
+              <Box className="space-y-4 space-x-4 !p-2 !py-10 max-w-[500px] !mx-auto">
                 {orientation === "horizontal" && routeChildren}
               </Box>
               // </Card>
