@@ -44,7 +44,7 @@ const Message: React.FC<MessageProps> = ({ block, handleAction }) => {
   return (
     <Card
       variant="ghost"
-      className="!flex-col !max-w-full !text-xs !justify-center !my-10 !p-1 "
+      className="!flex !flex-col !w-full !mx-auto !justify-center"
     >
       <Flex
         direction="column"

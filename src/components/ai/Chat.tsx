@@ -405,7 +405,7 @@ const Chat = forwardRef(
       return (
         <Card
           variant="ghost"
-          className="!flex !flex-col !max-w-full !text-xs !justify-center !my-10 !p-1 "
+          className="!flex !flex-col !max-w-[99%] !mx-auto !text-xs !justify-center !my-10 "
         >
           <Avatar
             color="gold"
