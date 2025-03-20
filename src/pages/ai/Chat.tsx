@@ -126,13 +126,13 @@ const AI = () => {
 
   const PanelBar = (
     <Flex
-      className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${chatData.orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}   !items-center gap-2`}
+      className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${chatData.orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}   !items-center gap-2 !p-1`}
     >
       <Sizer />
       {/* <Flex> */}
       <Tooltip content="go home">
         <IconButton
-          variant="soft"
+          variant="ghost"
           onClick={() => (location.href = "/")}
           aria-label="Go to Home"
         >
@@ -142,7 +142,7 @@ const AI = () => {
 
       <Popover.Root>
         <Popover.Trigger>
-          <IconButton variant="soft">
+          <IconButton variant="ghost">
             <EllipsisVerticalIcon className="scale-75" />
           </IconButton>
         </Popover.Trigger>
@@ -194,7 +194,7 @@ const AI = () => {
       <Tooltip content="delete chat">
         <IconButton
           size="2"
-          variant="soft"
+          variant="ghost"
           onClick={() => {
             {
               dispatch(clearMessages());
@@ -209,7 +209,7 @@ const AI = () => {
       <Tooltip content="toggle ui">
         <IconButton
           size="2"
-          variant="soft"
+          variant="ghost"
           onClick={() =>
             dispatch(
               setMessageBoxMode(
@@ -229,7 +229,7 @@ const AI = () => {
       <Tooltip content="request study">
         <IconButton
           size="2"
-          variant="soft"
+          variant="ghost"
           onClick={() => displaySummaizerDialog()}
         >
           <FileCode2 />
