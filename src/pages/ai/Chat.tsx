@@ -126,7 +126,7 @@ const AI = () => {
 
   const PanelBar = (
     <Flex
-      className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${chatData.orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}   !items-center gap-2 !p-1`}
+      className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${chatData.orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}  !items-center gap-2 !p-1`}
     >
       <Sizer />
       {/* <Flex> */}
