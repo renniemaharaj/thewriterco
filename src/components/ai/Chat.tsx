@@ -1,11 +1,4 @@
-import {
-  Flex,
-  Button,
-  Skeleton,
-  Card,
-  Avatar,
-  Blockquote,
-} from "@radix-ui/themes";
+import { Flex, Button, Skeleton, Card } from "@radix-ui/themes";
 import {
   useCallback,
   useImperativeHandle,
@@ -400,33 +393,22 @@ const Chat = forwardRef(
       }, []);
 
       const baseClassName =
-        "w-3/4 !h-4 rounded mb-2 opacity-0 transition-opacity duration-700";
+        "w-3/4 !h-3 rounded mb-2 opacity-0 transition-opacity duration-700";
 
       return (
         <Card
           variant="ghost"
           className="!border-none !w-full !mx-auto !outline-none !p-0"
         >
-          <Blockquote className="p-3 rounded-xl whitespace-pre-wrap">
-            <Avatar
-              color="gold"
-              size={"1"}
-              className={`h-6 w-6 relative ml-2 !my-10 !animate-pulse`}
-              fallback="M"
-            >
-              {"M"}
-            </Avatar>
-
-            <Skeleton
-              className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-[70%] mt-5 delay-100`}
-            />
-            <Skeleton
-              className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-2/4 delay-200`}
-            />
-            <Skeleton
-              className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-1/4 delay-300`}
-            />
-          </Blockquote>
+          <Skeleton
+            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-[70%] mt-5 delay-100`}
+          />
+          <Skeleton
+            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-2/4 delay-200`}
+          />
+          <Skeleton
+            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-1/4 delay-300`}
+          />
         </Card>
       );
     };
