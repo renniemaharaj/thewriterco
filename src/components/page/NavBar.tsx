@@ -89,6 +89,7 @@ const Navbar: React.FC = () => {
     if (searchBoxForm) {
       const onSearchBoxFormSubmit = (e: Event) => {
         e.preventDefault();
+        if (!localSearchState) return;
         handleFindReq(localSearchState);
       };
       searchBoxForm.addEventListener("submit", onSearchBoxFormSubmit);
@@ -170,7 +171,6 @@ const Navbar: React.FC = () => {
               aria-label="Search"
               variant="soft"
               // highContrast
-              className={`${theme === "dark" ? "!text-white" : "!text-yellow-400"}`}
             >
               <ScanSearchIcon width="18" height="18" />
             </IconButton>

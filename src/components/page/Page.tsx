@@ -5,7 +5,6 @@ import Footer from "./Footer";
 import { ReactNode, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Sizer from "./Sizer";
-import LocationTile from "./LocationTile";
 
 const Page = ({
   children,
@@ -43,7 +42,7 @@ const Page = ({
       {/* <Navbar /> */}
       <Navbar />
       <section className="p-2 w-full max-w-full">
-        <LocationTile />
+        {/* <LocationTile /> */}
       </section>
       <Ereader hidePicker={hideBiblePicker} />
       {/* <Flex className="!w-full animate-fade-in !flex-col merriweather-bold !p-2"> */}
