@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 import Hero from "../Hero";
 import Hint from "../Hint";
-import { useThemeContext } from "../context/theme/useThemeContext";
 
 const companyName = "The Writer Company";
 const companyMission =
@@ -31,23 +30,15 @@ const companyEmail = "rvesprey@gmail.com";
 const companyPhone = "(***) ***-****";
 
 const Footer: React.FC = () => {
-  const { theme } = useThemeContext();
   return (
-    <footer
-      id="footer"
-      className="flex !flex-col !gap-5 py-16 !max-w-[140% bg-[#171918] text-white"
-    >
+    <footer id="footer" className="flex !flex-col !gap-5 py-16">
       {/* First Column: Information Section */}
       <Hero
         header={companyName}
         className="!text-center max-w-[500px] mx-auto"
         subHeader={
           <div>
-            <Link
-              size="2"
-              href="/office"
-              className={`${theme === "dark" ? "!text-white" : "!text-yellow-400"}`}
-            >
+            <Link size="2" href="/office">
               {companyAddress}
             </Link>
             <br />
@@ -65,28 +56,13 @@ const Footer: React.FC = () => {
           </Heading>
           <ul className="space-y-2">
             <li>
-              <Link
-                href="#"
-                className="text-sm !text-gray-300 hover:!text-white"
-              >
-                FAQ
-              </Link>
+              <Link href="#">FAQ</Link>
             </li>
             <li>
-              <Link
-                href="#"
-                className="text-sm !text-gray-300 hover:!text-white"
-              >
-                Privacy Policy
-              </Link>
+              <Link href="#">Privacy Policy</Link>
             </li>
             <li>
-              <Link
-                href="#"
-                className="text-sm !text-gray-300 hover:!text-white"
-              >
-                Terms of Service
-              </Link>
+              <Link href="#">Terms of Service</Link>
             </li>
             {/* <li>
             <Button className="bg-primary text-sm mt-4">Donate Now</Button>
@@ -131,24 +107,12 @@ const Footer: React.FC = () => {
           <Flex className="items-start gap-2 text-sm">
             <MapPin className="h-5 w-5 text-primary" />
             <Text>
-              {companyAddress && (
-                <Link
-                  href="/office"
-                  className={`${theme === "dark" ? "!text-white" : "!text-yellow-400"}`}
-                >
-                  {companyAddress}
-                </Link>
-              )}
+              {companyAddress && <Link href="/office">{companyAddress}</Link>}
             </Text>
           </Flex>
           <Flex className="items-center gap-2 text-sm mt-2">
             <Mail className="h-5 w-5 text-primary" />
-            <Link
-              href={`mailto:${companyEmail}`}
-              className="!text-gray-300 hover:!text-white"
-            >
-              Email: {companyEmail}
-            </Link>
+            <Link href={`mailto:${companyEmail}`}>Email: {companyEmail}</Link>
           </Flex>
 
           <Flex className="items-center gap-2 text-sm mt-2">
@@ -165,12 +129,7 @@ const Footer: React.FC = () => {
           </Heading>
           <Flex className="items-center gap-2 text-sm mt-2">
             <HandCoinsIcon className="h-5 w-5 text-primary" />
-            <Link
-              href="https://paypal.me/newrennie"
-              className="!text-gray-300 hover:!text-white"
-            >
-              Paypal Contribute
-            </Link>
+            <Link href="https://paypal.me/newrennie">Paypal Contribute</Link>
           </Flex>
         </Flex>
       </Flex>
