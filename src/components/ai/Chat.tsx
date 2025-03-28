@@ -31,7 +31,6 @@ import {
   addMessage,
   clearMessages,
   nukeSystemMessages,
-  setConversationMode,
   setConversationTokens,
   setViewMode,
 } from "../../app/chat/chatSlice.ts";
@@ -41,6 +40,7 @@ import useLocalStorage from "../hooks/useLocalStorage.ts";
 import Message, { MessageAction } from "./Message.tsx";
 import { toggleFlowSlice } from "../../app/flow/flowSlice.ts";
 import { getInitialChatState } from "../../app/chat/utils.ts";
+import Models from "./Models.tsx";
 
 const Chat = forwardRef(
   (
@@ -442,6 +442,7 @@ const Chat = forwardRef(
       return (
         <Card
           className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-32 my-auto`}
+          variant="ghost"
         >
           {chatState.messages.length === 0 && (
             <Flex className={`gap-1 px-8 mb-4 pt-2 !justify-center !flex-wrap`}>
@@ -520,11 +521,12 @@ const Chat = forwardRef(
         <Input
           disabled={isTyping}
           handleRecieve={(text: string) => handleMessageSend(text)}
-          className={`!absolute ${chatState.messageBoxMode === "hidden" && "!hidden"} bottom-[2px] blurred-div`}
+          className={`!absolute ${chatState.messageBoxMode === "hidden" && "!hidden"} animate-fade-in bottom-[2px] blurred-div`}
           style={{ width: chatBoxRespectiveWidth }}
           children={
             <Flex gap="2" className="!flex-row">
               <Flex align={"center"} className="!p-1 gap-2 !flex-wrap">
+                <Models />
                 <Button
                   variant={"outline"}
                   onClick={() => dispatch(setOpenState(true))}
@@ -542,30 +544,6 @@ const Chat = forwardRef(
                   }
                 >
                   Canvas
-                </Button>
-                <Button
-                  variant={
-                    chatState.conversationMode === "exchange"
-                      ? "soft"
-                      : "outline"
-                  }
-                  onClick={() =>
-                    dispatch(
-                      setConversationMode(
-                        chatState.conversationMode === "exchange"
-                          ? "none"
-                          : "exchange",
-                      ),
-                    )
-                  }
-                >
-                  {chatState.conversationMode === "exchange"
-                    ? "Conversation (" +
-                      chatState.conversationTokens +
-                      " / " +
-                      maxTokens +
-                      ")"
-                    : "Conversation"}
                 </Button>
               </Flex>
             </Flex>

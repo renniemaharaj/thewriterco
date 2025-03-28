@@ -50,22 +50,17 @@ const Input: React.FC<InputProps> = ({
     shallowWrapperRef?.addEventListener("focus", handleFocus);
     shallowWrapperRef?.addEventListener("click", handleFocus);
     shallowWrapperRef?.addEventListener("mousedown", handleFocus);
-
-    shallowWrapperRef?.addEventListener("mouseleave", handleBlur);
     // shallowTextAreaRef?.addEventListener("mouseover", handleFocus);
 
-    shallowWrapperRef?.addEventListener("mouseenter", handleFocus);
     shallowWrapperRef?.addEventListener("touchstart", handleFocus);
 
     return () => {
       shallowTextAreaRef?.removeEventListener("focus", handleFocus);
       shallowTextAreaRef?.removeEventListener("blur", handleBlur);
-      shallowTextAreaRef?.removeEventListener("mouseleave", handleBlur);
 
       shallowWrapperRef?.removeEventListener("focus", handleFocus);
       shallowWrapperRef?.removeEventListener("click", handleFocus);
       shallowWrapperRef?.removeEventListener("mousedown", handleFocus);
-      shallowTextAreaRef?.removeEventListener("mouseover", handleFocus);
       shallowWrapperRef?.removeEventListener("touchstart", handleFocus);
     };
   }, []);
