@@ -1,11 +1,10 @@
 import { ReactNode, useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { Button, Callout, Flex, ScrollArea } from "@radix-ui/themes";
+import { Button, Flex, ScrollArea } from "@radix-ui/themes";
 import { motion } from "framer-motion";
 import { useThemeContext } from "./context/theme/useThemeContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
-import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 type CollapsibleProps = {
   title: ReactNode;
@@ -68,16 +67,7 @@ export default function Collapsible({
           className={`overflow-auto transition-all duration-300 max-h-[${maxHeight}]`}
         >
           <Flex className="p-4">
-            {handledChildren && orientation === "horizontal" ? (
-              <Callout.Root size={"1"} className="mt-5">
-                <Callout.Icon>
-                  <InfoCircledIcon />
-                </Callout.Icon>
-                <Callout.Text>Content routed out</Callout.Text>
-              </Callout.Root>
-            ) : (
-              children
-            )}
+            {handledChildren && orientation === "horizontal" ? <></> : children}
           </Flex>
         </ScrollArea>
       </motion.div>
