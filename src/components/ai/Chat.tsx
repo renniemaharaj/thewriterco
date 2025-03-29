@@ -398,16 +398,16 @@ const Chat = forwardRef(
       return (
         <Card
           variant="ghost"
-          className="!border-none !w-full !mx-auto !outline-none !p-0"
+          className="!border-none !w-full !mx-auto !outline-none"
         >
           <Skeleton
-            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-[70%] mt-5 delay-100`}
+            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-[70%] mt-5 delay-100 !p-2`}
           />
           <Skeleton
-            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-2/4 delay-200`}
+            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-2/4 delay-200 !p-2`}
           />
           <Skeleton
-            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-1/4 delay-300`}
+            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-1/4 delay-300 !p-2`}
           />
         </Card>
       );
@@ -441,7 +441,7 @@ const Chat = forwardRef(
     const ViewContainer = useCallback(() => {
       return (
         <Card
-          className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-32 my-auto`}
+          className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-[9rem] my-auto`}
           variant="ghost"
         >
           {chatState.messages.length === 0 && (
