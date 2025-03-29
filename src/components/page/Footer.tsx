@@ -25,7 +25,7 @@ import Hint from "../Hint";
 const companyName = "The Writer Company";
 const companyMission =
   "Bible, writing, resources and open source biblical tools.";
-const companyAddress = "Trinidad and Tobago";
+const companyAddress = "Trinidad and Tobago ";
 const companyEmail = "rvesprey@gmail.com";
 const companyPhone = "(***) ***-****";
 
@@ -38,9 +38,7 @@ const Footer: React.FC = () => {
         className="!text-center max-w-[500px] mx-auto"
         subHeader={
           <div>
-            <Link size="2" href="/office">
-              {companyAddress}
-            </Link>
+            <Text className="country-colored-text-tt">{companyAddress}</Text>
             <br />
             <Hint>{companyMission}</Hint>
           </div>
@@ -56,17 +54,14 @@ const Footer: React.FC = () => {
           </Heading>
           <ul className="space-y-2">
             <li>
-              <Link href="#">FAQ</Link>
+              <Link href="/faq">FAQ</Link>
             </li>
             <li>
-              <Link href="#">Privacy Policy</Link>
+              <Link href="/privacy">Privacy Policy</Link>
             </li>
             <li>
-              <Link href="#">Terms of Service</Link>
+              <Link href="/tos">Terms of Service</Link>
             </li>
-            {/* <li>
-            <Button className="bg-primary text-sm mt-4">Donate Now</Button>
-          </li> */}
           </ul>
         </Flex>
 
@@ -107,7 +102,11 @@ const Footer: React.FC = () => {
           <Flex className="items-start gap-2 text-sm">
             <MapPin className="h-5 w-5 text-primary" />
             <Text>
-              {companyAddress && <Link href="/office">{companyAddress}</Link>}
+              {companyAddress && (
+                <Text className="country-colored-text-tt">
+                  {companyAddress}
+                </Text>
+              )}
             </Text>
           </Flex>
           <Flex className="items-center gap-2 text-sm mt-2">

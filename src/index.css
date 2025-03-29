@@ -66,6 +66,17 @@
   font-style: italic;
 }
 
+.country-colored-text-tt {
+  font-size: 1rem; /* Adjust text size */
+  font-weight: bold;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/6/64/Flag_of_Trinidad_and_Tobago.svg"); /* Publicly hosted image of the Trinidad and Tobago flag */
+  background-size: cover; /* Ensures the flag covers the entire text */
+  background-position: center; /* Position the flag as needed */
+  -webkit-background-clip: text; /* Works for Webkit-based browsers (Chrome, Safari) */
+  background-clip: text; /* Standard property for clipping background to text */
+  color: transparent; /* Make text transparent to show the background image */
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     --hrtm-theme-background: #fff;
