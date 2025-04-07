@@ -1,13 +1,15 @@
-import { Text, Button, Flex, Separator } from "@radix-ui/themes";
+import { Text, Button, Link } from "@radix-ui/themes";
+import { HomeIcon } from "@radix-ui/react-icons";
 import Page from "../../components/page/Page";
 import Hero from "../../components/Hero";
+// import Link from "next/link";
 
 export default function NoPage() {
   return (
     <Page
       wrapChildren
-      title="404 - Page Not Found"
-      description="Page not found"
+      title="Page Not Found"
+      description="404 - Page Not Found"
       hero={
         <Hero
           header="Welcome to"
@@ -27,41 +29,29 @@ export default function NoPage() {
         />
       }
     >
-      <Text as="div" color="red" className="!w-full !text-center animate-pulse">
-        Oops! This page doesn't exist 😔
-      </Text>
+      <div className="w-full text-center space-y-4 mt-6">
+        <Text as="div" color="red" size="5" className="animate-pulse">
+          Oops! This page doesn’t exist
+        </Text>
 
-      <Separator size="4" className="m-4" />
+        <Text as="p" color="gray" size="3">
+          You may have followed a broken link
+        </Text>
 
-      <Flex direction="column" align="center" gap="3">
-        <Button
-          onClick={() => (window.location.href = "/")}
-          variant="soft"
-          aria-label="Go to Homepage"
-          className="!w-full"
-        >
-          Go Home
-        </Button>
-
-        <Flex gap="3" className="!w-full">
-          <Button
-            onClick={() => (window.location.href = "/ai")}
-            variant="soft"
-            className="!flex-1"
-            aria-label="Visit TheWriterCo AI"
-          >
-            TheWriterCo AI
-          </Button>
-          <Button
-            onClick={() => (window.location.href = "/reasoning")}
-            variant="soft"
-            className="!flex-1"
-            aria-label="Read Rationale"
-          >
-            Rationale
-          </Button>
-        </Flex>
-      </Flex>
+        <div className="flex justify-center gap-4 flex-wrap">
+          <Link href="/">
+            <Button>
+              <HomeIcon />
+              Home
+            </Button>
+          </Link>
+          <Link href="/contact">
+            <Button variant="soft" disabled>
+              Report
+            </Button>
+          </Link>
+        </div>
+      </div>
     </Page>
   );
 }
