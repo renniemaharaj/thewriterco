@@ -1,20 +1,36 @@
 import { Flex, Spinner } from "@radix-ui/themes";
+import Page from "./page/Page";
+import Hero from "./Hero";
 
 export default function Block() {
   return (
-    <Flex
-      justify={"center"}
-      align={"center"}
-      className={`w-full h-[100vh] fixed top-0 left-0`}
+    <Page
+      title="Home"
+      description="Welcome to The Writer Company"
+      className="!gap-5"
+      wrapChildren
+      hero={
+        <Hero
+          header="Welcome to"
+          subHeader={
+            <>
+              The Writer <br />
+              Company
+            </>
+          }
+          hint={
+            <>
+              We're here to: give reasoning for faith; reinforcement to your
+              shield, 🛡️ Wherewith ye shall quench all the fiery darts of the
+              wicked. For his bow is set with a fiery deception 🏹
+            </>
+          }
+        />
+      }
     >
-      <Flex
-        justify={"center"}
-        align={"center"}
-        className="page-signup_flex_left_logo rounded-full !w-52 !h-52"
-      >
-        <BlockingSpinner />
-      </Flex>
-    </Flex>
+      <BlockingSpinner className="mx-auto" />
+      {/* </Flex> */}
+    </Page>
   );
 }
 
@@ -29,7 +45,7 @@ export function BlockingSpinner({
     <Flex
       justify={"center"}
       align={"center"}
-      className={`w-10 aspect-square rounded-full absolute ${className}`}
+      className={`w-10 aspect-square rounded-full ${className}`}
     >
       <Spinner size={size || "2"} className="scale-125" />
     </Flex>
