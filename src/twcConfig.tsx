@@ -37,7 +37,10 @@ export const publicRoutes: (CustomRoute | IndexRoute)[] = [
   { path: "doc/geminiPool", element: <GeminiPool /> },
 ];
 
-const protectedRoutes: CustomRoute[] = [{ path: "office", element: <></> }];
+const protectedRoutes: CustomRoute[] = [
+  { path: "office", element: <></> },
+  { path: "studies", element: <></> },
+];
 
 export const publicRoutesFunc = () => {
   return publicRoutes.map((route, i) =>

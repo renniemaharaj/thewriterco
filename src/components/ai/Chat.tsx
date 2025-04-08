@@ -10,7 +10,6 @@ import {
 import { useSendAskReqMutation } from "../../app/api/apiSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store.ts";
-import { useThemeContext } from "../context/theme/useThemeContext.tsx";
 
 import {
   Block,
@@ -53,8 +52,6 @@ const Chat = forwardRef(
     },
     ref,
   ) => {
-    const { theme } = useThemeContext();
-
     const dispatch = useDispatch();
     const [sendAskReq] = useSendAskReqMutation();
 
@@ -185,7 +182,7 @@ const Chat = forwardRef(
             });
         }
       },
-      [dispatch, dispatchAddMessage],
+      [dispatch, dispatchAddMessage, setValue],
     );
 
     const handleMessageSend = useCallback(
@@ -306,12 +303,12 @@ const Chat = forwardRef(
         }
       },
       [
+        handleCommand,
         chatState,
         dispatchAddMessage,
         eReaderState,
         maxTokens,
         sendAskReq,
-        theme,
         scrollMessageBoxToBottom,
         parseAIResponse,
       ],
@@ -350,40 +347,21 @@ const Chat = forwardRef(
       dispatch(toggleFlowSlice());
     }, [chatState.messages, computeTokens, dispatch, scrollMessageBoxToBottom]);
 
-    const handleActions = (action: MessageAction) => {
-      switch (action) {
-        case "fix":
-          handleMessageSend(
-            "-@here Respond correctly, in defined schema. Validation failing.",
-            false,
-          );
-          dispatch(nukeSystemMessages());
+    const handleActions = useCallback(
+      (action: MessageAction) => {
+        switch (action) {
+          case "fix":
+            handleMessageSend(
+              "-@here Respond correctly, in defined schema. Validation failing.",
+              false,
+            );
+            dispatch(nukeSystemMessages());
 
-          break;
-      }
-    };
-
-    const MessageBlock = ({
-      block,
-      onAnimated,
-    }: {
-      block: Block;
-      onAnimated: () => void;
-    }) => {
-      useEffect(() => {
-        onAnimated();
-      }, [onAnimated]);
-      return (
-        <Message
-          block={block}
-          handleAction={
-            block.role === "system"
-              ? (action: MessageAction) => handleActions(action)
-              : () => {}
-          }
-        />
-      );
-    };
+            break;
+        }
+      },
+      [handleMessageSend, dispatch],
+    );
 
     const SkeletonTextBlock = () => {
       const [blockMounted, setBlockMounted] = useState(false);
@@ -439,6 +417,27 @@ const Chat = forwardRef(
     }, []);
 
     const ViewContainer = useCallback(() => {
+      const MessageBlock = ({
+        block,
+        onAnimated,
+      }: {
+        block: Block;
+        onAnimated: () => void;
+      }) => {
+        useEffect(() => {
+          onAnimated();
+        }, [onAnimated]);
+        return (
+          <Message
+            block={block}
+            handleAction={
+              block.role === "system"
+                ? (action: MessageAction) => handleActions(action)
+                : () => {}
+            }
+          />
+        );
+      };
       return (
         <Card
           className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-[9rem] my-auto`}
@@ -484,6 +483,7 @@ const Chat = forwardRef(
       chatState,
       isTyping,
       suggestions,
+      handleActions,
       handleSuggestionClick,
       scrollMessageBoxToBottom,
     ]);

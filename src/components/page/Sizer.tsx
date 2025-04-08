@@ -16,7 +16,7 @@ const Sizer = () => {
     resizeObserver.observe(document.body);
 
     return () => resizeObserver.disconnect();
-  }, []);
+  }, [dispatch]);
   return <div></div>;
 };
 

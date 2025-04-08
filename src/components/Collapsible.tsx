@@ -34,7 +34,7 @@ export default function Collapsible({
     if (open && onOpen) onOpen(children);
 
     if (!open && onClose) onClose();
-  }, [open]);
+  }, [open, children, onOpen, onClose]);
 
   return (
     <div

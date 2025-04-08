@@ -5,6 +5,8 @@ import Footer from "./Footer";
 import { ReactNode, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Sizer from "./Sizer";
+import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
+import Block from "../Block";
 
 const Page = ({
   children,
@@ -23,6 +25,7 @@ const Page = ({
   title?: string;
   description?: string;
 }) => {
+  const { isPending } = useTransitionNavigation();
   useEffect(() => {
     document.body.style.overflowX = "hidden";
     return () => {
@@ -61,7 +64,7 @@ const Page = ({
             </Flex>
           </Card>
         )}
-        {!wrapChildren && [hero, <div>{children}</div>]}
+        {!wrapChildren && [hero, isPending ? <Block /> : <div>{children}</div>]}
       </Flex>
       {/* </Flex> */}
       <Separator size={"4"} />

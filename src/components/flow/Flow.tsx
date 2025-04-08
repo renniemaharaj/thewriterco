@@ -58,7 +58,7 @@ const FlowComponent = ({
       duration: 500,
       nodes: nodesLocal,
     };
-  }, [nodesLocal, flowState]);
+  }, [nodesLocal]);
 
   const { fitView } = useReactFlow();
 
@@ -70,7 +70,7 @@ const FlowComponent = ({
     setTimeout(() => {
       fitView(fitViewOptionsConfig);
     }, 500);
-  }, [flowState]);
+  }, [flowState, fitView, fitViewOptionsConfig]);
 
   return (
     <Box className={`w-auto h-full !flex-col ${width} ${height}`}>

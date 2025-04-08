@@ -13,7 +13,7 @@ import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Link from "../link/Link";
 
 const navLinks = [
-  { label: "Articles", href: "#articles", disabled: true },
+  { label: "Studies", href: "/studies", disabled: false },
   { label: "KJV", href: "/kjv" },
   { label: "Sources", href: "#footer", disabled: true },
   { label: "Pool", href: "/doc/geminiPool" },
