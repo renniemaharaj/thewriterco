@@ -5,6 +5,7 @@ import NoPage from "./pages/noPage/NoPage";
 import Study from "./pages/reasoning/Reasoning";
 
 import { lazy } from "react";
+import Login from "./pages/login/Login";
 
 const AI = lazy(() => import("./pages/ai/Chat"));
 const Number = lazy(() => import("./pages/number/Number"));
@@ -28,6 +29,7 @@ export const publicRoutes: (CustomRoute | IndexRoute)[] = [
   { index: true, element: <Root /> },
   { path: "*", element: <NoPage /> },
   { path: "deducer", element: <Number /> },
+  { path: "login", element: <Login /> },
   { path: "ai", element: <AI /> },
   { path: "kjv", element: <Kjv /> },
   { path: "reasoning", element: <Study /> },
