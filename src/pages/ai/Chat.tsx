@@ -39,6 +39,7 @@ import fetchGitBlob, {
 import { Helmet } from "react-helmet-async";
 import { toggleFlowSlice } from "../../app/flow/flowSlice";
 import Sizer from "../../components/page/Sizer";
+import { useTransitionNavigation } from "../../components/hooks/useTransitionNavigation";
 
 const AI = () => {
   const { theme } = useThemeContext();
@@ -133,7 +134,7 @@ const AI = () => {
       <Tooltip content="go home">
         <IconButton
           variant="ghost"
-          onClick={() => (location.href = "/")}
+          onClick={() => navigateWT("/")}
           aria-label="Go to Home"
         >
           <HomeIcon />
@@ -238,6 +239,8 @@ const AI = () => {
     </Flex>
   );
 
+  const { navigateWT } = useTransitionNavigation();
+
   useEffect(() => {
     fetchTemplateCatalogue();
   }, []);
@@ -288,7 +291,9 @@ const AI = () => {
           <Dialog.Title>Request Study Document</Dialog.Title>
           <Dialog.Description size="2" mb="4">
             Request a study based on your current conversation{" "}
-            <Link href="/doc/studyDocument">Study Document</Link>
+            <Link onClick={() => navigateWT("/doc/studyDocument")}>
+              Study Document
+            </Link>
           </Dialog.Description>
           <Flex direction="column" gap="3">
             <Flex direction="column" gap="2">

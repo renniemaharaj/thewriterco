@@ -1,11 +1,12 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import Hero from "../../../components/Hero";
 import Page from "../../../components/page/Page";
-import { Link, Text, Blockquote, Callout } from "@radix-ui/themes";
+import { Text, Blockquote, Callout } from "@radix-ui/themes";
 import Content from "../../../components/docs/Content";
 import BreakII from "../../../components/docs/BreakII";
 import List from "../../../components/docs/List";
 import GuideTemplate from "../../../components/docs/GuideTemplate";
+import Link from "../../../components/link/Link";
 
 const Guide = () => {
   return (
@@ -36,7 +37,7 @@ const Guide = () => {
             The Writer Company AI helps you study the Bible with AI-powered
             insights.
             <BreakII />
-            Have you tried our AI chatbot? Visit <Link href="/ai">/ai</Link> to
+            Have you tried our AI chatbot? Visit <Link href="ai">"ai"</Link> to
             interact with an AI trained for Bible studies. It answers questions
             concisely, provides long-form explanations, and is structured
             according to Christian beliefs.

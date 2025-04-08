@@ -1,5 +1,6 @@
-import { Flex, Text, Button, Quote, Separator } from "@radix-ui/themes";
+import { Flex, Text, Quote, Separator } from "@radix-ui/themes";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import Link from "../../components/link/Link";
 
 const flexClassName =
   "!flex-col !items-center !justify-center gap-2 w-full h-[300px]";
@@ -18,13 +19,9 @@ export const swiperSlides = [
       <br /> wherewith ye shall be able to quench all the fiery darts of the
       wicked.
     </Quote>
-    <Button
-      variant="soft"
-      className="mt-5 px-6 py-3 text-lg font-medium rounded-lg"
-      onClick={() => (location.href = "/reasoning")}
-    >
+    <Link as="button" variant="soft" href="/reasoning">
       Explore reasoning
-    </Button>
+    </Link>
   </Flex>,
 
   <Flex className={flexClassName}>
@@ -36,13 +33,9 @@ export const swiperSlides = [
       Study to shew thyself approved unto God, <br /> a workman that needeth not
       to be ashamed, rightly dividing the word of truth.
     </Quote>
-    <Button
-      variant="soft"
-      className="mt-5 px-6 py-3 text-lg font-medium rounded-lg"
-      onClick={() => (location.href = "/ai")}
-    >
+    <Link as="button" variant="soft" href="/ai">
       Begin Studying Now
-    </Button>
+    </Link>
   </Flex>,
 
   <Flex className={flexClassName}>
@@ -55,13 +48,9 @@ export const swiperSlides = [
       Study to shew thyself approved unto God, <br /> a workman that needeth not
       to be ashamed, rightly dividing the word of truth.
     </Quote>
-    <Button
-      variant="soft"
-      className="mt-5 px-6 py-3 text-lg font-medium rounded-lg"
-      onClick={() => (location.href = "/doc/studyDocument")}
-    >
+    <Link as="button" variant="soft" href="/doc/studyDocument">
       Learn More
-    </Button>
+    </Link>
   </Flex>,
 
   <Flex className={flexClassName}>
@@ -69,22 +58,21 @@ export const swiperSlides = [
       Open source on <br /> Github
     </Text>
     <GitHubLogoIcon /> <Separator size={"1"} />
-    <Button
-      variant="ghost"
-      onClick={() =>
-        (window.location.href = "https://github.com/renniemaharaj/thewriterco")
-      }
+    <Link
+      as="button"
+      variant="soft"
+      href="https://github.com/renniemaharaj/thewriterco"
+      external
     >
       React Front-End
-    </Button>
-    <Button
-      variant="ghost"
-      onClick={() =>
-        (window.location.href =
-          "https://github.com/renniemaharaj/thewriterco-auth-go")
-      }
+    </Link>
+    <Link
+      as="button"
+      variant="soft"
+      href="https://github.com/renniemaharaj/thewriterco-auth-go"
+      external
     >
       Golang Back-End
-    </Button>
+    </Link>
   </Flex>,
 ];

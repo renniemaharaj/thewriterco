@@ -1,12 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
-import {
-  Link,
-  IconButton,
-  Flex,
-  TextField,
-  Text,
-  Button,
-} from "@radix-ui/themes";
+import { IconButton, Flex, TextField, Text, Button } from "@radix-ui/themes";
 import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { useThemeContext } from "../context/theme/useThemeContext";
 import { useSelector } from "react-redux";
@@ -16,9 +9,10 @@ import SearchLoading from "../SearchLoading";
 import { useSendFindReqMutation } from "../../app/api/apiSlice";
 import SearchResults from "../SearchResults";
 import { Block, ResponseBlock, Scripture } from "../ai/types";
+import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
+import Link from "../link/Link";
 
 const navLinks = [
-  { label: "About", href: "#footer" },
   { label: "Articles", href: "#articles", disabled: true },
   { label: "KJV", href: "/kjv" },
   { label: "Sources", href: "#footer", disabled: true },
@@ -39,6 +33,7 @@ const Navbar: React.FC = () => {
   const { theme, specifyTheme } = useThemeContext();
   const eReaderState = useSelector((state: RootState) => state.ereader);
 
+  const { navigateWT } = useTransitionNavigation();
   const [localSearchState, setLocalSearchState] = useState("");
   const [sendFindReq, { isLoading }] = useSendFindReqMutation();
   const [block, setBlock] = useState<Block>(emptyBlock);
@@ -126,12 +121,6 @@ const Navbar: React.FC = () => {
     }
   }, [searchBoxRef]);
 
-  const linkHoverClassName =
-    theme === "light" ? "after:bg-gray-900" : "after:bg-gray-100";
-
-  const linkClassName = ` text-gray-700 relative after:content-[''] after:block after:h-0.5 after:scale-x-0
-    hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left`;
-
   return (
     <>
       <SearchResults
@@ -146,7 +135,7 @@ const Navbar: React.FC = () => {
         <Flex className="gap-4 flex-row md:flex-row items-center justify-between px-4">
           <Text
             className="text-2xl font-bold cursor-pointer"
-            onClick={() => (location.href = "/")}
+            onClick={() => navigateWT("/")}
           >
             TheWriterCo
           </Text>
@@ -211,12 +200,7 @@ const Navbar: React.FC = () => {
               (link, index) =>
                 !link.disabled && (
                   <li key={index}>
-                    <Link
-                      underline="none"
-                      color="gray"
-                      href={link.href}
-                      className={`${linkHoverClassName} ${linkClassName}`}
-                    >
+                    <Link href={link.href} animate>
                       {link.label}
                     </Link>
                   </li>
@@ -233,12 +217,7 @@ const Navbar: React.FC = () => {
                 (link, index) =>
                   !link.disabled && (
                     <li key={index}>
-                      <Link
-                        underline="none"
-                        color="gray"
-                        href={link.href}
-                        className={`${linkHoverClassName} ${linkClassName}`}
-                      >
+                      <Link href={link.href} animate>
                         {link.label}
                       </Link>
                     </li>

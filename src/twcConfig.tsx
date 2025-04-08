@@ -1,9 +1,10 @@
 import { Route } from "react-router-dom";
 
-import { lazy } from "react";
 import Root from "./pages/root/Root";
 import NoPage from "./pages/noPage/NoPage";
 import Study from "./pages/reasoning/Reasoning";
+
+import { lazy } from "react";
 
 const AI = lazy(() => import("./pages/ai/Chat"));
 const Number = lazy(() => import("./pages/number/Number"));

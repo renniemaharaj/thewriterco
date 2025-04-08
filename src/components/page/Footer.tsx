@@ -3,7 +3,6 @@ import {
   Heading,
   Text,
   Flex,
-  Link,
   TextField,
   Button,
   Separator,
@@ -21,6 +20,7 @@ import {
 } from "lucide-react";
 import Hero from "../Hero";
 import Hint from "../Hint";
+import Link from "../link/Link";
 
 const companyName = "The Writer Company";
 const companyMission =
@@ -54,13 +54,19 @@ const Footer: React.FC = () => {
           </Heading>
           <ul className="space-y-2">
             <li>
-              <Link href="/faq">FAQ</Link>
+              <Link href="/faq" animate>
+                FAQ
+              </Link>
             </li>
             <li>
-              <Link href="/privacy">Privacy Policy</Link>
+              <Link href="/privacy" animate>
+                Privacy Policy
+              </Link>
             </li>
             <li>
-              <Link href="/tos">Terms of Service</Link>
+              <Link href="/tos" animate>
+                Terms of Service
+              </Link>
             </li>
           </ul>
         </Flex>
@@ -111,7 +117,9 @@ const Footer: React.FC = () => {
           </Flex>
           <Flex className="items-center gap-2 text-sm mt-2">
             <Mail className="h-5 w-5 text-primary" />
-            <Link href={`mailto:${companyEmail}`}>Email: {companyEmail}</Link>
+            <Link href={`mailto:${companyEmail}`} external animate>
+              Email: {companyEmail}
+            </Link>
           </Flex>
 
           <Flex className="items-center gap-2 text-sm mt-2">
@@ -128,7 +136,9 @@ const Footer: React.FC = () => {
           </Heading>
           <Flex className="items-center gap-2 text-sm mt-2">
             <HandCoinsIcon className="h-5 w-5 text-primary" />
-            <Link href="https://paypal.me/newrennie">Paypal Contribute</Link>
+            <Link href="https://paypal.me/newrennie" external animate>
+              Paypal Contribute
+            </Link>
           </Flex>
         </Flex>
       </Flex>

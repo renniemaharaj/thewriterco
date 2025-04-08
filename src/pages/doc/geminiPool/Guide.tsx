@@ -1,12 +1,13 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import Hero from "../../../components/Hero";
 import Page from "../../../components/page/Page";
-import { Link, Text, Blockquote, Callout } from "@radix-ui/themes";
+import { Text, Blockquote, Callout } from "@radix-ui/themes";
 import Content from "../../../components/docs/Content";
 import BreakII from "../../../components/docs/BreakII";
 import List from "../../../components/docs/List";
 import Snippet from "../../../components/docs/Snippet";
 import GuideTemplate from "../../../components/docs/GuideTemplate";
+import Link from "../../../components/link/Link";
 
 const Guide = () => {
   return (
@@ -64,7 +65,10 @@ const Guide = () => {
             / backoff to increase the chances of a successful response.
             <BreakII />
             Check out the GitHub repository:{" "}
-            <Link href="https://github.com/renniemaharaj/google-gemini-pool">
+            <Link
+              external
+              href="https://github.com/renniemaharaj/google-gemini-pool"
+            >
               Google Gemini-Pool
             </Link>
           </Text>

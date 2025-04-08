@@ -3,7 +3,6 @@ import {
   Card,
   Flex,
   IconButton,
-  Link,
   Separator,
   Text,
   Tooltip,
@@ -22,6 +21,7 @@ import { clearMessages } from "../../app/chat/chatSlice";
 import { toggleFlowSlice } from "../../app/flow/flowSlice";
 import { Trash2Icon } from "lucide-react";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import Link from "../../components/link/Link";
 
 const Root: React.FC = () => {
   const messageBoxRef = useRef<HTMLDivElement>(null);
@@ -92,9 +92,7 @@ const Root: React.FC = () => {
               <Trash2Icon />
             </IconButton>
           </Tooltip>
-          <Link href="/ai" className="!text-center !text-lg !font-bold">
-            Go
-          </Link>
+          <Link href="ai">Go</Link>
         </Flex>
 
         <Callout.Root>
@@ -114,9 +112,12 @@ const Root: React.FC = () => {
               queue-based retrying, exponential backoff and custom validation,
               and is written in Go for performance{" "}
               <Link href="/doc/geminiPool">Learn More</Link> or{" "}
-              <Link href="https://github.com/renniemaharaj/google-gemini-pool">
+              <Link
+                external
+                href="https://github.com/renniemaharaj/google-gemini-pool"
+              >
                 Source
-              </Link>
+              </Link>{" "}
             </Text>
             {/* </Card> */}
           </Callout.Text>
