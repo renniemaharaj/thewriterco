@@ -37,7 +37,7 @@ const Guide = () => {
             The Writer Company AI helps you study the Bible with AI-powered
             insights.
             <BreakII />
-            Have you tried our AI chatbot? Visit <Link href="ai">"ai"</Link> to
+            Have you tried our AI chatbot? Visit <Link href="/ai">chat</Link> to
             interact with an AI trained for Bible studies. It answers questions
             concisely, provides long-form explanations, and is structured
             according to Christian beliefs.
