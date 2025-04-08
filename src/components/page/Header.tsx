@@ -22,7 +22,7 @@ const navLinks = [
   { label: "Articles", href: "#articles", disabled: true },
   { label: "KJV", href: "/kjv" },
   { label: "Sources", href: "#footer", disabled: true },
-  { label: "Guesser", href: "/deducer" },
+  { label: "Pool", href: "/doc/geminiPool" },
   { label: "AI", href: "/ai" },
 ];
 const emptyBlock: Block = {
@@ -141,7 +141,7 @@ const Navbar: React.FC = () => {
       />
 
       <Flex
-        className={`w-full !justify-evenly py-2 shadow-md ${theme === "dark" && "shadow-sm shadow-[gray]"} sticky top-0 blurred-div !rounded-none transition-all ${eReaderState.isOpen ? "z-0" : "z-10"}`}
+        className={`w-full !justify-evenly py-2 shadow-md sticky top-0 blurred-div !rounded-none transition-all ${eReaderState.isOpen ? "z-0" : "z-10"}`}
       >
         <Flex className="gap-4 flex-row md:flex-row items-center justify-between px-4">
           <Text

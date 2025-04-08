@@ -1,5 +1,5 @@
 import { Card, Flex, Separator } from "@radix-ui/themes";
-import Navbar from "./NavBar";
+import Navbar from "./Header";
 import Ereader from "../bible/Ereader";
 import Footer from "./Footer";
 import { ReactNode, useEffect } from "react";
