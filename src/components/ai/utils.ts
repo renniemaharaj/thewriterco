@@ -1,5 +1,12 @@
 import { Block, Code, Exchange, MarkupResponse, Scripture } from "./types";
 
+// Convert scripture block to string
+export function scriptureToStr(block: Scripture) {
+  return JSON.stringify(
+    Array.isArray(block.verses) ? block.verses.join(" ") : block.verses,
+  );
+}
+
 // Build conversation for AI
 export async function buildConversation(
   primaryBlocks: Block[],
@@ -10,30 +17,19 @@ export async function buildConversation(
     .map((block) => {
       switch (block.type) {
         case "markup":
-          if (!isMarkupResponse(block.content)) {
-            throw new Error("Invalid markup content");
-          }
           return {
             role: block.role,
-            content: block.content.markupContent,
+            content: (block.content as MarkupResponse).markupContent,
           };
         case "code":
-          if (!isCode(block.content)) {
-            throw new Error("Invalid code content");
-          }
           return {
             role: block.role,
-            content: block.content.codeContent,
+            content: (block.content as Code).codeContent,
           };
         case "scripture":
-          if (!isScripture(block.content)) {
-            throw new Error("Invalid scripture content");
-          }
           return {
             role: block.role,
-            content: Array.isArray(block.content.verses)
-              ? block.content.verses.join(" ")
-              : block.content.verses,
+            content: scriptureToStr(block.content as Scripture),
           };
         default:
           throw new Error(`Unknown block type: ${block.type}`);
@@ -45,21 +41,4 @@ export async function buildConversation(
   }
 
   return conversation;
-}
-
-// Type guards
-/* eslint-disable @typescript-eslint/no-explicit-any */
-function isMarkupResponse(content: any): content is MarkupResponse {
-  return content && typeof content.markupContent === "string";
-}
-
-function isCode(content: any): content is Code {
-  return content && typeof content.codeContent === "string";
-}
-
-function isScripture(content: any): content is Scripture {
-  return (
-    content &&
-    (Array.isArray(content.verses) || typeof content.verses === "string")
-  );
 }
