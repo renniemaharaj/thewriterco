@@ -33,6 +33,10 @@ const Page = ({
     };
   }, []);
 
+  useEffect(() => {
+    document.documentElement.scrollTo(0, 0);
+  }, [isPending]);
+
   return (
     <>
       <Helmet>
