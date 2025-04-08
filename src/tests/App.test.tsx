@@ -6,10 +6,17 @@ describe("App component", () => {
   beforeEach(() => {
     // Mock scrollTo
     document.documentElement.scrollTo = vi.fn();
+
+    // Mock ResizeObserver
+    global.ResizeObserver = vi.fn().mockImplementation(() => ({
+      observe: vi.fn(),
+      unobserve: vi.fn(),
+      disconnect: vi.fn(),
+    }));
   });
 
   test("renders Home component on default route", () => {
     render(<App />, { route: "/" });
-    expect(screen.getByText(/ResizeObserver is not defined/i));
+    expect(screen.getAllByText(/The Writer Co/i)).toBeTruthy();
   });
 });
