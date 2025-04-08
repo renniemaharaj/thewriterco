@@ -29,7 +29,7 @@ export function BlockingSpinner({
     <Flex
       justify={"center"}
       align={"center"}
-      className={`w-10 aspect-square rounded-full animate-spin transition-[all_1s_ease-in-out] absolute ${className}`}
+      className={`w-10 aspect-square rounded-full absolute ${className}`}
     >
       <Spinner size={size || "2"} className="scale-125" />
     </Flex>
