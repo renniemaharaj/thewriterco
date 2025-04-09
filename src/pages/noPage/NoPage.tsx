@@ -1,10 +1,12 @@
-import { Text, Button, Link } from "@radix-ui/themes";
+import { Text, Button, Link, Flex } from "@radix-ui/themes";
 import { HomeIcon } from "@radix-ui/react-icons";
 import Page from "../../components/page/Page";
 import Hero from "../../components/Hero";
+import { useTransitionNavigation } from "../../components/hooks/useTransitionNavigation";
 // import Link from "next/link";
 
 export default function NoPage() {
+  const { path } = useTransitionNavigation();
   return (
     <Page
       wrapChildren
@@ -19,17 +21,23 @@ export default function NoPage() {
               Company
             </>
           }
-          hint={
-            <>
-              We're here to give reasoning for faith; reinforcement to your
-              shield 🛡️ Wherewith ye shall quench all the fiery darts of the
-              wicked. For his bow is set with a fiery deception 🏹
-            </>
-          }
+          // hint={<></>}
         />
       }
     >
       <div className="w-full text-center space-y-4 mt-6">
+        <Flex direction="row" className="gap-2">
+          <Text as="p" color="green" size="3">
+            https🔒
+          </Text>
+          <Text as="p" color="green" size="3">
+            thewriterco.com ✅
+          </Text>
+          <Text as="p" color="red" size="3">
+            {path}
+          </Text>
+        </Flex>
+
         <Text as="div" color="red" size="5" className="animate-pulse">
           Oops! This page doesn’t exist
         </Text>

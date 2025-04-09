@@ -25,7 +25,7 @@ const Page = ({
   title?: string;
   description?: string;
 }) => {
-  const { isPending } = useTransitionNavigation();
+  const { isPending, path } = useTransitionNavigation();
   useEffect(() => {
     document.body.style.overflowX = "hidden";
     return () => {
@@ -35,7 +35,7 @@ const Page = ({
 
   useEffect(() => {
     document.documentElement.scrollTo(0, 0);
-  }, [isPending]);
+  }, [isPending, path]);
 
   return (
     <>
