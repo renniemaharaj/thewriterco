@@ -44,8 +44,8 @@ describe("App component", () => {
       /TheWriterCo/,
       /Studies/,
       /KJV/,
-      /Pool/,
       /AI/,
+      /Pool/,
     ]);
   });
 });
