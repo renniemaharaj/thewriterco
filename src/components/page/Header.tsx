@@ -130,6 +130,7 @@ const Navbar: React.FC = () => {
       />
 
       <Flex
+        data-testid="header"
         className={`w-full !justify-evenly py-2 shadow-md sticky top-0 blurred-div !rounded-none transition-all ${eReaderState.isOpen ? "z-0" : "z-10"}`}
       >
         <Flex className="gap-4 flex-row md:flex-row items-center justify-between px-4">
