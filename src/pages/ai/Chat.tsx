@@ -20,19 +20,13 @@ import Chat from "../../components/ai/Chat";
 import {
   EllipsisVerticalIcon,
   FileCode2,
-  FullscreenIcon,
   HomeIcon,
-  MaximizeIcon,
   Trash2Icon,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import {
-  clearMessages,
-  setMessageBoxMode,
-  setResponseConstraint,
-} from "../../app/chat/chatSlice";
+import { clearMessages, setResponseConstraint } from "../../app/chat/chatSlice";
 import fetchGitBlob, {
   templateRepoUrl,
 } from "../../components/hooks/data/gitFetcher";
@@ -194,7 +188,7 @@ const AI = () => {
       {/* </Flex> */}
       <Tooltip content="delete chat">
         <IconButton
-          size="2"
+          size="3"
           variant="ghost"
           onClick={() => {
             {
@@ -207,29 +201,9 @@ const AI = () => {
         </IconButton>
       </Tooltip>
 
-      <Tooltip content="toggle ui">
-        <IconButton
-          size="2"
-          variant="ghost"
-          onClick={() =>
-            dispatch(
-              setMessageBoxMode(
-                chatState.messageBoxMode === "hidden" ? "visible" : "hidden",
-              ),
-            )
-          }
-        >
-          {chatState.messageBoxMode === "hidden" ? (
-            <MaximizeIcon />
-          ) : (
-            <FullscreenIcon />
-          )}
-        </IconButton>
-      </Tooltip>
-
       <Tooltip content="request study">
         <IconButton
-          size="2"
+          size="3"
           variant="ghost"
           onClick={() => displaySummaizerDialog()}
         >

@@ -26,19 +26,19 @@ export default function NoPage() {
       }
     >
       <div className="w-full text-center space-y-4 mt-6">
-        <Flex direction="row" className="gap-2">
+        <Flex align={"center"} direction="row" className="gap-1">
           <Text as="p" color="green" size="3">
-            https🔒
+            https: 🔒
           </Text>
           <Text as="p" color="green" size="3">
-            thewriterco.com ✅
+            thewriterco.com
           </Text>
-          <Text as="p" color="red" size="3">
-            {path}
+          <Text as="p" color="red" size="3" className="animate-pulse">
+            / {path}
           </Text>
         </Flex>
 
-        <Text as="div" color="red" size="5" className="animate-pulse">
+        <Text as="div" color="red" size="3" className="animate-pulse">
           Oops! This page doesn’t exist
         </Text>
 
