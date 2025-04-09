@@ -15,9 +15,10 @@ import Link from "../link/Link";
 const navLinks = [
   { label: "Studies", href: "/studies", disabled: false },
   { label: "KJV", href: "/kjv" },
-  { label: "Sources", href: "#footer", disabled: true },
-  { label: "Pool", href: "/doc/geminiPool" },
+  //&
   { label: "AI", href: "/ai" },
+  { label: "Pool", href: "/doc/geminiPool" },
+  //*s
 ];
 const emptyBlock: Block = {
   role: "system",
