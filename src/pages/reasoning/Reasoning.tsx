@@ -25,11 +25,9 @@ const Reasoning = () => {
       {/* <BeforeHeader /> */}
       <SideBar
         variant="center"
-        className="flex-col !relative flex-wrap md:!flex-nowrap !m-auto !w-[100vw] !p-2 transition-all gap-1"
+        className="flex-col !relative flex-wrap md:!flex-nowrap !m-auto !w-[98vw] transition-all mx-auto gap-1"
         orientation={"horizontal"}
-        childLeft={<Menu routeChildren={setRouteChildren} />}
-        centerBar={<></>}
-        childRight={
+        childLeft={
           /* Chatbox Section */
           <Flex
             // ref={messageBoxRef}
@@ -44,6 +42,8 @@ const Reasoning = () => {
             )}
           </Flex>
         }
+        centerBar={<></>}
+        childRight={<Menu routeChildren={setRouteChildren} />}
       />
     </Page>
   );
