@@ -28,13 +28,13 @@ export default function NoPage() {
       <div className="w-full text-center space-y-4 mt-6">
         <Flex align={"center"} direction="row" className="gap-1">
           <Text as="p" color="green" size="3">
-            https: 🔒
+            🔒 https
           </Text>
           <Text as="p" color="green" size="3">
             thewriterco.com
           </Text>
           <Text as="p" color="red" size="3" className="animate-pulse">
-            / {path}
+            /{path}
           </Text>
         </Flex>
 

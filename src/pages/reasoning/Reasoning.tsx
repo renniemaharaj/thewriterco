@@ -33,13 +33,15 @@ const Reasoning = () => {
             // ref={messageBoxRef}
             className={`${theme === "dark" ? "bg-[#171918]" : "border"} !flex md:!min-w-[70%]`}
           >
-            {routeChildren && (
+            {routeChildren &&
               // <Card className="!p-1 !mx-auto">
-              <Box className="space-y-4 space-x-4 !p-2 !py-10 max-w-[500px] !mx-auto">
-                {orientation === "horizontal" && routeChildren}
-              </Box>
-              // </Card>
-            )}
+              orientation === "horizontal" && (
+                <Box className="space-y-4 space-x-4 !p-2 !py-10 max-w-[500px] !mx-auto">
+                  {routeChildren}
+                </Box>
+
+                // </Card>
+              )}
           </Flex>
         }
         centerBar={<></>}
