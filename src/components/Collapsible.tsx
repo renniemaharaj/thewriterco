@@ -47,6 +47,16 @@ export default function Collapsible({
 
   const { orientation } = useSelector((state: RootState) => state.chat);
 
+  const handleBtnClick = useCallback(() => {
+    if (currentTitle === title) {
+      toggle("");
+      if (onOpen) onOpen("");
+    }
+    if (currentTitle !== title) {
+      toggle(title as string);
+    }
+  }, [currentTitle, title, toggle]);
+
   useEffect(() => {
     if (currentTitle === title) {
       if (onOpen) onOpen(children);
@@ -62,7 +72,7 @@ export default function Collapsible({
       {/* Header / Trigger */}
       <Button
         variant="soft"
-        onClick={() => toggle(title as string)}
+        onClick={handleBtnClick}
         className="!flex !items-center !justify-between !w-full !p-3 !transition !rounded-full"
         aria-expanded={isCollapsed()}
         aria-controls="collapsible-content"
