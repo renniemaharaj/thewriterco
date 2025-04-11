@@ -1,10 +1,11 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useCallback, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import { Button, Flex, ScrollArea } from "@radix-ui/themes";
 import { motion } from "framer-motion";
 import { useThemeContext } from "./context/theme/useThemeContext";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../app/store";
+import { toggleReasoningTitle } from "../app/reasoning/reasoningSlice";
 
 type CollapsibleProps = {
   title: ReactNode;
@@ -25,16 +26,34 @@ export default function Collapsible({
   onClose,
   handledChildren,
 }: CollapsibleProps) {
-  const [open, setOpen] = useState(false);
   const { theme } = useThemeContext();
+
+  const dispatch = useDispatch();
+
+  const toggle = useCallback(
+    (title: string) => {
+      dispatch(toggleReasoningTitle(title));
+    },
+    [dispatch],
+  );
+
+  const currentTitle = useSelector(
+    (state: RootState) => state.reasoning.titleToggled,
+  );
+
+  const isCollapsed = useCallback((): boolean => {
+    return currentTitle === title;
+  }, [currentTitle, title]);
 
   const { orientation } = useSelector((state: RootState) => state.chat);
 
   useEffect(() => {
-    if (open && onOpen) onOpen(children);
-
-    if (!open && onClose) onClose();
-  }, [open, children, onOpen, onClose]);
+    if (currentTitle === title) {
+      if (onOpen) onOpen(children);
+    } else {
+      if (onClose) onClose();
+    }
+  }, [currentTitle, isCollapsed, onOpen, onClose, title, children]);
 
   return (
     <div
@@ -43,14 +62,14 @@ export default function Collapsible({
       {/* Header / Trigger */}
       <Button
         variant="soft"
-        onClick={() => setOpen(!open)}
+        onClick={() => toggle(title as string)}
         className="!flex !items-center !justify-between !w-full !p-3 !transition !rounded-full"
-        aria-expanded={open}
+        aria-expanded={isCollapsed()}
         aria-controls="collapsible-content"
       >
         <span className="font-semibold ">{title}</span>
         <ChevronDown
-          className={`transition-transform ${open ? "rotate-180" : ""}`}
+          className={`transition-transform ${isCollapsed() ? "rotate-180" : ""}`}
         />
       </Button>
 
@@ -58,7 +77,7 @@ export default function Collapsible({
       <motion.div
         id="collapsible-content"
         initial={false}
-        animate={{ height: open ? "auto" : 0 }}
+        animate={{ height: isCollapsed() ? "auto" : 0 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
         className="overflow-hidden"
       >

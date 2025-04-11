@@ -5,6 +5,7 @@ import authReducer from "./api/auth/authSlice";
 import ereaderSlice from "./ereader/ereaderSlice";
 import chatSlice from "./chat/chatSlice";
 import flowSlice from "./flow/flowSlice";
+import reasoningSlice from "./reasoning/reasoningSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     ereader: ereaderSlice.reducer,
     chat: chatSlice.reducer,
     flow: flowSlice.reducer,
+    reasoning: reasoningSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
