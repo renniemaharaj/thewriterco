@@ -11,6 +11,23 @@ const quoteClassName = "italic animate-fade-in px-6";
 export const swiperSlides = [
   <Flex className={flexClassName}>
     <Text className={textClassName}>
+      Confess with your mouth the Lord Jesus, <br />
+      and believe in your heart ❤️
+    </Text>
+    <Separator size={"1"} />
+    <Quote className={quoteClassName}>
+      That if thou shalt confess with thy mouth the Lord Jesus, <br />
+      and shalt believe in thine heart that God hath raised him from the dead,
+      thou shalt be saved.
+      <br />
+      <br />
+      For with the heart man believeth unto righteousness; and with the mouth
+      confession is made unto salvation.
+    </Quote>
+  </Flex>,
+
+  <Flex className={flexClassName}>
+    <Text className={textClassName}>
       Reinforce your faith with <br /> reasoning
     </Text>
     <Separator size={"1"} />
