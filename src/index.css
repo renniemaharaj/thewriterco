@@ -67,14 +67,36 @@
 }
 
 .country-colored-text-tt {
-  font-size: 1rem; /* Adjust text size */
+  font-size: 1rem;
   font-weight: bold;
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/6/64/Flag_of_Trinidad_and_Tobago.svg"); /* Publicly hosted image of the Trinidad and Tobago flag */
-  background-size: cover; /* Ensures the flag covers the entire text */
-  background-position: center; /* Position the flag as needed */
-  -webkit-background-clip: text; /* Works for Webkit-based browsers (Chrome, Safari) */
-  background-clip: text; /* Standard property for clipping background to text */
-  color: transparent; /* Make text transparent to show the background image */
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/6/64/Flag_of_Trinidad_and_Tobago.svg");
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.country-colored-text-us {
+  font-size: 1rem;
+  font-weight: bold;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg");
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.country-colored-text-ca {
+  font-size: 1rem;
+  font-weight: bold;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg");
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 @media (prefers-color-scheme: light) {

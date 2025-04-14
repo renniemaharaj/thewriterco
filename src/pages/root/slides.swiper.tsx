@@ -4,8 +4,16 @@ import Slide from "./Slide";
 export const swiperSlides = [
   <Slide
     title="Be Thou My Vision"
-    quote="Introducing youtube slides"
+    quote="Welcome, may the Lord Jesus bless your faith and light your path."
     videoUrl="https://www.youtube.com/watch?v=mQ8gqTA-F9M&list=RDmQ8gqTA-F9M&index=1"
+    videoMeta={{
+      title: "Be Thou My Vision",
+      author: "Aaron Strumpel",
+      originalUrl:
+        "https://www.youtube.com/watch?v=mQ8gqTA-F9M&list=RDmQ8gqTA-F9M&index=1",
+      album: "Mighty Refuge",
+      country: "us",
+    }}
   />,
   <Slide
     title={
