@@ -1,8 +1,8 @@
-import { Text, Button, Link, Flex } from "@radix-ui/themes";
-import { HomeIcon } from "@radix-ui/react-icons";
+import { Text, Button, Link, Flex, Badge } from "@radix-ui/themes";
 import Page from "../../components/page/Page";
 import Hero from "../../components/Hero";
 import { useTransitionNavigation } from "../../components/hooks/useTransitionNavigation";
+import { FlagIcon, HomeIcon } from "lucide-react";
 // import Link from "next/link";
 
 export default function NoPage() {
@@ -27,15 +27,17 @@ export default function NoPage() {
     >
       <div className="w-full text-center space-y-4 mt-6">
         <Flex align={"center"} direction="row" className="gap-1">
-          <Text as="p" color="green" size="3">
-            🔒 https
-          </Text>
-          <Text as="p" color="green" size="3">
-            thewriterco.com
-          </Text>
-          <Text as="p" color="red" size="3" className="animate-pulse">
-            /{path}
-          </Text>
+          {/* <Text as="p" color="green" size="3">
+            
+          </Text> */}
+          <Badge color="gold">🔒 https</Badge>
+          {/* <Text as="p" color="green" size="3"></Text> */}
+          <Badge color="green">thewriterco.com</Badge>
+          <Badge color="green">/</Badge>
+          <Badge color="red" className="animate-pulse">
+            {" "}
+            {path}
+          </Badge>
         </Flex>
 
         <Text as="div" color="red" size="3" className="animate-pulse">
@@ -48,13 +50,14 @@ export default function NoPage() {
 
         <div className="flex justify-center gap-4 flex-wrap">
           <Link href="/">
-            <Button>
-              <HomeIcon />
+            <Button size="1" variant="soft">
+              <HomeIcon className="scale-75" />
               Home
             </Button>
           </Link>
           <Link href="/contact">
-            <Button variant="soft" disabled>
+            <Button size="1" variant="soft" disabled>
+              <FlagIcon className="scale-75" />
               Report
             </Button>
           </Link>
