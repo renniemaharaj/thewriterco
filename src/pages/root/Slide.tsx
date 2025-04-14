@@ -57,7 +57,7 @@ const Slide: FC<SlideProps> = ({
       )}
 
       {(media || embedUrl) && (
-        <div className="mt-4 w-full max-w-2xl aspect-video">
+        <div className="w-full max-w-[500px] aspect-video">
           {media || (
             <iframe
               width="100%"
@@ -75,10 +75,10 @@ const Slide: FC<SlideProps> = ({
 
       {embedUrl && videoMeta && (
         <div
-          className="mt-4 w-full max-w-2xl px-2 cursor-pointer"
+          className="mt-4 w-full px-1 cursor-pointer"
           onClick={() => setRevealMeta(true)}
         >
-          <Flex direction="row" justify="between" gap="4" wrap="wrap">
+          <Flex direction="row" justify="between" gap="2" wrap="wrap">
             <Flex direction="column" gap="1" className="flex-1 min-w-[45%]">
               <MetaText reveal={revealMeta}>{videoMeta.title}</MetaText>
               {videoMeta.album && (
