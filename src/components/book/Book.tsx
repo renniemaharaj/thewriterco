@@ -80,7 +80,7 @@ export default function Book({
 
   return (
     <div
-      className={`w-[250px] aspect-[2/3] ${className} transition-all hover:border-2 border-yellow-600`}
+      className={`w-[250px] aspect-[2/3] ${className} hover:animate-pulse border-yellow-600`}
     >
       <div
         className="w-full h-[100%] relative book-container m-auto"

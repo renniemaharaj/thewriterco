@@ -63,9 +63,6 @@ const Sword: React.FC<SwordProps> = ({ setEBook }) => {
   return (
     <>
       {isFetchingContent && <Block />}
-      {/* <section id="biblical" className={`${!asChild && "pb-10"}`}> */}
-
-      {/* <Section className={` mx-auto `}> */}
       <Flex className="w-full mx-auto pb-10 flex-col items-center text-center">
         <Tabs.Root defaultValue="Canonical Gospels">
           <Tabs.List className="!flex-wrap">
@@ -91,8 +88,7 @@ const Sword: React.FC<SwordProps> = ({ setEBook }) => {
                         title={"Holy Bible"}
                         division={book}
                         version="KJV"
-                        className="!w-[6rem] animate-fade-in"
-                        // onOpenClassName={`absolute z-20 translate-x-[-50%] translate-y-[-50%] `}
+                        className="!w-[6rem]"
                         actionPagesFlipped={
                           eReaderState.eContent.title === book &&
                           eReaderState.isOpen
@@ -105,11 +101,6 @@ const Sword: React.FC<SwordProps> = ({ setEBook }) => {
                         }
                       />
                     </React.Fragment>
-                    // <ArticleCard
-                    //   key={book}
-                    //   title={book}
-                    //   date="Dec 04, 2024" // Static date for demo
-                    // />
                   ))}
                 </Flex>
               </Tabs.Content>
@@ -117,8 +108,6 @@ const Sword: React.FC<SwordProps> = ({ setEBook }) => {
           </Box>
         </Tabs.Root>
       </Flex>
-      {/* </Section> */}
-      {/* </section> */}
     </>
   );
 };
