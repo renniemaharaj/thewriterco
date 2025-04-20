@@ -31,7 +31,7 @@ import {
   clearMessages,
   nukeSystemMessages,
   setConversationTokens,
-  setViewMode,
+  // setViewMode,
 } from "../../app/chat/chatSlice.ts";
 import { buildConversation } from "./utils.ts";
 import { initialSuggestions } from "./configuration.ts";
@@ -533,7 +533,7 @@ const Chat = forwardRef(
                 >
                   Bible
                 </Button>
-                <Button
+                {/* <Button
                   variant={chatState.viewMode === "canvas" ? "soft" : "outline"}
                   onClick={() =>
                     dispatch(
@@ -544,7 +544,7 @@ const Chat = forwardRef(
                   }
                 >
                   Canvas
-                </Button>
+                </Button> */}
               </Flex>
             </Flex>
           }

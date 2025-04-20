@@ -15,10 +15,6 @@ const ereaderSlice = createSlice({
     spliceMessage(state, action: PayloadAction<number>) {
       state.messages.splice(action.payload, 1);
     },
-    // Set the message box mode of the chat
-    setMessageBoxMode(state, action: PayloadAction<"hidden" | "visible">) {
-      state.messageBoxMode = action.payload;
-    },
     // Remove all system messages from the chat
     nukeSystemMessages(state) {
       state.messages = state.messages.filter(
@@ -58,7 +54,6 @@ const ereaderSlice = createSlice({
 export const {
   addMessage,
   spliceMessage,
-  setMessageBoxMode,
   nukeSystemMessages,
   clearMessages,
   setOrientation,
