@@ -3,16 +3,15 @@ import Slide from "./Slide";
 
 export const swiperSlides = [
   <Slide
-    title="Be Thou My Vision"
-    quote="Welcome, may the Lord Jesus bless your faith and light your path."
-    videoUrl="https://www.youtube.com/watch?v=mQ8gqTA-F9M&list=RDmQ8gqTA-F9M&index=1"
+    title="What is EASTER & why do we celebrate it as CHRISTIANS?"
+    // quote="A balanced view of Easter, the resurrection of Jesus Christ, and its significance in Christianity."
+    videoUrl="https://www.youtube.com/watch?v=O8vsGMO5RgE&t=351s"
     videoMeta={{
-      title: "Be Thou My Vision",
-      author: "Aaron Strumpel",
-      originalUrl:
-        "https://www.youtube.com/watch?v=mQ8gqTA-F9M&list=RDmQ8gqTA-F9M&index=1",
-      album: "Mighty Refuge",
-      country: "us",
+      title: "What is EASTER & why do we celebrate it as CHRISTIANS?",
+      author: "Daniel Maritz",
+      originalUrl: "https://www.youtube.com/watch?v=O8vsGMO5RgE&t=351s",
+      album: "",
+      country: "",
     }}
   />,
   <Slide

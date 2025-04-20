@@ -5,7 +5,6 @@ export const initialState: Chat = {
   messages: [],
   orientation: "horizontal",
   messageBoxRef: React.createRef<HTMLDivElement>(),
-  messageBoxMode: "visible",
   viewMode: "standard",
   conversationMode: "exchange",
   conversationTokens: 0,
