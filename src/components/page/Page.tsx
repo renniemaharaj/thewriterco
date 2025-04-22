@@ -1,6 +1,6 @@
 import { Card, Flex, Separator } from "@radix-ui/themes";
 import Navbar from "./Header";
-import Ereader from "../bible/Ereader";
+import Reader from "../bible/Reader";
 import Footer from "./Footer";
 import { ReactNode, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
@@ -51,7 +51,7 @@ const Page = ({
       <section className="p-2 w-full max-w-full">
         {/* <LocationTile /> */}
       </section>
-      <Ereader hidePicker={hideBiblePicker} />
+      <Reader hidePicker={hideBiblePicker} />
       {/* <Flex className="!w-full animate-fade-in !flex-col merriweather-bold !p-2"> */}
       <Flex
         direction="column"

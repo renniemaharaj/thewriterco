@@ -94,7 +94,7 @@ export default function Book({
           <div className="back-cover flex items-center w-full h-full justify-center shadow-[gray] shadow-sm cursor-pointer">
             Back Cover
           </div>
-          {Array.from({ length: 25 }).map((_, i) => (
+          {Array.from({ length: 10 }).map((_, i) => (
             <div key={i} className="pages w-full h-full bottom-0">
               <img
                 src={pageArt}

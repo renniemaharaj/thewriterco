@@ -12,7 +12,7 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
-import Ereader from "../../components/bible/Ereader";
+import Reader from "../../components/bible/Reader";
 import SideBar from "../../components/SideBar";
 import Menu from "../../components/docs/Menu";
 import { useThemeContext } from "../../components/context/theme/useThemeContext";
@@ -253,7 +253,7 @@ const AI = () => {
         }
       />
       {/* <Ereader /> */}
-      <Ereader hidePicker={true} />
+      <Reader hidePicker={true} />
       {/* Summary Menu */}
       <Dialog.Root
         open={summaryVisible}
