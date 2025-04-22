@@ -90,7 +90,7 @@ const VoiceReader = ({ value }: { value: string }) => {
               <Select.Label>Voices</Select.Label>
               {voices.map((voice) => (
                 <Select.Item key={voice.voiceURI} value={voice.voiceURI}>
-                  {voice.name.slice(0, 150)} {voice.lang.slice(0, 50)}
+                  {voice.name.slice(0, 15)} {voice.lang.slice(0, 5)}
                 </Select.Item>
               ))}
             </Select.Group>
