@@ -144,7 +144,6 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
           {(eContent.author || eContent.date) && (
             <div className="text-sm text-gray-500">
               {eContent.author && <p>Author: {eContent.author}</p>}
-              {eContent.date && <p>Date: {eContent.date}</p>}
             </div>
           )}
 
