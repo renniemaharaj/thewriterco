@@ -8,6 +8,7 @@ import {
   setGlobalCurrentVerse,
 } from "../../app/ereader/ereaderSlice";
 import Renderer from "./Renderer";
+import { PlayIcon } from "lucide-react";
 
 const SHADOW_COUNT = 4;
 
@@ -121,6 +122,8 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
     }
   };
 
+  const [readTextOverride, setReadTextOverride] = useState("");
+
   return (
     <div
       className={`blurred-div fixed bottom-0 left-0 shadow-lg overflow-auto z-20 ${
@@ -131,6 +134,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
         hidePicker={hidePicker ?? false}
         isOpen={isOpen}
         title={eContent.title}
+        override={readTextOverride}
       />
 
       {isOpen && (
@@ -264,6 +268,35 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
                   onClick={() => adjustShadowOffset("next")}
                 >
                   <ChevronRightIcon />
+                </IconButton>
+                {/* Add a button to play the current verse plus shadows*/}
+                <IconButton
+                  variant="soft"
+                  onClick={() => {
+                    if (
+                      currentChapter &&
+                      currentVerse &&
+                      typeof eContent.content !== "string"
+                    ) {
+                      const versesToRead = shadowVerses();
+                      const content = eContent.content;
+                      if (
+                        typeof content !== "string" &&
+                        content[currentChapter]
+                      ) {
+                        const textToRead = `${currentChapter}:${currentVerse} ${content[currentChapter][currentVerse]} ${versesToRead
+                          .map(
+                            (verse) =>
+                              `(${currentChapter}:${verse}) ${content[currentChapter][verse]}`,
+                          )
+                          .join(" ")}`;
+                        setReadTextOverride(textToRead);
+                      }
+                    }
+                  }}
+                  disabled
+                >
+                  <PlayIcon />
                 </IconButton>
               </Flex>
             </Flex>

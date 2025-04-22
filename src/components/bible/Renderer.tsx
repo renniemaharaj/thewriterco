@@ -9,9 +9,11 @@ import { useCallback } from "react";
 
 const Renderer = ({
   hidePicker,
+  override,
   isOpen,
   title,
 }: {
+  override?: string;
   hidePicker: boolean;
   isOpen: boolean;
   title: string;
@@ -21,6 +23,9 @@ const Renderer = ({
   const content = eReaderState.eContent.content;
 
   const readerContent = useCallback((): string => {
+    if (override) {
+      return override;
+    }
     if (typeof content === "string") {
       return content;
     } else {
