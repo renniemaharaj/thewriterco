@@ -1,4 +1,10 @@
-export type Content = string | Record<string, Record<string, string>>;
+export type Content =
+  | {
+      [chapterId: string]: {
+        [verseId: string]: string; // You can replace `any` with actual verse content type
+      };
+    }
+  | string;
 
 export type EBook = {
   title: string;
@@ -12,7 +18,7 @@ export type EBook = {
 export type EreaderState = {
   isOpen: boolean;
   readerStyle: "rich" | "bible";
-  currentChapter: string | null;
-  currentVerse: string | null;
+  currentChapter: string;
+  currentVerse: string;
   eContent: EBook;
 };
