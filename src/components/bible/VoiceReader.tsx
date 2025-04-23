@@ -97,11 +97,16 @@ const VoiceReader = ({ value, override }: VoiceReaderProps) => {
           <Select.Content>
             <Select.Group>
               <Select.Label>Voices</Select.Label>
-              {voices.map((voice) => (
-                <Select.Item key={voice.voiceURI} value={voice.voiceURI}>
-                  {voice.name.slice(0, 20)} ({voice.lang})
-                </Select.Item>
-              ))}
+              {voices
+                .filter((voice) => !!voice.voiceURI)
+                .map((voice, index) => (
+                  <Select.Item
+                    key={`voice-${voice.voiceURI ?? index}`}
+                    value={voice.voiceURI!}
+                  >
+                    {voice.name.slice(0, 20)} ({voice.lang})
+                  </Select.Item>
+                ))}
             </Select.Group>
           </Select.Content>
         </Select.Root>
