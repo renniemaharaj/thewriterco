@@ -3,76 +3,87 @@ import { Flex, IconButton, Select } from "@radix-ui/themes";
 import { PlayIcon, PauseIcon, StopCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const VoiceReader = ({ value }: { value: string }) => {
+type VoiceReaderProps = {
+  value: string;
+  override?: string;
+};
+
+const DEFAULT_VOICE = "Microsoft Mark - English (United States)";
+
+const VoiceReader = ({ value, override }: VoiceReaderProps) => {
   const { speak, pause, resume, stop, speaking, paused, voices } =
     useVoiceReader();
 
-  const defaultVoice = "Microsoft Mark - English (United States)";
-
+  const [selectedVoice, setSelectedVoice] = useState<string>();
   const [stopped, setStopped] = useState(true);
-  const [selectedVoiceURI, setSelectedVoiceURI] = useState<string | undefined>(
-    undefined,
-  );
 
   useEffect(() => {
-    if (voices.length > 0 && !selectedVoiceURI) {
-      setSelectedVoiceURI(defaultVoice || voices[0].voiceURI);
+    if (voices.length > 0 && !selectedVoice) {
+      const defaultVoice = voices.find((v) => v.name === DEFAULT_VOICE);
+      setSelectedVoice(defaultVoice?.voiceURI || voices[0].voiceURI);
     }
   }, [voices]);
 
   useEffect(() => {
-    if (speaking) setStopped(false);
-    if (!speaking && !paused) setStopped(true);
-  }, [speaking]);
+    setStopped(!speaking && !paused);
+  }, [speaking, paused]);
 
-  const setStop = () => {
-    setStopped(true);
+  const handlePlay = (useOverride = false) => {
+    const text = useOverride && override ? override : value;
+    speak(text, { voiceName: selectedVoice });
+  };
+
+  const handleStop = () => {
     stop();
+    setStopped(true);
   };
 
-  const handlePlay = () => {
-    speak(value, { voiceName: selectedVoiceURI });
-  };
+  const voiceReaderIconClass =
+    "text-gray-500 hover:animate-pulse transition-colors duration-200";
 
   useEffect(() => {
-    console.log("Selected voice URI changed:", selectedVoiceURI);
-  }, [selectedVoiceURI]);
-
-  const voiceReaderIconClassName =
-    "text-gray-500 hover:animate-pulse transition-colors duration-200 ease-in-out";
+    if (override) handlePlay(true);
+  }, [override]);
 
   return (
     <Flex direction="column" gap="2">
       <Flex className="gap-2 items-center">
+        {/* Play Original */}
         <IconButton
-          className={`${voiceReaderIconClassName} ${paused && "!hidden"}`}
-          disabled={!stopped}
-          onClick={handlePlay}
+          onClick={() => handlePlay(false)}
           variant="soft"
           aria-label="Play"
+          className={`${voiceReaderIconClass} ${paused && "!hidden"}`}
+          disabled={!stopped}
         >
           <PlayIcon />
         </IconButton>
+
+        {/* Resume */}
         <IconButton
-          className={`${!paused && "!hidden"}`}
           onClick={resume}
           variant="soft"
           aria-label="Resume"
+          className={`${!paused && "!hidden"}`}
           disabled={!paused}
         >
           <PlayIcon />
         </IconButton>
+
+        {/* Pause */}
         <IconButton
           onClick={pause}
           variant="soft"
           aria-label="Pause"
-          className={`${voiceReaderIconClassName} ${paused && "!hidden"}`}
+          className={`${voiceReaderIconClass} ${paused && "!hidden"}`}
           disabled={!speaking || paused}
         >
           <PauseIcon />
         </IconButton>
+
+        {/* Stop */}
         <IconButton
-          onClick={setStop}
+          onClick={handleStop}
           variant="soft"
           aria-label="Stop"
           disabled={stopped}
@@ -80,17 +91,15 @@ const VoiceReader = ({ value }: { value: string }) => {
           <StopCircle />
         </IconButton>
 
-        <Select.Root
-          defaultValue={defaultVoice}
-          onValueChange={setSelectedVoiceURI}
-        >
+        {/* Voice Selector */}
+        <Select.Root value={selectedVoice} onValueChange={setSelectedVoice}>
           <Select.Trigger />
           <Select.Content>
             <Select.Group>
               <Select.Label>Voices</Select.Label>
               {voices.map((voice) => (
                 <Select.Item key={voice.voiceURI} value={voice.voiceURI}>
-                  {voice.name.slice(0, 15)} {voice.lang.slice(0, 5)}
+                  {voice.name.slice(0, 20)} ({voice.lang})
                 </Select.Item>
               ))}
             </Select.Group>

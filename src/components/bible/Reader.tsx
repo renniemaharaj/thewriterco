@@ -284,17 +284,13 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
                         typeof content !== "string" &&
                         content[currentChapter]
                       ) {
-                        const textToRead = `${currentChapter}:${currentVerse} ${content[currentChapter][currentVerse]} ${versesToRead
-                          .map(
-                            (verse) =>
-                              `(${currentChapter}:${verse}) ${content[currentChapter][verse]}`,
-                          )
+                        const textToRead = `${content[currentChapter][currentVerse]} ${versesToRead
+                          .map((verse) => `${content[currentChapter][verse]}`)
                           .join(" ")}`;
                         setReadTextOverride(textToRead);
                       }
                     }
                   }}
-                  disabled
                 >
                   <PlayIcon />
                 </IconButton>

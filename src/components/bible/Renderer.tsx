@@ -23,9 +23,6 @@ const Renderer = ({
   const content = eReaderState.eContent.content;
 
   const readerContent = useCallback((): string => {
-    if (override) {
-      return override;
-    }
     if (typeof content === "string") {
       return content;
     } else {
@@ -53,7 +50,7 @@ const Renderer = ({
       </IconButton>
 
       {/* VersePlayer component to play the selected verse */}
-      <VoiceReader value={readerContent()} />
+      <VoiceReader override={override} value={readerContent()} />
     </div>
   );
 };

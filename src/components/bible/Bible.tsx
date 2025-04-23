@@ -6,7 +6,7 @@ import fetchGitBlob, { kjvRepoUrl } from "../hooks/data/gitFetcher";
 import { EBook } from "../../app/ereader/types";
 import Block from "../Block";
 import { setOpenState } from "../../app/ereader/ereaderSlice";
-import BookFragment from "./BookFragment";
+import BookFragment from "./Book";
 import { bibleDivisions } from "./bibleDivisions";
 import { SwordProps } from "./types";
 import Search from "./Search";
