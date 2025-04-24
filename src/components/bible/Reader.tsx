@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Flex, IconButton, Select } from "@radix-ui/themes";
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import {
@@ -8,7 +7,12 @@ import {
   setGlobalCurrentVerse,
 } from "../../app/ereader/ereaderSlice";
 import Renderer from "./Renderer";
-import { PlayIcon } from "lucide-react";
+import {
+  ArrowBigLeft,
+  ArrowBigRight,
+  ArrowBigRightDash,
+  PlayIcon,
+} from "lucide-react";
 import { getChapterVerses } from "./utils/reader";
 
 const SHADOW_COUNT = 4;
@@ -180,7 +184,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
 
           <Flex className="!justify-center !items-center space-x-4">
             <IconButton onClick={() => navigateVerse("prev")} variant="soft">
-              <ChevronLeftIcon />
+              <ArrowBigLeft />
             </IconButton>
 
             <div
@@ -206,7 +210,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
             </div>
 
             <IconButton onClick={() => navigateVerse("next")} variant="soft">
-              <ChevronRightIcon />
+              <ArrowBigRight />
             </IconButton>
           </Flex>
 
@@ -244,7 +248,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
                   }
                   onClick={() => adjustShadowOffset("next")}
                 >
-                  <ChevronRightIcon />
+                  <ArrowBigRightDash />
                 </IconButton>
 
                 <IconButton variant="soft" onClick={generateReadText}>

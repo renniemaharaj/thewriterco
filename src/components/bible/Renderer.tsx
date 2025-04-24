@@ -1,7 +1,7 @@
 import { BookDownIcon, BookUpIcon } from "lucide-react";
 import { toggleOpenState } from "../../app/ereader/ereaderSlice";
 import Picker from "./Picker";
-import { Button, IconButton } from "@radix-ui/themes";
+import { Button, Flex, IconButton } from "@radix-ui/themes";
 import { useDispatch, useSelector } from "react-redux";
 import VoiceReader from "./VoiceReader";
 import { RootState } from "../../app/store";
@@ -18,10 +18,12 @@ const Renderer = ({
   isOpen: boolean;
   title: string;
 }) => {
-  const eReaderState = useSelector((state: RootState) => state.ereader);
+  const content = useSelector(
+    (state: RootState) => state.ereader.eContent.content,
+  );
 
-  const content = eReaderState.eContent.content;
-
+  // Function to get the content for the reader, is a callback to avoid unnecessary re-renders
+  // and to ensure that the content is only recalculated when the content changes
   const readerContent = useCallback((): string => {
     if (typeof content === "string") {
       return content;
@@ -35,8 +37,8 @@ const Renderer = ({
   const dispatch = useDispatch();
 
   return (
-    <div
-      className={`${hidePicker && !isOpen ? "!hidden" : ""} flex justify-center gap-2 items-center p-4 border-b`}
+    <Flex
+      className={`${hidePicker && !isOpen ? "!hidden" : ""} !gap-2 !p-2 !max-w-full overflow-auto !flex !justify-center !items-center !border-b`}
     >
       {/* Picker component to select different books */}
       <Picker trigger={<Button variant="soft">{title}</Button>} />
@@ -51,7 +53,7 @@ const Renderer = ({
 
       {/* VersePlayer component to play the selected verse */}
       <VoiceReader override={override} value={readerContent()} />
-    </div>
+    </Flex>
   );
 };
 
