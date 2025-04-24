@@ -15,6 +15,7 @@ export type BookProps = {
   className?: string;
   onOpenClassName?: string;
   onClick?: () => void;
+  showAnimation: boolean;
 };
 
 export default function Book({
@@ -27,6 +28,7 @@ export default function Book({
   versionFontSize,
   className,
   onClick,
+  showAnimation,
 }: BookProps) {
   const bookRef = useRef<HTMLDivElement>(null);
   const isBookOpenRef = useRef(false);
@@ -47,6 +49,7 @@ export default function Book({
   }, [returnPages]);
 
   const flipPages = useCallback(() => {
+    if (!showAnimation) return;
     if (!bookRef.current) return;
     const pages = bookRef.current.querySelectorAll(".pages");
     const pagesToFlip = Array.from(pages).slice(0, pages.length / 2);
@@ -56,7 +59,7 @@ export default function Book({
     });
 
     setTimeout(() => cleanupPages(), pagesToFlip.length * 100);
-  }, [cleanupPages]);
+  }, [cleanupPages, showAnimation]);
 
   const openBook = useCallback(() => {
     isBookOpenRef.current = true;

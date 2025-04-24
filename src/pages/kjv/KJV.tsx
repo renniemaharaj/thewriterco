@@ -43,7 +43,7 @@ const KJV = () => {
         className="w-full md:!w-[80%] mx-auto"
       >
         {/* <Sword />*/}
-        <Bible setEBook={setEreaderState} />
+        <Bible showAnimation={true} setEBook={setEreaderState} />
       </Flex>
     </Page>
   );

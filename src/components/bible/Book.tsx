@@ -7,6 +7,7 @@ import { RootState } from "../../app/store";
 type BookFragmentProps = {
   book: string;
   title: string;
+  showAnimation: boolean;
   onClick: () => void;
 };
 
@@ -14,6 +15,7 @@ const BookFragment: React.FC<BookFragmentProps> = ({
   book,
   title,
   onClick,
+  showAnimation,
 }) => {
   const eReaderState = useSelector((state: RootState) => state.ereader);
 
@@ -23,6 +25,7 @@ const BookFragment: React.FC<BookFragmentProps> = ({
       division={book}
       version="KJV"
       className="!w-[6rem]"
+      showAnimation={showAnimation}
       actionPagesFlipped={
         eReaderState.eContent.title === book && eReaderState.isOpen
       }

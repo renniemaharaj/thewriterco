@@ -22,7 +22,7 @@ const Picker = ({ trigger }: { trigger: ReactNode }) => {
           Explore the various districts of the Holy Bible KJV
         </Dialog.Title>
         <Flex direction="column" gap="3">
-          <Bible asChild setEBook={setEreaderState} />
+          <Bible asChild showAnimation={false} setEBook={setEreaderState} />
         </Flex>
         <Flex gap="3" mt="4" justify="end">
           <Dialog.Close>

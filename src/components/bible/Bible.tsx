@@ -11,7 +11,7 @@ import { bibleDivisions } from "./bibleDivisions";
 import { SwordProps } from "./types";
 import Search from "./Search";
 
-const Sword: React.FC<SwordProps> = ({ setEBook }) => {
+const Sword: React.FC<SwordProps> = ({ setEBook, showAnimation }) => {
   const dispatch = useDispatch();
   const [isFetchingContent, setIsFetchingContent] = React.useState(false);
 
@@ -99,6 +99,7 @@ const Sword: React.FC<SwordProps> = ({ setEBook }) => {
                         key={index}
                         book={book}
                         title="Holy Bible"
+                        showAnimation={showAnimation}
                         onClick={() =>
                           handleArticleClick({
                             title: book,
