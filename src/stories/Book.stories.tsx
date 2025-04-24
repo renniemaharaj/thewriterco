@@ -34,6 +34,7 @@ export const Implementation: Story = {
     version: "KJV",
     className: "!w-[120px]",
     onOpenClassName: `!scale-x-[200%] absolute z-30 translate-x-[-50%] translate-y-[-50%]"}`,
+    showAnimation: true,
     initialOpen: false,
   } as BookProps,
 };
