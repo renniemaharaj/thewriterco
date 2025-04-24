@@ -11,7 +11,7 @@ import {
   ArrowBigLeft,
   ArrowBigRight,
   ArrowBigRightDash,
-  PlayIcon,
+  AudioLines,
 } from "lucide-react";
 import { getChapterVerses } from "./utils/reader";
 
@@ -252,7 +252,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
                 </IconButton>
 
                 <IconButton variant="soft" onClick={generateReadText}>
-                  <PlayIcon />
+                  <AudioLines />
                 </IconButton>
               </Flex>
             </Flex>

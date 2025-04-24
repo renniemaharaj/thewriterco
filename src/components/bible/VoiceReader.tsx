@@ -1,6 +1,6 @@
 import { useVoiceReader } from "../hooks/useVoiceReader";
 import { Flex, IconButton, Select } from "@radix-ui/themes";
-import { PlayIcon, PauseIcon, StopCircle } from "lucide-react";
+import { PauseIcon, StopCircle, AudioLines } from "lucide-react";
 import { useEffect, useState } from "react";
 
 type VoiceReaderProps = {
@@ -56,7 +56,7 @@ const VoiceReader = ({ value, override }: VoiceReaderProps) => {
           className={`${voiceReaderIconClass} ${paused && "!hidden"}`}
           disabled={!stopped}
         >
-          <PlayIcon />
+          <AudioLines />
         </IconButton>
 
         {/* Resume */}
@@ -67,7 +67,7 @@ const VoiceReader = ({ value, override }: VoiceReaderProps) => {
           className={`${!paused && "!hidden"}`}
           disabled={!paused}
         >
-          <PlayIcon />
+          <AudioLines />
         </IconButton>
 
         {/* Pause */}
