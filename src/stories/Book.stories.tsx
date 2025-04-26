@@ -4,9 +4,9 @@ import "@radix-ui/themes/styles.css"; // Import the Radix Theme styles
 import { Theme } from "@radix-ui/themes";
 
 import { Meta, StoryObj } from "@storybook/react";
-import Book, { BookProps } from "../components/book/Book";
+import Book, { BookProps } from "../pkg/book/Book";
 
-// import CheckRadix from "../components/CheckRadix";
+// import CheckRadix from "../pkg/CheckRadix";
 
 type StoryProps = ComponentProps<typeof Book>;
 

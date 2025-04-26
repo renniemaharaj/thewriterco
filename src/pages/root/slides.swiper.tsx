@@ -1,4 +1,4 @@
-import Link from "../../components/link/Link";
+import Link from "../../pkg/link/Link";
 import Slide from "./Slide";
 
 export const swiperSlides = [

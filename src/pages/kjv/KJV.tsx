@@ -1,13 +1,13 @@
-import Bible from "../../components/bible/Bible";
+import Bible from "../../pkg/bible/Bible";
 
 import { EBook } from "../../app/ereader/types";
 import { useDispatch } from "react-redux";
 import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
-import Page from "../../components/page/Page";
+import Page from "../../pkg/page/Page";
 import { Flex, Text } from "@radix-ui/themes";
-import Hero from "../../components/page/Hero";
-// import Footer from "../../components/additional/footer";
-// import Footer from "../../components/Footer";
+import Hero from "../../pkg/page/Hero";
+// import Footer from "../../pkg/additional/footer";
+// import Footer from "../../pkg/Footer";
 const KJV = () => {
   const dispatch = useDispatch();
   const setEreaderState = (eBook: EBook) => {

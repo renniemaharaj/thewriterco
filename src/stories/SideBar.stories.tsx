@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps } from "react";
 import { Theme } from "@radix-ui/themes";
-import { useThemeContext } from "../components/context/theme/useThemeContext";
-import SideBar from "../components/SideBar";
+import { useThemeContext } from "../pkg/context/theme/useThemeContext";
+import SideBar from "../pkg/SideBar";
 import { Provider } from "react-redux";
-import { ThemeProvider } from "../components/context/theme/ThemeProvider";
+import { ThemeProvider } from "../pkg/context/theme/ThemeProvider";
 import "@radix-ui/themes/styles.css"; // Import the Radix Theme styles
 import { store } from "../app/store";
 

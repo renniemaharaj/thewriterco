@@ -8,13 +8,13 @@ import {
 import { generatePossibilities, mean } from "./utils.ts";
 import { QueryForm, GameEndNotice } from "./types.ts";
 import { Flex, Box, Button, Text, Link, Quote } from "@radix-ui/themes";
-import { AllowedColors } from "../../components/RadixColors.ts";
-import Hint from "../../components/Hint.tsx";
-// import Footer from "../../components/Footer";
+import { AllowedColors } from "../../pkg/RadixColors.ts";
+import Hint from "../../pkg/Hint.tsx";
+// import Footer from "../../pkg/Footer";
 import { BrainCircuit } from "lucide-react";
-import Page from "../../components/page/Page.tsx";
-import Hero from "../../components/page/Hero.tsx";
-// import Footer from "../../components/additional/footer";
+import Page from "../../pkg/page/Page.tsx";
+import Hero from "../../pkg/page/Hero.tsx";
+// import Footer from "../../pkg/additional/footer";
 
 type Mind = {
   title: string;

@@ -1,4 +1,4 @@
-import { Block } from "../../components/ai/types";
+import { Block } from "../../pkg/ai/types";
 
 export type Model = {
   displayName: string;

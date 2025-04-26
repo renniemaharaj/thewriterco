@@ -1,13 +1,13 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
-import Hero from "../../../components/page/Hero";
-import Page from "../../../components/page/Page";
+import Hero from "../../../pkg/page/Hero";
+import Page from "../../../pkg/page/Page";
 import { Text, Blockquote, Callout } from "@radix-ui/themes";
-import Content from "../../../components/docs/Content";
-import BreakII from "../../../components/docs/BreakII";
-import List from "../../../components/docs/List";
-import Snippet from "../../../components/docs/Snippet";
-import GuideTemplate from "../../../components/docs/GuideTemplate";
-import Link from "../../../components/link/Link";
+import Content from "../../../pkg/docs/Content";
+import BreakII from "../../../pkg/docs/BreakII";
+import List from "../../../pkg/docs/List";
+import Snippet from "../../../pkg/docs/Snippet";
+import GuideTemplate from "../../../pkg/docs/GuideTemplate";
+import Link from "../../../pkg/link/Link";
 
 const Guide = () => {
   return (

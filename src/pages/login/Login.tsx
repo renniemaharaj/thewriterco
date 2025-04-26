@@ -1,5 +1,5 @@
-import Block from "../../components/page/Block";
-import { useTransitionNavigation } from "../../components/hooks/useTransitionNavigation";
+import Block from "../../pkg/page/Block";
+import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
 
 const Login = () => {
   const { navigateWT } = useTransitionNavigation();

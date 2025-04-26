@@ -7,21 +7,21 @@ import {
   Text,
   Tooltip,
 } from "@radix-ui/themes";
-import Hero from "../../components/page/Hero";
+import Hero from "../../pkg/page/Hero";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import React, { useRef } from "react";
-import Page from "../../components/page/Page";
+import Page from "../../pkg/page/Page";
 import { swiperSlides } from "./slides.swiper";
 import { swiperProps } from "./config.swiper";
-import Chat from "../../components/ai/Chat";
+import Chat from "../../pkg/ai/Chat";
 import { useDispatch } from "react-redux";
 import { clearMessages } from "../../app/chat/chatSlice";
 import { toggleFlowSlice } from "../../app/flow/flowSlice";
 import { Trash2Icon } from "lucide-react";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
-import Link from "../../components/link/Link";
+import Link from "../../pkg/link/Link";
 
 const Root: React.FC = () => {
   const messageBoxRef = useRef<HTMLDivElement>(null);

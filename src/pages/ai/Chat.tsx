@@ -12,11 +12,11 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
-import Reader from "../../components/bible/Reader";
-import SideBar from "../../components/SideBar";
-import Menu from "../../components/docs/Menu";
-import { useThemeContext } from "../../components/context/theme/useThemeContext";
-import Chat from "../../components/ai/Chat";
+import Reader from "../../pkg/bible/Reader";
+import SideBar from "../../pkg/SideBar";
+import Menu from "../../pkg/docs/Menu";
+import { useThemeContext } from "../../pkg/context/theme/useThemeContext";
+import Chat from "../../pkg/ai/Chat";
 import {
   EllipsisVerticalIcon,
   FileCode2,
@@ -27,13 +27,11 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { clearMessages, setResponseConstraint } from "../../app/chat/chatSlice";
-import fetchGitBlob, {
-  templateRepoUrl,
-} from "../../components/hooks/data/gitFetcher";
+import fetchGitBlob, { templateRepoUrl } from "../../pkg/hooks/data/gitFetcher";
 import { Helmet } from "react-helmet-async";
 import { toggleFlowSlice } from "../../app/flow/flowSlice";
-import Sizer from "../../components/page/Sizer";
-import { useTransitionNavigation } from "../../components/hooks/useTransitionNavigation";
+import Sizer from "../../pkg/page/Sizer";
+import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
 
 const AI = () => {
   const { theme } = useThemeContext();

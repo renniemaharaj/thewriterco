@@ -2,7 +2,7 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { setupServer } from "msw/node";
 import { beforeAll, afterEach, afterAll, beforeEach } from "vitest";
-import { handlers } from "./src/components/hooks/mocks/handlers";
+import { handlers } from "./src/pkg/hooks/mocks/handlers";
 import { mockAuthEmpty } from "./src/utils/test-utils";
 import { mockBrowser } from "./src/tests/devices/mockBrowser";
 

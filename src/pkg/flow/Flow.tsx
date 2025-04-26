@@ -12,12 +12,12 @@ import {
   ReactFlowProvider,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import CustomControls from "./components/Controls";
+import CustomControls from "./pkg/Controls";
 import { Box } from "@radix-ui/themes";
 
 import { nodeData } from "./config";
 import { useThemeContext } from "../context/theme/useThemeContext";
-import ResourceMonitor from "./components/ResourceMonitor";
+import ResourceMonitor from "./pkg/ResourceMonitor";
 import { cloneDeep } from "lodash";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";

@@ -3,11 +3,11 @@ import { ErrorBoundary } from "react-error-boundary";
 import { HelmetProvider } from "react-helmet-async";
 import { Theme } from "@radix-ui/themes";
 
-import PersistLogin from "./components/PersistLogin";
-import ErrorFallback from "./components/ErrorBoundary";
-import { RequireAuth } from "./components/RequireAuth";
-import { ThemeProvider } from "./components/context/theme/ThemeProvider";
-import { useThemeContext } from "./components/context/theme/useThemeContext";
+import PersistLogin from "./pkg/PersistLogin";
+import ErrorFallback from "./pkg/ErrorBoundary";
+import { RequireAuth } from "./pkg/RequireAuth";
+import { ThemeProvider } from "./pkg/context/theme/ThemeProvider";
+import { useThemeContext } from "./pkg/context/theme/useThemeContext";
 import { protectedRoutesFunc, publicRoutesFunc } from "./twcConfig";
 
 function App() {

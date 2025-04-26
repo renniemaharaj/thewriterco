@@ -1,14 +1,14 @@
-// import Footer from "../../components/Footer";
+// import Footer from "../../pkg/Footer";
 import { Box, Flex } from "@radix-ui/themes";
-import Menu from "../../components/docs/Menu";
-import Page from "../../components/page/Page";
-import SideBar from "../../components/SideBar";
-import { useThemeContext } from "../../components/context/theme/useThemeContext";
+import Menu from "../../pkg/docs/Menu";
+import Page from "../../pkg/page/Page";
+import SideBar from "../../pkg/SideBar";
+import { useThemeContext } from "../../pkg/context/theme/useThemeContext";
 import { ReactNode, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-// import Hint from "../../components/Hint";
-// import Footer from "../../components/additional/footer";
+// import Hint from "../../pkg/Hint";
+// import Footer from "../../pkg/additional/footer";
 
 const Reasoning = () => {
   const { theme } = useThemeContext();

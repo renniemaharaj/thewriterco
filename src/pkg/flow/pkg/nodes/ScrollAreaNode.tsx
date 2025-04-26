@@ -1,5 +1,5 @@
 import { NodeProps } from "@xyflow/react";
-import { Node } from "./components/Node";
+import { Node } from "./pkg/Node";
 import { CustomNodeProps } from "./types";
 import { memo } from "react";
 

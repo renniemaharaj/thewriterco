@@ -2,7 +2,7 @@ import { render, screen } from "../utils/test-utils";
 import App from "../App";
 import { describe, test, expect } from "vitest";
 // import { act } from "react";
-// import { useElevenLabs } from "../components/hooks/data/useElevenLabs";
+// import { useElevenLabs } from "../pkg/hooks/data/useElevenLabs";
 
 // Utility: Assert that a string matches all provided regex patterns
 const assertTextMatchesAll = (text: string, patterns: RegExp[]) => {

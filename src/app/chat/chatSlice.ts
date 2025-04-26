@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // import { initialState } from "./config";
-import { Block } from "../../components/ai/types";
+import { Block } from "../../pkg/ai/types";
 import { getInitialChatState } from "./utils";
 
 const ereaderSlice = createSlice({
