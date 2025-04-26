@@ -55,7 +55,7 @@ export default function Collapsible({
     if (currentTitle !== title) {
       toggle(title as string);
     }
-  }, [currentTitle, title, toggle]);
+  }, [currentTitle, title, toggle, onOpen]);
 
   useEffect(() => {
     if (currentTitle === title) {

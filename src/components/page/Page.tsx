@@ -7,6 +7,9 @@ import { Helmet } from "react-helmet-async";
 import Sizer from "./Sizer";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Block from "../Block";
+import Toast from "../toast/Toast";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 const Page = ({
   children,
@@ -26,6 +29,9 @@ const Page = ({
   description?: string;
 }) => {
   const { isPending, path } = useTransitionNavigation();
+
+  const { toasts } = useSelector((state: RootState) => state.toast);
+
   useEffect(() => {
     document.body.style.overflowX = "hidden";
     return () => {
@@ -39,6 +45,10 @@ const Page = ({
 
   return (
     <>
+      {toasts.length > 0 &&
+        toasts.map((toast, index) => (
+          <Toast key={index} message={toast.message} success={toast.success} />
+        ))}
       <Helmet>
         {title !== "" && <title>{`TheWriterCo - ${title}`}</title>}
         {description !== "" && (

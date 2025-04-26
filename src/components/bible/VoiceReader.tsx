@@ -1,37 +1,81 @@
 import { useVoiceReader } from "../hooks/useVoiceReader";
-import { Flex, IconButton, Select } from "@radix-ui/themes";
+import { Flex, IconButton } from "@radix-ui/themes";
 import { PauseIcon, StopCircle, AudioLines } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { ElevenVoice, useElevenLabs } from "../hooks/data/useElevenLabs";
+import { useDispatch } from "react-redux";
+import { PushToast } from "../../app/toast/toastSlice";
+import VoiceSelect from "./VoiceSelect";
 
 type VoiceReaderProps = {
   value: string;
   override?: string;
+  useEleven?: boolean;
+  elevenKey?: string;
 };
 
-const DEFAULT_VOICE = "Microsoft Mark - English (United States)";
-
-const VoiceReader = ({ value, override }: VoiceReaderProps) => {
-  const { speak, pause, resume, stop, speaking, paused, voices } =
-    useVoiceReader();
+const VoiceReader = ({
+  value,
+  override,
+  useEleven = true,
+  elevenKey = "",
+}: VoiceReaderProps) => {
+  const desiredTechnology = useEleven ? useElevenLabs : useVoiceReader;
+  const {
+    speak,
+    pause,
+    resume,
+    stop,
+    speaking,
+    paused,
+    voices,
+    errors,
+    clearErrors,
+  } = desiredTechnology(elevenKey);
 
   const [selectedVoice, setSelectedVoice] = useState<string>();
   const [stopped, setStopped] = useState(true);
 
+  const DEFAULT_VOICE_BROWSER = "Microsoft Mark - English (United States)";
+  const DEFAULT_VOICE_ELEVEN = "Lily";
+
   useEffect(() => {
     if (voices.length > 0 && !selectedVoice) {
-      const defaultVoice = voices.find((v) => v.name === DEFAULT_VOICE);
-      setSelectedVoice(defaultVoice?.voiceURI || voices[0].voiceURI);
+      if (useEleven) {
+        const defaultVoice = voices.find(
+          (v) => (v as ElevenVoice).name === DEFAULT_VOICE_ELEVEN,
+        );
+        if (defaultVoice) {
+          setSelectedVoice(
+            (defaultVoice as ElevenVoice).name ||
+              (voices[0] as ElevenVoice).name,
+          );
+        }
+      } else {
+        const defaultVoice = voices.find(
+          (v) => (v as SpeechSynthesisVoice).name === DEFAULT_VOICE_BROWSER,
+        );
+        if (defaultVoice) {
+          setSelectedVoice(
+            (defaultVoice as SpeechSynthesisVoice).voiceURI ||
+              (voices[0] as SpeechSynthesisVoice).voiceURI,
+          );
+        }
+      }
     }
-  }, [voices]);
+  }, [voices, useEleven, selectedVoice]);
 
   useEffect(() => {
     setStopped(!speaking && !paused);
   }, [speaking, paused]);
 
-  const handlePlay = (useOverride = false) => {
-    const text = useOverride && override ? override : value;
-    speak(text, { voiceName: selectedVoice });
-  };
+  const handlePlay = useCallback(
+    (useOverride = false) => {
+      const text = useOverride && override ? override : value;
+      speak(text, { voiceName: selectedVoice });
+    },
+    [speak, value, selectedVoice, override],
+  );
 
   const handleStop = () => {
     stop();
@@ -43,7 +87,20 @@ const VoiceReader = ({ value, override }: VoiceReaderProps) => {
 
   useEffect(() => {
     if (override) handlePlay(true);
-  }, [override]);
+  }, [override, handlePlay]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      errors.forEach((error) =>
+        dispatch(PushToast({ message: error, success: false })),
+      );
+      return () => {
+        clearErrors();
+      };
+    }
+  }, [errors, clearErrors, dispatch]);
 
   return (
     <Flex direction="column" gap="2">
@@ -90,26 +147,14 @@ const VoiceReader = ({ value, override }: VoiceReaderProps) => {
         >
           <StopCircle />
         </IconButton>
-
-        {/* Voice Selector */}
-        <Select.Root value={selectedVoice} onValueChange={setSelectedVoice}>
-          <Select.Trigger />
-          <Select.Content>
-            <Select.Group>
-              <Select.Label>Voices</Select.Label>
-              {voices
-                .filter((voice) => !!voice.voiceURI)
-                .map((voice, index) => (
-                  <Select.Item
-                    key={`voice-${voice.voiceURI ?? index}`}
-                    value={voice.voiceURI!}
-                  >
-                    {voice.name.slice(0, 20)} ({voice.lang})
-                  </Select.Item>
-                ))}
-            </Select.Group>
-          </Select.Content>
-        </Select.Root>
+        <Flex>
+          <VoiceSelect
+            voices={voices}
+            setSelectedVoice={setSelectedVoice}
+            selectedVoice={selectedVoice ?? ""}
+            useEleven={useEleven}
+          />
+        </Flex>
       </Flex>
     </Flex>
   );

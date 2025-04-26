@@ -9,7 +9,7 @@ const Search = ({ onChange }: { onChange: (str: string) => void }) => {
     if (onChange && searchTerm) {
       onChange(searchTerm);
     }
-  }, [searchTerm]);
+  }, [searchTerm, onChange]);
 
   return (
     <Flex className="ml-auto flex gap-2 items-center">
