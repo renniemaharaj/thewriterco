@@ -11,6 +11,7 @@ export const useTransitionNavigation = () => {
       navigate(path);
       setPath(path);
     });
+    console.log("Transitioning");
   };
 
   const location = useLocation();

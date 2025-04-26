@@ -14,27 +14,18 @@ export type ElevenVoice = {
   description?: string;
 };
 
-let cachedVoices: ElevenVoice[] = []; // Static cache
+let cachedVoices: ElevenVoice[] = [];
 
 export function useElevenLabs(apiKey: string) {
   const [speaking, setSpeaking] = useState(false);
   const [paused, setPaused] = useState(false);
   const [voices, setVoices] = useState<ElevenVoice[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [errors, setErrors] = useState<string[]>([]);
-  const hasFetchedRef = useRef(false); // Prevent multiple fetches
-
-  const pushError = (error: string) => {
-    setErrors((prev) => [...prev, error]);
-  };
-
-  const clearErrors = () => {
-    setErrors([]);
-  };
+  const hasFetchedRef = useRef(false);
 
   useEffect(() => {
     if (hasFetchedRef.current) {
-      setVoices(cachedVoices); // Use cached if already fetched
+      setVoices(cachedVoices);
       return;
     }
 
@@ -45,17 +36,15 @@ export function useElevenLabs(apiKey: string) {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data?.voices?.length > 0) {
+        if (Array.isArray(data?.voices) && data.voices.length > 0) {
           cachedVoices = data.voices;
           setVoices(data.voices);
         } else {
-          pushError("No voices returned from ElevenLabs.");
           setVoices(cachedVoices);
         }
       })
       .catch((err) => {
         console.error("Failed to fetch voices:", err);
-        pushError("Failed to fetch voices from ElevenLabs: " + err.message);
         setVoices(cachedVoices);
       });
 
@@ -69,8 +58,13 @@ export function useElevenLabs(apiKey: string) {
 
   const speak = async (text: string, options?: SpeakOptions) => {
     stop();
-    const voiceId = options?.voiceName ?? cachedVoices[0]?.voice_id;
-    if (!voiceId) return pushError("No voice ID available.");
+    const voiceId = options?.voiceId ?? cachedVoices[0]?.voice_id;
+
+    if (!voiceId) {
+      console.warn("No voice available to speak.");
+      return;
+    }
+
     try {
       const response = await fetch(
         `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
@@ -94,7 +88,8 @@ export function useElevenLabs(apiKey: string) {
 
       if (!response.ok) {
         const errorText = await response.text();
-        return pushError("Text-to-speech error: " + errorText);
+        console.error("Speak error:", errorText);
+        return;
       }
 
       const audioBlob = await response.blob();
@@ -111,15 +106,12 @@ export function useElevenLabs(apiKey: string) {
         setSpeaking(false);
         setPaused(false);
       };
-      audio.onerror = () => {
-        setSpeaking(false);
-        pushError("Audio playback failed.");
-      };
+      audio.onerror = () => setSpeaking(false);
 
       audio.play();
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : String(err);
-      pushError("Speak error: " + errorMessage);
+      console.error("Speak exception:", errorMessage);
     }
   };
 
@@ -154,7 +146,5 @@ export function useElevenLabs(apiKey: string) {
     speaking,
     paused,
     voices,
-    errors,
-    clearErrors,
   };
 }

@@ -4,7 +4,7 @@ import {
   AuthResult,
   registerCredentials,
   RefreshTokenResult,
-} from "../app/api/auth/authTypes";
+} from "../../../app/api/auth/authTypes";
 
 const BASE_URL = "https://auth-api-gmxb.onrender.com";
 const LOGIN_URL = `${BASE_URL}/login/email`;

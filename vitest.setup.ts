@@ -2,23 +2,36 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { setupServer } from "msw/node";
 import { beforeAll, afterEach, afterAll, beforeEach } from "vitest";
-import { handlers } from "./src/mocks/handlers";
+import { handlers } from "./src/components/hooks/mocks/handlers";
 import { mockAuthEmpty } from "./src/utils/test-utils";
+import { mockBrowser } from "./src/tests/devices/mockBrowser";
 
 const server = setupServer(...handlers);
 
-beforeEach(() => mockAuthEmpty());
-beforeAll(() => server.listen());
-afterEach(() => {
-  // Reset any runtime request handlers we may add during the tests.
-  server.resetHandlers();
-  mockAuthEmpty();
-  cleanup();
+// Mock browser ONCE globally
+beforeAll(() => {
+  mockBrowser();
+  server.listen();
 });
 
-// Disable API mocking after the tests are done.
-afterAll(() => server.close());
+// Mock auth before EACH test (if needed)
+beforeEach(() => {
+  mockAuthEmpty();
+});
 
+// Cleanup after EACH test
+afterEach(() => {
+  server.resetHandlers();
+  cleanup();
+  mockAuthEmpty();
+});
+
+// Fully shutdown MSW after all tests
+afterAll(() => {
+  server.close();
+});
+
+// Optional: Log intercepted requests
 server.events.on("request:start", ({ request }) => {
   console.log("MSW intercepted:", request.method, request.url);
 });

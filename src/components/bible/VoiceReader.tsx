@@ -1,15 +1,12 @@
 import { useVoiceReader } from "../hooks/useVoiceReader";
 import { Button, Flex, IconButton } from "@radix-ui/themes";
-import { AudioLines, PauseCircle, StopCircle } from "lucide-react";
+import { PauseIcon, StopCircle, AudioLines } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ElevenVoice, useElevenLabs } from "../hooks/data/useElevenLabs";
-import { useDispatch, useSelector } from "react-redux";
-import { PushToast } from "../../app/toast/toastSlice";
+import { useSelector } from "react-redux";
 import VoiceSelect from "./VoiceSelect";
 import ElevenLabs from "./ElevenLabs";
 import { RootState } from "../../app/store";
-import SpeakIcon from "./SpeakIcon";
-import { setSpeaking } from "../../app/ereader/ereaderSlice";
 
 type VoiceReaderProps = {
   value: string;
@@ -20,129 +17,102 @@ type VoiceReaderProps = {
 const DEFAULT_VOICE_BROWSER = "Microsoft Mark - English (United States)";
 const DEFAULT_VOICE_ELEVEN = "Lily";
 
-const VoiceReader = ({ value, override, setOverride }: VoiceReaderProps) => {
-  const dispatch = useDispatch();
-  const { enabled: elevenLabsPowered, apiKey } = useSelector(
-    (state: RootState) => state.elevenLabs,
-  );
+const VoiceReader = ({ value, override }: VoiceReaderProps) => {
+  const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
+  const elevenLabsPowered = elevenLabs.enabled ?? false;
 
-  const elevenLabsReader = useElevenLabs(apiKey);
-  const browserReader = useVoiceReader();
-
-  const {
-    speak,
-    pause,
-    resume,
-    stop,
-    speaking,
-    paused,
-    voices,
-    errors,
-    clearErrors,
-  } = elevenLabsPowered ? elevenLabsReader : browserReader;
+  const browser = useVoiceReader();
+  const eleven = useElevenLabs(elevenLabs.apiKey);
 
   const [selectedVoice, setSelectedVoice] = useState<
     SpeechSynthesisVoice | ElevenVoice
   >();
   const [stopped, setStopped] = useState(true);
 
-  const defaultVoiceName = useMemo(
-    () => (elevenLabsPowered ? DEFAULT_VOICE_ELEVEN : DEFAULT_VOICE_BROWSER),
-    [elevenLabsPowered],
-  );
+  const active = elevenLabsPowered ? eleven : browser;
 
-  // Set default voice
+  const defaultVoiceName = useMemo(() => {
+    return elevenLabsPowered ? DEFAULT_VOICE_ELEVEN : DEFAULT_VOICE_BROWSER;
+  }, [elevenLabsPowered]);
+
+  const setStop = useCallback(() => {
+    setStopped(true);
+    active.stop();
+  }, [active]);
+
   useEffect(() => {
-    if (voices.length && !selectedVoice) {
-      const defaultVoice = voices.find((v) => v.name === defaultVoiceName);
-      setSelectedVoice(defaultVoice || voices[0]);
+    if (active.voices.length > 0) {
+      const defaultVoice = active.voices.find(
+        (v) => v.name === defaultVoiceName,
+      );
+      setSelectedVoice(defaultVoice || active.voices[0]);
     }
-  }, [voices, defaultVoiceName, selectedVoice]);
+  }, [active.voices, defaultVoiceName]);
 
-  // Update stop state based on speaking and paused
   useEffect(() => {
-    setStopped(!speaking && !paused);
-  }, [speaking, paused]);
+    setStopped(!active.speaking && !active.paused);
+  }, [active.speaking, active.paused]);
 
   const handlePlay = useCallback(
     (useOverride = false) => {
       const text = useOverride && override ? override : value;
       if (!text || !selectedVoice) return;
 
-      speak(text, {
+      active.speak(text, {
         voiceName: elevenLabsPowered
           ? (selectedVoice as ElevenVoice).voice_id
           : (selectedVoice as SpeechSynthesisVoice).name,
       });
-
-      dispatch(setSpeaking(true));
     },
-    [speak, value, override, selectedVoice, elevenLabsPowered],
+    [active, value, override, selectedVoice, elevenLabsPowered],
   );
 
   const handleStop = useCallback(() => {
-    stop();
-    setStopped(true);
-    dispatch(setSpeaking(false));
-  }, [stop]);
+    setStop();
+  }, [setStop]);
 
-  // Auto-play when override is set
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (!override) return;
-    handlePlay(true);
-    return () => handleStop();
+    if (override) {
+      handlePlay(true);
+    }
   }, [override]);
-
-  // Display errors via toast
-  useEffect(() => {
-    if (!errors.length) return;
-    errors.forEach((error) =>
-      dispatch(PushToast({ message: error, success: false })),
-    );
-    clearErrors();
-  }, [errors, dispatch, clearErrors]);
 
   const voiceReaderIconClass =
     "text-gray-500 hover:animate-pulse transition-colors duration-200";
 
-  useEffect(() => {
-    if (stopped) {
-      setOverride?.("");
-    }
-  }, [stopped]);
   return (
     <Flex direction="column" gap="2">
       <Flex className="gap-2 items-center">
-        {/* Play */}
-        <SpeakIcon
-          onClick={() => handlePlay()}
-          // variant="soft"
-          className={`${voiceReaderIconClass} ${!stopped && "!hidden"}`}
-          disabled={!selectedVoice}
-        />
-        {/* Resume */}
         <IconButton
-          onClick={resume}
+          onClick={() => handlePlay(false)}
           variant="soft"
-          aria-label="Resume"
-          disabled={!paused}
-          className={`${voiceReaderIconClass} ${!paused && "!hidden"}`}
+          aria-label="Play"
+          className={`${voiceReaderIconClass} ${active.paused && "!hidden"}`}
+          disabled={!stopped}
         >
           <AudioLines />
         </IconButton>
-        {/* Pause */}
+
         <IconButton
-          onClick={pause}
+          onClick={active.resume}
           variant="soft"
-          aria-label="Pause"
-          disabled={!speaking || paused}
-          className={`${voiceReaderIconClass} ${paused || (stopped && "!hidden")}`}
+          aria-label="Resume"
+          className={`${!active.paused && "!hidden"}`}
+          disabled={!active.paused}
         >
-          <PauseCircle />
+          <AudioLines />
         </IconButton>
 
-        {/* Stop */}
+        <IconButton
+          onClick={active.pause}
+          variant="soft"
+          aria-label="Pause"
+          className={`${voiceReaderIconClass} ${active.paused && "!hidden"}`}
+          disabled={!active.speaking || active.paused}
+        >
+          <PauseIcon />
+        </IconButton>
+
         <IconButton
           onClick={handleStop}
           variant="soft"
@@ -152,13 +122,12 @@ const VoiceReader = ({ value, override, setOverride }: VoiceReaderProps) => {
           <StopCircle />
         </IconButton>
 
-        {/* Voice & Settings */}
         <Flex className="gap-2 items-center">
           <VoiceSelect
-            voices={voices}
+            voices={active.voices}
             selectedVoice={selectedVoice?.name ?? ""}
             setSelectedVoice={(voiceName) =>
-              setSelectedVoice(voices.find((v) => v.name === voiceName))
+              setSelectedVoice(active.voices.find((v) => v.name === voiceName))
             }
             useEleven={elevenLabsPowered}
           />

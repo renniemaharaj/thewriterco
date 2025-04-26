@@ -5,8 +5,6 @@ export function useVoiceReader() {
   const [paused, setPaused] = useState(false);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
-  const [errors] = useState<string[]>([]);
-
   useEffect(() => {
     return () => {
       window.speechSynthesis.cancel(); // Cleanup on unmount
@@ -73,9 +71,5 @@ export function useVoiceReader() {
     speaking,
     paused,
     voices: window.speechSynthesis.getVoices(), // Optional voice list
-    errors,
-    clearErrors: () => {
-      // Clear errors if needed
-    },
   };
 }

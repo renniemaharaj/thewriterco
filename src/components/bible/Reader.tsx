@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, Flex, IconButton, Select } from "@radix-ui/themes";
+import { Flex, IconButton, Select } from "@radix-ui/themes";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import {
@@ -18,6 +18,10 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
   const eReaderState = useSelector((state: RootState) => state.ereader);
   const { isOpen, currentChapter, currentVerse, eContent, readerStyle } =
     eReaderState;
+
+  const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
+
+  const elevenLabsPowered = elevenLabs.enabled && elevenLabs.apiKey !== "";
 
   const content = eContent.content;
 
@@ -128,6 +132,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
         isOpen={isOpen}
         title={eContent.title}
         override={readTextOverride}
+        elevenLabsPowered={elevenLabsPowered}
         setOverride={(override: string) => setReadTextOverride(override)}
       />
 
@@ -149,9 +154,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
                 value={currentChapter || ""}
                 onValueChange={handleChapterChange}
               >
-                <Select.Trigger>
-                  <Button variant="soft">Chapter {currentChapter}</Button>
-                </Select.Trigger>
+                <Select.Trigger>Chapter {currentChapter}</Select.Trigger>
                 <Select.Content>
                   {Object.keys(eContent.content).map((chapter) => (
                     <Select.Item key={"chapter-" + chapter} value={chapter}>
@@ -165,9 +168,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
                 value={currentVerse || ""}
                 onValueChange={handleVerseChange}
               >
-                <Select.Trigger>
-                  <Button variant="soft">Verse {currentVerse}</Button>
-                </Select.Trigger>
+                <Select.Trigger>Verse {currentVerse}</Select.Trigger>
                 <Select.Content>
                   {chapterVerses.map((verse) => (
                     <Select.Item key={"verse-" + verse} value={verse}>

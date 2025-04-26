@@ -17,7 +17,7 @@ export const mockBrowser = () => {
     disconnect: vi.fn(),
   }));
 
-  // Mock getVoices
+  // Mock getVoices and speechSynthesis
   window.speechSynthesis = {
     getVoices: vi.fn(() => [
       { name: "MockVoice1", lang: "en-US", default: true },
@@ -29,12 +29,4 @@ export const mockBrowser = () => {
     resume: vi.fn(),
     speaking: false,
   } as unknown as SpeechSynthesis;
-
-  // Mock synthesize method (your own custom window.synthesize)
-  window.synthesize = vi.fn((text: string) => {
-    // Simulate MP3 blob return for testing
-    if (!text) return Promise.reject(new Error("No text provided"));
-    const blob = new Blob(["MOCK_AUDIO_CONTENT"], { type: "audio/mpeg" });
-    return Promise.resolve(blob);
-  });
 };

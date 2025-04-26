@@ -1,4 +1,4 @@
-import { Button, Select } from "@radix-ui/themes";
+import { Select } from "@radix-ui/themes";
 import VoiceList from "./VoiceList";
 import { ElevenVoice } from "../hooks/data/useElevenLabs";
 import { memo } from "react";
@@ -19,7 +19,7 @@ const VoiceSelect = ({
   return (
     <Select.Root value={selectedVoice} onValueChange={setSelectedVoice}>
       <Select.Trigger
-        children={<Button variant="soft">{selectedVoice}</Button>}
+      // children={<Button variant="soft">{selectedVoice}</Button>}
       />
       <Select.Content>
         <Select.Group>

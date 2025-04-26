@@ -1,7 +1,8 @@
 import { render, screen } from "../utils/test-utils";
 import App from "../App";
-import { describe, test, expect, beforeEach } from "vitest";
-import { mockBrowser } from "./devices/mockBrowser";
+import { describe, test, expect } from "vitest";
+// import { act } from "react";
+// import { useElevenLabs } from "../components/hooks/data/useElevenLabs";
 
 // Utility: Assert that a string matches all provided regex patterns
 const assertTextMatchesAll = (text: string, patterns: RegExp[]) => {
@@ -23,10 +24,6 @@ const assertElementContainsAllText = (testId: string, patterns: RegExp[]) => {
 };
 
 describe("App component", () => {
-  beforeEach(() => {
-    mockBrowser();
-  });
-
   test("renders root page with company name", () => {
     render(<App />, { route: "/" });
     const matches = screen.getAllByText(/The Writer Company/i);
