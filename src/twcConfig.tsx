@@ -1,7 +1,7 @@
 import { Route } from "react-router-dom";
 
 import Root from "./pages/root/Root";
-import NoPage from "./pages/noPage/NoPage";
+import NoPage from "./pages/404/NoPage";
 import Study from "./pages/reasoning/Reasoning";
 
 import { lazy } from "react";

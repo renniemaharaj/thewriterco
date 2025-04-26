@@ -1,10 +1,8 @@
 import { Button, Dialog, Flex } from "@radix-ui/themes";
-import Hint from "./Hint";
-// import { Scripture } from "./NavBar";
-// import fetchGitBlob from "./hooks/data/gitGetter";
-import { Block } from "./ai/types";
+import Hint from "../Hint";
+import { Block } from "./types";
 
-import Message from "./ai/Message";
+import Message from "./Message";
 
 const SearchResults = ({
   displayResults,
