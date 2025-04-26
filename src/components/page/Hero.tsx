@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import Hint from "./Hint";
+import Hint from "../Hint";
 import { Flex } from "@radix-ui/themes";
 
 export type HeroProps = {

@@ -1,5 +1,5 @@
 import { Flex, Spinner } from "@radix-ui/themes";
-import Page from "./page/Page";
+import Page from "./Page";
 import Hero from "./Hero";
 
 export default function Block() {

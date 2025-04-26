@@ -1,6 +1,6 @@
 import { Text, Button, Link, Flex, Badge } from "@radix-ui/themes";
 import Page from "../../components/page/Page";
-import Hero from "../../components/Hero";
+import Hero from "../../components/page/Hero";
 import { useTransitionNavigation } from "../../components/hooks/useTransitionNavigation";
 import { FlagIcon, HomeIcon } from "lucide-react";
 // import Link from "next/link";

@@ -1,4 +1,4 @@
-import Block from "../../components/Block";
+import Block from "../../components/page/Block";
 import { useTransitionNavigation } from "../../components/hooks/useTransitionNavigation";
 
 const Login = () => {

@@ -4,7 +4,7 @@ import { Flex, Tabs, Box } from "@radix-ui/themes";
 import { useDispatch } from "react-redux";
 import fetchGitBlob, { kjvRepoUrl } from "../hooks/data/gitFetcher";
 import { EBook } from "../../app/ereader/types";
-import Block from "../Block";
+import Block from "../page/Block";
 import { setOpenState } from "../../app/ereader/ereaderSlice";
 import BookFragment from "./Book";
 import { bibleDivisions } from "./bibleDivisions";

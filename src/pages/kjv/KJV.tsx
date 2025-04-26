@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
 import Page from "../../components/page/Page";
 import { Flex, Text } from "@radix-ui/themes";
-import Hero from "../../components/Hero";
+import Hero from "../../components/page/Hero";
 // import Footer from "../../components/additional/footer";
 // import Footer from "../../components/Footer";
 const KJV = () => {

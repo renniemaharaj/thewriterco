@@ -18,7 +18,7 @@ import {
   Phone,
   HandCoinsIcon,
 } from "lucide-react";
-import Hero from "../Hero";
+import Hero from "./Hero";
 import Hint from "../Hint";
 import Link from "../link/Link";
 

@@ -13,7 +13,7 @@ import Hint from "../../components/Hint.tsx";
 // import Footer from "../../components/Footer";
 import { BrainCircuit } from "lucide-react";
 import Page from "../../components/page/Page.tsx";
-import Hero from "../../components/Hero.tsx";
+import Hero from "../../components/page/Hero.tsx";
 // import Footer from "../../components/additional/footer";
 
 type Mind = {

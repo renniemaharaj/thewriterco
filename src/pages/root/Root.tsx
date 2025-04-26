@@ -7,7 +7,7 @@ import {
   Text,
   Tooltip,
 } from "@radix-ui/themes";
-import Hero from "../../components/Hero";
+import Hero from "../../components/page/Hero";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 

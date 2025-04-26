@@ -7,7 +7,7 @@ import {
   setAccessToken,
 } from "../app/api/auth/authSlice";
 import { Outlet } from "react-router-dom";
-import Block from "./Block";
+import Block from "./page/Block";
 
 const PersistLogin = () => {
   const dispatch = useAppDispatch();

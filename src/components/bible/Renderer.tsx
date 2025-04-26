@@ -17,7 +17,6 @@ const Renderer = ({
   override?: string;
   setOverride?: (override: string) => void;
   elevenLabsPowered: boolean;
-  useVoice: boolean;
   hidePicker: boolean;
   isOpen: boolean;
   title: string;

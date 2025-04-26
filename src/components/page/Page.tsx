@@ -6,7 +6,7 @@ import { ReactNode, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Sizer from "./Sizer";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
-import Block from "../Block";
+import Block from "./Block";
 
 const Page = ({
   children,

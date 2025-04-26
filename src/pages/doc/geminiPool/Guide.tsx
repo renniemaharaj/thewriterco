@@ -1,5 +1,5 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
-import Hero from "../../../components/Hero";
+import Hero from "../../../components/page/Hero";
 import Page from "../../../components/page/Page";
 import { Text, Blockquote, Callout } from "@radix-ui/themes";
 import Content from "../../../components/docs/Content";
