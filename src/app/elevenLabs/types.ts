@@ -1,3 +1,4 @@
-export type ElevenLabsConfig = {
+export type ElevenLabsState = {
   apiKey: string;
+  enabled: boolean;
 };

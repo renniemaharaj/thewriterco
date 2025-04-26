@@ -1,5 +1,6 @@
-import { ElevenLabsConfig } from "./types";
+import { ElevenLabsState } from "./types";
 
-export const initialState: ElevenLabsConfig = {
+export const initialState: ElevenLabsState = {
   apiKey: "",
+  enabled: false,
 };

@@ -1,11 +1,13 @@
 import { useVoiceReader } from "../hooks/useVoiceReader";
-import { Flex, IconButton } from "@radix-ui/themes";
+import { Button, Flex, IconButton } from "@radix-ui/themes";
 import { PauseIcon, StopCircle, AudioLines } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { ElevenVoice, useElevenLabs } from "../hooks/data/useElevenLabs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PushToast } from "../../app/toast/toastSlice";
 import VoiceSelect from "./VoiceSelect";
+import ElevenLabs from "./ElevenLabs";
+import { RootState } from "../../app/store";
 
 type VoiceReaderProps = {
   value: string;
@@ -14,13 +16,10 @@ type VoiceReaderProps = {
   elevenKey?: string;
 };
 
-const VoiceReader = ({
-  value,
-  override,
-  useEleven = true,
-  elevenKey = "",
-}: VoiceReaderProps) => {
-  const desiredTechnology = useEleven ? useElevenLabs : useVoiceReader;
+const VoiceReader = ({ value, override, elevenKey = "" }: VoiceReaderProps) => {
+  const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
+  const enabled = elevenLabs.enabled;
+  const desiredTechnology = enabled ? useElevenLabs : useVoiceReader;
   const {
     speak,
     pause,
@@ -41,7 +40,7 @@ const VoiceReader = ({
 
   useEffect(() => {
     if (voices.length > 0 && !selectedVoice) {
-      if (useEleven) {
+      if (enabled) {
         const defaultVoice = voices.find(
           (v) => (v as ElevenVoice).name === DEFAULT_VOICE_ELEVEN,
         );
@@ -63,7 +62,7 @@ const VoiceReader = ({
         }
       }
     }
-  }, [voices, useEleven, selectedVoice]);
+  }, [voices, enabled, selectedVoice]);
 
   useEffect(() => {
     setStopped(!speaking && !paused);
@@ -147,13 +146,14 @@ const VoiceReader = ({
         >
           <StopCircle />
         </IconButton>
-        <Flex>
+        <Flex className="gap-2 items-center">
           <VoiceSelect
             voices={voices}
             setSelectedVoice={setSelectedVoice}
             selectedVoice={selectedVoice ?? ""}
-            useEleven={useEleven}
+            useEleven={enabled}
           />
+          <ElevenLabs trigger={<Button variant="soft">Lab</Button>} />
         </Flex>
       </Flex>
     </Flex>

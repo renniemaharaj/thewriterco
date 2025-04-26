@@ -1,12 +1,12 @@
 import { initialState } from "./config";
 
-import { ElevenLabsConfig } from "./types";
+import { ElevenLabsState } from "./types";
 
-export function getInitialElevenLabsState(): ElevenLabsConfig {
+export function getInitialElevenLabsState(): ElevenLabsState {
   // Check local storage for flow data
-  const elevenLabs = localStorage.getItem("elevenLabsData");
+  const elevenLabs = localStorage.getItem("elevenLabs");
   if (elevenLabs) {
-    return { ...initialState, ...JSON.parse(elevenLabs) }; // Use spread operator to combine initial state
+    return JSON.parse(elevenLabs); // Use spread operator to combine initial state
   }
   return initialState;
 }

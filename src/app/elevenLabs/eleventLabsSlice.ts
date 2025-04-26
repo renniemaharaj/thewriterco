@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { getInitialElevenLabsState } from "./utils";
+import { ElevenLabsState } from "./types";
 
 const elevenLabsSlice = createSlice({
   name: "elevenLabs",
@@ -10,9 +11,16 @@ const elevenLabsSlice = createSlice({
     SetApiKey(state, action: PayloadAction<string>) {
       state.apiKey = action.payload;
     },
+    SetElevenLabs(state, action: PayloadAction<ElevenLabsState>) {
+      const { apiKey } = action.payload;
+      state.apiKey = apiKey;
+    },
+    SetEnabled(state, action: PayloadAction<boolean>) {
+      state.enabled = action.payload;
+    },
   },
 });
 
-export const { SetApiKey } = elevenLabsSlice.actions;
+export const { SetApiKey, SetElevenLabs, SetEnabled } = elevenLabsSlice.actions;
 
 export default elevenLabsSlice;
