@@ -13,10 +13,9 @@ type VoiceReaderProps = {
   value: string;
   override?: string;
   useEleven?: boolean;
-  elevenKey?: string;
 };
 
-const VoiceReader = ({ value, override, elevenKey = "" }: VoiceReaderProps) => {
+const VoiceReader = ({ value, override }: VoiceReaderProps) => {
   const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
   const enabled = elevenLabs.enabled;
   const desiredTechnology = enabled ? useElevenLabs : useVoiceReader;
@@ -30,9 +29,11 @@ const VoiceReader = ({ value, override, elevenKey = "" }: VoiceReaderProps) => {
     voices,
     errors,
     clearErrors,
-  } = desiredTechnology(elevenKey);
+  } = desiredTechnology(elevenLabs.apiKey);
 
-  const [selectedVoice, setSelectedVoice] = useState<string>();
+  const [selectedVoice, setSelectedVoice] = useState<
+    SpeechSynthesisVoice | ElevenVoice
+  >();
   const [stopped, setStopped] = useState(true);
 
   const DEFAULT_VOICE_BROWSER = "Microsoft Mark - English (United States)";
@@ -46,8 +47,7 @@ const VoiceReader = ({ value, override, elevenKey = "" }: VoiceReaderProps) => {
         );
         if (defaultVoice) {
           setSelectedVoice(
-            (defaultVoice as ElevenVoice).name ||
-              (voices[0] as ElevenVoice).name,
+            (defaultVoice as ElevenVoice) || (voices[0] as ElevenVoice),
           );
         }
       } else {
@@ -56,8 +56,8 @@ const VoiceReader = ({ value, override, elevenKey = "" }: VoiceReaderProps) => {
         );
         if (defaultVoice) {
           setSelectedVoice(
-            (defaultVoice as SpeechSynthesisVoice).voiceURI ||
-              (voices[0] as SpeechSynthesisVoice).voiceURI,
+            (defaultVoice as SpeechSynthesisVoice) ||
+              (voices[0] as SpeechSynthesisVoice),
           );
         }
       }
@@ -71,7 +71,15 @@ const VoiceReader = ({ value, override, elevenKey = "" }: VoiceReaderProps) => {
   const handlePlay = useCallback(
     (useOverride = false) => {
       const text = useOverride && override ? override : value;
-      speak(text, { voiceName: selectedVoice });
+      if (elevenLabs.enabled) {
+        speak(text, {
+          voiceName: (selectedVoice as ElevenVoice).voice_id,
+        });
+      } else {
+        speak(text, {
+          voiceName: (selectedVoice as SpeechSynthesisVoice).name,
+        });
+      }
     },
     [speak, value, selectedVoice, override],
   );
@@ -84,9 +92,10 @@ const VoiceReader = ({ value, override, elevenKey = "" }: VoiceReaderProps) => {
   const voiceReaderIconClass =
     "text-gray-500 hover:animate-pulse transition-colors duration-200";
 
+  // Possibly, suppress this warning
   useEffect(() => {
     if (override) handlePlay(true);
-  }, [override, handlePlay]);
+  }, [override]);
 
   const dispatch = useDispatch();
 
@@ -149,8 +158,10 @@ const VoiceReader = ({ value, override, elevenKey = "" }: VoiceReaderProps) => {
         <Flex className="gap-2 items-center">
           <VoiceSelect
             voices={voices}
-            setSelectedVoice={setSelectedVoice}
-            selectedVoice={selectedVoice ?? ""}
+            setSelectedVoice={(voice) =>
+              setSelectedVoice(voices.find((v) => v.name === voice))
+            }
+            selectedVoice={selectedVoice?.name ?? ""}
             useEleven={enabled}
           />
           <ElevenLabs trigger={<Button variant="soft">Lab</Button>} />

@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 export type SpeakOptions = {
   voiceId?: string;
   modelId?: string;
+  voiceName?: string;
 };
 
 export type ElevenVoice = {
@@ -68,10 +69,8 @@ export function useElevenLabs(apiKey: string) {
 
   const speak = async (text: string, options?: SpeakOptions) => {
     stop();
-
-    const voiceId = options?.voiceId ?? cachedVoices[0]?.voice_id;
+    const voiceId = options?.voiceName ?? cachedVoices[0]?.voice_id;
     if (!voiceId) return pushError("No voice ID available.");
-
     try {
       const response = await fetch(
         `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
