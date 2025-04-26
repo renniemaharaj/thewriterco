@@ -21,4 +21,5 @@ export type EreaderState = {
   currentChapter: string;
   currentVerse: string;
   eContent: EBook;
+  speaking: boolean;
 };

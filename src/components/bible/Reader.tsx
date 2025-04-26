@@ -7,13 +7,9 @@ import {
   setGlobalCurrentVerse,
 } from "../../app/ereader/ereaderSlice";
 import Renderer from "./Renderer";
-import {
-  ArrowBigLeft,
-  ArrowBigRight,
-  ArrowBigRightDash,
-  AudioLines,
-} from "lucide-react";
+import { ArrowBigLeft, ArrowBigRight, ArrowBigRightDash } from "lucide-react";
 import { getChapterVerses } from "./utils/reader";
+import SpeakIcon from "./SpeakIcon";
 
 const SHADOW_COUNT = 4;
 
@@ -132,6 +128,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
         isOpen={isOpen}
         title={eContent.title}
         override={readTextOverride}
+        setOverride={(override: string) => setReadTextOverride(override)}
       />
 
       {isOpen && (
@@ -251,9 +248,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
                   <ArrowBigRightDash />
                 </IconButton>
 
-                <IconButton variant="soft" onClick={generateReadText}>
-                  <AudioLines />
-                </IconButton>
+                <SpeakIcon onClick={() => generateReadText()} />
               </Flex>
             </Flex>
           )}

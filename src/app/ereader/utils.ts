@@ -14,4 +14,5 @@ export const initialState: EreaderState = {
   currentChapter: "1",
   currentVerse: "1",
   eContent: defaultContent,
+  speaking: false,
 };

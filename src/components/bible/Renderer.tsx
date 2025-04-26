@@ -10,10 +10,12 @@ import { useCallback } from "react";
 const Renderer = ({
   hidePicker,
   override,
+  setOverride,
   isOpen,
   title,
 }: {
   override?: string;
+  setOverride?: (override: string) => void;
   hidePicker: boolean;
   isOpen: boolean;
   title: string;
@@ -52,7 +54,11 @@ const Renderer = ({
       </IconButton>
 
       {/* VersePlayer component to play the selected verse */}
-      <VoiceReader override={override} value={readerContent()} />
+      <VoiceReader
+        override={override}
+        value={readerContent()}
+        setOverride={setOverride}
+      />
     </Flex>
   );
 };

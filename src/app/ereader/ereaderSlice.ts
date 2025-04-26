@@ -45,6 +45,12 @@ const ereaderSlice = createSlice({
     setGlobalCurrentVerse(state, action: PayloadAction<string>) {
       state.currentVerse = action.payload;
     },
+    setSpeaking(state, action: PayloadAction<boolean>) {
+      state.speaking = action.payload;
+    },
+    toggleSpeaking(state) {
+      state.speaking = !state.speaking;
+    },
   },
 });
 
@@ -61,6 +67,8 @@ export const {
   toggleOpenState,
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
+  setSpeaking,
+  toggleSpeaking,
 } = ereaderSlice.actions;
 
 export default ereaderSlice;
