@@ -7,6 +7,9 @@ import { Helmet } from "react-helmet-async";
 import Sizer from "./Sizer";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Block from "./Block";
+import { useDispatch } from "react-redux";
+import { setEBook } from "../../app/ereader/ereaderSlice";
+import { initialState } from "../../app/ereader/utils";
 
 const Page = ({
   children,
@@ -36,6 +39,11 @@ const Page = ({
   useEffect(() => {
     document.documentElement.scrollTo(0, 0);
   }, [isPending, path]);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setEBook(initialState.eContent));
+  }, []);
 
   return (
     <>
