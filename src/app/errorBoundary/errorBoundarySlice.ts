@@ -7,7 +7,12 @@ const errorBoundarySlice = createSlice({
   initialState,
   reducers: {
     RegisterRecoveryFunction(state, action: PayloadAction<RecoveryFunction>) {
-      state.recoveryFunctions.push(action.payload);
+      const exists = state.recoveryFunctions.some(
+        (recovery) => recovery.title === action.payload.title,
+      );
+      if (!exists) {
+        state.recoveryFunctions.push(action.payload);
+      }
     },
   },
 });

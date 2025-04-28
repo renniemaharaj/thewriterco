@@ -8,6 +8,7 @@ import flowSlice from "./flow/flowSlice";
 import reasoningSlice from "./reasoning/reasoningSlice";
 import toastSlice from "./toast/toastSlice";
 import elevenLabsSlice from "./elevenLabs/eleventLabsSlice";
+import errorBoundarySlice from "./errorBoundary/errorBoundarySlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     reasoning: reasoningSlice.reducer,
     toast: toastSlice.reducer,
     elevenLabs: elevenLabsSlice.reducer,
+    errorBoundary: errorBoundarySlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

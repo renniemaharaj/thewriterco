@@ -21,10 +21,20 @@ const elevenLabsSlice = createSlice({
     SetSelectedVoice(state, action: PayloadAction<string>) {
       state.selectedVoice = action.payload;
     },
+    ResetElevenLabsState(state) {
+      state.apiKey = "";
+      state.enabled = false;
+      state.selectedVoice = "";
+    },
   },
 });
 
-export const { SetApiKey, SetElevenLabs, SetEnabled, SetSelectedVoice } =
-  elevenLabsSlice.actions;
+export const {
+  SetApiKey,
+  SetElevenLabs,
+  SetEnabled,
+  SetSelectedVoice,
+  ResetElevenLabsState,
+} = elevenLabsSlice.actions;
 
 export default elevenLabsSlice;
