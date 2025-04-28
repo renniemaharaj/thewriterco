@@ -14,7 +14,7 @@ export type VoiceSelectProps = {
 
 const VoiceSelect = ({ useEleven, voices }: VoiceSelectProps) => {
   const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
-  const selectedVoice = elevenLabs.selectedVoice;
+  const selectedVoice = elevenLabs.selectedVoice?.trim();
 
   const dispatch = useDispatch();
   const setSelectedVoice = useCallback(
