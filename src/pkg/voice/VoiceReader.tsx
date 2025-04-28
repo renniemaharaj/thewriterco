@@ -21,35 +21,53 @@ const VoiceReader = ({
   activeVoice,
 }: VoiceReaderProps) => {
   const [stopped, setStopped] = useState(true);
+  const [paused, setPaused] = useState(false);
 
   const setStop = useCallback(() => {
     setStopped(true);
+    setPaused(false);
     activeVoice.stop();
   }, [activeVoice]);
 
   const handlePlay = useCallback(() => {
     if (!textContent || !selectedVoice) return;
 
-    activeVoice.stop(); // Important: stop any old speech first.
-
+    activeVoice.stop();
     activeVoice.speak(textContent, {
       voiceName: defaultModel
         ? (selectedVoice as ElevenVoice).voice_id
         : (selectedVoice as SpeechSynthesisVoice).name,
     });
+    setStopped(false);
+    setPaused(false);
   }, [activeVoice, textContent, selectedVoice, defaultModel]);
 
   const handleResume = useCallback(() => {
     activeVoice.resume();
+    setPaused(false);
   }, [activeVoice]);
 
   const handlePause = useCallback(() => {
     activeVoice.pause();
+    setPaused(true);
   }, [activeVoice]);
 
   useEffect(() => {
     setStopped(!activeVoice.speaking && !activeVoice.paused);
+    setPaused(activeVoice.paused);
   }, [activeVoice.speaking, activeVoice.paused]);
+
+  // Auto-restart reading if textContent changes, but only if playing (NOT paused)
+  useEffect(() => {
+    if (activeVoice.speaking && !stopped && !paused) {
+      activeVoice.stop();
+      activeVoice.speak(textContent, {
+        voiceName: defaultModel
+          ? (selectedVoice as ElevenVoice).voice_id
+          : (selectedVoice as SpeechSynthesisVoice).name,
+      });
+    }
+  }, [textContent, activeVoice, selectedVoice, defaultModel]);
 
   const voiceReaderIconClass =
     "text-gray-500 hover:animate-pulse transition-colors duration-200";
@@ -61,7 +79,7 @@ const VoiceReader = ({
           onClick={handlePlay}
           variant="soft"
           aria-label="Play"
-          className={`${voiceReaderIconClass} ${activeVoice.paused && "!hidden"}`}
+          className={`${voiceReaderIconClass} ${paused && "!hidden"}`}
           disabled={!stopped}
         >
           <AudioLines />
@@ -71,8 +89,8 @@ const VoiceReader = ({
           onClick={handleResume}
           variant="soft"
           aria-label="Resume"
-          className={`${!activeVoice.paused && "!hidden"}`}
-          disabled={!activeVoice.paused}
+          className={`${!paused && "!hidden"}`}
+          disabled={!paused}
         >
           <AudioLines />
         </IconButton>
@@ -81,8 +99,8 @@ const VoiceReader = ({
           onClick={handlePause}
           variant="soft"
           aria-label="Pause"
-          className={`${voiceReaderIconClass} ${activeVoice.paused && "!hidden"}`}
-          disabled={!activeVoice.speaking || activeVoice.paused}
+          className={`${voiceReaderIconClass} ${paused && "!hidden"}`}
+          disabled={!activeVoice.speaking || paused}
         >
           <PauseIcon />
         </IconButton>

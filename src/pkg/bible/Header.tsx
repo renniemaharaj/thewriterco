@@ -3,7 +3,7 @@ import { toggleOpenState } from "../../app/ereader/ereaderSlice";
 import Picker from "./Picker";
 import { Button, Flex, IconButton } from "@radix-ui/themes";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Voice from "./Voice";
 import { RootState } from "../../app/store";
 import ElevenLabs from "../voice/ElevenLabs";
@@ -11,12 +11,10 @@ import ElevenLabs from "../voice/ElevenLabs";
 const Header = ({
   hidePicker,
   isOpen,
-
   routeTextContent,
 }: {
   hidePicker: boolean;
   isOpen: boolean;
-
   routeTextContent: string;
 }) => {
   const eReaderState = useSelector((state: RootState) => state.ereader);
@@ -24,39 +22,44 @@ const Header = ({
   const elevenLabsActive = elevenLabs.enabled;
 
   const [useBrowser, setUseBrowser] = useState<boolean>(true);
+  const [textContent, setTextContent] = useState<string>("");
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     setUseBrowser(!elevenLabsActive);
   }, [elevenLabsActive]);
 
-  const [textContent, setTextContent] = useState<string>("");
-
-  const NarratedContent = useCallback((): string => {
+  // 🚀 Memoized version of NarratedContent — only recalculates when eReaderState.eContent changes
+  const narratedContent = useMemo(() => {
     const content = eReaderState.eContent.content;
     if (typeof content === "string") return content;
     return Object.values(content)
       .flatMap((chapter) => Object.values(chapter))
       .join(" ");
-  }, [eReaderState]);
+  }, [eReaderState.eContent]);
 
   useEffect(() => {
-    if (routeTextContent.trim() !== "") return setTextContent(routeTextContent);
-    setTextContent(NarratedContent);
-  }, [routeTextContent]);
+    if (routeTextContent.trim() !== "") {
+      setTextContent(routeTextContent);
+    } else {
+      setTextContent(narratedContent);
+    }
+  }, [routeTextContent, narratedContent]);
 
-  useEffect(() => {
-    console.log(textContent);
-  }, [textContent]);
+  const displayHeaderClassName =
+    "!gap-2 !p-2 !max-w-full overflow-auto !flex !justify-center !items-center !border-b";
+
   return (
     <Flex
-      className={`${hidePicker && !isOpen ? "!hidden" : ""} !gap-2 !p-2 !max-w-full overflow-auto !flex !justify-center !items-center !border-b`}
+      className={`${hidePicker && !isOpen ? "!hidden" : ""} ${displayHeaderClassName}`}
     >
-      {/** Bible picker */}
+      {/* Bible picker */}
       <Picker
         trigger={<Button variant="soft">{eReaderState.eContent.title}</Button>}
       />
-      {/** Toggle */}
+
+      {/* Toggle */}
       <IconButton
         onClick={() => dispatch(toggleOpenState())}
         aria-label="Toggle Ereader"
@@ -64,7 +67,8 @@ const Header = ({
       >
         {isOpen ? <BookDownIcon /> : <BookUpIcon />}
       </IconButton>
-      {/** Voice */}
+
+      {/* Voice */}
       <Voice defaultModel={useBrowser} textContent={textContent} />
       <ElevenLabs trigger={<Button variant="soft">ElevenLabs</Button>} />
     </Flex>
