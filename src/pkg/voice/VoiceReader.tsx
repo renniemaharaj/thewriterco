@@ -3,6 +3,7 @@ import { PauseIcon, StopCircle, AudioLines } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { ElevenVoice } from "../hooks/data/useElevenLabs";
 import { VoiceReaderEngine } from "../hooks/useVoiceReader";
+import useGetDefaultVoice from "../hooks/useGetDefaultVoice";
 
 export type Variant = SpeechSynthesisVoice | ElevenVoice;
 
@@ -20,27 +21,25 @@ const VoiceReader = ({
   selectedVoice,
   activeVoice,
 }: VoiceReaderProps) => {
-  const [stopped, setStopped] = useState(true);
+  const [playing, setPlaying] = useState(true);
   const [paused, setPaused] = useState(false);
 
-  const setStop = useCallback(() => {
-    setStopped(true);
-    setPaused(false);
-    activeVoice.stop();
-  }, [activeVoice]);
+  const getVoiceName = useCallback(() => {
+    return defaultModel
+      ? (selectedVoice as ElevenVoice).voice_id
+      : (selectedVoice as SpeechSynthesisVoice).name;
+  }, [defaultModel, selectedVoice]);
 
   const handlePlay = useCallback(() => {
-    if (!textContent || !selectedVoice) return;
+    if (!textContent) return;
 
     activeVoice.stop();
     activeVoice.speak(textContent, {
-      voiceName: defaultModel
-        ? (selectedVoice as ElevenVoice).voice_id
-        : (selectedVoice as SpeechSynthesisVoice).name,
+      voiceName: getVoiceName(),
     });
-    setStopped(false);
+    setPlaying(false);
     setPaused(false);
-  }, [activeVoice, textContent, selectedVoice, defaultModel]);
+  }, [activeVoice, textContent, getVoiceName]);
 
   const handleResume = useCallback(() => {
     activeVoice.resume();
@@ -52,22 +51,30 @@ const VoiceReader = ({
     setPaused(true);
   }, [activeVoice]);
 
+  const handleStop = useCallback(() => {
+    activeVoice.stop();
+    setPlaying(true);
+    setPaused(false);
+  }, [activeVoice]);
+
+  // Keep UI state synced to activeVoice (only state syncing here)
   useEffect(() => {
-    setStopped(!activeVoice.speaking && !activeVoice.paused);
+    setPlaying(!activeVoice.speaking && !activeVoice.paused);
     setPaused(activeVoice.paused);
   }, [activeVoice.speaking, activeVoice.paused]);
 
-  // Auto-restart reading if textContent changes, but only if playing (NOT paused)
+  const defaultVoice = useGetDefaultVoice().resolveVoice();
+
+  // ONLY when new textContent arrives (NOT when paused or stopped manually)
   useEffect(() => {
-    if (activeVoice.speaking && !stopped && !paused) {
-      activeVoice.stop();
-      activeVoice.speak(textContent, {
-        voiceName: defaultModel
-          ? (selectedVoice as ElevenVoice).voice_id
-          : (selectedVoice as SpeechSynthesisVoice).name,
-      });
-    }
-  }, [textContent, activeVoice, selectedVoice, defaultModel]);
+    if (!textContent.trim()) return;
+    activeVoice.stop();
+    activeVoice.speak(textContent, {
+      voiceName:
+        (defaultVoice as ElevenVoice).name ||
+        (defaultVoice as SpeechSynthesisVoice).voiceURI,
+    });
+  }, [textContent, getVoiceName]); // Only listening to textContent changes!
 
   const voiceReaderIconClass =
     "text-gray-500 hover:animate-pulse transition-colors duration-200";
@@ -80,7 +87,7 @@ const VoiceReader = ({
           variant="soft"
           aria-label="Play"
           className={`${voiceReaderIconClass} ${paused && "!hidden"}`}
-          disabled={!stopped}
+          disabled={!playing}
         >
           <AudioLines />
         </IconButton>
@@ -106,10 +113,10 @@ const VoiceReader = ({
         </IconButton>
 
         <IconButton
-          onClick={setStop}
+          onClick={handleStop}
           variant="soft"
           aria-label="Stop"
-          disabled={stopped}
+          disabled={playing}
         >
           <StopCircle />
         </IconButton>

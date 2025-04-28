@@ -73,6 +73,7 @@ const ElevenLabs = ({ trigger }: { trigger: React.ReactNode }) => {
               Enable Voice
             </Text>
             <Switch
+              disabled
               checked={enabled}
               onCheckedChange={(checked) => setEnabled(checked)}
             />

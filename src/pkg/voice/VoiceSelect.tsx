@@ -24,7 +24,7 @@ const VoiceSelect = ({
       (resolveVoice() as ElevenVoice).name ??
         (resolveVoice() as SpeechSynthesisVoice).voiceURI,
     );
-  }, [resolveVoice]);
+  }, [resolveVoice, setSelectedVoice]);
 
   return (
     <Select.Root value={selectedVoice} onValueChange={setSelectedVoice}>

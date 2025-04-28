@@ -29,4 +29,20 @@ export const mockBrowser = () => {
     resume: vi.fn(),
     speaking: false,
   } as unknown as SpeechSynthesis;
+
+  // Mock SpeechSynthesisUtterance
+  window.SpeechSynthesisUtterance = vi.fn().mockImplementation(function (
+    this: SpeechSynthesisUtterance, // Explicitly typing 'this'
+    text: string,
+  ) {
+    this.text = text;
+    this.volume = 1;
+    this.rate = 1;
+    this.pitch = 1;
+    this.lang = "en-US";
+    this.voice = null;
+    this.onstart = vi.fn();
+    this.onend = vi.fn();
+    this.onerror = vi.fn();
+  });
 };
