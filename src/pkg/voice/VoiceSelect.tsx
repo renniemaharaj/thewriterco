@@ -27,7 +27,11 @@ const VoiceSelect = ({
   }, [resolveVoice, setSelectedVoice]);
 
   return (
-    <Select.Root value={selectedVoice} onValueChange={setSelectedVoice}>
+    <Select.Root
+      disabled
+      value={selectedVoice}
+      onValueChange={setSelectedVoice}
+    >
       <Select.Trigger />
       <Select.Content>
         <Select.Group>
