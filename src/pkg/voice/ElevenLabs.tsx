@@ -90,6 +90,7 @@ const ElevenLabs = ({ trigger }: { trigger: React.ReactNode }) => {
               Enable Voice
             </Text>
             <Switch
+              disabled={!isValidKey(apiKeyInput)}
               checked={useVoiceChecked}
               onCheckedChange={(checked) => setUseVoiceChecked(checked)}
             />
