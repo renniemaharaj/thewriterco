@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { ElevenLabsState } from "../../app/elevenLabs/types";
 import { SetElevenLabs } from "../../app/elevenLabs/eleventLabsSlice";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { getInitialElevenLabsState } from "../../app/elevenLabs/utils";
 
 const ElevenLabs = ({ trigger }: { trigger: React.ReactNode }) => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const ElevenLabs = ({ trigger }: { trigger: React.ReactNode }) => {
 
   const handleSave = () => {
     const updated: ElevenLabsState = {
+      ...getInitialElevenLabsState(),
       apiKey: apiKeyInput,
       enabled,
     };
