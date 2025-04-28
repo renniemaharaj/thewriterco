@@ -1,7 +1,7 @@
 import { Flex, IconButton } from "@radix-ui/themes";
 import { PauseIcon, StopCircle, AudioLines } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { ElevenVoice, useElevenLabs } from "../hooks/data/useElevenLabs";
+import { ElevenVoice } from "../hooks/data/useElevenLabs";
 import { VoiceReaderEngine } from "../hooks/useVoiceReader";
 
 export type Variant = SpeechSynthesisVoice | ElevenVoice;
@@ -30,12 +30,14 @@ const VoiceReader = ({
   const handlePlay = useCallback(() => {
     if (!textContent || !selectedVoice) return;
 
+    activeVoice.stop(); // Important: stop any old speech first.
+
     activeVoice.speak(textContent, {
       voiceName: defaultModel
         ? (selectedVoice as ElevenVoice).voice_id
         : (selectedVoice as SpeechSynthesisVoice).name,
     });
-  }, [activeVoice, textContent, selectedVoice, useElevenLabs, defaultModel]);
+  }, [activeVoice, textContent, selectedVoice, defaultModel]);
 
   const handleResume = useCallback(() => {
     activeVoice.resume();

@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import VoiceReader from "../voice/VoiceReader";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
@@ -13,42 +13,27 @@ const Voice = ({
   defaultModel: boolean;
   textContent: string;
 }) => {
-  const content = useSelector(
-    (state: RootState) => state.ereader.eContent.content,
-  );
-
-  const NarratedContent = useCallback((): string => {
-    if (typeof content === "string") return content;
-
-    return Object.values(content)
-      .flatMap((chapter) => Object.values(chapter))
-      .join(" ");
-  }, [content]);
-
   const apiKey = useSelector((state: RootState) => state.elevenLabs.apiKey);
-  const voiceElevenLabs = useElevenLabs(apiKey) as unknown as VoiceReaderEngine;
-  const voiceBrowser = useVoiceReader();
-
-  const [selectedVoice, setSelectedVoice] = useState("");
-
-  //   const [textContentLocal, setTextContentLocal] = useState("");
-
   const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
   const elevenLabsActive = elevenLabs.enabled;
 
+  const voiceElevenLabs = useElevenLabs(apiKey) as unknown as VoiceReaderEngine;
+  const voiceBrowser = useVoiceReader();
   const resolveVoice = useGetDefaultVoice().resolveVoice;
+
+  const [selectedVoice, setSelectedVoice] = useState("");
 
   return (
     <>
-      {/** Voice Reader Component */}
+      {/* Voice Reader Component */}
       <VoiceReader
-        textContent={textContent || NarratedContent()}
+        textContent={textContent}
         defaultModel={!elevenLabsActive}
         selectedVoice={resolveVoice()}
         activeVoice={elevenLabsActive ? voiceElevenLabs : voiceBrowser}
       />
 
-      {/** */}
+      {/* Voice Selector Component */}
       <VoiceSelect
         useEleven={elevenLabsActive}
         voices={elevenLabsActive ? voiceElevenLabs.voices : voiceBrowser.voices}

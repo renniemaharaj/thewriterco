@@ -103,7 +103,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
     }
   };
 
-  const generateReadText = () => {
+  const routeCurrentVerses = () => {
     if (
       !currentChapter ||
       !currentVerse ||
@@ -114,9 +114,9 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
     const text = `${content[currentVerse]} ${shadowVerses()
       .map((v) => content[v])
       .join(" ")}`;
+
     setRouteText(text);
   };
-
   return (
     <div
       className={`blurred-div fixed bottom-0 left-0 shadow-lg overflow-auto z-20 ${
@@ -126,7 +126,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
       <Header
         hidePicker={hidePicker ?? false}
         isOpen={isOpen}
-        routeText={routeText}
+        routeTextContent={routeText}
       />
 
       {isOpen && (
@@ -242,7 +242,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
                   <ArrowBigRightDash />
                 </IconButton>
 
-                <SpeakIcon onClick={() => generateReadText()} />
+                <SpeakIcon onClick={() => routeCurrentVerses()} />
               </Flex>
             </Flex>
           )}
