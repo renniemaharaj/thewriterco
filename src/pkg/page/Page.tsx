@@ -41,9 +41,10 @@ const Page = ({
   }, [isPending, path]);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(setEBook(initialState.eContent));
-  }, []);
+  }, [path]);
 
   return (
     <>
