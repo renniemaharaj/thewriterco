@@ -13,6 +13,8 @@ const useGetDefaultVoice = () => {
   const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
   const elevenLabsActive = elevenLabs.enabled;
 
+  const selectedVoice = elevenLabs.selectedVoice;
+
   const resolveVoice = (): SpeechSynthesisVoice | ElevenVoice => {
     const voices: Variant[] = elevenLabsActive
       ? voiceElevenLabs.voices
@@ -21,11 +23,14 @@ const useGetDefaultVoice = () => {
     return (
       voices.find((voice) =>
         elevenLabsActive
-          ? DEFAULT_VOICE_ELEVEN === (voice as ElevenVoice).name
-          : DEFAULT_VOICE_BROWSER === (voice as SpeechSynthesisVoice).voiceURI,
+          ? (voice as ElevenVoice).name ===
+            (selectedVoice ?? DEFAULT_VOICE_ELEVEN)
+          : (voice as SpeechSynthesisVoice).voiceURI ===
+            (selectedVoice ?? DEFAULT_VOICE_BROWSER),
       ) || voices[0]
     );
   };
+
   return {
     resolveVoice,
   };

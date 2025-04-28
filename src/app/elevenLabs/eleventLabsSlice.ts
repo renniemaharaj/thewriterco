@@ -18,9 +18,13 @@ const elevenLabsSlice = createSlice({
     SetEnabled(state, action: PayloadAction<boolean>) {
       state.enabled = action.payload;
     },
+    SetSelectedVoice(state, action: PayloadAction<string>) {
+      state.selectedVoice = action.payload;
+    },
   },
 });
 
-export const { SetApiKey, SetElevenLabs, SetEnabled } = elevenLabsSlice.actions;
+export const { SetApiKey, SetElevenLabs, SetEnabled, SetSelectedVoice } =
+  elevenLabsSlice.actions;
 
 export default elevenLabsSlice;

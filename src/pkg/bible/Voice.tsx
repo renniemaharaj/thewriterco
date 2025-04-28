@@ -1,4 +1,3 @@
-import { useState } from "react";
 import VoiceReader from "../voice/VoiceReader";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
@@ -21,8 +20,6 @@ const Voice = ({
   const voiceBrowser = useVoiceReader();
   const resolveVoice = useGetDefaultVoice().resolveVoice;
 
-  const [selectedVoice, setSelectedVoice] = useState("");
-
   return (
     <>
       {/* Voice Reader Component */}
@@ -37,8 +34,6 @@ const Voice = ({
       <VoiceSelect
         useEleven={elevenLabsActive}
         voices={elevenLabsActive ? voiceElevenLabs.voices : voiceBrowser.voices}
-        selectedVoice={selectedVoice}
-        setSelectedVoice={setSelectedVoice}
       />
     </>
   );
