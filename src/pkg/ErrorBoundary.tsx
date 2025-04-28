@@ -1,4 +1,4 @@
-import { Flex, Button, Text, Code } from "@radix-ui/themes";
+import { Flex, Button, Text, Code, Card } from "@radix-ui/themes";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { initialState } from "../app/chat/config";
 import { RootState } from "../app/store";
@@ -18,62 +18,71 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
       direction="column"
       align="center"
       justify="center"
-      gap="4"
-      className="min-h-screen px-6"
+      className="min-h-screen px-6 bg-gray-50"
     >
-      {/* <Card className="max-w-lg p-6 shadow-lg border border-gray-200 rounded-lg"> */}
-      <Text size="6" weight="bold">
-        Something went wrong
-      </Text>
-      <Text size="2" color="gray" className="mt-2">
-        An unexpected error occurred. You can try the following actions:
-      </Text>
+      <Card className="w-full max-w-md p-8 shadow-lg rounded-2xl bg-white">
+        <Flex direction="column" align="center" gap="5">
+          <Text size="7" weight="bold" className="text-center">
+            Something went wrong
+          </Text>
+          <Text size="3" color="gray" className="text-center">
+            An unexpected error occurred. Please try one of the options below.
+          </Text>
 
-      <Code
-        variant="ghost"
-        className="p-3 mt-4 overflow-auto max-h-32 bg-gray-100 rounded-md text-red-600"
-      >
-        {error.message}
-      </Code>
+          <Code
+            variant="ghost"
+            className="w-full p-4 overflow-auto max-h-32 rounded-lg bg-gray-100 text-red-600 text-sm"
+          >
+            {error.message}
+          </Code>
 
-      <Flex gap="3" className="mt-6 !gap-4">
-        <Button
-          variant="solid"
-          color="blue"
-          className="!p-1"
-          onClick={resetErrorBoundary}
-        >
-          Retry
-        </Button>
-        <Button
-          variant="solid"
-          color="blue"
-          className="!p-1"
-          onClick={() => window.location.reload()}
-        >
-          Restart
-        </Button>
-        <Button
-          variant="outline"
-          color="gray"
-          className="!p-1"
-          onClick={() => setValue(initialState)}
-        >
-          Reset App
-        </Button>
-        <Button
-          variant="ghost"
-          color="red"
-          className="!p-1"
-          onClick={() =>
-            (window.location.href =
-              "mailto:rvesprey@gmail.com?subject=App Crash Report")
-          }
-        >
-          Report Issue
-        </Button>
-      </Flex>
-      {/* </Card> */}
+          <Flex direction="column" gap="3" className="w-full mt-4">
+            <Button
+              size="3"
+              radius="full"
+              variant="soft"
+              color="blue"
+              onClick={resetErrorBoundary}
+              className="w-full"
+            >
+              Retry
+            </Button>
+            <Button
+              size="3"
+              radius="full"
+              variant="soft"
+              color="blue"
+              onClick={() => window.location.reload()}
+              className="w-full"
+            >
+              Restart
+            </Button>
+            <Button
+              size="3"
+              radius="full"
+              variant="outline"
+              color="gray"
+              onClick={() => setValue(initialState)}
+              className="w-full"
+            >
+              Reset App
+            </Button>
+            <Button
+              size="3"
+              radius="full"
+              variant="ghost"
+              color="red"
+              onClick={() =>
+                (window.location.href =
+                  "mailto:rvesprey@gmail.com?subject=App Crash Report")
+              }
+              className="w-full"
+            >
+              Report Issue
+            </Button>
+          </Flex>
+        </Flex>
+      </Card>
     </Flex>
   );
 }
