@@ -1,7 +1,8 @@
 import { Select } from "@radix-ui/themes";
 import VoiceList from "./VoiceList";
 import { ElevenVoice } from "../hooks/data/useElevenLabs";
-import { memo } from "react";
+import { memo, useEffect } from "react";
+import useGetDefaultVoice from "../hooks/useGetDefaultVoice";
 
 export type VoiceSelectProps = {
   voices: SpeechSynthesisVoice[] | ElevenVoice[];
@@ -16,11 +17,18 @@ const VoiceSelect = ({
   useEleven,
   voices,
 }: VoiceSelectProps) => {
+  const resolveVoice = useGetDefaultVoice().resolveVoice;
+  useEffect(() => {
+    if (!resolveVoice()) return;
+    setSelectedVoice(
+      (resolveVoice() as ElevenVoice).name ??
+        (resolveVoice() as SpeechSynthesisVoice).voiceURI,
+    );
+  }, [resolveVoice]);
+
   return (
     <Select.Root value={selectedVoice} onValueChange={setSelectedVoice}>
-      <Select.Trigger
-      // children={<Button variant="soft">{selectedVoice}</Button>}
-      />
+      <Select.Trigger />
       <Select.Content>
         <Select.Group>
           <Select.Label>

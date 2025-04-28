@@ -7,7 +7,7 @@ import { EBook } from "../../app/ereader/types";
 import Block from "../page/Block";
 import { setOpenState } from "../../app/ereader/ereaderSlice";
 import BookFragment from "./Book";
-import { bibleDivisions } from "./bibleDivisions";
+import { bibleDivisions } from "./config";
 import { SwordProps } from "./types";
 import Search from "./Search";
 

@@ -1,3 +1,6 @@
+export const DEFAULT_VOICE_BROWSER = "Microsoft Mark - English (United States)";
+export const DEFAULT_VOICE_ELEVEN = "Lily";
+
 // Canonical Gospels
 export const canonicalGospels: string[] = ["Matthew", "Mark", "Luke", "John"];
 
@@ -103,3 +106,15 @@ export const bibleNames: string[] = [
   ...wisdomBooks,
   ...propheticBooks,
 ];
+
+export const bibleDivisions: { [key: string]: string[] } = {
+  "Canonical Gospels": canonicalGospels,
+  "Acts of the Apostles": actsOfApostles,
+  "Epistles of Paul": epistlesOfPaul,
+  "General Epistles": generalEpistles,
+  "Book of Revelation": bookOfRevelation,
+  "The Pentateuch": pentateuch,
+  "Historical Books": historicalBooks,
+  "Wisdom Books": wisdomBooks,
+  "Prophetic Books": propheticBooks,
+};

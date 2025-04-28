@@ -6,7 +6,7 @@ import {
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
 } from "../../app/ereader/ereaderSlice";
-import Renderer from "./Renderer";
+import Header from "./Header";
 import { ArrowBigLeft, ArrowBigRight, ArrowBigRightDash } from "lucide-react";
 import { getChapterVerses } from "./utils/reader";
 import SpeakIcon from "./SpeakIcon";
@@ -19,10 +19,6 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
   const { isOpen, currentChapter, currentVerse, eContent, readerStyle } =
     eReaderState;
 
-  const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
-
-  const elevenLabsPowered = elevenLabs.enabled && elevenLabs.apiKey !== "";
-
   const content = eContent.content;
 
   const chapterVerses = getChapterVerses({
@@ -34,7 +30,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
   const [parsedContent] = useState(eContent.content);
   const initialContentLoaded = useRef(false);
   const [shadowOffset, setShadowOffset] = useState(0);
-  const [readTextOverride, setReadTextOverride] = useState("");
+  const [routeText, setRouteText] = useState("");
 
   useEffect(() => {
     setRenderState(readerStyle);
@@ -118,7 +114,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
     const text = `${content[currentVerse]} ${shadowVerses()
       .map((v) => content[v])
       .join(" ")}`;
-    setReadTextOverride(text);
+    setRouteText(text);
   };
 
   return (
@@ -127,13 +123,10 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
         isOpen ? "h-full w-full" : "w-auto left-[50%] translate-x-[-50%]"
       }`}
     >
-      <Renderer
+      <Header
         hidePicker={hidePicker ?? false}
         isOpen={isOpen}
-        title={eContent.title}
-        override={readTextOverride}
-        elevenLabsPowered={elevenLabsPowered}
-        setOverride={(override: string) => setReadTextOverride(override)}
+        routeText={routeText}
       />
 
       {isOpen && (

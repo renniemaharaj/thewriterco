@@ -1,6 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 
-export function useVoiceReader() {
+export type VoiceReaderEngine = {
+  speak: (
+    text: string,
+    options?: { rate?: number; pitch?: number; voiceName?: string },
+  ) => void;
+  pause: () => void;
+  resume: () => void;
+  stop: () => void;
+  speaking: boolean;
+  paused: boolean;
+  voices: SpeechSynthesisVoice[];
+};
+
+export function useVoiceReader(): VoiceReaderEngine {
   const [speaking, setSpeaking] = useState(false);
   const [paused, setPaused] = useState(false);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
