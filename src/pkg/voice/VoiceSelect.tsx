@@ -9,33 +9,34 @@ import { SetSelectedVoice } from "../../app/elevenLabs/eleventLabsSlice";
 
 export type VoiceSelectProps = {
   voices: SpeechSynthesisVoice[] | ElevenVoice[];
-  useEleven: boolean;
 };
 
-const VoiceSelect = ({ useEleven, voices }: VoiceSelectProps) => {
+const VoiceSelect = ({ voices }: VoiceSelectProps) => {
   const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
-  const selectedVoice = elevenLabs.selectedVoice?.trim();
+  // const selectedVoice = elevenLabs.selectedVoice?.trim();
+  const useEleven = elevenLabs.enabled;
 
   const dispatch = useDispatch();
   const setSelectedVoice = useCallback(
     (value: string) => dispatch(SetSelectedVoice(value)),
     [dispatch],
   );
+  // const setSelectedVoice = (value: string) => dispatch(SetSelectedVoice(value));
 
   const resolveVoice = useGetDefaultVoice().resolveVoice;
 
   useEffect(() => {
-    if (selectedVoice) return;
+    if (elevenLabs.selectedVoice) return;
     if (!resolveVoice()) return;
     setSelectedVoice(
       (resolveVoice() as ElevenVoice).name ??
         (resolveVoice() as SpeechSynthesisVoice).voiceURI,
     );
-  }, [selectedVoice, setSelectedVoice, resolveVoice]);
+  }, [elevenLabs, setSelectedVoice, resolveVoice]);
 
   return (
     <Select.Root
-      value={selectedVoice}
+      value={elevenLabs.selectedVoice}
       onValueChange={(value) => setSelectedVoice(value)}
     >
       <Select.Trigger />

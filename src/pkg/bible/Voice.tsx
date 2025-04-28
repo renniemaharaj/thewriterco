@@ -32,7 +32,6 @@ const Voice = ({
 
       {/* Voice Selector Component */}
       <VoiceSelect
-        useEleven={elevenLabsActive}
         voices={elevenLabsActive ? voiceElevenLabs.voices : voiceBrowser.voices}
       />
     </>

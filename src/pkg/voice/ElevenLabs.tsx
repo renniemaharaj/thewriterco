@@ -11,7 +11,10 @@ import { RootState } from "../../app/store";
 import { useEffect, useState } from "react";
 
 import { ElevenLabsState } from "../../app/elevenLabs/types";
-import { SetElevenLabs } from "../../app/elevenLabs/eleventLabsSlice";
+import {
+  SetElevenLabs,
+  SetEnabled,
+} from "../../app/elevenLabs/eleventLabsSlice";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { getInitialElevenLabsState } from "../../app/elevenLabs/utils";
 
@@ -24,11 +27,13 @@ const ElevenLabs = ({ trigger }: { trigger: React.ReactNode }) => {
   );
 
   const [apiKeyInput, setApiKeyInput] = useState(globalSettings.apiKey);
-  const [enabled, setEnabled] = useState(globalSettings.enabled);
+  const [useVoiceChecked, setUseVoiceChecked] = useState(
+    globalSettings.enabled,
+  );
 
   useEffect(() => {
     setApiKeyInput(globalSettings.apiKey);
-    setEnabled(globalSettings.enabled);
+    setUseVoiceChecked(globalSettings.enabled);
   }, [globalSettings]);
 
   const isValidKey = (key: string) => key.trim().length > 0;
@@ -37,7 +42,7 @@ const ElevenLabs = ({ trigger }: { trigger: React.ReactNode }) => {
     const updated: ElevenLabsState = {
       ...getInitialElevenLabsState(),
       apiKey: apiKeyInput,
-      enabled,
+      enabled: useVoiceChecked,
     };
     dispatch(SetElevenLabs(updated));
     setLocalStorageValue(updated);
@@ -45,8 +50,12 @@ const ElevenLabs = ({ trigger }: { trigger: React.ReactNode }) => {
 
   const handleCancel = () => {
     setApiKeyInput(globalSettings.apiKey);
-    setEnabled(globalSettings.enabled);
+    setUseVoiceChecked(globalSettings.enabled);
   };
+
+  useEffect(() => {
+    dispatch(SetEnabled(useVoiceChecked));
+  }, [useVoiceChecked]);
 
   return (
     <Dialog.Root>
@@ -67,7 +76,13 @@ const ElevenLabs = ({ trigger }: { trigger: React.ReactNode }) => {
               value={apiKeyInput}
               onChange={(e) => setApiKeyInput(e.target.value)}
               placeholder="Enter your ElevenLabs API Key"
+              color={isValidKey(apiKeyInput) ? undefined : "red"}
             />
+            {!isValidKey(apiKeyInput) && (
+              <Text size="1" color="red" mt="1">
+                API key cannot be empty.
+              </Text>
+            )}
           </label>
 
           <label>
@@ -75,9 +90,8 @@ const ElevenLabs = ({ trigger }: { trigger: React.ReactNode }) => {
               Enable Voice
             </Text>
             <Switch
-              disabled
-              checked={enabled}
-              onCheckedChange={(checked) => setEnabled(checked)}
+              checked={useVoiceChecked}
+              onCheckedChange={(checked) => setUseVoiceChecked(checked)}
             />
           </label>
         </Flex>
