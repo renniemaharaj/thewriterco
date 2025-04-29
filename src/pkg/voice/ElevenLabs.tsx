@@ -55,7 +55,7 @@ const ElevenLabs = ({ trigger }: { trigger: React.ReactNode }) => {
 
   useEffect(() => {
     dispatch(SetEnabled(useVoiceChecked));
-  }, [useVoiceChecked]);
+  }, [useVoiceChecked, dispatch]);
 
   return (
     <Dialog.Root>

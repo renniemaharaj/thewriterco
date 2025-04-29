@@ -4,7 +4,7 @@ import VoiceReader from "../voice/VoiceReader";
 import VoiceSelect from "../voice/VoiceSelect";
 import { useElevenLabs } from "../hooks/data/useElevenLabs";
 import { useVoiceReader, VoiceReaderEngine } from "../hooks/useVoiceReader";
-import useGetDefaultVoice from "../hooks/useGetDefaultVoice";
+import useResolveFallbackVoice from "../hooks/useResolveFallbackVoice";
 import { RootState } from "../../app/store";
 import { RegisterRecoveryFunction } from "../../app/errorBoundary/errorBoundarySlice";
 import { RecoveryFunction } from "../../app/errorBoundary/types";
@@ -13,7 +13,7 @@ const Voice = ({
   textContent,
 }: {
   defaultModel: boolean;
-  textContent: string;
+  textContent: string[];
 }) => {
   const dispatch = useDispatch();
 
@@ -23,7 +23,7 @@ const Voice = ({
 
   const voiceElevenLabs = useElevenLabs(apiKey) as unknown as VoiceReaderEngine;
   const voiceBrowser = useVoiceReader();
-  const resolveVoice = useGetDefaultVoice().resolveVoice;
+  const voiceResolved = useResolveFallbackVoice().resolveOrFallback();
 
   void useEffect(() => {
     const voiceRecoveryFunction: RecoveryFunction = {
@@ -41,8 +41,8 @@ const Voice = ({
       <VoiceReader
         textContent={textContent}
         defaultModel={!elevenLabsActive}
-        selectedVoice={resolveVoice()}
-        activeVoice={elevenLabsActive ? voiceElevenLabs : voiceBrowser}
+        selectedVoice={voiceResolved}
+        voiceReaderEngine={elevenLabsActive ? voiceElevenLabs : voiceBrowser}
       />
       <VoiceSelect
         voices={elevenLabsActive ? voiceElevenLabs.voices : voiceBrowser.voices}

@@ -22,31 +22,32 @@ const Header = ({
   const elevenLabsActive = elevenLabs.enabled;
 
   const [useBrowser, setUseBrowser] = useState<boolean>(true);
-  const [textContent, setTextContent] = useState<string>("");
-
   const dispatch = useDispatch();
+
+  const narratedContent = useMemo((): string[] => {
+    const content = eReaderState.eContent.content;
+    if (typeof content === "string") return [content];
+
+    return Object.values(content).reduce((acc: string[], chapter) => {
+      return acc.concat(Object.values(chapter));
+    }, []);
+  }, [eReaderState.eContent]);
+
+  // 🚀 Memoized final textContent
+  const textContent = useMemo(() => {
+    if (routeTextContent.trim() !== "") {
+      return [routeTextContent];
+    }
+    return narratedContent;
+  }, [routeTextContent, narratedContent]);
 
   useEffect(() => {
     setUseBrowser(!elevenLabsActive);
   }, [elevenLabsActive]);
 
-  // 🚀 Memoized version of NarratedContent — only recalculates when eReaderState.eContent changes
-  const narratedContent = useMemo(() => {
-    const content = eReaderState.eContent.content;
-    if (typeof content === "string") return content;
-    return Object.values(content)
-      .flatMap((chapter) => Object.values(chapter))
-      .join(" ");
-  }, [eReaderState.eContent]);
-
   useEffect(() => {
-    if (routeTextContent.trim() !== "") {
-      setTextContent(routeTextContent);
-    } else {
-      setTextContent(narratedContent);
-    }
-  }, [routeTextContent, narratedContent]);
-
+    console.log(narratedContent);
+  }, [narratedContent]);
   const displayHeaderClassName =
     "!gap-2 !p-2 !max-w-full overflow-auto !flex !justify-center !items-center !border-b";
 
@@ -54,12 +55,10 @@ const Header = ({
     <Flex
       className={`${hidePicker && !isOpen ? "!hidden" : ""} ${displayHeaderClassName}`}
     >
-      {/* Bible picker */}
       <Picker
         trigger={<Button variant="soft">{eReaderState.eContent.title}</Button>}
       />
 
-      {/* Toggle */}
       <IconButton
         onClick={() => dispatch(toggleOpenState())}
         aria-label="Toggle Ereader"
@@ -68,8 +67,9 @@ const Header = ({
         {isOpen ? <BookDownIcon /> : <BookUpIcon />}
       </IconButton>
 
-      {/* Voice */}
+      {/* 🚀 Pass the whole array at once */}
       <Voice defaultModel={useBrowser} textContent={textContent} />
+
       <ElevenLabs trigger={<Button variant="soft">ElevenLabs</Button>} />
     </Flex>
   );

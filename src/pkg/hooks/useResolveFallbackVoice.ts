@@ -5,7 +5,7 @@ import { Variant } from "../voice/VoiceReader";
 import { useVoiceReader, VoiceReaderEngine } from "./useVoiceReader";
 import { DEFAULT_VOICE_BROWSER, DEFAULT_VOICE_ELEVEN } from "../bible/config";
 
-const useGetDefaultVoice = () => {
+const useResolveFallbackVoice = () => {
   const apiKey = useSelector((state: RootState) => state.elevenLabs.apiKey);
   const voiceElevenLabs = useElevenLabs(apiKey) as unknown as VoiceReaderEngine;
   const voiceBrowser = useVoiceReader();
@@ -15,7 +15,7 @@ const useGetDefaultVoice = () => {
 
   const selectedVoice = elevenLabs.selectedVoice;
 
-  const resolveVoice = (): SpeechSynthesisVoice | ElevenVoice => {
+  const resolveOrFallback = (): SpeechSynthesisVoice | ElevenVoice => {
     const voices: Variant[] = elevenLabsActive
       ? voiceElevenLabs.voices
       : voiceBrowser.voices;
@@ -32,8 +32,8 @@ const useGetDefaultVoice = () => {
   };
 
   return {
-    resolveVoice,
+    resolveOrFallback,
   };
 };
 
-export default useGetDefaultVoice;
+export default useResolveFallbackVoice;
