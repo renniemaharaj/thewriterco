@@ -45,9 +45,6 @@ const Header = ({
     setUseBrowser(!elevenLabsActive);
   }, [elevenLabsActive]);
 
-  useEffect(() => {
-    console.log(narratedContent);
-  }, [narratedContent]);
   const displayHeaderClassName =
     "!gap-2 !p-2 !max-w-full overflow-auto !flex !justify-center !items-center !border-b";
 

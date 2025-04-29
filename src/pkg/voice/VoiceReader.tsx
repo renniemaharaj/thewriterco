@@ -3,6 +3,7 @@ import { PauseIcon, StopCircle, AudioLines } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ElevenVoice } from "../hooks/data/useElevenLabs";
 import { VoiceReaderEngine } from "../hooks/useVoiceReader";
+import { useContentReducers } from "../hooks/useContentReducers";
 
 export type Variant = SpeechSynthesisVoice | ElevenVoice;
 
@@ -22,6 +23,8 @@ const VoiceReader = ({
   const [playing, setPlaying] = useState(false);
   const [paused, setPaused] = useState(false);
 
+  const { navigateVerse } = useContentReducers();
+
   const speakCurrent = useCallback(
     (index: number) => {
       const chunk = textContent[index];
@@ -36,7 +39,7 @@ const VoiceReader = ({
       setPaused(false);
     },
     [textContent, selectedVoice],
-  ); // ✅ Only real dependencies
+  ); // Only real dependencies
 
   const handlePlay = () => {
     currentIndexRef.current = 0;
@@ -70,13 +73,12 @@ const VoiceReader = ({
       if (currentIndexRef.current < textContent.length) {
         speakCurrent(currentIndexRef.current);
         currentIndexRef.current += 1; // Move to next AFTER speaking
+        if (currentIndexRef.current > 1) navigateVerse("next");
       } else {
         setPlaying(false); // Reached end
       }
     }
   }, [playing, voiceReaderEngine.speaking, voiceReaderEngine.paused]);
-
-  useEffect(() => {}, [voiceReaderEngine]);
 
   // Reset on textContent change
   useEffect(() => {
@@ -92,7 +94,7 @@ const VoiceReader = ({
       handleStop();
       handlePlay();
     }
-  }, [selectedVoice]); // ✅ Only selectedVoice
+  }, [selectedVoice]); // Only selectedVoice
 
   const voiceReaderIconClass =
     "text-gray-500 hover:animate-pulse transition-colors duration-200";

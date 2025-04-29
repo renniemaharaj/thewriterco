@@ -1,122 +1,138 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { Flex, IconButton, Select } from "@radix-ui/themes";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import {
-  setGlobalCurrentChapter,
-  setGlobalCurrentVerse,
-} from "../../app/ereader/ereaderSlice";
 import Header from "./Header";
 import { ArrowBigLeft, ArrowBigRight, ArrowBigRightDash } from "lucide-react";
 import { getChapterVerses } from "./utils/reader";
 import SpeakIcon from "./SpeakIcon";
-
-const SHADOW_COUNT = 4;
+import { SHADOW_COUNT } from "./config";
+import { useContentReducers } from "../hooks/useContentReducers";
 
 const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
-  const dispatch = useDispatch();
   const eReaderState = useSelector((state: RootState) => state.ereader);
   const { isOpen, currentChapter, currentVerse, eContent, readerStyle } =
     eReaderState;
-
   const content = eContent.content;
 
-  const chapterVerses = getChapterVerses({
-    currentChapter,
-    eContent: content,
-  });
+  const {
+    getTextContent,
+    getCurrentSlice,
+    slideCurrentVerses,
+    handleChapterChange,
+    handleVerseChange,
+    navigateVerse,
+  } = useContentReducers();
 
-  const [readerState, setRenderState] = useState<"rich" | "bible">(readerStyle);
-  const [parsedContent] = useState(eContent.content);
+  const chapterVerses = useMemo(
+    () => getChapterVerses({ currentChapter, eContent: content }),
+    [currentChapter, content],
+  );
+  const [readerState, setReaderState] = useState<"rich" | "bible">(readerStyle);
+  const [parsedContent] = useState(content);
   const initialContentLoaded = useRef(false);
-  const [shadowOffset, setShadowOffset] = useState(0);
   const [routeText, setRouteText] = useState("");
 
   useEffect(() => {
-    setRenderState(readerStyle);
+    setReaderState(readerStyle);
     setTimeout(() => (initialContentLoaded.current = true), 1000);
   }, [readerStyle]);
 
-  useEffect(() => {
-    setShadowOffset(0);
-  }, [currentChapter, currentVerse]);
+  const routeCurrentVerses = () => setRouteText(getTextContent());
 
-  const handleChapterChange = (chapter: string) => {
-    dispatch(setGlobalCurrentChapter(chapter));
-    dispatch(setGlobalCurrentVerse("1"));
-  };
+  const renderChapterPicker = () => (
+    <Select.Root
+      value={currentChapter || ""}
+      onValueChange={handleChapterChange}
+    >
+      <Select.Trigger>Chapter {currentChapter}</Select.Trigger>
+      <Select.Content>
+        {Object.keys(content).map((chapter) => (
+          <Select.Item key={"chapter-" + chapter} value={chapter}>
+            {chapter}
+          </Select.Item>
+        ))}
+      </Select.Content>
+    </Select.Root>
+  );
 
-  const handleVerseChange = (verse: string) => {
-    dispatch(setGlobalCurrentVerse(verse));
-  };
+  const renderVersePicker = () => (
+    <Select.Root value={currentVerse || ""} onValueChange={handleVerseChange}>
+      <Select.Trigger>Verse {currentVerse}</Select.Trigger>
+      <Select.Content>
+        {chapterVerses.map((verse) => (
+          <Select.Item key={"verse-" + verse} value={verse}>
+            {verse}
+          </Select.Item>
+        ))}
+      </Select.Content>
+    </Select.Root>
+  );
 
-  const navigateVerse = (direction: "prev" | "next") => {
-    const chapterVerses = getChapterVerses({
-      currentChapter,
-      eContent: content,
-    });
-    const currentIndex = chapterVerses.indexOf(currentVerse);
-    const newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
-
-    if (newIndex < 0 && direction === "prev") {
-      const prevChapter = Object.keys(eContent.content)[
-        Object.keys(eContent.content).indexOf(currentChapter) - 1
-      ];
-      if (prevChapter && typeof eContent.content !== "string") {
-        handleChapterChange(prevChapter);
-        const lastVerse = Object.keys(eContent.content[prevChapter]).slice(
-          -1,
-        )[0];
-        handleVerseChange(lastVerse);
-      }
-    } else if (newIndex >= chapterVerses.length && direction === "next") {
-      const nextChapter = Object.keys(eContent.content)[
-        Object.keys(eContent.content).indexOf(currentChapter) + 1
-      ];
-      if (nextChapter) handleChapterChange(nextChapter);
-    } else {
-      handleVerseChange(chapterVerses[newIndex]);
+  const renderContent = () => {
+    if (readerState === "rich" && typeof parsedContent === "string") {
+      return (
+        <pre
+          className="whitespace-pre-line"
+          dangerouslySetInnerHTML={{ __html: parsedContent }}
+        />
+      );
     }
-  };
-
-  const shadowVerses = () => {
-    const currentIndex = chapterVerses.indexOf(currentVerse);
-    return chapterVerses.slice(
-      currentIndex + 1 + shadowOffset,
-      currentIndex + 1 + shadowOffset + SHADOW_COUNT,
+    return (
+      <div>
+        <h3 className="text-lg font-bold">
+          Chapter {currentChapter}, Verse {currentVerse}
+        </h3>
+        <p>
+          {typeof content !== "string" &&
+            content[currentChapter]?.[currentVerse]}
+        </p>
+      </div>
     );
   };
 
-  const adjustShadowOffset = (direction: "next") => {
-    const currentIndex = chapterVerses.indexOf(currentVerse);
-    const totalVersesAfter = chapterVerses.length - (currentIndex + 1);
-    const maxOffset = Math.max(0, totalVersesAfter - SHADOW_COUNT);
-
-    if (
-      direction === "next" &&
-      shadowOffset + SHADOW_COUNT < totalVersesAfter
-    ) {
-      const newOffset = Math.min(shadowOffset + SHADOW_COUNT, maxOffset);
-      setShadowOffset(newOffset);
-      const newVerse = chapterVerses[currentIndex + 1 + newOffset];
-      if (newVerse) dispatch(setGlobalCurrentVerse(newVerse));
-    }
+  const renderShadowSlice = () => {
+    const currentSlice = getCurrentSlice();
+    return (
+      currentSlice.length > 0 && (
+        <Flex
+          justify="center"
+          align="center"
+          className="!flex-col text-sm mt-4 gap-4 p-2 rounded-md"
+        >
+          <div className="blurred-div max-w-[700px] text-center p-4 shadow-lg rounded-md">
+            <p>
+              {currentSlice.map((verse, index) => (
+                <span
+                  key={"bible-verse-" + index}
+                  className={`${index == 0 && "font-bold"}`}
+                >
+                  {" "}
+                  ({currentChapter}:{verse}){" "}
+                  {typeof content !== "string" &&
+                    content[currentChapter]?.[verse]}
+                </span>
+              ))}
+            </p>
+          </div>
+          <Flex justify="center" align="center" className="gap-2">
+            <IconButton
+              variant="soft"
+              disabled={
+                parseInt(currentVerse) + SHADOW_COUNT >=
+                chapterVerses.length - chapterVerses.indexOf(currentVerse) - 1
+              }
+              onClick={() => slideCurrentVerses()}
+            >
+              <ArrowBigRightDash />
+            </IconButton>
+            <SpeakIcon onClick={routeCurrentVerses} />
+          </Flex>
+        </Flex>
+      )
+    );
   };
 
-  const routeCurrentVerses = () => {
-    if (
-      !currentChapter ||
-      !currentVerse ||
-      typeof eContent.content === "string"
-    )
-      return;
-    const content = eContent.content[currentChapter];
-    const text = `${content[currentVerse]} ${shadowVerses()
-      .map((v) => content[v])
-      .join(" ")}`;
-
-    setRouteText(text);
-  };
   return (
     <div
       className={`blurred-div fixed bottom-0 left-0 shadow-lg overflow-auto z-20 ${
@@ -128,7 +144,6 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
         isOpen={isOpen}
         routeTextContent={routeText}
       />
-
       {isOpen && (
         <div className="!flex-col p-4 space-y-4">
           {eContent.description && (
@@ -143,33 +158,8 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
 
           {readerState === "bible" && (
             <Flex className="!gap-4 justify-center">
-              <Select.Root
-                value={currentChapter || ""}
-                onValueChange={handleChapterChange}
-              >
-                <Select.Trigger>Chapter {currentChapter}</Select.Trigger>
-                <Select.Content>
-                  {Object.keys(eContent.content).map((chapter) => (
-                    <Select.Item key={"chapter-" + chapter} value={chapter}>
-                      {chapter}
-                    </Select.Item>
-                  ))}
-                </Select.Content>
-              </Select.Root>
-
-              <Select.Root
-                value={currentVerse || ""}
-                onValueChange={handleVerseChange}
-              >
-                <Select.Trigger>Verse {currentVerse}</Select.Trigger>
-                <Select.Content>
-                  {chapterVerses.map((verse) => (
-                    <Select.Item key={"verse-" + verse} value={verse}>
-                      {verse}
-                    </Select.Item>
-                  ))}
-                </Select.Content>
-              </Select.Root>
+              {renderChapterPicker()}
+              {renderVersePicker()}
             </Flex>
           )}
 
@@ -177,75 +167,18 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
             <IconButton onClick={() => navigateVerse("prev")} variant="soft">
               <ArrowBigLeft />
             </IconButton>
-
             <div
               className="max-w-[700px] text-center p-4 shadow-lg !bg-transparent"
               style={{ flex: 1 }}
             >
-              {readerState === "rich" && typeof parsedContent === "string" ? (
-                <pre
-                  className="whitespace-pre-line"
-                  dangerouslySetInnerHTML={{ __html: parsedContent }}
-                />
-              ) : (
-                <div>
-                  <h3 className="text-lg font-bold">
-                    Chapter {currentChapter}, Verse {currentVerse}
-                  </h3>
-                  <p>
-                    {typeof eContent.content !== "string" &&
-                      eContent.content[currentChapter]?.[currentVerse]}
-                  </p>
-                </div>
-              )}
+              {renderContent()}
             </div>
-
             <IconButton onClick={() => navigateVerse("next")} variant="soft">
               <ArrowBigRight />
             </IconButton>
           </Flex>
 
-          {shadowVerses().length > 0 && (
-            <Flex
-              justify="center"
-              align="center"
-              className="!flex-col text-sm mt-4 gap-4 p-2 rounded-md"
-            >
-              <div className="blurred-div max-w-[700px] text-center p-4 shadow-lg rounded-md">
-                <p>
-                  <span className="font-bold">
-                    ({currentChapter}:{currentVerse}){" "}
-                    {typeof eContent.content !== "string" &&
-                      eContent.content[currentChapter]?.[currentVerse]}
-                  </span>
-                  {shadowVerses().map(
-                    (verse) =>
-                      ` (${currentChapter}:${verse}) ${
-                        typeof eContent.content !== "string" &&
-                        eContent.content[currentChapter]?.[verse]
-                      }`,
-                  )}
-                </p>
-              </div>
-
-              <Flex justify="center" align="center" className="gap-2">
-                <IconButton
-                  variant="soft"
-                  disabled={
-                    shadowOffset + SHADOW_COUNT >=
-                    chapterVerses.length -
-                      chapterVerses.indexOf(currentVerse) -
-                      1
-                  }
-                  onClick={() => adjustShadowOffset("next")}
-                >
-                  <ArrowBigRightDash />
-                </IconButton>
-
-                <SpeakIcon onClick={() => routeCurrentVerses()} />
-              </Flex>
-            </Flex>
-          )}
+          {renderShadowSlice()}
         </div>
       )}
     </div>
