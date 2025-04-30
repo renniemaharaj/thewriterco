@@ -6,6 +6,7 @@ import { ResetElevenLabsState } from "../../app/elevenLabs/eleventLabsSlice";
 import { useEffect } from "react";
 import { recoveryFunctionMap } from "./config";
 import { RecoveryCard } from "./RecoveryCard";
+import RecoveryButton from "./RecoveryButton";
 
 interface ErrorFallbackProps {
   error: Error;
@@ -40,6 +41,9 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
     }
   };
 
+  const sharedActionClass =
+    "error-action !w-full !max-w-[300px] !h-12 !p-4 text-sm rounded-md flex items-center";
+
   return (
     <Flex
       direction="column"
@@ -58,13 +62,12 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
 
             {/* Main Title */}
             <Text size="8" weight="bold" className="text-center">
-              Application Crash Recovery
+              Application Crashed
             </Text>
 
             {/* Subtext */}
             <Text size="4" color="gray" className="text-center max-w-md">
-              Something went wrong, but don't worry — the app recovered. Choose
-              a recovery option below.
+              Something went wrong, but don't worry — let's recover your state
             </Text>
           </Flex>
 
@@ -74,28 +77,33 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
             <Code
               variant="solid"
               color="red"
-              className="!w-full !p-4 !overflow-auto !max-h-40 rounded-md bg-red-100 text-red-800"
+              className={sharedActionClass}
+              // className="!w-full !p-4 !overflow-auto !max-h-40 rounded-md bg-red-100 text-red-800"
             >
               {error.message}
             </Code>
 
             <Flex className="flex-row !justify-start !flex-wrap !gap-2">
-              <Button
-                variant="solid"
-                color="blue"
-                onClick={resetErrorBoundary}
-                className="!max-w-[300px] !p-2"
-                aria-label="Retry after error"
-              >
-                <RotateCcw className="w-5 h-5 mr-2" />
-                Retry
-              </Button>
+              <RecoveryButton
+                onClick={async () => {
+                  resetErrorBoundary();
+                  // simulate recovery logic
+                  await new Promise((res) => setTimeout(res, 1500));
+                  return true; // or "error" based on logic
+                }}
+                textContent={
+                  <>
+                    <RotateCcw className="w-5 h-5 mr-2 flip" />
+                    "Retry"
+                  </>
+                }
+              />
 
               <Button
                 variant="solid"
                 color="blue"
                 onClick={() => window.location.reload()}
-                className="!max-w-[300px] !p-2"
+                className={`${sharedActionClass} !max-w-[300px]`}
                 aria-label="Restart application"
               >
                 <RefreshCw className="w-5 h-5 mr-2" />
@@ -125,7 +133,7 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
             <>
               <Separator size="4" className="my-6 w-full" />
               <Text size="5" weight="bold" className="text-center">
-                Recovery Options
+                Registered Functions
               </Text>
 
               <Flex

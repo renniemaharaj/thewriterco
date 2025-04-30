@@ -54,6 +54,7 @@ export function RecoveryCard({
             </div>
           </dl>
         )}
+
         {recovery.componentRoute && (
           <dl className="flex flex-col gap-1">
             <div className="flex justify-between">
