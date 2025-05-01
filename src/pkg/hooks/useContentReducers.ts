@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useEffect } from "react";
 import { getChapterVerses } from "../bible/utils/reader";
 import { SHADOW_COUNT } from "../bible/config";
 import {
@@ -15,24 +15,55 @@ export const useContentReducers = () => {
   );
   const content = eContent.content;
 
+  const contentTitle = eContent.title;
+
   const chapterVerses = useMemo(() => {
     return getChapterVerses({ currentChapter, eContent: content });
   }, [currentChapter, content]);
+
+  useEffect(() => {
+    const isContentObject = typeof content === "object" && content !== null;
+
+    if (!isContentObject) return;
+
+    const chapterKeys = Object.keys(content);
+    const isChapterValid = chapterKeys.includes(currentChapter);
+
+    if (!isChapterValid) {
+      dispatch(setGlobalCurrentChapter("1"));
+      dispatch(setGlobalCurrentVerse("1"));
+      return;
+    }
+
+    const currentChapterContent = content[currentChapter];
+    const isVerseValid =
+      typeof currentChapterContent === "object" &&
+      currentChapterContent !== null &&
+      Object.keys(currentChapterContent).includes(currentVerse);
+
+    if (!isVerseValid) {
+      dispatch(setGlobalCurrentVerse("1"));
+    }
+  }, [content, currentChapter, currentVerse, contentTitle, dispatch]);
+
+  const narrate = useCallback((): string[] => {
+    const content = eContent.content;
+    if (typeof content === "string") return [content];
+
+    const chapter = content[currentChapter];
+    if (!chapter) return [];
+
+    const verseKeys = Object.keys(chapter);
+    const startIndex = verseKeys.indexOf(currentVerse);
+
+    return verseKeys.slice(startIndex).map((verseKey) => chapter[verseKey]);
+  }, [eContent, currentChapter, currentVerse]);
 
   const getCurrentSlice = useCallback(() => {
     const startIndex = chapterVerses.indexOf(currentVerse);
     const endIndex = startIndex + SHADOW_COUNT + 1;
     return chapterVerses.slice(startIndex, endIndex);
   }, [chapterVerses, currentVerse]);
-
-  const getTextContent = useCallback((): string => {
-    if (!currentChapter || typeof content === "string") return "";
-    const chapter = content[currentChapter];
-    return getCurrentSlice()
-      .map((verse) => chapter?.[verse])
-      .filter(Boolean)
-      .join(" ");
-  }, [currentChapter, content, getCurrentSlice]);
 
   const slideCurrentVerses = useCallback(() => {
     const currentIndex = chapterVerses.indexOf(currentVerse);
@@ -98,8 +129,10 @@ export const useContentReducers = () => {
   );
 
   return {
+    currentChapter,
+    currentVerse,
+    narrate,
     getCurrentSlice,
-    getTextContent,
     slideCurrentVerses,
     navigateVerse,
     handleChapterChange,

@@ -3,7 +3,6 @@ import { PauseIcon, StopCircle, AudioLines } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ElevenVoice } from "../hooks/data/useElevenLabs";
 import { VoiceReaderEngine } from "../hooks/useVoiceReader";
-import { useContentReducers } from "../hooks/useContentReducers";
 
 export type Variant = SpeechSynthesisVoice | ElevenVoice;
 
@@ -12,34 +11,57 @@ export type VoiceReaderProps = {
   defaultModel: boolean;
   selectedVoice: Variant;
   voiceReaderEngine: VoiceReaderEngine;
+  onSpeechProgress: (i: number) => void;
 };
 
 const VoiceReader = ({
   textContent,
   selectedVoice,
   voiceReaderEngine,
+  onSpeechProgress,
 }: VoiceReaderProps) => {
-  const currentIndexRef = useRef(0);
+  const currentIndexRef = useRef(-1);
+  const [localTextContent, setLocalTextContent] = useState<string[]>([]);
   const [playing, setPlaying] = useState(false);
   const [paused, setPaused] = useState(false);
 
-  const { navigateVerse } = useContentReducers();
+  // Deep compare and update local text content if changed
+  useEffect(() => {
+    const isEffectivelyEmpty = (arr: string[]) =>
+      arr.length === 0 || (arr.length === 1 && arr[0].trim() === "");
+
+    const hasChanged =
+      textContent.length !== localTextContent.length ||
+      textContent.some((t, i) => t !== localTextContent[i]);
+
+    if (hasChanged && !isEffectivelyEmpty(textContent)) {
+      setLocalTextContent(textContent);
+    }
+  }, [textContent, localTextContent]);
 
   const speakCurrent = useCallback(
-    (index: number) => {
-      const chunk = textContent[index];
-      if (!chunk) return;
+    async (index: number, onSpoken?: () => void) => {
+      const chunk = localTextContent[index];
+      if (!chunk) return false;
 
-      voiceReaderEngine.speak(chunk, {
-        voiceName:
-          (selectedVoice as ElevenVoice).name ||
-          (selectedVoice as SpeechSynthesisVoice).voiceURI,
-      });
       setPlaying(true);
       setPaused(false);
+
+      try {
+        await voiceReaderEngine.speakAsync(chunk, {
+          voiceName:
+            (selectedVoice as ElevenVoice)?.name ??
+            (selectedVoice as SpeechSynthesisVoice)?.voiceURI,
+        });
+        onSpoken?.();
+        return true;
+      } catch {
+        // console.error("Speech error:", err);
+        return false;
+      }
     },
-    [textContent, selectedVoice],
-  ); // Only real dependencies
+    [localTextContent, selectedVoice],
+  );
 
   const handlePlay = () => {
     currentIndexRef.current = 0;
@@ -63,30 +85,31 @@ const VoiceReader = ({
     currentIndexRef.current = 0;
   };
 
+  const not = (val: boolean) => !val;
   // Auto move to next chunk after speaking
-  // Increment *after* the engine finishes speaking
   useEffect(() => {
     if (!playing) return;
     if (!selectedVoice) return;
-
-    if (!voiceReaderEngine.speaking && !voiceReaderEngine.paused) {
-      if (currentIndexRef.current < textContent.length) {
-        speakCurrent(currentIndexRef.current);
-        currentIndexRef.current += 1; // Move to next AFTER speaking
-        if (currentIndexRef.current > 1) navigateVerse("next");
+    if (not(voiceReaderEngine.speaking) && not(voiceReaderEngine.paused)) {
+      if (currentIndexRef.current < localTextContent.length) {
+        speakCurrent(currentIndexRef.current, () => {
+          onSpeechProgress(currentIndexRef.current);
+          currentIndexRef.current++;
+        });
+        // onSpeechProgress(currentIndexRef.current);
       } else {
         setPlaying(false); // Reached end
       }
     }
   }, [playing, voiceReaderEngine.speaking, voiceReaderEngine.paused]);
 
-  // Reset on textContent change
+  // Reset on localTextContent change
   useEffect(() => {
-    if (textContent.length > 0) {
+    if (localTextContent.length > 0) {
       currentIndexRef.current = 0;
       speakCurrent(0);
     }
-  }, [textContent, speakCurrent]);
+  }, [localTextContent, speakCurrent]);
 
   // Restart reading if voice changes
   useEffect(() => {
@@ -94,7 +117,7 @@ const VoiceReader = ({
       handleStop();
       handlePlay();
     }
-  }, [selectedVoice]); // Only selectedVoice
+  }, [selectedVoice]);
 
   const voiceReaderIconClass =
     "text-gray-500 hover:animate-pulse transition-colors duration-200";

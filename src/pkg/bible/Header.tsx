@@ -3,43 +3,43 @@ import { toggleOpenState } from "../../app/ereader/ereaderSlice";
 import Picker from "./Picker";
 import { Button, Flex, IconButton } from "@radix-ui/themes";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Voice from "./Voice";
 import { RootState } from "../../app/store";
 import ElevenLabs from "../voice/ElevenLabs";
+import { useContentReducers } from "../hooks/useContentReducers";
 
 const Header = ({
   hidePicker,
   isOpen,
   routeTextContent,
+  // onSpeechProgress,
 }: {
   hidePicker: boolean;
   isOpen: boolean;
-  routeTextContent: string;
+  routeTextContent?: string[];
+  onSpeechProgress: (i: number) => void;
 }) => {
   const eReaderState = useSelector((state: RootState) => state.ereader);
   const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
   const elevenLabsActive = elevenLabs.enabled;
 
+  const [textContent, setTextContent] = useState<string[]>([]);
+
   const [useBrowser, setUseBrowser] = useState<boolean>(true);
   const dispatch = useDispatch();
 
-  const narratedContent = useMemo((): string[] => {
-    const content = eReaderState.eContent.content;
-    if (typeof content === "string") return [content];
+  const { narrate, navigateVerse } = useContentReducers();
 
-    return Object.values(content).reduce((acc: string[], chapter) => {
-      return acc.concat(Object.values(chapter));
-    }, []);
-  }, [eReaderState.eContent]);
+  useEffect(() => {
+    const x = routeTextContent?.length;
+    if (x) setTextContent(routeTextContent);
+    if (!x) setTextContent(narrate().slice(0, 1));
+  }, [routeTextContent, narrate]);
 
-  // 🚀 Memoized final textContent
-  const textContent = useMemo(() => {
-    if (routeTextContent.trim() !== "") {
-      return [routeTextContent];
-    }
-    return narratedContent;
-  }, [routeTextContent, narratedContent]);
+  const onSpeechProgress = () => {
+    navigateVerse("next");
+  };
 
   useEffect(() => {
     setUseBrowser(!elevenLabsActive);
@@ -64,8 +64,12 @@ const Header = ({
         {isOpen ? <BookDownIcon /> : <BookUpIcon />}
       </IconButton>
 
-      {/* 🚀 Pass the whole array at once */}
-      <Voice defaultModel={useBrowser} textContent={textContent} />
+      {/* Pass the whole array at once */}
+      <Voice
+        defaultModel={useBrowser}
+        textContent={textContent}
+        onSpeechProgress={onSpeechProgress}
+      />
 
       <ElevenLabs trigger={<Button variant="soft">ElevenLabs</Button>} />
     </Flex>

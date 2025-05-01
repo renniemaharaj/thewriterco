@@ -11,9 +11,11 @@ import { RecoveryFunction } from "../../app/errorBoundary/types";
 
 const Voice = ({
   textContent,
+  onSpeechProgress,
 }: {
   defaultModel: boolean;
   textContent: string[];
+  onSpeechProgress: (i: number) => void;
 }) => {
   const dispatch = useDispatch();
 
@@ -32,7 +34,6 @@ const Voice = ({
         "This recovery function will reset Eleven Labs voice state to defaults.",
       componentRoute: location.href, // Optionally use a static route if preferred
     };
-    console.log("Registered recover function");
     dispatch(RegisterRecoveryFunction(voiceRecoveryFunction));
   }, [dispatch]); // Empty array or `[dispatch]` is safe
 
@@ -43,6 +44,7 @@ const Voice = ({
         defaultModel={!elevenLabsActive}
         selectedVoice={voiceResolved}
         voiceReaderEngine={elevenLabsActive ? voiceElevenLabs : voiceBrowser}
+        onSpeechProgress={onSpeechProgress}
       />
       <VoiceSelect
         voices={elevenLabsActive ? voiceElevenLabs.voices : voiceBrowser.voices}

@@ -1,22 +1,35 @@
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { Flex, IconButton, Select } from "@radix-ui/themes";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import Header from "./Header";
 import { ArrowBigLeft, ArrowBigRight, ArrowBigRightDash } from "lucide-react";
 import { getChapterVerses } from "./utils/reader";
-import SpeakIcon from "./SpeakIcon";
 import { SHADOW_COUNT } from "./config";
 import { useContentReducers } from "../hooks/useContentReducers";
 
-const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
+const Reader = ({
+  hidePicker,
+  onSpeechProgress,
+}: {
+  hidePicker?: boolean;
+  onSpeechProgress?: (chapter: string, verse: string) => void;
+}) => {
   const eReaderState = useSelector((state: RootState) => state.ereader);
-  const { isOpen, currentChapter, currentVerse, eContent, readerStyle } =
-    eReaderState;
+  const {
+    isOpen,
+    currentChapter: reduxChapter,
+    currentVerse: reduxVerse,
+    eContent,
+    readerStyle,
+  } = eReaderState;
+
   const content = eContent.content;
 
   const {
-    getTextContent,
+    currentChapter,
+    currentVerse,
+
     getCurrentSlice,
     slideCurrentVerses,
     handleChapterChange,
@@ -24,27 +37,39 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
     navigateVerse,
   } = useContentReducers();
 
-  const chapterVerses = useMemo(
-    () => getChapterVerses({ currentChapter, eContent: content }),
-    [currentChapter, content],
-  );
   const [readerState, setReaderState] = useState<"rich" | "bible">(readerStyle);
-  const [parsedContent] = useState(content);
   const initialContentLoaded = useRef(false);
-  const [routeText, setRouteText] = useState("");
 
+  // Sync Redux state into local state without triggering updates every render
+  useEffect(() => {
+    if (!initialContentLoaded.current) {
+      initialContentLoaded.current = true;
+    }
+  }, [reduxChapter, reduxVerse]);
+
+  // Sync reader style changes
   useEffect(() => {
     setReaderState(readerStyle);
-    setTimeout(() => (initialContentLoaded.current = true), 1000);
   }, [readerStyle]);
 
-  const routeCurrentVerses = () => setRouteText(getTextContent());
+  // Chapter Verses for Select Picker
+  const chapterVerses = useMemo(
+    () =>
+      getChapterVerses({ currentChapter: currentChapter, eContent: content }),
+    [currentChapter, content],
+  );
+
+  // Speech progress handler (updates local state only)
+  const handleSpeechProgress = useCallback(
+    (current: number) => {
+      if (current <= 1) return;
+      navigateVerse("next");
+    },
+    [currentChapter, currentVerse, chapterVerses, onSpeechProgress],
+  );
 
   const renderChapterPicker = () => (
-    <Select.Root
-      value={currentChapter || ""}
-      onValueChange={handleChapterChange}
-    >
+    <Select.Root value={currentChapter} onValueChange={handleChapterChange}>
       <Select.Trigger>Chapter {currentChapter}</Select.Trigger>
       <Select.Content>
         {Object.keys(content).map((chapter) => (
@@ -57,7 +82,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
   );
 
   const renderVersePicker = () => (
-    <Select.Root value={currentVerse || ""} onValueChange={handleVerseChange}>
+    <Select.Root value={currentVerse} onValueChange={handleVerseChange}>
       <Select.Trigger>Verse {currentVerse}</Select.Trigger>
       <Select.Content>
         {chapterVerses.map((verse) => (
@@ -68,24 +93,19 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
       </Select.Content>
     </Select.Root>
   );
+  const renderCurrent = () => {
+    const currentSlice = getCurrentSlice();
+    const firstVerse = currentSlice[0];
 
-  const renderContent = () => {
-    if (readerState === "rich" && typeof parsedContent === "string") {
-      return (
-        <pre
-          className="whitespace-pre-line"
-          dangerouslySetInnerHTML={{ __html: parsedContent }}
-        />
-      );
-    }
+    if (!firstVerse) return null;
+
     return (
       <div>
         <h3 className="text-lg font-bold">
-          Chapter {currentChapter}, Verse {currentVerse}
+          Chapter {currentChapter}, Verse {firstVerse}
         </h3>
         <p>
-          {typeof content !== "string" &&
-            content[currentChapter]?.[currentVerse]}
+          {typeof content !== "string" && content[currentChapter]?.[firstVerse]}
         </p>
       </div>
     );
@@ -126,7 +146,6 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
             >
               <ArrowBigRightDash />
             </IconButton>
-            <SpeakIcon onClick={routeCurrentVerses} />
           </Flex>
         </Flex>
       )
@@ -142,8 +161,9 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
       <Header
         hidePicker={hidePicker ?? false}
         isOpen={isOpen}
-        routeTextContent={routeText}
+        onSpeechProgress={handleSpeechProgress}
       />
+
       {isOpen && (
         <div className="!flex-col p-4 space-y-4">
           {eContent.description && (
@@ -171,7 +191,7 @@ const Reader = ({ hidePicker }: { hidePicker?: boolean }) => {
               className="max-w-[700px] text-center p-4 shadow-lg !bg-transparent"
               style={{ flex: 1 }}
             >
-              {renderContent()}
+              {renderCurrent()}
             </div>
             <IconButton onClick={() => navigateVerse("next")} variant="soft">
               <ArrowBigRight />

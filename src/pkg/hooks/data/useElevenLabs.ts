@@ -57,12 +57,49 @@ export function useElevenLabs(apiKey: string) {
   }, [apiKey]);
 
   const speak = async (text: string, options?: SpeakOptions) => {
-    stop();
-    const voiceId = options?.voiceId ?? cachedVoices[0]?.voice_id;
+    const audio = await generateAudio(text, options);
+    if (!audio) return;
 
+    audioRef.current = audio;
+    bindAudioEvents(audio);
+    audio.play();
+  };
+
+  const speakAsync = async (
+    text: string,
+    options?: SpeakOptions,
+  ): Promise<void> => {
+    const audio = await generateAudio(text, options);
+    if (!audio) return;
+
+    audioRef.current = audio;
+    bindAudioEvents(audio);
+
+    return new Promise((resolve) => {
+      audio.onended = () => {
+        setSpeaking(false);
+        setPaused(false);
+        resolve();
+      };
+      audio.onerror = () => {
+        setSpeaking(false);
+        resolve(); // Still resolve to avoid hanging
+      };
+
+      audio.play();
+    });
+  };
+
+  const generateAudio = async (
+    text: string,
+    options?: SpeakOptions,
+  ): Promise<HTMLAudioElement | null> => {
+    stop();
+
+    const voiceId = options?.voiceId ?? cachedVoices[0]?.voice_id;
     if (!voiceId) {
       console.warn("No voice available to speak.");
-      return;
+      return null;
     }
 
     try {
@@ -89,30 +126,25 @@ export function useElevenLabs(apiKey: string) {
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Speak error:", errorText);
-        return;
+        return null;
       }
 
       const audioBlob = await response.blob();
       const audioUrl = URL.createObjectURL(audioBlob);
-      const audio = new Audio(audioUrl);
-      audioRef.current = audio;
-
-      audio.onplay = () => {
-        setSpeaking(true);
-        setPaused(false);
-      };
-      audio.onpause = () => setPaused(true);
-      audio.onended = () => {
-        setSpeaking(false);
-        setPaused(false);
-      };
-      audio.onerror = () => setSpeaking(false);
-
-      audio.play();
+      return new Audio(audioUrl);
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : String(err);
       console.error("Speak exception:", errorMessage);
+      return null;
     }
+  };
+
+  const bindAudioEvents = (audio: HTMLAudioElement) => {
+    audio.onplay = () => {
+      setSpeaking(true);
+      setPaused(false);
+    };
+    audio.onpause = () => setPaused(true);
   };
 
   const pause = () => {
@@ -140,6 +172,7 @@ export function useElevenLabs(apiKey: string) {
 
   return {
     speak,
+    speakAsync,
     pause,
     resume,
     stop,
