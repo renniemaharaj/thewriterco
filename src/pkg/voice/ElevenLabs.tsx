@@ -59,7 +59,7 @@ const ElevenLabs = ({ trigger }: { trigger: React.ReactNode }) => {
 
   return (
     <Dialog.Root>
-      <Dialog.Trigger>{trigger}</Dialog.Trigger>
+      <Dialog.Trigger disabled>{trigger}</Dialog.Trigger>
 
       <Dialog.Content maxWidth="450px">
         <Dialog.Title>ElevenLabs</Dialog.Title>
