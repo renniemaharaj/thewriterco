@@ -1,8 +1,8 @@
 {
-  "name": "hrtm-react-scaffold",
+  "name": "thewriterco",
   "private": true,
   "version": "1.0.0",
-  "author": "HRTM Consulting",
+  "author": "thewriterco",
   "type": "module",
   "scripts": {
     "dev": "vite",
