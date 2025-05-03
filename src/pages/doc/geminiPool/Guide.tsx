@@ -5,7 +5,7 @@ import { Text, Blockquote, Callout } from "@radix-ui/themes";
 import Content from "../../../pkg/docs/Content";
 import BreakII from "../../../pkg/docs/BreakII";
 import List from "../../../pkg/docs/List";
-import Snippet from "../../../pkg/docs/Snippet";
+// import Snippet from "../../../pkg/docs/Snippet";
 import GuideTemplate from "../../../pkg/docs/GuideTemplate";
 import Link from "../../../pkg/link/Link";
 
@@ -104,8 +104,8 @@ const Guide = () => {
           />
           <BreakII />
           <Blockquote>
-            Example setting up a pool with keys
-            <Snippet
+            Example setting up a pool with keys (See github)
+            {/* <Snippet
               code={`package main
 
 import (
@@ -140,7 +140,7 @@ myGeminiKey := transformer.API{
 pool.Channel <- myGeminiKey
 }`}
               language="go"
-            />
+            /> */}
           </Blockquote>
         </Content>
 
@@ -150,8 +150,8 @@ pool.Channel <- myGeminiKey
             (basic usage), or use the advanced features for more control.
             <BreakII />
             <Blockquote>
-              Example sending a prompt to the pool
-              <Snippet
+              Example sending a prompt to the pool (See github)
+              {/* <Snippet
                 code={`
 session, cleanup, err := pool.Queue(context.Background())
 if err != nil {
@@ -169,7 +169,7 @@ if err != nil {
 fmt.Println(response)
     `}
                 language="go"
-              />
+              /> */}
             </Blockquote>
           </Text>
         </Content>

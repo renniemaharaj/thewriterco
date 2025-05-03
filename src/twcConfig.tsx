@@ -11,6 +11,7 @@ const AI = lazy(() => import("./pages/ai/Chat"));
 const Number = lazy(() => import("./pages/number/Number"));
 const Guide = lazy(() => import("./pages/doc/studyDocument/Guide"));
 const GeminiPool = lazy(() => import("./pages/doc/geminiPool/Guide"));
+const Daily = lazy(() => import("./pages/daily/Reports"));
 const Kjv = lazy(() => import("./pages/kjv/KJV"));
 
 export interface Primitve {
@@ -35,6 +36,7 @@ export const publicRoutes: (CustomRoute | IndexRoute)[] = [
   { path: "reasoning", element: <Study /> },
   { path: "doc/studyDocument", element: <Guide /> },
   { path: "doc/geminiPool", element: <GeminiPool /> },
+  { path: "daily", element: <Daily /> },
 ];
 
 const protectedRoutes: CustomRoute[] = [
