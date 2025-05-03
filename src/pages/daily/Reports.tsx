@@ -7,20 +7,20 @@ import {
   Text,
   Link,
   Card,
-  // Inset,
 } from "@radix-ui/themes";
 import Hero from "../../pkg/page/Hero";
 import Page from "../../pkg/page/Page";
 import { useDailyReports } from "../../pkg/hooks/data/useDailyReports";
 import React, { useState, useEffect, useRef } from "react";
 import { Report } from "./Report"; // renamed for clarity
+import { ReportObject } from "../../pkg/hooks/data/useDailyReports";
 
 const PlaceholderImage =
   "https://aharvey.com/wp-content/uploads/2018/03/bg-placeholder.jpg";
 
 const Reports = () => {
   const { reports, loading, error } = useDailyReports();
-  const [currentReport, setCurrentReport] = useState<Report | null>(null);
+  const [currentReport, setCurrentReport] = useState<ReportObject | null>(null);
 
   const currentReportRef = useRef<HTMLDivElement>(null);
 

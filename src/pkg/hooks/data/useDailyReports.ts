@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 
-type Report = {
-  id: string;
+export type ReportObject = {
   title: string;
+  summary: string;
+  tags: string[];
+  url: string;
   date: string;
-  content: string;
+  relevance: number;
+  images?: string[];
 };
 
 export function useDailyReports() {
-  const [reports, setReports] = useState<Report[]>([]);
+  const [reports, setReports] = useState<ReportObject[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,7 +24,7 @@ export function useDailyReports() {
         if (!res.ok) {
           throw new Error(`HTTP error: ${res.status}`);
         }
-        const data: Report[] = await res.json();
+        const data: ReportObject[] = await res.json();
         setReports(data);
       } catch (err) {
         setError((err as Error).message);

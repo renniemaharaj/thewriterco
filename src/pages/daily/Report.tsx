@@ -7,16 +7,7 @@ import {
   Link,
   Button,
 } from "@radix-ui/themes";
-
-type ReportObject = {
-  title: string;
-  summary: string;
-  tags: string[];
-  url: string;
-  date: string;
-  relevance: number;
-  images?: string[];
-};
+import { ReportObject } from "../../pkg/hooks/data/useDailyReports";
 
 const PlaceholderImage =
   "https://aharvey.com/wp-content/uploads/2018/03/bg-placeholder.jpg";
