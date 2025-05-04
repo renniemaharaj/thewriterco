@@ -2,18 +2,18 @@ import Link from "../../pkg/link/Link";
 import Slide from "./Slide";
 
 export const swiperSlides = [
-  // <Slide
-  //   title="What is EASTER & why do we celebrate it as CHRISTIANS?"
-  //   // quote="A balanced view of Easter, the resurrection of Jesus Christ, and its significance in Christianity."
-  //   videoUrl="https://www.youtube.com/watch?v=O8vsGMO5RgE&t=351s"
-  //   videoMeta={{
-  //     title: "What is EASTER & why do we celebrate it as CHRISTIANS?",
-  //     author: "Daniel Maritz",
-  //     originalUrl: "https://www.youtube.com/watch?v=O8vsGMO5RgE&t=351s",
-  //     album: "",
-  //     country: "",
-  //   }}
-  // />,
+  <Slide
+    title="Eric Ludy - He is (The Names of God)"
+    quote="Who is like the Lord Jesus Christ?"
+    videoUrl="https://www.youtube.com/watch?v=NscHCa395-M"
+    videoMeta={{
+      title: "Eric Ludy - He is (The Names of God)",
+      author: "Ellerslie Discipleship Training",
+      originalUrl: "https://www.youtube.com/watch?v=NscHCa395-M",
+      album: "",
+      country: "",
+    }}
+  />,
   <Slide
     title={
       <>

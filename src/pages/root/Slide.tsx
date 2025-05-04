@@ -44,7 +44,7 @@ const Slide: FC<SlideProps> = ({
       direction="column"
       align="center"
       justify="center"
-      className={`w-full h-full max-w-3xl mx-auto px-4 text-center gap-4 ${theme === "dark" ? "bg-[#171918]" : "border"} blurred-div`}
+      className={`w-full h-full max-w-2xl mx-auto px-4 text-center gap-4 ${theme === "dark" ? "bg-[#171918]" : "border"} blurred-div`}
     >
       <Text className="text-2xl font-semibold text-foreground leading-snug">
         {title}
@@ -60,7 +60,7 @@ const Slide: FC<SlideProps> = ({
       )}
 
       {(media || embedUrl) && (
-        <div className="w-full max-w-[500px] aspect-video">
+        <div className="w-full max-w-[400px] aspect-video">
           {media || (
             <iframe
               width="100%"
