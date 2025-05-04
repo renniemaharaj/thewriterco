@@ -5,11 +5,10 @@ import { Text, Blockquote, Callout } from "@radix-ui/themes";
 import Content from "../../../pkg/docs/Content";
 import BreakII from "../../../pkg/docs/BreakII";
 import List from "../../../pkg/docs/List";
-// import Snippet from "../../../pkg/docs/Snippet";
 import GuideTemplate from "../../../pkg/docs/GuideTemplate";
 import Link from "../../../pkg/link/Link";
 
-const Guide = () => {
+const Document = () => {
   return (
     <Page
       wrapChildren
@@ -105,42 +104,6 @@ const Guide = () => {
           <BreakII />
           <Blockquote>
             Example setting up a pool with keys (See github)
-            {/* <Snippet
-              code={`package main
-
-import (
-  "fmt"
-  "github.com/renniemaharaj/google-gemini-pool"
-)
-
-func main() {
- // Store json object, [] of transformer.API: key and base for pool
-var GEMINI_API_KEYS_POOL = []transformer.API{
-    {
-        Key:  "YOUR_API_KEY",
-        Base: "gemini-20-pro-exp-0205", // or your preferred model
-    },
-}
-
-// Create a new pool instance
-pool := pool.Instance{}
-
-// Loads from GEMINI_API_KEYS_POOL environment variable & pushes all to pool
-pool.InitializePool()
-
-// Push one (1) single transformer.API key to channel
-myGeminiKey := transformer.API{
-    {
-        Key:  "YOUR_API_KEY",
-        Base: "gemini-20-pro-exp-0205", // or your preferred model
-    },
-}
-
-// Push directly to exposed channel
-pool.Channel <- myGeminiKey
-}`}
-              language="go"
-            /> */}
           </Blockquote>
         </Content>
 
@@ -151,25 +114,6 @@ pool.Channel <- myGeminiKey
             <BreakII />
             <Blockquote>
               Example sending a prompt to the pool (See github)
-              {/* <Snippet
-                code={`
-session, cleanup, err := pool.Queue(context.Background())
-if err != nil {
-    log.Fatalf("Failed to queue session: %v", err)
-}
-defer cleanup()
-
-// Send a simple string
-response, err := session.SendString(context.Background(), "Hello World")
-if err != nil {
-    log.Fatalf("Error: %v", err)
-}
-
-// See github repo for more advanced usage
-fmt.Println(response)
-    `}
-                language="go"
-              /> */}
             </Blockquote>
           </Text>
         </Content>
@@ -199,4 +143,4 @@ fmt.Println(response)
   );
 };
 
-export default Guide;
+export default Document;

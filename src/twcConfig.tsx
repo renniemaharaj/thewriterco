@@ -9,10 +9,12 @@ import Login from "./pages/login/Login";
 
 const AI = lazy(() => import("./pages/ai/Chat"));
 const Number = lazy(() => import("./pages/number/Number"));
-const Guide = lazy(() => import("./pages/doc/studyDocument/Guide"));
-const GeminiPool = lazy(() => import("./pages/doc/geminiPool/Guide"));
 const Daily = lazy(() => import("./pages/daily/Reports"));
 const Kjv = lazy(() => import("./pages/kjv/KJV"));
+
+const DocPools = lazy(() => import("./pages/doc/geminiPool/Document"));
+const DocStudies = lazy(() => import("./pages/doc/studyDocument/Document"));
+const DocAI = lazy(() => import("./pages/doc/ai/Document"));
 
 export interface Primitve {
   element: JSX.Element;
@@ -34,8 +36,9 @@ export const publicRoutes: (CustomRoute | IndexRoute)[] = [
   { path: "ai", element: <AI /> },
   { path: "kjv", element: <Kjv /> },
   { path: "reasoning", element: <Study /> },
-  { path: "doc/studyDocument", element: <Guide /> },
-  { path: "doc/geminiPool", element: <GeminiPool /> },
+  { path: "doc/studyDocument", element: <DocStudies /> },
+  { path: "doc/geminiPool", element: <DocPools /> },
+  { path: "doc/ai", element: <DocAI /> },
   { path: "daily", element: <Daily /> },
 ];
 

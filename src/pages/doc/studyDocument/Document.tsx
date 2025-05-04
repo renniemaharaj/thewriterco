@@ -8,7 +8,7 @@ import List from "../../../pkg/docs/List";
 import GuideTemplate from "../../../pkg/docs/GuideTemplate";
 import Link from "../../../pkg/link/Link";
 
-const Guide = () => {
+const Document = () => {
   return (
     <Page
       wrapChildren
@@ -145,4 +145,4 @@ const Guide = () => {
   );
 };
 
-export default Guide;
+export default Document;
