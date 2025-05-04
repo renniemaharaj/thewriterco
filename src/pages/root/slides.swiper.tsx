@@ -23,13 +23,13 @@ export const swiperSlides = [
     }
     quote={
       <>
-        "If you confess with your mouth that Jesus is Lord, <br />
+        If you confess with your mouth that Jesus is Lord, <br />
         and believe in your heart that God raised him from the dead, you will be
-        saved."
+        saved.
         <br />
         <br />
-        "For with the heart one believes and is justified, and with the mouth
-        one confesses and is saved."
+        For with the heart one believes and is justified, and with the mouth one
+        confesses and is saved.
       </>
     }
   />,
