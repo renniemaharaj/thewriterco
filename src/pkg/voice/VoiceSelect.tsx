@@ -1,6 +1,5 @@
 import { Select } from "@radix-ui/themes";
 import VoiceList from "./VoiceList";
-import { ElevenVoice } from "../hooks/data/useElevenLabs";
 import { memo, useCallback, useEffect } from "react";
 import useResolveFallbackVoice from "../hooks/useResolveFallbackVoice";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +7,7 @@ import { RootState } from "../../app/store";
 import { SetSelectedVoice } from "../../app/elevenLabs/eleventLabsSlice";
 
 export type VoiceSelectProps = {
-  voices: SpeechSynthesisVoice[] | ElevenVoice[];
+  voices: SpeechSynthesisVoice[];
 };
 
 const VoiceSelect = ({ voices }: VoiceSelectProps) => {
@@ -27,10 +26,7 @@ const VoiceSelect = ({ voices }: VoiceSelectProps) => {
   useEffect(() => {
     if (elevenLabs.selectedVoice) return;
     if (!resolveVoice) return;
-    setSelectedVoice(
-      (resolveVoice as ElevenVoice).name ??
-        (resolveVoice as SpeechSynthesisVoice).voiceURI,
-    );
+    setSelectedVoice((resolveVoice as SpeechSynthesisVoice).voiceURI);
   }, [elevenLabs, setSelectedVoice, resolveVoice]);
 
   return (

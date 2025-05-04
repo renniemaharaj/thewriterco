@@ -1,10 +1,9 @@
 import { Flex, IconButton } from "@radix-ui/themes";
 import { PauseIcon, StopCircle, AudioLines } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ElevenVoice } from "../hooks/data/useElevenLabs";
 import { VoiceReaderEngine } from "../hooks/useVoiceReader";
 
-export type Variant = SpeechSynthesisVoice | ElevenVoice;
+export type Variant = SpeechSynthesisVoice;
 
 export type VoiceReaderProps = {
   textContent: string[];
@@ -49,9 +48,7 @@ const VoiceReader = ({
 
       try {
         await voiceReaderEngine.speakAsync(chunk, {
-          voiceName:
-            (selectedVoice as ElevenVoice)?.name ??
-            (selectedVoice as SpeechSynthesisVoice)?.voiceURI,
+          voiceName: (selectedVoice as SpeechSynthesisVoice)?.voiceURI,
         });
         onSpoken?.();
         return true;
@@ -101,7 +98,13 @@ const VoiceReader = ({
         setPlaying(false); // Reached end
       }
     }
-  }, [playing, voiceReaderEngine.speaking, voiceReaderEngine.paused]);
+  }, [
+    playing,
+    voiceReaderEngine.speaking,
+    voiceReaderEngine.paused,
+    localTextContent.length,
+    onSpeechProgress,
+  ]);
 
   // Reset on localTextContent change
   useEffect(() => {

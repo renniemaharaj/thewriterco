@@ -10,7 +10,6 @@ import { useContentReducers } from "../hooks/useContentReducers";
 
 const Reader = ({
   hidePicker,
-  onSpeechProgress,
 }: {
   hidePicker?: boolean;
   onSpeechProgress?: (chapter: string, verse: string) => void;
@@ -65,7 +64,7 @@ const Reader = ({
       if (current <= 1) return;
       navigateVerse("next");
     },
-    [currentChapter, currentVerse, chapterVerses, onSpeechProgress],
+    [navigateVerse],
   );
 
   const renderChapterPicker = () => (

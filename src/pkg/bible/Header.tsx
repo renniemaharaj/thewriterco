@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Voice from "./Voice";
 import { RootState } from "../../app/store";
-import ElevenLabs from "../voice/ElevenLabs";
 import { useContentReducers } from "../hooks/useContentReducers";
 
 const Header = ({
@@ -70,8 +69,6 @@ const Header = ({
         textContent={textContent}
         onSpeechProgress={onSpeechProgress}
       />
-
-      <ElevenLabs trigger={<Button variant="soft">ElevenLabs</Button>} />
     </Flex>
   );
 };
