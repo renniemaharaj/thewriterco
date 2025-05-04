@@ -2,6 +2,8 @@ import { Flex, Quote, Separator, Text } from "@radix-ui/themes";
 import { FC, ReactNode, useState } from "react";
 import MetaText from "./MetaText";
 
+import { useThemeContext } from "../../pkg/context/theme/useThemeContext";
+
 export type SlideProps = {
   title: ReactNode;
   quote?: ReactNode;
@@ -36,12 +38,13 @@ const Slide: FC<SlideProps> = ({
   const [revealMeta, setRevealMeta] = useState(false);
   const embedUrl = videoUrl ? getYouTubeEmbedUrl(videoUrl) : null;
 
+  const { theme } = useThemeContext();
   return (
     <Flex
       direction="column"
       align="center"
       justify="center"
-      className="w-full h-full max-w-3xl mx-auto px-4 text-center gap-4"
+      className={`w-full h-full max-w-3xl mx-auto px-4 text-center gap-4 ${theme === "dark" ? "bg-[#171918]" : "border"} blurred-div`}
     >
       <Text className="text-2xl font-semibold text-foreground leading-snug">
         {title}

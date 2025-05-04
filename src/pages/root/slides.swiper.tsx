@@ -23,14 +23,56 @@ export const swiperSlides = [
     }
     quote={
       <>
-        That if thou shalt confess with thy mouth the Lord Jesus, <br />
-        and shalt believe in thine heart that God hath raised him from the dead,
-        thou shalt be saved.
+        "If you confess with your mouth that Jesus is Lord, <br />
+        and believe in your heart that God raised him from the dead, you will be
+        saved."
         <br />
         <br />
-        For with the heart man believeth unto righteousness; and with the mouth
-        confession is made unto salvation.
+        "For with the heart one believes and is justified, and with the mouth
+        one confesses and is saved."
       </>
+    }
+  />,
+  <Slide
+    title={
+      <>
+        Read, listen, or both <br />
+        with native Browser Voice Synthesis
+      </>
+    }
+    quote={
+      <>
+        Your word I have hidden in my heart, <br />
+        that I might not sin against You.
+      </>
+    }
+    actionBar={
+      <Link as="button" variant="soft" href="/kjv" aria-label="Read kjv">
+        Read KJV
+      </Link>
+    }
+  />,
+  <Slide
+    title={
+      <>
+        Biblical Perspective <br /> on Today's Headlines
+      </>
+    }
+    quote={
+      <>
+        And he said unto them, Take heed what ye hear. <br />
+        With what measure ye mete, it shall be measured to you.
+      </>
+    }
+    actionBar={
+      <Link
+        as="button"
+        variant="soft"
+        href="/daily"
+        aria-label="View daily news report"
+      >
+        View News Report
+      </Link>
     }
   />,
 
@@ -48,18 +90,19 @@ export const swiperSlides = [
       </>
     }
     actionBar={
-      <Link as="button" variant="soft" href="/reasoning">
-        Explore reasoning
+      <Link
+        as="button"
+        variant="soft"
+        href="/reasoning"
+        aria-label="Study reasoning"
+      >
+        Study reasoning
       </Link>
     }
   />,
 
   <Slide
-    title={
-      <>
-        Explore the Bible through our <br /> AI-powered study tools
-      </>
-    }
+    title={<>Study alongside our assistant AI</>}
     quote={
       <>
         Study to shew thyself approved unto God, <br /> a workman that needeth
@@ -67,8 +110,8 @@ export const swiperSlides = [
       </>
     }
     actionBar={
-      <Link as="button" variant="soft" href="/ai">
-        Begin Studying Now
+      <Link as="button" variant="soft" href="/ai" aria-label="Start AI chat">
+        Begin chatting now
       </Link>
     }
   />,
@@ -76,18 +119,24 @@ export const swiperSlides = [
   <Slide
     title={
       <>
-        Convert your conversations to bible studies <br />
+        Create study-ready documents <br />
         as web pages, with our tools
       </>
     }
     quote={
       <>
-        Study to shew thyself approved unto God, <br /> a workman that needeth
-        not to be ashamed, rightly dividing the word of truth.
+        But sanctify the Lord God in your hearts: <br />
+        and be ready always to give an answer to every man that asketh you a
+        reason of the hope that is in you with meekness and fear.
       </>
     }
     actionBar={
-      <Link as="button" variant="soft" href="/doc/studyDocument">
+      <Link
+        as="button"
+        variant="soft"
+        href="/doc/studyDocument"
+        aria-label="Learn about study documents"
+      >
         Learn More
       </Link>
     }
@@ -107,6 +156,7 @@ export const swiperSlides = [
           variant="soft"
           href="https://github.com/renniemaharaj/thewriterco"
           external
+          aria-label="React front end github"
         >
           React Front-End
         </Link>
@@ -115,6 +165,7 @@ export const swiperSlides = [
           variant="soft"
           href="https://github.com/renniemaharaj/thewriterco-auth-go"
           external
+          aria-label="Golang back end github"
         >
           Golang Back-End
         </Link>
