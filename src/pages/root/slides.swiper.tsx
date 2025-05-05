@@ -102,21 +102,6 @@ export const swiperSlides = [
   />,
 
   <Slide
-    title={<>Study alongside our assistant AI</>}
-    quote={
-      <>
-        Study to shew thyself approved unto God, <br /> a workman that needeth
-        not to be ashamed, rightly dividing the word of truth.
-      </>
-    }
-    actionBar={
-      <Link as="button" variant="soft" href="/ai" aria-label="Start AI chat">
-        Begin chatting now
-      </Link>
-    }
-  />,
-
-  <Slide
     title={
       <>
         Create study-ready documents <br />

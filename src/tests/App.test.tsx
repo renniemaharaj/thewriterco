@@ -41,7 +41,6 @@ describe("App component", () => {
       /TheWriterCo/,
       /Studies/,
       /KJV/,
-      /AI/,
       /Pool/,
     ]);
   });

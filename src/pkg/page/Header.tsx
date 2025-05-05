@@ -16,7 +16,7 @@ const navLinks = [
   { label: "Studies", href: "/studies", disabled: false },
   { label: "KJV", href: "/kjv" },
   //&
-  { label: "AI", href: "/ai" },
+  // { label: "AI", href: "/ai" },
   { label: "Pool", href: "/doc/geminiPool" },
   //*s
 ];
