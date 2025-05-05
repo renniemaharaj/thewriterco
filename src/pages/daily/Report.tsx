@@ -8,6 +8,7 @@ import {
   Button,
 } from "@radix-ui/themes";
 import { ReportObject } from "../../pkg/hooks/data/useDailyReports";
+import { getRandomElement } from "./utils";
 
 const PlaceholderImage =
   "https://aharvey.com/wp-content/uploads/2018/03/bg-placeholder.jpg";
@@ -19,12 +20,13 @@ export const Report = ({
   report: ReportObject;
   onFocus?: (title: string) => void;
 }) => {
-  const image =
+  const image = getRandomElement(
     "images" in report &&
-    Array.isArray(report.images) &&
-    report.images.length > 0
-      ? report.images[0]
-      : PlaceholderImage;
+      Array.isArray(report.images) &&
+      report.images.length > 0
+      ? report.images
+      : [PlaceholderImage],
+  );
 
   const handleReadMore = () => {
     if (onFocus) {
