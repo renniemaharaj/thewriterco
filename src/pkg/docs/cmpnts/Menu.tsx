@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Tabs, Box, ScrollArea } from "@radix-ui/themes";
 
@@ -13,10 +13,12 @@ import {
   kjvSourceCommand,
   seperatorCommand,
 } from "../commands";
+import { useDispatch } from "react-redux";
+import { toggleReasoningTitle } from "../../../app/reasoning/reasoningSlice";
 
 // Define the shape of each collapsible item
 export type CollapsibleItem = {
-  title: ReactNode;
+  title: string;
   body: ReactNode;
 };
 
@@ -38,6 +40,8 @@ const Menu = ({ className, routeChildren, additionalTabs = [] }: MenuProps) => {
     "!flex !mx-auto p-2 flex-col h-full max-h-[100vh] !sticky !top-0";
 
   const tabListClass = "!flex !flex-wrap space-x-4 !shadow-none pb-2";
+
+  const dispatch = useDispatch();
 
   // Example default tabs with structured title + body
   const defaultTabs: TabItem[] = [
@@ -64,10 +68,16 @@ const Menu = ({ className, routeChildren, additionalTabs = [] }: MenuProps) => {
 
   const combinedTabs = [...defaultTabs, ...additionalTabs];
 
+  useEffect(() => {
+    const firstTitle = additionalTabs[0]?.content[0]?.title;
+    if (firstTitle) {
+      dispatch(toggleReasoningTitle(firstTitle));
+    }
+  }, [additionalTabs, dispatch]);
   return (
     <ScrollArea className={`${className} ${scrollAreaClass}`}>
       <Tabs.Root
-        defaultValue={combinedTabs[0]?.value}
+        defaultValue={additionalTabs[0]?.value ?? combinedTabs[0]?.value}
         className="!max-w-[100%]"
       >
         <Tabs.List className={tabListClass}>

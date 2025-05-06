@@ -54,7 +54,7 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
       }
       centerBar={<></>}
       childRight={
-        <Card className="!flex !flex-[2]">
+        <Card className="!flex !flex-[2] !max-h-fit !top-0 !sticky">
           <Menu
             routeChildren={setRouteChildren}
             additionalTabs={additionalTabs}
