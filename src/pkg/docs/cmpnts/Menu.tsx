@@ -73,7 +73,7 @@ const Menu = ({ className, routeChildren, additionalTabs = [] }: MenuProps) => {
         <Tabs.List className={tabListClass}>
           {combinedTabs.map((tab) => (
             <Tabs.Trigger
-              key={tab.value}
+              key={tab.value + "tabsTrigger"}
               value={tab.value}
               className="px-4 py-2"
             >
@@ -85,13 +85,13 @@ const Menu = ({ className, routeChildren, additionalTabs = [] }: MenuProps) => {
         <Box pt="3" className="space-y-4 max-w-[100%]">
           {combinedTabs.map((tab) => (
             <Tabs.Content
-              key={tab.value}
+              key={tab.value + "tabsContent"}
               value={tab.value}
               className="!flex flex-col !gap-2"
             >
               {tab.content.map((item, index) => (
                 <motion.div
-                  key={index}
+                  key={index + "tabsItem"}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}

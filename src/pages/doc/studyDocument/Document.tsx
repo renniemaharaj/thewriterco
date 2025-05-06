@@ -71,7 +71,7 @@ const Document = () => {
                           These axioms ensure responses stay within biblical
                           doctrine, preventing deviations or manipulations
                           common in AI interactions. Read more on axioms and
-                          rationale <Link href="/reasoning">/reasoning</Link>.
+                          rationale <Link href="/reasoning">/reasoning</Link>
                         </Text>
                       </Content>
 
