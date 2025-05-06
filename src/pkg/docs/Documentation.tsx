@@ -1,5 +1,5 @@
 import { Box, Flex } from "@radix-ui/themes";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import Menu, { TabItem } from "./cmpnts/Menu";
@@ -15,6 +15,9 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
   const { theme } = useThemeContext();
   const { orientation } = useSelector((state: RootState) => state.chat);
   const [routeChildren, setRouteChildren] = useState<ReactNode | null>(null);
+  const currentTitle = useSelector(
+    (state: RootState) => state.reasoning.titleToggled,
+  );
 
   const isDarkMode = theme === "dark";
 
@@ -23,16 +26,30 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
     "flex-col !relative flex-wrap md:!flex-nowrap !m-auto !w-[98vw] transition-all gap-1";
 
   const contentContainerClass = `
-    ${isDarkMode ? "bg-[#171918]" : "border"} 
-    !flex md:!min-w-[70%]
+  ${isDarkMode ? "bg-[#171918]" : "border"} 
+  !flex md:!min-w-[70%]
   `;
 
   const innerBoxClass = `
-    space-y-4 space-x-4 
-    !p-2 !py-10 
-    !max-w-[500px] 
-    !mx-auto
+  space-y-4 space-x-4 
+  !p-2 !py-10 
+  !max-w-[500px] 
+  !mx-auto
+  useEffect(() => {
+    if (boxRef.current) {
+      boxRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  }, [currentTitle]);
   `;
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }, [currentTitle]);
 
   return (
     <SideBar
