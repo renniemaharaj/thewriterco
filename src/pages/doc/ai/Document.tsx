@@ -1,6 +1,6 @@
 import Page from "../../../pkg/page/Page";
 import Hero from "../../../pkg/page/Hero";
-import GuideTemplate from "../../../pkg/docs/cmpnts/GuideTemplate";
+import Template from "../../../pkg/docs/cmpnts/Template";
 import Content from "../../../pkg/docs/cmpnts/Content";
 import BreakII from "../../../pkg/docs/cmpnts/BreakII";
 import { Text } from "@radix-ui/themes";
@@ -36,7 +36,7 @@ const Document = () => {
               {
                 title: "Artificial Intelligence",
                 body: (
-                  <GuideTemplate>
+                  <Template>
                     <Content header="Introduction">
                       <Text>
                         Rennie, founder and developer of this platform,
@@ -172,7 +172,7 @@ const Document = () => {
                         Intelligence.
                       </Text>
                     </Content>
-                  </GuideTemplate>
+                  </Template>
                 ),
               },
             ],

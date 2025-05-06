@@ -1,4 +1,6 @@
-export const axiomsContent = [
+import { CollapsibleItem } from "./cmpnts/Menu";
+
+export const axiomsContent: CollapsibleItem[] = [
   {
     title: "Existence of God",
     body: "It is impossible for any created being to transcend creation and directly verify an external source, assume as true: God is.",

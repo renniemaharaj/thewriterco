@@ -5,7 +5,7 @@ import { Text, Blockquote, Callout } from "@radix-ui/themes";
 import Content from "../../../pkg/docs/cmpnts/Content";
 import BreakII from "../../../pkg/docs/cmpnts/BreakII";
 import List from "../../../pkg/docs/cmpnts/List";
-import GuideTemplate from "../../../pkg/docs/cmpnts/GuideTemplate";
+import Template from "../../../pkg/docs/cmpnts/Template";
 import Link from "../../../pkg/link/Link";
 import Documentation from "../../../pkg/docs/Documentation";
 
@@ -41,7 +41,7 @@ const Document = () => {
               {
                 title: "Gemini Pool",
                 body: (
-                  <GuideTemplate>
+                  <Template>
                     <Content header="Introduction to Google Gemini-Pool">
                       <Text>
                         Limited to google gemini api keys? I know, renting a GPU
@@ -152,7 +152,7 @@ const Document = () => {
                         API usage policies when using multiple keys.
                       </Callout.Text>
                     </Callout.Root>
-                  </GuideTemplate>
+                  </Template>
                 ),
               },
             ],

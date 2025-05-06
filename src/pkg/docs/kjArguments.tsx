@@ -1,6 +1,7 @@
 import BreakII from "./cmpnts/BreakII";
+import { CollapsibleItem } from "./cmpnts/Menu";
 
-export const kjvArguments = [
+export const kjvArguments: CollapsibleItem[] = [
   {
     title: "Family of Texts",
     body: (

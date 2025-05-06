@@ -1,6 +1,7 @@
 import BreakII from "./cmpnts/BreakII";
+import { CollapsibleItem } from "./cmpnts/Menu";
 
-export const ftevidence = [
+export const ftevidence: CollapsibleItem[] = [
   {
     title: "Does Truth Exist?",
     body: (

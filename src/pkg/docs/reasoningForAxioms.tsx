@@ -1,7 +1,8 @@
 import { Text } from "@radix-ui/themes";
+import { CollapsibleItem } from "./cmpnts/Menu";
 const uClassName = "space-y-2 list-disc pl-4 text-sm";
 
-export const reasoningForAxioms = [
+export const reasoningForAxioms: CollapsibleItem[] = [
   {
     title: "Existence of God",
     body: (

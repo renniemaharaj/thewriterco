@@ -5,7 +5,7 @@ import { Text, Blockquote, Callout } from "@radix-ui/themes";
 import Content from "../../../pkg/docs/cmpnts/Content";
 import BreakII from "../../../pkg/docs/cmpnts/BreakII";
 import List from "../../../pkg/docs/cmpnts/List";
-import GuideTemplate from "../../../pkg/docs/cmpnts/GuideTemplate";
+import Template from "../../../pkg/docs/cmpnts/Template";
 import Link from "../../../pkg/link/Link";
 import Documentation from "../../../pkg/docs/Documentation";
 
@@ -42,7 +42,7 @@ const Document = () => {
                 title: "Study Documents",
                 body: [
                   <>
-                    <GuideTemplate>
+                    <Template>
                       <Content header="Power Your Bible Studies with AI">
                         <Text>
                           The Writer Company AI helps you study the Bible with
@@ -155,7 +155,7 @@ const Document = () => {
                           provide instructions on self-hosting.
                         </Callout.Text>
                       </Callout.Root>
-                    </GuideTemplate>
+                    </Template>
                   </>,
                 ],
               },

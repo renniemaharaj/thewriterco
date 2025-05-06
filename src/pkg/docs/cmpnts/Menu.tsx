@@ -15,8 +15,8 @@ import {
 } from "../commands";
 
 // Define the shape of each collapsible item
-type CollapsibleItem = {
-  title: string;
+export type CollapsibleItem = {
+  title: ReactNode;
   body: ReactNode;
 };
 
