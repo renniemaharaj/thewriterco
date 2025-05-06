@@ -1,4 +1,4 @@
-import { Box, Flex } from "@radix-ui/themes";
+import { Box, Card } from "@radix-ui/themes";
 import { ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -26,30 +26,17 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
     "flex-col !relative flex-wrap md:!flex-nowrap !m-auto !w-[98vw] transition-all gap-1";
 
   const contentContainerClass = `
-  ${isDarkMode ? "bg-[#171918]" : "border"} 
-  !flex md:!min-w-[70%]
-  `;
+  ${isDarkMode ? "bg-[#171918]" : "border"} !flex !flex-[4] !min-h-[350px]`;
 
-  const innerBoxClass = `
-  space-y-4 space-x-4 
-  !p-2 !py-10 
-  !max-w-[500px] 
-  !mx-auto
-  useEffect(() => {
-    if (boxRef.current) {
-      boxRef.current.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
-  }, [currentTitle]);
-  `;
+  const innerBoxClass =
+    "space-y-4 space-x-4 !p-2 !py-10 !max-w-[500px] !mx-auto";
 
   useEffect(() => {
+    if (orientation === "vertical") return;
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
-  }, [currentTitle]);
+  }, [currentTitle, orientation]);
 
   return (
     <SideBar
@@ -57,18 +44,22 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
       className={sidebarClass}
       orientation="horizontal"
       childLeft={
-        <Flex className={contentContainerClass}>
-          {routeChildren && orientation === "horizontal" && (
-            <Box className={innerBoxClass}>{routeChildren}</Box>
-          )}
-        </Flex>
+        orientation === "horizontal" && (
+          <Card className={contentContainerClass}>
+            {routeChildren && orientation === "horizontal" && (
+              <Box className={innerBoxClass}>{routeChildren}</Box>
+            )}
+          </Card>
+        )
       }
       centerBar={<></>}
       childRight={
-        <Menu
-          routeChildren={setRouteChildren}
-          additionalTabs={additionalTabs}
-        />
+        <Card className="!flex !flex-[2]">
+          <Menu
+            routeChildren={setRouteChildren}
+            additionalTabs={additionalTabs}
+          />
+        </Card>
       }
     />
   );
