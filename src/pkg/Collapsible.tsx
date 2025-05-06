@@ -1,6 +1,6 @@
-import { ReactNode, useCallback, useEffect } from "react";
+import React, { ReactNode, useCallback, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
-import { Button, Flex, ScrollArea } from "@radix-ui/themes";
+import { Button, Flex, ScrollArea, Separator, Link } from "@radix-ui/themes";
 import { motion } from "framer-motion";
 import { useThemeContext } from "./context/theme/useThemeContext";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,26 @@ type CollapsibleProps = {
   handledChildren?: boolean;
 };
 
-export default function Collapsible({
+const isSlashCommand = (title: ReactNode): boolean => {
+  return typeof title === "string" && title.trim().startsWith("/");
+};
+
+const renderSlashCommand = (command: string, content: ReactNode) => {
+  switch (command) {
+    case "/separate":
+      return <Separator size="3" className="my-3 mx-auto" />;
+    case "/source":
+      return (
+        <div className="text-sm text-center text-muted-foreground my-4">
+          <Link href={content as string}>Source</Link>
+        </div>
+      );
+    default:
+      return null;
+  }
+};
+
+const Collapsible = ({
   title,
   children,
   maxHeight = "200px",
@@ -25,9 +44,8 @@ export default function Collapsible({
   onOpen,
   onClose,
   handledChildren,
-}: CollapsibleProps) {
+}: CollapsibleProps) => {
   const { theme } = useThemeContext();
-
   const dispatch = useDispatch();
 
   const toggle = useCallback(
@@ -51,8 +69,7 @@ export default function Collapsible({
     if (currentTitle === title) {
       toggle("");
       if (onOpen) onOpen("");
-    }
-    if (currentTitle !== title) {
+    } else {
       toggle(title as string);
     }
   }, [currentTitle, title, toggle, onOpen]);
@@ -64,6 +81,11 @@ export default function Collapsible({
       if (onClose) onClose();
     }
   }, [currentTitle, isCollapsed, onOpen, onClose, title, children]);
+
+  // ---------- Early return for slash command ----------
+  if (isSlashCommand(title)) {
+    return renderSlashCommand((title as string).toLowerCase().trim(), children);
+  }
 
   return (
     <div
@@ -77,7 +99,7 @@ export default function Collapsible({
         aria-expanded={isCollapsed()}
         aria-controls="collapsible-content"
       >
-        <span className="font-semibold ">{title}</span>
+        <span className="font-semibold">{title}</span>
         <ChevronDown
           className={`transition-transform ${isCollapsed() ? "rotate-180" : ""}`}
         />
@@ -102,4 +124,6 @@ export default function Collapsible({
       </motion.div>
     </div>
   );
-}
+};
+
+export default Collapsible;

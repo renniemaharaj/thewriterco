@@ -4,7 +4,7 @@ const uClassName = "space-y-2 list-disc pl-4 text-sm";
 export const reasoningForAxioms = [
   {
     title: "Existence of God",
-    description: (
+    body: (
       <Text>
         Assume as true: <strong>God is</strong> It is impossible for any created
         being to transcend creation and directly verify an external source.
@@ -106,7 +106,7 @@ export const reasoningForAxioms = [
   },
   {
     title: "KJV Bible as Truth",
-    description: (
+    body: (
       <Text>
         The KJV Bible is the complete and authoritative written source, and word
         of God. Any conflicting translation—whether in character, word, verse,
@@ -137,6 +137,6 @@ export const reasoningForAxioms = [
   },
   {
     title: "Jesus Christ as Truth",
-    description: `This third axiom follows logically from the previous two. If God is, and the KJV Bible is true, then the KJV Bible's account of Jesus Christ's is also true. External historical sources also confirm the existence of Jesus Christ, but the KJV Bible is our primary source within this framework.`,
+    body: `This third axiom follows logically from the previous two. If God is, and the KJV Bible is true, then the KJV Bible's account of Jesus Christ's is also true. External historical sources also confirm the existence of Jesus Christ, but the KJV Bible is our primary source within this framework.`,
   },
 ];

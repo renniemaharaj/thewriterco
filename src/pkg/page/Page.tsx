@@ -80,7 +80,17 @@ const Page = ({
             </Flex>
           </Card>
         )}
-        {!wrapChildren && [hero, isPending ? <Block /> : <div>{children}</div>]}
+        {!wrapChildren && [
+          hero,
+          isPending ? (
+            <Block />
+          ) : (
+            <Flex className="!flex-col !gap-10">
+              <Separator size={"2"} className="mx-auto mt-10" />
+              {children}
+            </Flex>
+          ),
+        ]}
       </Flex>
       {/* </Flex> */}
       <Separator size={"4"} />

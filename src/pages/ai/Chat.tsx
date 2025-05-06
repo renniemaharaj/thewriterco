@@ -14,7 +14,7 @@ import {
 } from "@radix-ui/themes";
 import Reader from "../../pkg/bible/Reader";
 import SideBar from "../../pkg/SideBar";
-import Menu from "../../pkg/docs/Menu";
+import Menu from "../../pkg/docs/cmpnts/Menu";
 import { useThemeContext } from "../../pkg/context/theme/useThemeContext";
 import Chat from "../../pkg/ai/Chat";
 import {
