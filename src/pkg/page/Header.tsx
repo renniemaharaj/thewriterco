@@ -17,7 +17,7 @@ const navLinks = [
   { label: "KJV", href: "/kjv" },
   //&
   // { label: "AI", href: "/ai" },
-  { label: "Pool", href: "/doc/geminiPool" },
+  { label: "Rationale", href: "/reasoning" },
   //*s
 ];
 const emptyBlock: Block = {

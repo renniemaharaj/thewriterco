@@ -7,7 +7,8 @@ import Study from "./pages/reasoning/Document";
 import { lazy } from "react";
 import Login from "./pages/login/Login";
 
-const AI = lazy(() => import("./pages/ai/Chat"));
+// const AI = lazy(() => import("./pages/ai/Chat"));
+const AI = lazy(() => import("./pkg/page/Maintenance"));
 const Number = lazy(() => import("./pages/number/Number"));
 const Daily = lazy(() => import("./pages/daily/Reports"));
 const Kjv = lazy(() => import("./pages/kjv/KJV"));

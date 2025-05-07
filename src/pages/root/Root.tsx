@@ -1,38 +1,38 @@
 import {
-  Callout,
+  // Callout,
   Card,
   Flex,
-  IconButton,
+  // IconButton,
   Separator,
-  Text,
-  Tooltip,
+  // Text,
+  // Tooltip,
 } from "@radix-ui/themes";
 import Hero from "../../pkg/page/Hero";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import React, { useRef } from "react";
+// import React, { useRef } from "react";
 import Page from "../../pkg/page/Page";
 import { swiperSlides } from "./slides.swiper";
 import { swiperProps } from "./config.swiper";
-import Chat from "../../pkg/ai/Chat";
-import { useDispatch } from "react-redux";
-import { clearMessages } from "../../app/chat/chatSlice";
-import { toggleFlowSlice } from "../../app/flow/flowSlice";
-import { Trash2Icon } from "lucide-react";
-import { InfoCircledIcon } from "@radix-ui/react-icons";
-import Link from "../../pkg/link/Link";
+// import Chat from "../../pkg/ai/Chat";
+// import { useDispatch } from "react-redux";
+// import { clearMessages } from "../../app/chat/chatSlice";
+// import { toggleFlowSlice } from "../../app/flow/flowSlice";
+// import { Trash2Icon } from "lucide-react";
+// import { InfoCircledIcon } from "@radix-ui/react-icons";
+// import Link from "../../pkg/link/Link";
 
 const Root: React.FC = () => {
-  const messageBoxRef = useRef<HTMLDivElement>(null);
+  // const messageBoxRef = useRef<HTMLDivElement>(null);
 
-  const dispatch = useDispatch();
-  const scrollMessageBoxToBottom = () => {
-    messageBoxRef.current?.scrollTo({
-      top: messageBoxRef.current.scrollHeight,
-      behavior: "smooth",
-    });
-  };
+  // const dispatch = useDispatch();
+  // const scrollMessageBoxToBottom = () => {
+  //   messageBoxRef.current?.scrollTo({
+  //     top: messageBoxRef.current.scrollHeight,
+  //     behavior: "smooth",
+  //   });
+  // };
 
   return (
     <Page
@@ -74,7 +74,7 @@ const Root: React.FC = () => {
           </Swiper>
         </Flex>
         <Separator size={"4"} className="mx-auto m-5" />
-        <Flex className="!relative w-full !flex-row !justify-center !items-center gap-5 mx-auto">
+        {/* <Flex className="!relative w-full !flex-row !justify-center !items-center gap-5 mx-auto">
           <Text className="!text-center !text-lg !font-bold">
             TheWriterCo AI
           </Text>
@@ -93,14 +93,13 @@ const Root: React.FC = () => {
             </IconButton>
           </Tooltip>
           <Link href="ai">Go</Link>
-        </Flex>
+        </Flex> */}
 
-        <Callout.Root>
+        {/* <Callout.Root>
           <Callout.Icon>
             <InfoCircledIcon />
           </Callout.Icon>
           <Callout.Text className="flex flex-col gap-2">
-            {/* <Card className="!flex !flex-col !gap-2 !w-full mx-auto !min-h-fit !static"> */}
             <Text className="!text-center !text-lg !font-bold">
               Powered by our open source, Google Gemini-Pool, Go Manager
             </Text>
@@ -119,21 +118,18 @@ const Root: React.FC = () => {
                 Source
               </Link>{" "}
             </Text>
-            {/* </Card> */}
           </Callout.Text>
-        </Callout.Root>
+        </Callout.Root> */}
 
-        {/* <Flex className="!w-full md:!w-[70%] mx-auto "> */}
-        <Card className="!w-full mx-auto !min-h-fit !static">
+        {/* <Card className="!w-full mx-auto !min-h-fit !static">
           <Flex className="!w-full md:!w-[70%] max-w-[700px] !h-[400px] mx-auto overflow-auto">
             <Chat
               className="!w-full mx-auto sm:!w-[100%] "
               scrollMessageBoxToBottom={scrollMessageBoxToBottom}
             />
           </Flex>
-        </Card>
+        </Card> */}
       </Flex>
-      {/* </Flex> */}
     </Page>
   );
 };
