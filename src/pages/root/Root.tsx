@@ -1,10 +1,11 @@
 import {
+  Callout,
   // Callout,
   Card,
   Flex,
   // IconButton,
   Separator,
-  // Text,
+  Text,
   // Tooltip,
 } from "@radix-ui/themes";
 import Hero from "../../pkg/page/Hero";
@@ -15,6 +16,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Page from "../../pkg/page/Page";
 import { swiperSlides } from "./slides.swiper";
 import { swiperProps } from "./config.swiper";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
+// import Link from "../../pkg/link/Link";
 // import Chat from "../../pkg/ai/Chat";
 // import { useDispatch } from "react-redux";
 // import { clearMessages } from "../../app/chat/chatSlice";
@@ -94,7 +97,20 @@ const Root: React.FC = () => {
           </Tooltip>
           <Link href="ai">Go</Link>
         </Flex> */}
-
+        <Callout.Root>
+          <Callout.Icon>
+            <InfoCircledIcon />
+          </Callout.Icon>
+          <Callout.Text className="flex flex-col gap-2">
+            <Text className="!text-center !text-lg !font-bold">
+              Heads up: Google suddenly forced everyone to switch to a new beta
+              version of their Gemini SDK and broke the old one in the process.
+              Because of that, we're exploring other options. Some features that
+              rely on generative AI might be paused or removed until things
+              stabilize. Thank you!
+            </Text>
+          </Callout.Text>
+        </Callout.Root>
         {/* <Callout.Root>
           <Callout.Icon>
             <InfoCircledIcon />

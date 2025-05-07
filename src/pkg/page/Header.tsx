@@ -150,6 +150,7 @@ const Navbar: React.FC = () => {
             <TextField.Root
               ref={searchBoxRef}
               onChange={(e) => setLocalSearchState(e.target.value)}
+              disabled
               value={localSearchState}
               type="text"
               className="transition-all"
