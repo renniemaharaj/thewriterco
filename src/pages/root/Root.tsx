@@ -103,11 +103,10 @@ const Root: React.FC = () => {
           </Callout.Icon>
           <Callout.Text className="flex flex-col gap-2">
             <Text className="!text-center !text-lg !font-bold">
-              Heads up: Google suddenly forced everyone to switch to a new beta
-              version of their Gemini SDK and broke the old one in the process.
-              Because of that, we're exploring other options. Some features that
-              rely on generative AI might be paused or removed until things
-              stabilize. Thank you!
+              Please note: Services implementing artificial intelligence, with
+              the exception of daily reports, have been permanently disabled for
+              the public. However, you may fork our github repositories, for
+              your personal use. Do enjoy!
             </Text>
           </Callout.Text>
         </Callout.Root>
