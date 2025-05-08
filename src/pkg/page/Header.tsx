@@ -7,13 +7,9 @@ import {
   Button,
   Callout,
 } from "@radix-ui/themes";
-import {
-  HamburgerMenuIcon,
-  Cross1Icon,
-  InfoCircledIcon,
-} from "@radix-ui/react-icons";
+import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { useThemeContext } from "../context/theme/useThemeContext";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { ScanSearchIcon, SunIcon, SunMoonIcon } from "lucide-react";
 import SearchLoading from "../ai/SearchLoading";
@@ -22,6 +18,9 @@ import SearchResults from "../ai/SearchResults";
 import { Block, ResponseBlock, Scripture } from "../ai/types";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Link from "../link/Link";
+import { dismissDeclaration } from "../../app/page/pageSlice";
+import useLocalStorage from "../hooks/useLocalStorage";
+import { initialState } from "../../app/page/config";
 
 const navLinks = [
   { label: "Studies", href: "/studies", disabled: false },
@@ -45,6 +44,12 @@ const Navbar: React.FC = () => {
   const { theme, specifyTheme } = useThemeContext();
   const eReaderState = useSelector((state: RootState) => state.ereader);
 
+  const { dismissedDeclaration } = useSelector(
+    (state: RootState) => state.page,
+  );
+
+  const [, setValue] = useLocalStorage("pageData", initialState);
+
   const { navigateWT } = useTransitionNavigation();
   const [localSearchState, setLocalSearchState] = useState("");
   const [sendFindReq, { isLoading }] = useSendFindReqMutation();
@@ -53,6 +58,21 @@ const Navbar: React.FC = () => {
 
   const formRef = useRef<HTMLFormElement>(null);
   const searchBoxRef = useRef<HTMLInputElement>(null);
+
+  const [showDeclaration, setShowDeclaration] = useState<boolean>(
+    dismissedDeclaration < 3,
+  );
+
+  const dispatch = useDispatch();
+
+  const dismissDeclarationOnce = () => {
+    setShowDeclaration(false);
+    dispatch(dismissDeclaration(dismissedDeclaration + 1));
+  };
+
+  useEffect(() => {
+    setValue({ dismissedDeclaration });
+  }, [dismissedDeclaration]);
 
   const handleFindReq = useCallback(
     async (input: string) => {
@@ -140,26 +160,37 @@ const Navbar: React.FC = () => {
         block={block}
         onOpenChange={setDisplayResults}
       />
-      <Callout.Root>
-        <Callout.Icon>
-          <InfoCircledIcon />
-        </Callout.Icon>
-        <Callout.Text className="flex flex-col gap-2">
-          <Text className="!text-center !text-lg !font-bold">
-            There was none before the Lord Jesus, the Christ. There will be none
-            after Him. He is LORD. He is God. He is the great Amen; the faithful
-            witness; the beginning of the creation of God; everlasting Father.
-            No man is able to loose or to bind his own lusts. For this cause was
-            He purposed before the beginning of our time to be a blameless
-            mediator between man and the unseen Father, begotten of the Father
-            Himself alone; of God. So the Father purposed His very Word, and
-            made His Word His own Son, not by woman, though He entered the world
-            through a woman, but of God. Hence He is the Son of God; holy, holy,
-            holy. Therefore there is no successor to Him. For His kingdom is
-            everlasting and coming in full!
-          </Text>
-        </Callout.Text>
-      </Callout.Root>
+      {showDeclaration && (
+        <Callout.Root className="relative">
+          <Callout.Icon>
+            <IconButton
+              size="1"
+              variant="soft"
+              className="!relative top-2 !right-2"
+              onClick={() => dismissDeclarationOnce()}
+            >
+              <Cross1Icon />
+            </IconButton>
+          </Callout.Icon>
+
+          <Callout.Text className="flex flex-col gap-2">
+            <Text className="!text-center !text-lg !font-bold">
+              There was none before the Lord Jesus, the Christ. There will be
+              none after Him. He is LORD. He is God. He is the great Amen; the
+              faithful witness; the beginning of the creation of God;
+              everlasting Father. No man is able to loose or to bind his own
+              lusts. For this cause was He purposed before the beginning of our
+              time to be a blameless mediator between man and the unseen Father,
+              begotten of the Father Himself alone; of God. So the Father
+              purposed His very Word, and made His Word His own Son, not by
+              woman, though He entered the world through a woman, but of God.
+              Hence He is the Son of God; holy, holy, holy. Therefore there is
+              no successor to Him. For His kingdom is everlasting and coming in
+              full!
+            </Text>
+          </Callout.Text>
+        </Callout.Root>
+      )}
       <Flex
         data-testid="header"
         className={`w-full !justify-evenly py-2 shadow-md sticky top-0 blurred-div !rounded-none transition-all ${eReaderState.isOpen ? "z-0" : "z-10"}`}
