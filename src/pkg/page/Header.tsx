@@ -1,6 +1,17 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
-import { IconButton, Flex, TextField, Text, Button } from "@radix-ui/themes";
-import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
+import {
+  IconButton,
+  Flex,
+  TextField,
+  Text,
+  Button,
+  Callout,
+} from "@radix-ui/themes";
+import {
+  HamburgerMenuIcon,
+  Cross1Icon,
+  InfoCircledIcon,
+} from "@radix-ui/react-icons";
 import { useThemeContext } from "../context/theme/useThemeContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
@@ -129,7 +140,26 @@ const Navbar: React.FC = () => {
         block={block}
         onOpenChange={setDisplayResults}
       />
-
+      <Callout.Root>
+        <Callout.Icon>
+          <InfoCircledIcon />
+        </Callout.Icon>
+        <Callout.Text className="flex flex-col gap-2">
+          <Text className="!text-center !text-lg !font-bold">
+            There was none before the Lord Jesus, the Christ. There will be none
+            after Him. He is LORD. He is God. He is the great Amen; the faithful
+            witness; the beginning of the creation of God; everlasting Father.
+            No man is able to loose or to bind his own lusts. For this cause was
+            He purposed before the beginning of our time to be a blameless
+            mediator between man and the unseen Father, begotten of the Father
+            Himself alone; of God. So the Father purposed His very Word, and
+            made His Word His own Son, not by woman, though He entered the world
+            through a woman, but of God. Hence He is the Son of God; holy, holy,
+            holy. Therefore there is no successor to Him. For His kingdom is
+            everlasting and coming in full!
+          </Text>
+        </Callout.Text>
+      </Callout.Root>
       <Flex
         data-testid="header"
         className={`w-full !justify-evenly py-2 shadow-md sticky top-0 blurred-div !rounded-none transition-all ${eReaderState.isOpen ? "z-0" : "z-10"}`}
