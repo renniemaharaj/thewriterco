@@ -44,7 +44,7 @@ const Page = ({
 
   useEffect(() => {
     dispatch(setEBook(initialState.eContent));
-  }, [path]);
+  }, [dispatch]);
 
   return (
     <>
