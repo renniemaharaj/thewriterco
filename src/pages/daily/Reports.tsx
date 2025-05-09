@@ -16,9 +16,6 @@ import { Report } from "./Report"; // renamed for clarity
 import { ReportObject } from "../../pkg/hooks/data/useDailyReports";
 import { getRandomElement } from "./utils";
 
-const PlaceholderImage =
-  "https://aharvey.com/wp-content/uploads/2018/03/bg-placeholder.jpg";
-
 const Reports = () => {
   const { reports, loading, error } = useDailyReports();
   const [currentReport, setCurrentReport] = useState<ReportObject | null>(null);
@@ -68,9 +65,7 @@ const Reports = () => {
           <Card ref={currentReportRef} size="4" variant="classic" mb="6">
             <Flex direction={{ initial: "column", md: "row" }} gap="5">
               <img
-                src={getRandomElement(
-                  currentReport.images ?? [PlaceholderImage],
-                )}
+                src={getRandomElement(currentReport.images ?? [])}
                 alt={currentReport.title}
                 style={{
                   width: "100%",
