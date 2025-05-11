@@ -15,6 +15,18 @@ export const swiperSlides = [
     }}
   />,
   <Slide
+    title="The Rise of Christianity:"
+    quote="Why It's Spreading Fast and What It Means for the Church"
+    videoUrl="https://www.youtube.com/watch?v=87IGqrjDooo"
+    videoMeta={{
+      title: "The Rise of Christianity",
+      author: "Daniel Maritz",
+      originalUrl: "https://www.youtube.com/watch?v=87IGqrjDooo",
+      album: "",
+      country: "",
+    }}
+  />,
+  <Slide
     title={
       <>
         Confess with your mouth the Lord Jesus, <br />
