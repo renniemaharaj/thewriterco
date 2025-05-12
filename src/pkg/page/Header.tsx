@@ -196,7 +196,7 @@ const Navbar: React.FC = () => {
               className="hidden md:block"
             >
               {theme === "dark" ? (
-                <Tooltip content=";night lit">
+                <Tooltip content=";moon lit">
                   <SunMoonIcon className="w-6 h-6 text-white animate-pulse" />
                 </Tooltip>
               ) : (
