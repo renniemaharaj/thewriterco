@@ -53,16 +53,17 @@ const Menu = ({ className, routeChildren, additionalTabs = [] }: MenuProps) => {
     {
       label: "Verbose",
       value: "reasoning",
-      content: [
-        ...introduction,
-        seperatorCommand,
-        ...reasoningForAxioms,
-        seperatorCommand,
-        ...ftevidence,
-        fteSourceCommand,
-        ...kjvArguments,
-        kjvSourceCommand,
-      ],
+      content: [...introduction, seperatorCommand, ...reasoningForAxioms],
+    },
+    {
+      label: "Pro KJV",
+      value: "prokjv",
+      content: [...kjvArguments, kjvSourceCommand],
+    },
+    {
+      label: "Pro Christianity",
+      value: "prochristianity",
+      content: [...ftevidence, fteSourceCommand],
     },
   ];
 
