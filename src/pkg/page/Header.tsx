@@ -1,23 +1,16 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
-import {
-  IconButton,
-  Flex,
-  TextField,
-  Text,
-  Button,
-  Tooltip,
-} from "@radix-ui/themes";
+import { IconButton, Flex, TextField, Text } from "@radix-ui/themes";
 import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
-import { useThemeContext } from "../context/theme/useThemeContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { ScanSearchIcon, SunIcon, SunMoonIcon } from "lucide-react";
+import { ScanSearchIcon } from "lucide-react";
 import SearchLoading from "../ai/SearchLoading";
 import { useSendFindReqMutation } from "../../app/api/apiSlice";
 import SearchResults from "../ai/SearchResults";
 import { Block, ResponseBlock, Scripture } from "../ai/types";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Link from "../link/Link";
+import ThemeButton from "./ThemeButton";
 
 const navLinks = [
   { label: "Studies", href: "/studies", disabled: false },
@@ -38,7 +31,6 @@ const emptyBlock: Block = {
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { theme, specifyTheme } = useThemeContext();
   const eReaderState = useSelector((state: RootState) => state.ereader);
 
   const { navigateWT } = useTransitionNavigation();
@@ -46,8 +38,6 @@ const Navbar: React.FC = () => {
   const [sendFindReq, { isLoading }] = useSendFindReqMutation();
   const [block, setBlock] = useState<Block>(emptyBlock);
   const [displayResults, setDisplayResults] = useState(false);
-
-  const moonRef = useRef<HTMLButtonElement>(null);
 
   const formRef = useRef<HTMLFormElement>(null);
   const searchBoxRef = useRef<HTMLInputElement>(null);
@@ -131,15 +121,6 @@ const Navbar: React.FC = () => {
     }
   }, [searchBoxRef]);
 
-  useEffect(() => {
-    if (moonRef.current) {
-      moonRef.current.style.transition =
-        "transform 1s cubic-bezier(0.68, -0.55, 0.265, 1.55)";
-      moonRef.current.style.transform =
-        theme === "dark" ? "rotate(360deg)" : "rotate(0deg)";
-    }
-  }, [theme]);
-
   return (
     <>
       <SearchResults
@@ -180,32 +161,14 @@ const Navbar: React.FC = () => {
               type="submit"
               aria-label="Search"
               variant="soft"
-              // highContrast
             >
-              <ScanSearchIcon width="18" height="18" />
+              <ScanSearchIcon width="20" height="20" />
             </IconButton>
             <SearchLoading isLoading={isLoading} />
           </form>
 
           {/* Theme Toggle & Menu Button */}
-          <Flex className="items-center gap-4">
-            <Button
-              ref={moonRef}
-              variant="ghost"
-              onClick={() => specifyTheme(theme === "dark" ? "light" : "dark")}
-              className="hidden md:block"
-            >
-              {theme === "dark" ? (
-                <Tooltip content=";moon lit">
-                  <SunMoonIcon className="w-6 h-6 text-white animate-pulse" />
-                </Tooltip>
-              ) : (
-                <Tooltip content="sun's wit">
-                  <SunIcon className="w-6 h-6 text-yellow-400 animate-pulse" />
-                </Tooltip>
-              )}
-            </Button>
-          </Flex>
+          <ThemeButton />
         </Flex>
 
         {/* Navigation */}

@@ -17,7 +17,22 @@ export const mockBrowser = () => {
     disconnect: vi.fn(),
   }));
 
-  // Mock getVoices and speechSynthesis
+  // Mock matchMedia for motion queries
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: vi.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(), // Deprecated but sometimes still used
+      removeListener: vi.fn(), // Deprecated but sometimes still used
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    })),
+  });
+
+  // Mock speechSynthesis and other existing mocks...
   window.speechSynthesis = {
     getVoices: vi.fn(() => [
       { name: "MockVoice1", lang: "en-US", default: true },
@@ -32,7 +47,7 @@ export const mockBrowser = () => {
 
   // Mock SpeechSynthesisUtterance
   window.SpeechSynthesisUtterance = vi.fn().mockImplementation(function (
-    this: SpeechSynthesisUtterance, // Explicitly typing 'this'
+    this: SpeechSynthesisUtterance,
     text: string,
   ) {
     this.text = text;
