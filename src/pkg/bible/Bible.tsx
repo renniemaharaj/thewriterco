@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Flex, Tabs, Box } from "@radix-ui/themes";
 
 import { useDispatch } from "react-redux";
@@ -53,68 +53,75 @@ const Sword: React.FC<SwordProps> = ({ setEBook, showAnimation }) => {
     ? matchingDivisions.map((d) => d.division)
     : allTabs;
 
+  useEffect(() => {
+    document.documentElement.scrollTo(0, 0);
+  }, [isFetchingContent]);
+
   return (
     <>
-      {isFetchingContent && <Block />}
-      <Flex className="w-full mx-auto pb-10 flex-col items-center text-center">
-        <Box>
-          <Search onChange={(str: string) => setSearchText(str)} />
-        </Box>
-
-        <Tabs.Root defaultValue={tabsToShow[0]}>
-          <Tabs.List className="!flex-wrap">
-            {tabsToShow.map((division) => (
-              <Tabs.Trigger
-                key={division}
-                value={division}
-                className={
-                  searchText &&
-                  matchingDivisions.some((d) => d.division === division)
-                    ? "bg-yellow-100 text-black"
-                    : ""
-                }
-              >
-                {division}
-              </Tabs.Trigger>
-            ))}
-          </Tabs.List>
-
-          <Box pt="3">
-            {tabsToShow.map((division) => {
-              const books = searchText
-                ? matchingDivisions.find((d) => d.division === division)
-                    ?.books || []
-                : bibleDivisions[division];
-
-              return (
-                <Tabs.Content key={division} value={division}>
-                  <Flex
-                    direction="row"
-                    gap="3"
-                    wrap="wrap"
-                    className="relative !justify-center"
-                  >
-                    {books.map((book, index) => (
-                      <BookFragment
-                        key={index}
-                        book={book}
-                        title="Holy Bible"
-                        showAnimation={showAnimation}
-                        onClick={() =>
-                          handleArticleClick({
-                            title: book,
-                            date: Date.now().toString(),
-                          })
-                        }
-                      />
-                    ))}
-                  </Flex>
-                </Tabs.Content>
-              );
-            })}
+      {isFetchingContent ? (
+        <Block noPage />
+      ) : (
+        <Flex className="w-full mx-auto pb-10 flex-col items-center text-center">
+          <Box>
+            <Search onChange={(str: string) => setSearchText(str)} />
           </Box>
-        </Tabs.Root>
-      </Flex>
+
+          <Tabs.Root defaultValue={tabsToShow[0]}>
+            <Tabs.List className="!flex-wrap">
+              {tabsToShow.map((division) => (
+                <Tabs.Trigger
+                  key={division}
+                  value={division}
+                  className={
+                    searchText &&
+                    matchingDivisions.some((d) => d.division === division)
+                      ? "bg-yellow-100 text-black"
+                      : ""
+                  }
+                >
+                  {division}
+                </Tabs.Trigger>
+              ))}
+            </Tabs.List>
+
+            <Box pt="3">
+              {tabsToShow.map((division) => {
+                const books = searchText
+                  ? matchingDivisions.find((d) => d.division === division)
+                      ?.books || []
+                  : bibleDivisions[division];
+
+                return (
+                  <Tabs.Content key={division} value={division}>
+                    <Flex
+                      direction="row"
+                      gap="3"
+                      wrap="wrap"
+                      className="relative !justify-center"
+                    >
+                      {books.map((book, index) => (
+                        <BookFragment
+                          key={index}
+                          book={book}
+                          title="Holy Bible"
+                          showAnimation={showAnimation}
+                          onClick={() =>
+                            handleArticleClick({
+                              title: book,
+                              date: Date.now().toString(),
+                            })
+                          }
+                        />
+                      ))}
+                    </Flex>
+                  </Tabs.Content>
+                );
+              })}
+            </Box>
+          </Tabs.Root>
+        </Flex>
+      )}
     </>
   );
 };

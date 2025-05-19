@@ -1,36 +1,41 @@
 import { Flex, Spinner } from "@radix-ui/themes";
 import Page from "./Page";
 import Hero from "./Hero";
+import { memo } from "react";
 
-export default function Block() {
+export default function Block({ noPage }: { noPage?: boolean }) {
+  const BlockingSpinnerMemo = memo(BlockingSpinner);
+  const blockingSpinner = <BlockingSpinnerMemo className="mx-auto" />;
   return (
-    <Page
-      title="Home"
-      description="Welcome to The Writer Company"
-      className="!gap-5"
-      wrapChildren
-      hero={
-        <Hero
-          header="Welcome to"
-          subHeader={
-            <>
-              The Writer <br />
-              Company
-            </>
-          }
-          hint={
-            <>
-              We're here to: give reasoning for faith; reinforcement to your
-              shield, 🛡️ Wherewith ye shall quench all the fiery darts of the
-              wicked. For his bow is set with a fiery deception 🏹
-            </>
-          }
-        />
-      }
-    >
-      <BlockingSpinner className="mx-auto" />
-      {/* </Flex> */}
-    </Page>
+    (noPage && blockingSpinner) || (
+      <Page
+        title="Home"
+        description="Welcome to The Writer Company"
+        className="!gap-5"
+        wrapChildren
+        hero={
+          <Hero
+            header="Welcome to"
+            subHeader={
+              <>
+                The Writer <br />
+                Company
+              </>
+            }
+            hint={
+              <>
+                We're here to: give reasoning for faith; reinforcement to your
+                shield, 🛡️ Wherewith ye shall quench all the fiery darts of the
+                wicked. For his bow is set with a fiery deception 🏹
+              </>
+            }
+          />
+        }
+      >
+        {blockingSpinner}
+        {/* </Flex> */}
+      </Page>
+    )
   );
 }
 
