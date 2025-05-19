@@ -66,7 +66,6 @@ export const swiperSlides = [
     title={<>Her Shaking</>}
     quote={
       <>
-        <br />
         I will be moved out of my place in heaven in all this unbearable
         shaking,
         <br />I will drift away from light—my—sun; and His moon will be turned
@@ -75,7 +74,7 @@ export const swiperSlides = [
         To outer darkness forever, and eternal separation from God; caught in: a
         curse of unbelief, a free fall.
         <br />A worthy event, demanding the much-debated proof of God. He will
-        come, and as a terrifying sight-seen by all.
+        come, and as a terrifying sight-seen on clouds.
       </>
     }
   />,
