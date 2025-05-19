@@ -1,7 +1,7 @@
-import { Flex, IconButton } from "@radix-ui/themes";
-import { PauseIcon, StopCircle, AudioLines } from "lucide-react";
+import { Flex } from "@radix-ui/themes";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { VoiceReaderEngine } from "../hooks/useVoiceReader";
+import VoiceHeader from "./VoiceHeader";
 
 export type Variant = SpeechSynthesisVoice;
 
@@ -20,27 +20,27 @@ const VoiceReader = ({
   onSpeechProgress,
 }: VoiceReaderProps) => {
   const currentIndexRef = useRef(-1);
-  const [localTextContent, setLocalTextContent] = useState<string[]>([]);
   const [playing, setPlaying] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [currentText, setCurrentText] = useState<string[]>([]);
 
-  // Deep compare and update local text content if changed
+  // Utility
+  const not = (val: boolean) => !val;
+
+  // Sync currentText with textContent
   useEffect(() => {
-    const isEffectivelyEmpty = (arr: string[]) =>
-      arr.length === 0 || (arr.length === 1 && arr[0].trim() === "");
+    const isDifferent =
+      textContent.length !== currentText.length ||
+      textContent.some((t, i) => t !== currentText[i]);
 
-    const hasChanged =
-      textContent.length !== localTextContent.length ||
-      textContent.some((t, i) => t !== localTextContent[i]);
-
-    if (hasChanged && !isEffectivelyEmpty(textContent)) {
-      setLocalTextContent(textContent);
+    if (isDifferent) {
+      setCurrentText(textContent);
     }
-  }, [textContent, localTextContent]);
+  }, [textContent, currentText]);
 
   const speakCurrent = useCallback(
     async (index: number, onSpoken?: () => void) => {
-      const chunk = localTextContent[index];
+      const chunk = currentText[index];
       if (!chunk) return false;
 
       setPlaying(true);
@@ -48,22 +48,24 @@ const VoiceReader = ({
 
       try {
         await voiceReaderEngine.speakAsync(chunk, {
-          voiceName: (selectedVoice as SpeechSynthesisVoice)?.voiceURI,
+          voiceName: selectedVoice?.voiceURI,
         });
         onSpoken?.();
         return true;
       } catch {
-        // console.error("Speech error:", err);
         return false;
       }
     },
-    [localTextContent, selectedVoice],
+
+    // Only rerun when selectedVoice actually changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentText, selectedVoice],
   );
 
-  const handlePlay = () => {
+  const handlePlay = useCallback(() => {
     currentIndexRef.current = 0;
     speakCurrent(0);
-  };
+  }, [speakCurrent]);
 
   const handleResume = () => {
     voiceReaderEngine.resume();
@@ -75,98 +77,71 @@ const VoiceReader = ({
     setPaused(true);
   };
 
-  const handleStop = () => {
+  const handleStop = useCallback(() => {
     voiceReaderEngine.stop();
     setPlaying(false);
     setPaused(false);
     currentIndexRef.current = 0;
-  };
+  }, [voiceReaderEngine]);
 
-  const not = (val: boolean) => !val;
-  // Auto move to next chunk after speaking
-  useEffect(() => {
-    if (!playing) return;
-    if (!selectedVoice) return;
-    if (not(voiceReaderEngine.speaking) && not(voiceReaderEngine.paused)) {
-      if (currentIndexRef.current < localTextContent.length) {
-        speakCurrent(currentIndexRef.current, () => {
-          onSpeechProgress(currentIndexRef.current);
-          currentIndexRef.current++;
-        });
-        // onSpeechProgress(currentIndexRef.current);
-      } else {
-        setPlaying(false); // Reached end
-      }
+  const trySpeakNext = useCallback(() => {
+    const canSpeak =
+      not(voiceReaderEngine.speaking) && not(voiceReaderEngine.paused);
+    const hasMore = currentIndexRef.current < currentText.length;
+
+    if (canSpeak && hasMore) {
+      const index = currentIndexRef.current;
+      speakCurrent(index, () => {
+        onSpeechProgress(index);
+        currentIndexRef.current++;
+      });
+    } else if (!hasMore) {
+      setPlaying(false);
     }
   }, [
-    playing,
     voiceReaderEngine.speaking,
     voiceReaderEngine.paused,
-    localTextContent.length,
+    currentText.length,
     onSpeechProgress,
+    speakCurrent,
   ]);
 
-  // Reset on localTextContent change
+  // Speak loop runner
   useEffect(() => {
-    if (localTextContent.length > 0) {
+    if (playing && selectedVoice) {
+      trySpeakNext();
+    }
+  }, [playing, trySpeakNext, selectedVoice]);
+
+  // Restart reading when currentText changes
+  useEffect(() => {
+    if (currentText.length > 0) {
       currentIndexRef.current = 0;
       speakCurrent(0);
     }
-  }, [localTextContent, speakCurrent]);
+  }, [currentText, speakCurrent]);
 
-  // Restart reading if voice changes
+  // Restart if voice changes while playing and not paused
   useEffect(() => {
     if (playing && !paused) {
       handleStop();
       handlePlay();
     }
-  }, [selectedVoice]);
-
-  const voiceReaderIconClass =
-    "text-gray-500 hover:animate-pulse transition-colors duration-200";
+    // Only rerun when selectedVoice actually changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedVoice?.voiceURI]);
 
   return (
     <Flex direction="column" gap="2">
-      <Flex className="gap-2 items-center">
-        <IconButton
-          onClick={handlePlay}
-          variant="soft"
-          aria-label="Play"
-          className={`${voiceReaderIconClass} ${paused && "!hidden"}`}
-          disabled={playing && !paused}
-        >
-          <AudioLines />
-        </IconButton>
-
-        <IconButton
-          onClick={handleResume}
-          variant="soft"
-          aria-label="Resume"
-          className={`${!paused && "!hidden"}`}
-          disabled={!paused}
-        >
-          <AudioLines />
-        </IconButton>
-
-        <IconButton
-          onClick={handlePause}
-          variant="soft"
-          aria-label="Pause"
-          className={`${voiceReaderIconClass} ${paused && "!hidden"}`}
-          disabled={!voiceReaderEngine.speaking || paused}
-        >
-          <PauseIcon />
-        </IconButton>
-
-        <IconButton
-          onClick={handleStop}
-          variant="soft"
-          aria-label="Stop"
-          disabled={!playing && !paused}
-        >
-          <StopCircle />
-        </IconButton>
-      </Flex>
+      <VoiceHeader
+        voiceReaderEngine={voiceReaderEngine}
+        playing={playing}
+        paused={paused}
+        handlePlay={handlePlay}
+        handlePause={handlePause}
+        handleResume={handleResume}
+        handleStop={handleStop}
+      />
     </Flex>
   );
 };
