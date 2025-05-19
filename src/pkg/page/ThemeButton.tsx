@@ -19,7 +19,7 @@ const ThemeButton = () => {
       animate={{ opacity: 1, rotate: 0, scale: 1 }}
       exit={{ opacity: 0.5, scale: 0.8 }}
       transition={{
-        duration: 0.6,
+        duration: 1,
         ease: [0.68, -0.6, 0.32, 1.6],
       }}
       variant="soft"
