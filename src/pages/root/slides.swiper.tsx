@@ -46,6 +46,40 @@ export const swiperSlides = [
     }
   />,
   <Slide
+    title={<>Imaginary Lines</>}
+    quote={
+      <>
+        This steadfast faith of mine; I'm steadfast—I hold fast to imaginary
+        lines.
+        <br />
+        I cannot see, and my feelings are contrary to His promises—mere promises
+        indeed.
+        <br />
+        My reasoning fails me, and all I have is what I initially believed.
+        <br />
+        That first belief, even with His presence moving on my seas; that
+        surety, on and off, evades me.
+      </>
+    }
+  />,
+  <Slide
+    title={<>Her Shaking</>}
+    quote={
+      <>
+        <br />
+        I will be moved out of my place in heaven in all this unbearable
+        shaking,
+        <br />I will drift away from light—my—sun; and His moon will be turned
+        blood red; light-forsaken.
+        <br />
+        To outer darkness forever, and eternal separation from God; caught in: a
+        curse of unbelief, a free fall.
+        <br />A worthy event, demanding the much-debated proof of God. He will
+        come, and as a terrifying sight-seen by all.
+      </>
+    }
+  />,
+  <Slide
     title={
       <>
         Read, listen, or both <br />
