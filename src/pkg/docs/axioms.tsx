@@ -1,5 +1,6 @@
 import Content from "./cmpnts/Content";
 import { CollapsibleItem } from "./cmpnts/Menu";
+import Strong from "./cmpnts/Strong";
 import Template from "./cmpnts/Template";
 import Text from "./cmpnts/Text";
 
@@ -10,8 +11,9 @@ export const axiomsContent: CollapsibleItem[] = [
       <Template>
         <Content header="Existence of God">
           <Text>
-            It is impossible for any created being to transcend creation and
-            directly verify an external source, assume as true: God is.
+            Assume as true: <Strong>God is</Strong>. It is impossible for any
+            created being to transcend creation and directly verify an external
+            source.
           </Text>
         </Content>
       </Template>

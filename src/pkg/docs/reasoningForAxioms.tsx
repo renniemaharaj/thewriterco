@@ -13,7 +13,7 @@ export const reasoningForAxioms: CollapsibleItem[] = [
       <Template>
         <Content header="Existence of God">
           <Text>
-            Assume as true: <Strong>God is</Strong> It is impossible for any
+            Assume as true: <Strong>God is</Strong>. It is impossible for any
             created being to transcend creation and directly verify an external
             source. However, we have only two possible cases: either{" "}
             <Strong>God is</Strong> or he is not. We do not seek to convince nor
