@@ -15,9 +15,14 @@ const ThemeButton = () => {
   return (
     <MotionIcon
       key={theme} // causes re-render and fresh animation on theme change
-      initial={{ opacity: 0.5, rotate: theme === "dark" ? 360 : 0, scale: 0.9 }}
-      animate={{ opacity: 1, rotate: 0, scale: 1 }}
-      exit={{ opacity: 0.5, scale: 0.8 }}
+      initial={{
+        opacity: 0,
+        rotate: theme === "dark" ? 360 : 0,
+        scale: 0.9,
+        y: 10,
+      }}
+      animate={{ opacity: 1, rotate: 0, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.8 }}
       transition={{
         duration: 1,
         ease: [0.68, -0.6, 0.32, 1.6],
