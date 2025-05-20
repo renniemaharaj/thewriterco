@@ -79,23 +79,6 @@ export const swiperSlides = [
     }
   />,
   <Slide
-    title={<>For Purpose</>}
-    quote={
-      <>
-        I will raise her up: on a high platform; above the flood. Her voice will
-        transcend the limit of friends, mutuals and followers, reaching the four
-        ends of the internet.
-        <br />
-        Because I am militant and my voice can be harsh, but she will speak in
-        grace, gracefully balancing on the shoulders of my wit.
-        <br />
-        Count the frequency of eclipses the earth sees per year. I have a
-        vision, we will increase this. The earth is yet to see many more
-        eclipses.
-      </>
-    }
-  />,
-  <Slide
     title={
       <>
         Read, listen, or both <br />
