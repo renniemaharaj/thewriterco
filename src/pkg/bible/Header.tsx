@@ -1,12 +1,13 @@
-import { BookDownIcon, BookUpIcon } from "lucide-react";
+import { BookDownIcon, BookUpIcon, DownloadIcon } from "lucide-react";
 import { toggleOpenState } from "../../app/ereader/ereaderSlice";
 import Picker from "./Picker";
-import { Button, Flex, IconButton } from "@radix-ui/themes";
+import { Button, Flex, IconButton, Tooltip } from "@radix-ui/themes";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Voice from "./Voice";
 import { RootState } from "../../app/store";
 import { useContentReducers } from "../hooks/useContentReducers";
+import useDownloader from "../hooks/useDownloader";
 
 const Header = ({
   hidePicker,
@@ -22,6 +23,8 @@ const Header = ({
   const eReaderState = useSelector((state: RootState) => state.ereader);
   const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
   const elevenLabsActive = elevenLabs.enabled;
+
+  const { download } = useDownloader();
 
   const [textContent, setTextContent] = useState<string[]>([]);
 
@@ -47,6 +50,13 @@ const Header = ({
   const displayHeaderClassName =
     "!gap-2 !p-2 !max-w-full overflow-auto !flex !justify-center !items-center !border-b";
 
+  const handleDownload = useCallback(() => {
+    download(
+      `${eReaderState.eContent.title}.json`,
+      JSON.stringify(eReaderState.eContent, null, 2),
+    );
+  }, [eReaderState.eContent, download]);
+
   return (
     <Flex
       className={`${hidePicker && !isOpen ? "!hidden" : ""} ${displayHeaderClassName}`}
@@ -54,14 +64,25 @@ const Header = ({
       <Picker
         trigger={<Button variant="soft">{eReaderState.eContent.title}</Button>}
       />
+      <Tooltip content={`Download JSON - ${eReaderState.eContent.title}`}>
+        <IconButton
+          onClick={handleDownload}
+          aria-label="Download Book"
+          variant="soft"
+        >
+          <DownloadIcon />
+        </IconButton>
+      </Tooltip>
 
-      <IconButton
-        onClick={() => dispatch(toggleOpenState())}
-        aria-label="Toggle Ereader"
-        variant="soft"
-      >
-        {isOpen ? <BookDownIcon /> : <BookUpIcon />}
-      </IconButton>
+      <Tooltip content="Toggle Ereader">
+        <IconButton
+          onClick={() => dispatch(toggleOpenState())}
+          aria-label="Toggle Ereader"
+          variant="soft"
+        >
+          {isOpen ? <BookDownIcon /> : <BookUpIcon />}
+        </IconButton>
+      </Tooltip>
 
       {/* Pass the whole array at once */}
       <Voice
