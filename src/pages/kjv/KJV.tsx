@@ -5,6 +5,7 @@ import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
 import Page from "../../pkg/page/Page";
 import { Card, Flex, Text } from "@radix-ui/themes";
 import Hero from "../../pkg/page/Hero";
+import Link from "../../pkg/link/Link";
 
 const KJV = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const KJV = () => {
         <Bible showAnimation={true} setEBook={setEreaderState} />
 
         {/* Static Meta Info */}
-        <Card className="text-center w-full">
+        <Card className="!flex text-center w-full !items-center !justify-center">
           <Flex className="flex-row gap-4">
             <Text size="3" className="text-md font-bold mb-4" weight="bold">
               KJV Bible
@@ -50,6 +51,13 @@ const KJV = () => {
             <Text size="3" color="gray">
               66 Books • 1,189 Chapters • 31,102 Verses
             </Text>
+            <Link
+              animate
+              external
+              href="https://github.com/renniemaharaj/kjv-bible"
+            >
+              Git Source
+            </Link>
           </Flex>
         </Card>
       </Flex>
