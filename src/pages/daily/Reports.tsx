@@ -5,8 +5,8 @@ import {
   Heading,
   Spinner,
   Text,
-  Link,
   Card,
+  Callout,
 } from "@radix-ui/themes";
 import Hero from "../../pkg/page/Hero";
 import Page from "../../pkg/page/Page";
@@ -15,6 +15,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Report } from "./Report"; // renamed for clarity
 import { ReportObject } from "../../pkg/hooks/data/useDailyReports";
 import { getRandomElement } from "./utils";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
+import Link from "../../pkg/link/Link";
 
 const Reports = () => {
   const { reports, loading, error } = useDailyReports();
@@ -48,7 +50,7 @@ const Reports = () => {
         />
       }
     >
-      <Box mt="5">
+      <Box mt="5" className="!flex !items-center !justify-center">
         {loading && (
           <Flex justify="center" align="center" p="5">
             <Spinner />
@@ -57,7 +59,7 @@ const Reports = () => {
 
         {error && (
           <Text color="red" align="center">
-            Error: {error}
+            {error}
           </Text>
         )}
 
@@ -89,7 +91,7 @@ const Reports = () => {
                     </Text>
                   ))}
                 </Flex>
-                <Link href={currentReport.url} target="_blank" mt="2">
+                <Link href={currentReport.url} external>
                   Read full report →
                 </Link>
               </Flex>
@@ -110,6 +112,18 @@ const Reports = () => {
           </Grid>
         )}
       </Box>
+      <Callout.Root>
+        <Callout.Icon>
+          <InfoCircledIcon />
+        </Callout.Icon>
+        <Callout.Text>
+          You can track the progress of our new golang, news scraper or
+          contribute to it's development on{" "}
+          <Link external href="https://github.com/renniemaharaj/news-go">
+            Git Source
+          </Link>
+        </Callout.Text>
+      </Callout.Root>
     </Page>
   );
 };
