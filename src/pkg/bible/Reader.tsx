@@ -7,6 +7,11 @@ import { ArrowBigLeft, ArrowBigRight, ArrowBigRightDash } from "lucide-react";
 import { getChapterVerses } from "./utils/reader";
 import { SHADOW_COUNT } from "./config";
 import { useContentReducers } from "../hooks/useContentReducers";
+import {
+  useGlobalShortcuts,
+  registerShortcut,
+  unregisterShortcut,
+} from "../hooks/useGlobalShortcuts";
 
 const Reader = ({
   hidePicker,
@@ -150,6 +155,28 @@ const Reader = ({
       )
     );
   };
+
+  useGlobalShortcuts(); // Mount global listener once
+
+  useEffect(() => {
+    const nextVerseShortcut = {
+      key: "ArrowRight",
+      action: () => navigateVerse("next"),
+    };
+
+    const prevVerseShortcut = {
+      key: "ArrowLeft",
+      action: () => navigateVerse("prev"),
+    };
+
+    registerShortcut(nextVerseShortcut);
+    registerShortcut(prevVerseShortcut);
+
+    return () => {
+      unregisterShortcut(nextVerseShortcut);
+      unregisterShortcut(prevVerseShortcut);
+    };
+  }, [navigateVerse]);
 
   return (
     <div
