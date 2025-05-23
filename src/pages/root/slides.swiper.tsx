@@ -96,6 +96,20 @@ export const swiperSlides = [
     }
   />,
   <Slide
+    title={<>Only after, on land</>}
+    quote={
+      <>
+        I had a dream: I tested the waters, then on it, I ran. I closed my eyes
+        and His presence came; a light brighter than ten sun. He took me out,
+        and then back to land.
+        <br />
+        O, how fast my feet ran. On waters with varying depths, but knowing it,
+        only after returning to land. And O, how sure my feet ran! But knowing
+        it only after, on land.
+      </>
+    }
+  />,
+  <Slide
     title={
       <>
         Read, listen, or both <br />
