@@ -105,18 +105,6 @@ const Presenter = () => {
         </div>
       )}
 
-      {/* Live content viewer */}
-      <Card mt="4">
-        {parts.length > 0 ? (
-          <div
-            className="space-y-4"
-            dangerouslySetInnerHTML={{ __html: parts[index] || "" }}
-          />
-        ) : (
-          <p>No content set. Paste and press Set.</p>
-        )}
-      </Card>
-
       {/* Input and control */}
       <Card mt="4">
         <TextArea
