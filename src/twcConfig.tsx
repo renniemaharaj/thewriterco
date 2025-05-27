@@ -6,6 +6,7 @@ import Study from "./pages/reasoning/Document";
 
 import { lazy } from "react";
 import Login from "./pages/login/Login";
+import Presenter from "./pages/doc/presenter/Presenter";
 
 // const AI = lazy(() => import("./pages/ai/Chat"));
 const AI = lazy(() => import("./pkg/page/Maintenance"));
@@ -41,6 +42,7 @@ export const publicRoutes: (CustomRoute | IndexRoute)[] = [
   { path: "doc/geminiPool", element: <DocPools /> },
   { path: "doc/ai", element: <DocAI /> },
   { path: "daily", element: <Daily /> },
+  { path: "doc/presenter", element: <Presenter /> },
 ];
 
 const protectedRoutes: CustomRoute[] = [
