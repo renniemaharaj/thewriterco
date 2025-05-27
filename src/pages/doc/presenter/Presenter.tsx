@@ -69,7 +69,10 @@ const Presenter = () => {
             </>
           }
           hint={
-            <>A points-based presentation tool for reading and presenting</>
+            <>
+              A voice presenter which reads aloud text content, rendering in
+              chunks.
+            </>
           }
         />
       }
