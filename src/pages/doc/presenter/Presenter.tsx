@@ -55,7 +55,7 @@ const Presenter = () => {
 
   return (
     <Page
-      title="Rationale"
+      title="Presenter"
       description="Presenter for reading and presenting text content"
       wrapChildren
       className="min-w-[80%]"
