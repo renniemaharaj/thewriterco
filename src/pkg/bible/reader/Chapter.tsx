@@ -3,12 +3,12 @@ import { Content } from "../../../app/ereader/types";
 
 const Chapter = ({
   currentChapter,
-  handleChapterChange,
   content,
+  handleChapterChange,
 }: {
   currentChapter: string;
-  handleChapterChange: (chapter: string) => void;
   content: Content;
+  handleChapterChange: (chapter: string) => void;
 }) => {
   return (
     <Select.Root value={currentChapter} onValueChange={handleChapterChange}>

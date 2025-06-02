@@ -1,13 +1,13 @@
 import { Content } from "../../../app/ereader/types";
 
 const Current = ({
-  getCurrentSlice,
   currentChapter,
   content,
+  getCurrentSlice,
 }: {
-  getCurrentSlice: () => string[];
   currentChapter: string;
   content: Content;
+  getCurrentSlice: () => string[];
 }) => {
   const currentSlice = getCurrentSlice();
   const firstVerse = currentSlice[0];

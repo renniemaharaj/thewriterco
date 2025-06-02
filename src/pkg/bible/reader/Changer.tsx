@@ -28,7 +28,7 @@ const Changer = ({
       <Verse
         chapterVerses={chapterVerses}
         currentVerse={currentVerse}
-        handleChapterChange={handleVerseChange}
+        handleVerseChange={handleVerseChange}
       />
     </Flex>
   );

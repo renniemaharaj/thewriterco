@@ -3,11 +3,11 @@ import { Select } from "@radix-ui/themes";
 const Verse = ({
   chapterVerses,
   currentVerse,
-  handleChapterChange: handleVerseChange,
+  handleVerseChange,
 }: {
   chapterVerses: string[];
   currentVerse: string;
-  handleChapterChange: (chapter: string) => void;
+  handleVerseChange: (chapter: string) => void;
 }) => {
   return (
     <Select.Root value={currentVerse} onValueChange={handleVerseChange}>
