@@ -1,0 +1,168 @@
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
+import { Flex, IconButton } from "@radix-ui/themes";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../app/store";
+import { ArrowBigLeft, ArrowBigRight, ArrowBigRightDash } from "lucide-react";
+import { getChapterVerses } from "../utils/reader";
+import { useContentReducers } from "../../hooks/useContentReducers";
+import {
+  useGlobalShortcuts,
+  registerShortcut,
+  unregisterShortcut,
+} from "../../hooks/useGlobalShortcuts";
+import Shadow from "./Shadow";
+import Current from "./Current";
+import { SHADOW_COUNT } from "../config";
+import Changer from "./Changer";
+import Header from "../Header";
+
+const Reader = ({
+  hidePicker,
+}: {
+  hidePicker?: boolean;
+  onSpeechProgress?: (chapter: string, verse: string) => void;
+}) => {
+  const eReaderState = useSelector((state: RootState) => state.ereader);
+  const {
+    isOpen,
+    currentChapter: reduxChapter,
+    currentVerse: reduxVerse,
+    eContent,
+    readerStyle,
+  } = eReaderState;
+
+  const content = eContent.content;
+
+  const {
+    currentChapter,
+    currentVerse,
+
+    getCurrentSlice,
+    slideCurrentVerses,
+    handleChapterChange,
+    handleVerseChange,
+    navigateVerse,
+  } = useContentReducers();
+
+  const [readerState, setReaderState] = useState<"rich" | "bible">(readerStyle);
+  const initialContentLoaded = useRef(false);
+
+  // Sync Redux state into local state without triggering updates every render
+  useEffect(() => {
+    if (!initialContentLoaded.current) {
+      initialContentLoaded.current = true;
+    }
+  }, [reduxChapter, reduxVerse]);
+
+  // Sync reader style changes
+  useEffect(() => {
+    setReaderState(readerStyle);
+  }, [readerStyle]);
+
+  // Chapter Verses for Select Picker
+  const chapterVerses = useMemo(
+    () =>
+      getChapterVerses({ currentChapter: currentChapter, eContent: content }),
+    [currentChapter, content],
+  );
+
+  // Speech progress handler (updates local state only)
+  const handleSpeechProgress = useCallback(
+    (current: number) => {
+      if (current <= 1) return;
+      navigateVerse("next");
+    },
+    [navigateVerse],
+  );
+
+  useGlobalShortcuts(); // Mount global listener once
+
+  useEffect(() => {
+    const nextVerseShortcut = {
+      key: "ArrowRight",
+      action: () => navigateVerse("next"),
+    };
+
+    const prevVerseShortcut = {
+      key: "ArrowLeft",
+      action: () => navigateVerse("prev"),
+    };
+
+    registerShortcut(nextVerseShortcut);
+    registerShortcut(prevVerseShortcut);
+
+    return () => {
+      unregisterShortcut(nextVerseShortcut);
+      unregisterShortcut(prevVerseShortcut);
+    };
+  }, [navigateVerse]);
+
+  return (
+    <div
+      className={`blurred-div fixed bottom-0 left-0 shadow-lg overflow-auto z-20 ${
+        isOpen ? "h-full w-full" : "w-auto left-[50%] translate-x-[-50%]"
+      }`}
+    >
+      <Header
+        hidePicker={hidePicker ?? false}
+        isOpen={isOpen}
+        onSpeechProgress={handleSpeechProgress}
+      />
+
+      {isOpen && (
+        <div className="!flex-col p-4 space-y-4">
+          {readerState === "bible" && (
+            <Changer
+              content={content}
+              chapterVerses={chapterVerses}
+              currentChapter={currentChapter}
+              currentVerse={currentVerse}
+              handleVerseChange={handleVerseChange}
+              handleChapterChange={handleChapterChange}
+            />
+          )}
+
+          <Flex className="!justify-center !items-center space-x-4">
+            <IconButton onClick={() => navigateVerse("prev")} variant="soft">
+              <ArrowBigLeft />
+            </IconButton>
+
+            <Current
+              getCurrentSlice={getCurrentSlice}
+              currentChapter={currentChapter}
+              content={content}
+            />
+
+            <IconButton onClick={() => navigateVerse("next")} variant="soft">
+              <ArrowBigRight />
+            </IconButton>
+          </Flex>
+
+          <Shadow
+            currentSlice={getCurrentSlice()}
+            currentVerse={currentVerse}
+            currentChapter={currentChapter}
+            chapterVerses={chapterVerses}
+            content={content}
+            slideCurrentVerses={slideCurrentVerses}
+          />
+
+          <Flex justify="center" align="center" className="gap-2">
+            <IconButton
+              variant="soft"
+              disabled={
+                parseInt(currentVerse) + SHADOW_COUNT >=
+                chapterVerses.length - chapterVerses.indexOf(currentVerse) - 1
+              }
+              onClick={() => slideCurrentVerses()}
+            >
+              <ArrowBigRightDash />
+            </IconButton>
+          </Flex>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Reader;

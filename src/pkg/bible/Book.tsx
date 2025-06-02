@@ -1,4 +1,3 @@
-// components/sword/BookFragment.tsx
 import React from "react";
 import Book from "../book/Book";
 import { useSelector } from "react-redux";

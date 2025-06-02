@@ -7,7 +7,7 @@ import {
   Text,
 } from "@radix-ui/themes";
 import Navbar from "./Header";
-import Reader from "../bible/Reader";
+import Reader from "../bible/reader/Reader";
 import Footer from "./Footer";
 import { ReactNode, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";

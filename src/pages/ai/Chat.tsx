@@ -12,7 +12,7 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
-import Reader from "../../pkg/bible/Reader";
+import Reader from "../../pkg/bible/reader/Reader";
 import SideBar from "../../pkg/SideBar";
 import Menu from "../../pkg/docs/cmpnts/Menu";
 import { useThemeContext } from "../../pkg/context/theme/useThemeContext";
