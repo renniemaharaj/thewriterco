@@ -99,7 +99,7 @@ const Reader = ({
 
   return (
     <div
-      className={`blurred-div fixed bottom-0 left-0 shadow-lg overflow-auto z-20 ${
+      className={`blurred-div fixed bottom-0 left-0 shadow-lg overflow-auto z-20 no-scrollbar ${
         isOpen ? "h-full w-full" : "w-auto left-[50%] translate-x-[-50%]"
       }`}
     >
