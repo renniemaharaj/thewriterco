@@ -75,18 +75,14 @@ const VoiceReader = ({
 
   // Wrapping these will require unstable dependencies
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleResume = () => {
-    voiceReaderEngine.resume();
-    setPaused(false);
+    handlePlay();
   };
 
   // Wrapping these will require unstable dependencies
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handlePause = () => {
-    voiceReaderEngine.pause();
-    setPaused(true);
+    handleStop();
   };
 
   const handleStop = useCallback(() => {
@@ -149,16 +145,29 @@ const VoiceReader = ({
     const stopShortcut = {
       key: "Escape",
       action: () => {
+        if (playing) handleStop();
+      },
+    };
+
+    const playStopShortcut = {
+      key: " ",
+      action: () => {
         if (playing) {
           handleStop();
+        } else {
+          handlePlay();
         }
       },
     };
+
     registerShortcut(stopShortcut);
+    registerShortcut(playStopShortcut);
+
     return () => {
       unregisterShortcut(stopShortcut);
+      unregisterShortcut(playStopShortcut);
     };
-  }, [handlePause, handlePlay, handleResume, handleStop, playing, paused]);
+  }, [handlePlay, handleStop, playing]);
 
   return (
     <Flex direction="column" gap="2">
