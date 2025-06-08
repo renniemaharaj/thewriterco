@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { Flex, IconButton, Tooltip } from "@radix-ui/themes";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
@@ -89,6 +89,11 @@ const Reader = ({
     };
   }, [navigateVerse]);
 
+  const hasFiveVersesLeft = useCallback(() => {
+    const currentIndex = parseInt(currentVerse, 10);
+    return currentIndex + SHADOW_COUNT < chapterVerses.length;
+  }, [currentVerse, chapterVerses]);
+
   return (
     <div
       className={`blurred-div fixed bottom-0 left-0 shadow-lg overflow-auto z-20 no-scrollbar ${
@@ -147,10 +152,7 @@ const Reader = ({
             <Tooltip content="Next 5 Verses">
               <IconButton
                 variant="soft"
-                disabled={
-                  parseInt(currentVerse) + SHADOW_COUNT >=
-                  chapterVerses.length - chapterVerses.indexOf(currentVerse) - 1
-                }
+                disabled={!hasFiveVersesLeft()}
                 onClick={() => slideCurrentVerses()}
               >
                 <ArrowBigRightDash />
