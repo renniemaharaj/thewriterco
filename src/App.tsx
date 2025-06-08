@@ -8,7 +8,7 @@ import ErrorFallback from "./pkg/eboundary/ErrorBoundary";
 import { RequireAuth } from "./pkg/RequireAuth";
 import { ThemeProvider } from "./pkg/context/theme/ThemeProvider";
 import { useThemeContext } from "./pkg/context/theme/useThemeContext";
-import { protectedRoutesFunc, publicRoutesFunc } from "./twcConfig";
+import { protectedRoutesFunc, publicRoutesFunc } from "./routing";
 
 function App() {
   return (
