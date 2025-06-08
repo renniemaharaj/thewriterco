@@ -1,42 +1,26 @@
 import {
   Callout,
-  // Callout,
   Card,
   Flex,
-  // IconButton,
+  Heading,
   Separator,
   Text,
-  // Tooltip,
 } from "@radix-ui/themes";
 import Hero from "../../pkg/page/Hero";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// import React, { useRef } from "react";
 import Page from "../../pkg/page/Page";
 import { swiperSlides } from "./slides.swiper";
 import { swiperProps } from "./config.swiper";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
-// import Link from "../../pkg/link/Link";
-// import Chat from "../../pkg/ai/Chat";
-// import { useDispatch } from "react-redux";
-// import { clearMessages } from "../../app/chat/chatSlice";
-// import { toggleFlowSlice } from "../../app/flow/flowSlice";
-// import { Trash2Icon } from "lucide-react";
-// import { InfoCircledIcon } from "@radix-ui/react-icons";
-// import Link from "../../pkg/link/Link";
+import { HandCoinsIcon } from "lucide-react";
+import Link from "../../pkg/link/Link";
+import android_192 from "../../assets/favicon_io/android-chrome-192x192.png";
+import Book from "../../pkg/book/Book";
+import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
 
 const Root: React.FC = () => {
-  // const messageBoxRef = useRef<HTMLDivElement>(null);
-
-  // const dispatch = useDispatch();
-  // const scrollMessageBoxToBottom = () => {
-  //   messageBoxRef.current?.scrollTo({
-  //     top: messageBoxRef.current.scrollHeight,
-  //     behavior: "smooth",
-  //   });
-  // };
-
+  const { navigateWT } = useTransitionNavigation();
   return (
     <Page
       title="Home"
@@ -63,8 +47,58 @@ const Root: React.FC = () => {
       }
     >
       {/* <Separator size={"4"} /> */}
-      <Flex className="!relative flex-col !w-full gap-5">
-        <Flex className="!relative w-full !flex-row md:!w-[70%] gap-5 mx-auto">
+      <Flex className="flex-row !w-full gap-5">
+        <Flex className="!flex-col !hidden !w-0 md:!w-[25%] gap-5 mx-auto !max-w-[400px] md:!flex">
+          <Card>
+            <Flex className="!flex-col !items-center !gap-5">
+              <img
+                src={android_192}
+                alt="Android Chrome Icon"
+                className="w-20 h-20 mx-auto mt-2 animate-pulse"
+              />
+              <Heading size="4" className="text-md font-bold">
+                Support Us
+              </Heading>
+              <Flex className="items-center gap-2 text-sm mt-2">
+                <HandCoinsIcon className="h-5 w-5 text-primary" />
+                <Link href="https://paypal.me/newrennie" external animate>
+                  Paypal Contribute
+                </Link>
+              </Flex>
+            </Flex>
+          </Card>
+
+          <Card>
+            <Flex className="!flex-col !items-center !gap-5">
+              <Book
+                title="Bible"
+                division="Complete"
+                version="KJV"
+                className="!w-[6rem] !z-10"
+                onClick={() => navigateWT("/kjv")}
+                showAnimation
+              />
+              <Heading size="4" className="text-md font-bold">
+                KJV Reader
+              </Heading>
+              <Text className="!text-center !text-sm">
+                Read, play audio or download
+              </Text>
+            </Flex>
+          </Card>
+          <Card>
+            <Flex className="!flex-col !items-center !gap-5">
+              <Heading size="4" className="text-md font-bold">
+                Our Mission
+              </Heading>
+              <Text className="!text-center !text-sm">
+                Advocacy of a KJV first approach and preservation of strong
+                theological reasoning for faith.
+              </Text>
+            </Flex>
+          </Card>
+        </Flex>
+        <Flex className="!relative !flex-row !w-[75%] gap-5 mx-auto">
           <Swiper {...swiperProps} slidesPerView="auto">
             {swiperSlides.map((item, index) => (
               <SwiperSlide
@@ -76,75 +110,20 @@ const Root: React.FC = () => {
             ))}
           </Swiper>
         </Flex>
-        <Separator size={"4"} className="mx-auto m-5" />
-        {/* <Flex className="!relative w-full !flex-row !justify-center !items-center gap-5 mx-auto">
-          <Text className="!text-center !text-lg !font-bold">
-            TheWriterCo AI
-          </Text>
-          <Tooltip content="delete chat">
-            <IconButton
-              size="2"
-              variant="soft"
-              onClick={() => {
-                {
-                  dispatch(clearMessages());
-                  dispatch(toggleFlowSlice());
-                }
-              }}
-            >
-              <Trash2Icon />
-            </IconButton>
-          </Tooltip>
-          <Link href="ai">Go</Link>
-        </Flex> */}
-        <Callout.Root>
-          <Callout.Icon>
-            <InfoCircledIcon />
-          </Callout.Icon>
-          <Callout.Text className="flex flex-col gap-2">
-            <Text className="!text-center !text-lg !font-bold">
-              Please note: Services implementing artificial intelligence, with
-              the exception of daily reports, have been permanently disabled for
-              the public. However, you may fork our github repositories, for
-              your personal use. Do enjoy!
-            </Text>
-          </Callout.Text>
-        </Callout.Root>
-        {/* <Callout.Root>
-          <Callout.Icon>
-            <InfoCircledIcon />
-          </Callout.Icon>
-          <Callout.Text className="flex flex-col gap-2">
-            <Text className="!text-center !text-lg !font-bold">
-              Powered by our open source, Google Gemini-Pool, Go Manager
-            </Text>
-
-            <Text className="!text-center !text-md">
-              A pool manager for handling multiple Google Gemini API keys
-              efficiently. This package provides thread-safe API key management
-              and session wrapping for Google's Gemini AI models. Featuring
-              queue-based retrying, exponential backoff and custom validation,
-              and is written in Go for performance{" "}
-              <Link href="/doc/geminiPool">Learn More</Link> or{" "}
-              <Link
-                external
-                href="https://github.com/renniemaharaj/google-gemini-pool"
-              >
-                Source
-              </Link>{" "}
-            </Text>
-          </Callout.Text>
-        </Callout.Root> */}
-
-        {/* <Card className="!w-full mx-auto !min-h-fit !static">
-          <Flex className="!w-full md:!w-[70%] max-w-[700px] !h-[400px] mx-auto overflow-auto">
-            <Chat
-              className="!w-full mx-auto sm:!w-[100%] "
-              scrollMessageBoxToBottom={scrollMessageBoxToBottom}
-            />
-          </Flex>
-        </Card> */}
       </Flex>
+      <Separator size={"4"} className="mx-auto m-5" />
+      <Callout.Root>
+        <Callout.Icon>
+          <InfoCircledIcon />
+        </Callout.Icon>
+        <Callout.Text className="flex flex-col gap-2">
+          <Text className="!text-center !text-lg !font-bold">
+            Please note: Services implementing artificial intelligence have been
+            permanently disabled for the public. However, you may fork our
+            github repositories, for your personal use. Do enjoy!
+          </Text>
+        </Callout.Text>
+      </Callout.Root>
     </Page>
   );
 };
