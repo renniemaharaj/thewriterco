@@ -1,13 +1,19 @@
 import { BookDownIcon, BookUpIcon, DownloadIcon } from "lucide-react";
 import { toggleOpenState } from "../../app/ereader/ereaderSlice";
 import Picker from "./Picker";
-import { Button, Flex, IconButton, Tooltip } from "@radix-ui/themes";
+import { Button, Flex, IconButton, Switch, Tooltip } from "@radix-ui/themes";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
 import Voice from "./Voice";
 import { RootState } from "../../app/store";
 import { useContentReducers } from "../hooks/useContentReducers";
 import useDownloader from "../hooks/useDownloader";
+
+import {
+  useGlobalShortcuts,
+  registerShortcut,
+  unregisterShortcut,
+} from "../hooks/useGlobalShortcuts";
 
 const Header = ({
   hidePicker,
@@ -18,17 +24,17 @@ const Header = ({
   hidePicker: boolean;
   isOpen: boolean;
   routeTextContent?: string[];
-  onSpeechProgress: (i: number) => void;
+  // onSpeechProgress: (i: number) => void;
 }) => {
   const eReaderState = useSelector((state: RootState) => state.ereader);
-  const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
-  const elevenLabsActive = elevenLabs.enabled;
+
+  const [speechEnabled, setSpeechEnabled] = useState(false);
 
   const { download } = useDownloader();
 
   const [textContent, setTextContent] = useState<string[]>([]);
 
-  const [useBrowser, setUseBrowser] = useState<boolean>(true);
+  const [useBrowser] = useState<boolean>(true);
   const dispatch = useDispatch();
 
   const { narrate, navigateVerse } = useContentReducers();
@@ -39,13 +45,10 @@ const Header = ({
     if (!x) setTextContent(narrate().slice(0, 1));
   }, [routeTextContent, narrate]);
 
-  const onSpeechProgress = () => {
+  const onSpeechProgress = useCallback(() => {
+    if (!speechEnabled) return;
     navigateVerse("next");
-  };
-
-  useEffect(() => {
-    setUseBrowser(!elevenLabsActive);
-  }, [elevenLabsActive]);
+  }, [speechEnabled, navigateVerse]);
 
   const displayHeaderClassName =
     "!gap-2 !p-2 !max-w-full overflow-auto !flex !justify-center !items-center !border-b";
@@ -57,6 +60,21 @@ const Header = ({
     );
   }, [eReaderState.eContent, download]);
 
+  useGlobalShortcuts(); // Mount global listener once
+
+  useEffect(() => {
+    const toggleSpeech = {
+      key: "V",
+      action: () => setSpeechEnabled((prev) => !prev),
+    };
+
+    registerShortcut(toggleSpeech);
+
+    return () => {
+      unregisterShortcut(toggleSpeech);
+    };
+  }, [navigateVerse]);
+
   return (
     <Flex
       className={`${hidePicker && !isOpen ? "!hidden" : ""} ${displayHeaderClassName}`}
@@ -64,15 +82,6 @@ const Header = ({
       <Picker
         trigger={<Button variant="soft">{eReaderState.eContent.title}</Button>}
       />
-      <Tooltip content={`Download JSON - ${eReaderState.eContent.title}`}>
-        <IconButton
-          onClick={handleDownload}
-          aria-label="Download Book"
-          variant="soft"
-        >
-          <DownloadIcon />
-        </IconButton>
-      </Tooltip>
 
       <Tooltip content="Toggle Ereader">
         <IconButton
@@ -84,12 +93,32 @@ const Header = ({
         </IconButton>
       </Tooltip>
 
+      <Tooltip content="Speech | ⌘ V">
+        <Switch
+          size="1"
+          checked={speechEnabled}
+          onCheckedChange={setSpeechEnabled}
+          variant="soft"
+          className={`${!speechEnabled && "!animate-pulse"}`}
+        />
+      </Tooltip>
+
       {/* Pass the whole array at once */}
       <Voice
         defaultModel={useBrowser}
         textContent={textContent}
         onSpeechProgress={onSpeechProgress}
       />
+
+      <Tooltip content={`Download JSON - ${eReaderState.eContent.title}`}>
+        <IconButton
+          onClick={handleDownload}
+          aria-label="Download Book"
+          variant="soft"
+        >
+          <DownloadIcon />
+        </IconButton>
+      </Tooltip>
     </Flex>
   );
 };

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState, useMemo, useCallback } from "react";
-import { Flex, IconButton } from "@radix-ui/themes";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { Flex, IconButton, Tooltip } from "@radix-ui/themes";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import { ArrowBigLeft, ArrowBigRight, ArrowBigRightDash } from "lucide-react";
@@ -45,6 +45,7 @@ const Reader = ({
   } = useContentReducers();
 
   const [readerState, setReaderState] = useState<"rich" | "bible">(readerStyle);
+
   const initialContentLoaded = useRef(false);
 
   // Sync Redux state into local state without triggering updates every render
@@ -64,15 +65,6 @@ const Reader = ({
     () =>
       getChapterVerses({ currentChapter: currentChapter, eContent: content }),
     [currentChapter, content],
-  );
-
-  // Speech progress handler (updates local state only)
-  const handleSpeechProgress = useCallback(
-    (current: number) => {
-      if (current <= 1) return;
-      navigateVerse("next");
-    },
-    [navigateVerse],
   );
 
   useGlobalShortcuts(); // Mount global listener once
@@ -106,7 +98,7 @@ const Reader = ({
       <Header
         hidePicker={hidePicker ?? false}
         isOpen={isOpen}
-        onSpeechProgress={handleSpeechProgress}
+        // onSpeechProgress={handleSpeechProgress}
       />
 
       {isOpen && (
@@ -123,9 +115,11 @@ const Reader = ({
           )}
 
           <Flex className="!justify-center !items-center space-x-4">
-            <IconButton onClick={() => navigateVerse("prev")} variant="soft">
-              <ArrowBigLeft />
-            </IconButton>
+            <Tooltip content="⌘ Left Key">
+              <IconButton onClick={() => navigateVerse("prev")} variant="soft">
+                <ArrowBigLeft />
+              </IconButton>
+            </Tooltip>
 
             <Current
               getCurrentSlice={getCurrentSlice}
@@ -133,9 +127,11 @@ const Reader = ({
               content={content}
             />
 
-            <IconButton onClick={() => navigateVerse("next")} variant="soft">
-              <ArrowBigRight />
-            </IconButton>
+            <Tooltip content="⌘ Right Key">
+              <IconButton onClick={() => navigateVerse("next")} variant="soft">
+                <ArrowBigRight />
+              </IconButton>
+            </Tooltip>
           </Flex>
 
           <Shadow
@@ -148,16 +144,18 @@ const Reader = ({
           />
 
           <Flex justify="center" align="center" className="gap-2">
-            <IconButton
-              variant="soft"
-              disabled={
-                parseInt(currentVerse) + SHADOW_COUNT >=
-                chapterVerses.length - chapterVerses.indexOf(currentVerse) - 1
-              }
-              onClick={() => slideCurrentVerses()}
-            >
-              <ArrowBigRightDash />
-            </IconButton>
+            <Tooltip content="Next 5 Verses">
+              <IconButton
+                variant="soft"
+                disabled={
+                  parseInt(currentVerse) + SHADOW_COUNT >=
+                  chapterVerses.length - chapterVerses.indexOf(currentVerse) - 1
+                }
+                onClick={() => slideCurrentVerses()}
+              >
+                <ArrowBigRightDash />
+              </IconButton>
+            </Tooltip>
           </Flex>
         </div>
       )}

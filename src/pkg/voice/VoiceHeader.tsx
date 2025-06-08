@@ -1,4 +1,4 @@
-import { Flex, IconButton } from "@radix-ui/themes";
+import { Flex, IconButton, Tooltip } from "@radix-ui/themes";
 import { AudioLines, PauseIcon, StopCircle } from "lucide-react";
 import { VoiceReaderEngine } from "../hooks/useVoiceReader";
 
@@ -26,44 +26,52 @@ const VoiceHeader = ({
 
   return (
     <Flex className="gap-2 items-center">
-      <IconButton
-        onClick={handlePlay}
-        variant="soft"
-        aria-label="Play"
-        className={`${voiceReaderIconClass} ${paused && "!hidden"}`}
-        disabled={playing && !paused}
-      >
-        <AudioLines />
-      </IconButton>
+      <Tooltip content="⌘ Space Key">
+        <IconButton
+          onClick={handlePlay}
+          variant="soft"
+          aria-label="Play"
+          className={`${voiceReaderIconClass} ${paused && "!hidden"}`}
+          disabled={playing && !paused}
+        >
+          <AudioLines />
+        </IconButton>
+      </Tooltip>
 
-      <IconButton
-        onClick={handleResume}
-        variant="soft"
-        aria-label="Resume"
-        className={`${!paused && "!hidden"}`}
-        disabled={!paused}
-      >
-        <AudioLines />
-      </IconButton>
+      <Tooltip content="⌘ Space Key">
+        <IconButton
+          onClick={handleResume}
+          variant="soft"
+          aria-label="Resume"
+          className={`${!paused && "!hidden"}`}
+          disabled={!paused}
+        >
+          <AudioLines />
+        </IconButton>
+      </Tooltip>
 
-      <IconButton
-        onClick={handlePause}
-        variant="soft"
-        aria-label="Pause"
-        className={`${voiceReaderIconClass} ${paused && "!hidden"}`}
-        disabled={!voiceReaderEngine.speaking || paused}
-      >
-        <PauseIcon />
-      </IconButton>
+      <Tooltip content="⌘ Space Key">
+        <IconButton
+          onClick={handlePause}
+          variant="soft"
+          aria-label="Pause"
+          className={`${voiceReaderIconClass} ${paused && "!hidden"}`}
+          disabled={!voiceReaderEngine.speaking || paused}
+        >
+          <PauseIcon />
+        </IconButton>
+      </Tooltip>
 
-      <IconButton
-        onClick={handleStop}
-        variant="soft"
-        aria-label="Stop"
-        disabled={!playing && !paused}
-      >
-        <StopCircle />
-      </IconButton>
+      <Tooltip content="⌘ Space Key">
+        <IconButton
+          onClick={handleStop}
+          variant="soft"
+          aria-label="Stop"
+          disabled={!playing && !paused}
+        >
+          <StopCircle />
+        </IconButton>
+      </Tooltip>
     </Flex>
   );
 };
