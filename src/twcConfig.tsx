@@ -1,15 +1,15 @@
 import { Route } from "react-router-dom";
 
 import Root from "./pages/root/Root";
-import NoPage from "./pages/404/NoPage";
+import Missing from "./pages/missing/Missing";
 import Study from "./pages/reasoning/Document";
 
 import { lazy } from "react";
 import Login from "./pages/login/Login";
 import Presenter from "./pages/doc/presenter/Presenter";
+import Suspended from "./pages/suspended/Suspended";
 
-// const AI = lazy(() => import("./pages/ai/Chat"));
-const AI = lazy(() => import("./pkg/page/Maintenance"));
+const AI = lazy(() => import("./pages/ai/Chat"));
 const Number = lazy(() => import("./pages/number/Number"));
 const Daily = lazy(() => import("./pages/daily/Reports"));
 const Kjv = lazy(() => import("./pages/kjv/KJV"));
@@ -20,6 +20,7 @@ const DocAI = lazy(() => import("./pages/doc/ai/Document"));
 
 export interface Primitve {
   element: JSX.Element;
+  suspended?: boolean;
 }
 
 export interface CustomRoute extends Primitve {
@@ -32,10 +33,10 @@ export interface IndexRoute extends Primitve {
 
 export const publicRoutes: (CustomRoute | IndexRoute)[] = [
   { index: true, element: <Root /> },
-  { path: "*", element: <NoPage /> },
+  { path: "*", element: <Missing /> },
   { path: "deducer", element: <Number /> },
   { path: "login", element: <Login /> },
-  { path: "ai", element: <AI /> },
+  { path: "ai", element: <AI />, suspended: true },
   { path: "kjv", element: <Kjv /> },
   { path: "reasoning", element: <Study /> },
   { path: "doc/studyDocument", element: <DocStudies /> },
@@ -50,6 +51,9 @@ const protectedRoutes: CustomRoute[] = [
   { path: "studies", element: <></> },
 ];
 
+const passThrough = (route: CustomRoute) =>
+  route.suspended ? <Suspended /> : route.element;
+
 export const publicRoutesFunc = () => {
   return publicRoutes.map((route, i) =>
     "index" in route ? (
@@ -58,7 +62,7 @@ export const publicRoutesFunc = () => {
       <Route
         key={`public-${route.path}` + i}
         path={route.path}
-        element={route.element}
+        element={passThrough(route)}
       />
     ),
   );
@@ -69,7 +73,7 @@ export const protectedRoutesFunc = () => {
     <Route
       key={`private-${route.path}` + i}
       path={route.path}
-      element={route.element}
+      element={passThrough(route)}
     />
   ));
 };

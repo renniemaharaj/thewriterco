@@ -5,7 +5,7 @@ import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation
 import { FlagIcon, HomeIcon } from "lucide-react";
 // import Link from "next/link";
 
-export default function NoPage() {
+function Missing() {
   const { path } = useTransitionNavigation();
   return (
     <Page
@@ -21,7 +21,6 @@ export default function NoPage() {
               Company
             </>
           }
-          // hint={<></>}
         />
       }
     >
@@ -41,7 +40,7 @@ export default function NoPage() {
         </Flex>
 
         <Text as="div" color="red" size="3" className="animate-pulse">
-          Oops! This page doesn’t exist
+          Oops! This page doesn't exist
         </Text>
 
         <Text as="p" color="gray" size="3">
@@ -66,3 +65,5 @@ export default function NoPage() {
     </Page>
   );
 }
+
+export default Missing;

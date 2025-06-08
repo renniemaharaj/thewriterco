@@ -1,10 +1,11 @@
 import { Text, Button, Link, Flex, Badge } from "@radix-ui/themes";
-import Page from "./Page";
-import Hero from "./Hero";
-import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
-import { BanIcon, HomeIcon } from "lucide-react";
 
-export default function Maintenance() {
+import { BanIcon, HomeIcon } from "lucide-react";
+import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
+import Page from "../../pkg/page/Page";
+import Hero from "../../pkg/page/Hero";
+
+const Suspended = () => {
   const { path } = useTransitionNavigation();
   return (
     <Page
@@ -17,7 +18,7 @@ export default function Maintenance() {
           subHeader={
             <>
               Temporarily <br />
-              Disabled
+              Suspended
             </>
           }
         />
@@ -34,11 +35,11 @@ export default function Maintenance() {
         </Flex>
 
         <Text as="div" color="red" size="3" className="animate-pulse">
-          This route is currently disabled.
+          This route is currently suspended
         </Text>
 
         <Text as="p" color="gray" size="3">
-          It may be under maintenance or intentionally blocked.
+          Please try again later
         </Text>
 
         <div className="flex justify-center gap-4 flex-wrap">
@@ -58,4 +59,6 @@ export default function Maintenance() {
       </div>
     </Page>
   );
-}
+};
+
+export default Suspended;
