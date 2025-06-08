@@ -40,10 +40,11 @@ const Header = ({
   const { narrate, navigateVerse } = useContentReducers();
 
   useEffect(() => {
+    if (!speechEnabled) return;
     const x = routeTextContent?.length;
     if (x) setTextContent(routeTextContent);
     if (!x) setTextContent(narrate().slice(0, 1));
-  }, [routeTextContent, narrate]);
+  }, [routeTextContent, narrate, speechEnabled]);
 
   const onSpeechProgress = useCallback(() => {
     if (!speechEnabled) return;
