@@ -1,18 +1,10 @@
-import {
-  Callout,
-  Card,
-  Flex,
-  Heading,
-  Separator,
-  Text,
-} from "@radix-ui/themes";
+import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import Hero from "../../pkg/page/Hero";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import Page from "../../pkg/page/Page";
 import { swiperSlides } from "./slides.swiper";
 import { swiperProps } from "./config.swiper";
-import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { HandCoinsIcon } from "lucide-react";
 import Link from "../../pkg/link/Link";
 import android_192 from "../../assets/favicon_io/android-chrome-192x192.png";
@@ -111,19 +103,6 @@ const Root: React.FC = () => {
           </Swiper>
         </Flex>
       </Flex>
-      <Separator size={"4"} className="mx-auto m-5" />
-      <Callout.Root>
-        <Callout.Icon>
-          <InfoCircledIcon />
-        </Callout.Icon>
-        <Callout.Text className="flex flex-col gap-2">
-          <Text className="!text-center !text-lg !font-bold">
-            Please note: Services implementing artificial intelligence have been
-            permanently disabled for the public. However, you may fork our
-            github repositories, for your personal use. Do enjoy!
-          </Text>
-        </Callout.Text>
-      </Callout.Root>
     </Page>
   );
 };
