@@ -78,7 +78,7 @@ const Menu = ({ className, routeChildren, additionalTabs = [] }: MenuProps) => {
   return (
     <ScrollArea className={`${className} ${scrollAreaClass}`}>
       <Tabs.Root
-        defaultValue={additionalTabs[0]?.value ?? combinedTabs[0]?.value}
+        defaultValue={additionalTabs[0]?.value ?? defaultTabs[0]?.value}
         className="!max-w-[100%]"
       >
         <Tabs.List className={tabListClass}>

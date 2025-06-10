@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import { setEBook } from "../../app/ereader/ereaderSlice";
 import { initialState } from "../../app/ereader/utils";
 
+import light from "../../assets/Light.jpg";
+
 const Page = ({
   children,
   hero,
@@ -48,7 +50,17 @@ const Page = ({
   }, [dispatch]);
 
   return (
-    <>
+    <div>
+      <div
+        style={{
+          backgroundImage: `url(${light})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          filter: "blur(2px)",
+        }}
+        className="absolute inset-0 z-[-1] opacity-50 !top-0 !left-0 w-[100vw] h-[100vh]"
+      />
       <Helmet>
         {title !== "" && <title>{`TheWriterCo - ${title}`}</title>}
         {description !== "" && (
@@ -66,10 +78,10 @@ const Page = ({
         direction="column"
         align="center"
         justify="center"
-        className={`!w-full md:!w-[90%] !flex-col !mx-auto pb-20  ${className}`}
+        className={`!w-full md:!w-[90%] !flex-col !mx-auto pb-20 blurred-div-light  ${className}`}
       >
         {wrapChildren && (
-          <Card className={`!p-5 !max-w-full ${className}`}>
+          <Card className={`!p-5 !max-w-full blurred-div ${className}`}>
             <Flex
               data-testid="heroElement"
               className="!flex-col !gap-10  !w-full !max-w-full"
@@ -99,7 +111,7 @@ const Page = ({
       <Separator size={"4"} />
       {/* <Footer /> */}
       <Footer />
-    </>
+    </div>
   );
 };
 

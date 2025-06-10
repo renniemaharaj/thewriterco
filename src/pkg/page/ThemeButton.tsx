@@ -39,11 +39,7 @@ const ThemeButton = () => {
           className="text-white animate-pulse"
         />
       ) : (
-        <SunIcon
-          width="20"
-          height="20"
-          className="text-yellow-400 animate-pulse"
-        />
+        <SunIcon width="20" height="20" className="animate-pulse" />
       )}
     </MotionIcon>
   );
