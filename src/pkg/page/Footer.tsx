@@ -1,12 +1,5 @@
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import {
-  Heading,
-  Text,
-  Flex,
-  TextField,
-  Button,
-  Separator,
-} from "@radix-ui/themes";
+import { Heading, Text, Flex, TextField, Button } from "@radix-ui/themes";
 import {
   Facebook,
   //   Instagram,
@@ -21,20 +14,13 @@ import {
 import Hero from "./Hero";
 import Hint from "../Hint";
 import Link from "../link/Link";
+import FlexBreak from "./FlexBreak";
+
+import android_192 from "../../assets/favicon_io/android-chrome-192x192.png";
 
 const companyName = "The Writer Company";
-const companyMission = `There was none before the Lord Jesus, the Christ. There will be
-              none after Him. He is LORD. He is God. He is the great Amen; the
-              faithful Witness; the Beginning of the creation of God;
-              everlasting Father. No man is able to loose or to bind his own
-              lusts. For this cause was He purposed before the beginning of our
-              time to be the blameless Mediator between man and the unseen
-              Father, begotten of the Father Himself alone; of God. So the
-              Father purposed His very Word, and God made His Word to be His own
-              Son, not by woman, though He entered the world through a virgin,
-              but of God. Hence, He is the Son of God; holy, holy, holy.
-              Therefore there is no successor to Him. For His kingdom is
-              everlasting and coming in full!`;
+const companyMission = `Advocacy of a KJV first approach and preservation of strong
+            theological reasoning for faith.`;
 const companyAddress = "Trinidad and Tobago ";
 const companyEmail = "rvesprey@gmail.com";
 const companyPhone = "(***) ***-****";
@@ -54,7 +40,8 @@ const Footer: React.FC = () => {
           </div>
         }
       />
-      <Separator size={"1"} className="mx-auto" />
+      <FlexBreak />
+      <FlexBreak />
       {/* </Box> */}
       <Flex className="max-w-7xl !flex-wrap mx-auto flex !gap-10 w-full !text-center !items-center !justify-center p-1">
         {/* Second Column: Support Section */}
@@ -138,9 +125,14 @@ const Footer: React.FC = () => {
           </Flex>
         </Flex>
 
-        <div className="basis-[100%]" />
+        <FlexBreak />
         {/* Fifth Column: Support */}
-        <Flex className="!flex-col">
+        <Flex className="!flex-col !items-center !gap-5">
+          <img
+            src={android_192}
+            alt="Android Chrome Icon"
+            className="w-20 h-20 mx-auto mt-2 animate-pulse rounded-lg"
+          />
           <Heading size="4" className="text-md font-bold">
             Support Us
           </Heading>
@@ -151,6 +143,8 @@ const Footer: React.FC = () => {
             </Link>
           </Flex>
         </Flex>
+
+        {/* </Card> */}
       </Flex>
 
       {/* Footer Bottom Section */}

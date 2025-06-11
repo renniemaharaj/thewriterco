@@ -46,7 +46,7 @@ const Root: React.FC = () => {
               <img
                 src={android_192}
                 alt="Android Chrome Icon"
-                className="w-20 h-20 mx-auto mt-2 animate-pulse"
+                className="w-20 h-20 mx-auto mt-2 animate-pulse rounded-lg"
               />
               <Heading size="4" className="text-md font-bold">
                 Support Us
@@ -75,17 +75,6 @@ const Root: React.FC = () => {
               </Heading>
               <Text className="!text-center !text-sm">
                 Read, play audio or download
-              </Text>
-            </Flex>
-          </Card>
-          <Card>
-            <Flex className="!flex-col !items-center !gap-5">
-              <Heading size="4" className="text-md font-bold">
-                Our Mission
-              </Heading>
-              <Text className="!text-center !text-sm">
-                Advocacy of a KJV first approach and preservation of strong
-                theological reasoning for faith.
               </Text>
             </Flex>
           </Card>
