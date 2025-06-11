@@ -15,7 +15,7 @@ export const swiperSlides = [
     }}
   />,
   <Slide
-    title="The Rise of Christianity:"
+    title="The Rise of Christianity"
     quote="Why It's Spreading Fast and What It Means for the Church"
     videoUrl="https://www.youtube.com/watch?v=87IGqrjDooo"
     videoMeta={{
