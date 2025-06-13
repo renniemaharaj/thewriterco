@@ -39,7 +39,7 @@ describe("App component", () => {
     render(<App />, { route: "/" });
     assertElementContainsAllText("header", [
       /TheWriterCo/,
-      /Studies/,
+      /Writer/,
       /KJV/,
       /Rationale/,
     ]);

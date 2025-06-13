@@ -13,7 +13,7 @@ import Link from "../link/Link";
 import ThemeButton from "./ThemeButton";
 
 const navLinks = [
-  { label: "Studies", href: "/studies", disabled: false },
+  { label: "Writer", href: "/writer", disabled: false },
   { label: "KJV", href: "/kjv" },
   //&
   // { label: "AI", href: "/ai" },

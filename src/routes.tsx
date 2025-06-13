@@ -17,6 +17,8 @@ const DocPools = lazy(() => import("./pages/doc/geminiPool/Document"));
 const DocStudies = lazy(() => import("./pages/doc/studyDocument/Document"));
 const DocAI = lazy(() => import("./pages/doc/ai/Document"));
 
+const Writer = lazy(() => import("./pages/writer/Writer.tsx"));
+
 export const protectedRoutes: CustomRoute[] = [
   { path: "office", element: <></> },
   { path: "studies", element: <></> },
@@ -35,4 +37,5 @@ export const publicRoutes: (CustomRoute | IndexRoute)[] = [
   { path: "doc/ai", element: <DocAI /> },
   { path: "daily", element: <Daily /> },
   { path: "doc/presenter", element: <Presenter /> },
+  { path: "writer", element: <Writer />, suspended: false },
 ];
