@@ -26,7 +26,7 @@ const KJV = () => {
           subHeader="KJV"
           hint={
             <Text>
-              The Writer Company is KJV only. We are against the subtle
+              The Writer Company is KJV first. We are against the subtle
               conditioning towards an ultimate acceptance of a watered-down
               bible version. 😬
             </Text>

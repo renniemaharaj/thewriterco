@@ -17,6 +17,11 @@ const Search = ({ onChange }: { onChange: (str: string) => void }) => {
         placeholder="Search"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+        onKeyUp={(e) => {
+          if (e.key === "Backspace" || e.key === "Enter") {
+            onChange(searchTerm);
+          }
+        }}
         className="w-56"
       />
 
