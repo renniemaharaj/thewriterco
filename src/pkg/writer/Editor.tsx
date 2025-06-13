@@ -1,4 +1,3 @@
-import { useState } from "react";
 import RichTextEditor from "reactjs-tiptap-editor";
 // import { BaseKit } from 'reactjs-tiptap-editor/extension-bundle'; // for version 0.1.16 and lower
 
@@ -55,7 +54,7 @@ import { Excalidraw } from "reactjs-tiptap-editor/excalidraw";
 import { Mention } from "reactjs-tiptap-editor/mention";
 import { Attachment } from "reactjs-tiptap-editor/attachment";
 import { ImageGif } from "reactjs-tiptap-editor/imagegif";
-import { Mermaid } from "reactjs-tiptap-editor/mermaid";
+// import { Mermaid } from "reactjs-tiptap-editor/mermaid";
 import { Twitter } from "reactjs-tiptap-editor/twitter";
 
 import { Drawer } from "reactjs-tiptap-editor/drawer";
@@ -126,17 +125,20 @@ const extensions = [
   Mention,
   Attachment,
   ImageGif,
-  Mermaid,
+  // Mermaid,
   Twitter,
 
   Drawer,
 ];
 
-const DEFAULT = "";
-
-const Editor = () => {
-  const [content, setContent] = useState(DEFAULT);
-
+/* eslint-disable */
+const Editor = ({
+  content,
+  setContent,
+}: {
+  content: any;
+  setContent: (content: any) => void;
+}) => {
   /* eslint-disable */
   const onChangeContent = (value: any) => {
     setContent(value);

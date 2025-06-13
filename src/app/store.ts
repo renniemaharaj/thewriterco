@@ -10,6 +10,7 @@ import reasoningSlice from "./reasoning/reasoningSlice";
 import elevenLabsSlice from "./elevenLabs/eleventLabsSlice";
 import errorBoundarySlice from "./errorBoundary/errorBoundarySlice";
 import pageSlice from "./page/pageSlice";
+import writerSlice from "./writer/writerSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     page: pageSlice.reducer,
     elevenLabs: elevenLabsSlice.reducer,
     errorBoundary: errorBoundarySlice.reducer,
+    writer: writerSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
