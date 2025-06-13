@@ -5,7 +5,6 @@ import Editor from "../../pkg/writer/Editor";
 const Writer = () => {
   return (
     <Page
-      wrapChildren
       title="Writer"
       description="Online Writer"
       hero={

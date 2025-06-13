@@ -144,6 +144,7 @@ const Editor = () => {
 
   return (
     <RichTextEditor
+      dark={false}
       output="html"
       content={content}
       onChangeContent={onChangeContent}
