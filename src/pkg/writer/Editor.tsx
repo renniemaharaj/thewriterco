@@ -1,8 +1,17 @@
-import RichTextEditor from "reactjs-tiptap-editor";
-// import { BaseKit } from 'reactjs-tiptap-editor/extension-bundle'; // for version 0.1.16 and lower
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 
-import { BaseKit } from "reactjs-tiptap-editor";
+import RichTextEditor, { BaseKit } from "reactjs-tiptap-editor";
 
+import {
+  BubbleMenuTwitter,
+  BubbleMenuKatex,
+  // BubbleMenuExcalidraw,
+  // BubbleMenuMermaid,
+  BubbleMenuDrawer,
+} from "reactjs-tiptap-editor/bubble-extra";
+
+import { Attachment } from "reactjs-tiptap-editor/attachment";
 import { Blockquote } from "reactjs-tiptap-editor/blockquote";
 import { Bold } from "reactjs-tiptap-editor/bold";
 import { BulletList } from "reactjs-tiptap-editor/bulletlist";
@@ -10,7 +19,10 @@ import { Clear } from "reactjs-tiptap-editor/clear";
 import { Code } from "reactjs-tiptap-editor/code";
 import { CodeBlock } from "reactjs-tiptap-editor/codeblock";
 import { Color } from "reactjs-tiptap-editor/color";
-import { Document } from "reactjs-tiptap-editor/document";
+import { ColumnActionButton } from "reactjs-tiptap-editor/multicolumn";
+import { Emoji } from "reactjs-tiptap-editor/emoji";
+import { ExportPdf } from "reactjs-tiptap-editor/exportpdf";
+import { ExportWord } from "reactjs-tiptap-editor/exportword";
 import { FontFamily } from "reactjs-tiptap-editor/fontfamily";
 import { FontSize } from "reactjs-tiptap-editor/fontsize";
 import { FormatPainter } from "reactjs-tiptap-editor/formatpainter";
@@ -19,140 +31,239 @@ import { Highlight } from "reactjs-tiptap-editor/highlight";
 import { History } from "reactjs-tiptap-editor/history";
 import { HorizontalRule } from "reactjs-tiptap-editor/horizontalrule";
 import { Iframe } from "reactjs-tiptap-editor/iframe";
-
 import { Image } from "reactjs-tiptap-editor/image";
-import "react-image-crop/dist/ReactCrop.css";
-
+// import { ImageGif } from "reactjs-tiptap-editor/imagegif";
+import { ImportWord } from "reactjs-tiptap-editor/importword";
 import { Indent } from "reactjs-tiptap-editor/indent";
 import { Italic } from "reactjs-tiptap-editor/italic";
 import { LineHeight } from "reactjs-tiptap-editor/lineheight";
 import { Link } from "reactjs-tiptap-editor/link";
-import { ListItem } from "reactjs-tiptap-editor/listitem";
+import { Mention } from "reactjs-tiptap-editor/mention";
 import { MoreMark } from "reactjs-tiptap-editor/moremark";
-import { MultiColumn } from "reactjs-tiptap-editor/multicolumn";
 import { OrderedList } from "reactjs-tiptap-editor/orderedlist";
-import { Selection } from "reactjs-tiptap-editor/selection";
+import { SearchAndReplace } from "reactjs-tiptap-editor/searchandreplace";
 import { SlashCommand } from "reactjs-tiptap-editor/slashcommand";
 import { Strike } from "reactjs-tiptap-editor/strike";
-import { SubAndSuperScript } from "reactjs-tiptap-editor/subandsuperscript";
 import { Table } from "reactjs-tiptap-editor/table";
+import { TableOfContents } from "reactjs-tiptap-editor/tableofcontent";
 import { TaskList } from "reactjs-tiptap-editor/tasklist";
 import { TextAlign } from "reactjs-tiptap-editor/textalign";
-import { TextBubble } from "reactjs-tiptap-editor/textbubble";
-import { TrailingNode } from "reactjs-tiptap-editor/trailingnode";
 import { TextUnderline } from "reactjs-tiptap-editor/textunderline";
 import { Video } from "reactjs-tiptap-editor/video";
-import { SearchAndReplace } from "reactjs-tiptap-editor/searchandreplace";
-import { Emoji } from "reactjs-tiptap-editor/emoji";
-
+import { TextDirection } from "reactjs-tiptap-editor/textdirection";
 import { Katex } from "reactjs-tiptap-editor/katex";
-import { ExportPdf } from "reactjs-tiptap-editor/exportpdf";
-import { ImportWord } from "reactjs-tiptap-editor/importword";
-import { ExportWord } from "reactjs-tiptap-editor/exportword";
-import { TableOfContents } from "reactjs-tiptap-editor/tableofcontent";
-import { Excalidraw } from "reactjs-tiptap-editor/excalidraw";
-import { Mention } from "reactjs-tiptap-editor/mention";
-import { Attachment } from "reactjs-tiptap-editor/attachment";
-import { ImageGif } from "reactjs-tiptap-editor/imagegif";
-// import { Mermaid } from "reactjs-tiptap-editor/mermaid";
-import { Twitter } from "reactjs-tiptap-editor/twitter";
-
 import { Drawer } from "reactjs-tiptap-editor/drawer";
-import "easydrawer/styles.css";
+// import { Excalidraw } from "reactjs-tiptap-editor/excalidraw";
+import { Twitter } from "reactjs-tiptap-editor/twitter";
+// import { Mermaid } from "reactjs-tiptap-editor/mermaid";
 
-// Import CSS
 import "reactjs-tiptap-editor/style.css";
+import "prism-code-editor-lightweight/layout.css";
+import "prism-code-editor-lightweight/themes/github-dark.css";
+
+import "katex/dist/katex.min.css";
+import "easydrawer/styles.css";
+import "react-image-crop/dist/ReactCrop.css";
+import { useThemeContext } from "../context/theme/useThemeContext";
+
+function convertBase64ToBlob(base64: string) {
+  const arr = base64.split(",");
+  const mime = arr[0].match(/:(.*?);/)![1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new Blob([u8arr], { type: mime });
+}
 
 const extensions = [
   BaseKit.configure({
-    // Show placeholder
     placeholder: {
       showOnlyCurrent: true,
     },
-
-    // Character count
     characterCount: {
       limit: 50_000,
     },
   }),
-  Blockquote,
-  Bold,
-  BulletList,
-  Clear,
-  Code,
-  CodeBlock,
-  Color,
-  Document,
-  FontFamily,
-  FontSize,
-  FormatPainter,
-  Heading,
-  Highlight,
   History,
-  HorizontalRule,
-  Iframe,
-
-  Image,
-
-  Indent,
-  Italic,
-  LineHeight,
-  Link,
-  ListItem,
-  MoreMark,
-  MultiColumn,
-  OrderedList,
-  Selection,
-  SlashCommand,
-  Strike,
-  SubAndSuperScript,
-  Table,
-  TaskList,
-  TextAlign,
-  TextBubble,
-  TrailingNode,
-  TextUnderline,
-  Video,
   SearchAndReplace,
-  Emoji,
-
-  Katex,
-  ExportPdf,
-  ImportWord,
-  ExportWord,
   TableOfContents,
-  Excalidraw,
+  FormatPainter.configure({ spacer: true }),
+  Clear,
+  FontFamily,
+  Heading.configure({ spacer: true }),
+  FontSize,
+  Bold,
+  Italic,
+  TextUnderline,
+  Strike,
+  MoreMark,
+  Emoji,
+  Color.configure({ spacer: true }),
+  Highlight,
+  BulletList,
+  OrderedList,
+  TextAlign.configure({ types: ["heading", "paragraph"], spacer: true }),
+  Indent,
+  LineHeight,
+  TaskList.configure({
+    spacer: true,
+    taskItem: {
+      nested: true,
+    },
+  }),
+  Link,
+  Image.configure({
+    upload: (files: File) =>
+      new Promise((resolve) =>
+        setTimeout(() => resolve(URL.createObjectURL(files)), 500),
+      ),
+  }),
+  Video.configure({
+    upload: (files: File) =>
+      new Promise((resolve) =>
+        setTimeout(() => resolve(URL.createObjectURL(files)), 500),
+      ),
+  }),
+  // ImageGif.configure({
+  //   GIPHY_API_KEY: process.env.NEXT_PUBLIC_GIPHY_API_KEY as string,
+  // }),
+  Blockquote,
+  SlashCommand,
+  HorizontalRule,
+  Code.configure({ toolbar: false }),
+  CodeBlock,
+  ColumnActionButton,
+  Table,
+  Iframe,
+  ExportPdf.configure({ spacer: true }),
+  ImportWord.configure({
+    upload: (files: File[]) =>
+      Promise.resolve(
+        files.map((file) => ({
+          src: URL.createObjectURL(file),
+          alt: file.name,
+        })),
+      ),
+  }),
+  ExportWord,
+  TextDirection,
   Mention,
-  Attachment,
-  ImageGif,
-  // Mermaid,
+  Attachment.configure({
+    upload: (file: any) =>
+      new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          const blob = convertBase64ToBlob(reader.result as string);
+          resolve(URL.createObjectURL(blob));
+        };
+      }),
+  }),
+  Katex,
+  // Excalidraw,
+  // Mermaid.configure({
+  //   upload: (file: any) =>
+  //     new Promise((resolve) => {
+  //       const reader = new FileReader();
+  //       reader.readAsDataURL(file);
+  //       reader.onload = () => {
+  //         const blob = convertBase64ToBlob(reader.result as string);
+  //         resolve(URL.createObjectURL(blob));
+  //       };
+  //     }),
+  // }),
+  Drawer.configure({
+    upload: (file: any) =>
+      new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          const blob = convertBase64ToBlob(reader.result as string);
+          resolve(URL.createObjectURL(blob));
+        };
+      }),
+  }),
   Twitter,
-
-  Drawer,
 ];
 
-/* eslint-disable */
-const Editor = ({
-  content,
-  setContent,
-}: {
-  content: any;
-  setContent: (content: any) => void;
-}) => {
-  /* eslint-disable */
-  const onChangeContent = (value: any) => {
-    setContent(value);
+const DEFAULT = "";
+
+function debounce(func: any, wait: number): (...args: any[]) => void {
+  let timeout: NodeJS.Timeout;
+  return function (this: unknown, ...args: any[]) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
   };
+}
+
+function Editor() {
+  const [content, setContent] = useState(DEFAULT);
+  // const [theme, setTheme] = useState<'light' | 'dark'>('light')
+  const { theme } = useThemeContext();
+
+  const onValueChange = debounce((value: any) => setContent(value), 300);
 
   return (
-    <RichTextEditor
-      dark={false}
-      output="html"
-      content={content}
-      onChangeContent={onChangeContent}
-      extensions={extensions}
-    />
+    <main>
+      <div>
+        <RichTextEditor
+          output="html"
+          content={content as any}
+          onChangeContent={onValueChange}
+          extensions={extensions}
+          dark={theme === "dark"}
+          // disabled={disable}
+          bubbleMenu={{
+            render({ extensionsNames, editor, disabled }, bubbleDefaultDom) {
+              return (
+                <>
+                  {bubbleDefaultDom}
+                  {extensionsNames.includes("twitter") && (
+                    <BubbleMenuTwitter
+                      disabled={disabled}
+                      editor={editor}
+                      key="twitter"
+                    />
+                  )}
+                  {extensionsNames.includes("katex") && (
+                    <BubbleMenuKatex
+                      disabled={disabled}
+                      editor={editor}
+                      key="katex"
+                    />
+                  )}
+                  {/* {extensionsNames.includes("excalidraw") && (
+                    <BubbleMenuExcalidraw
+                      disabled={disabled}
+                      editor={editor}
+                      key="excalidraw"
+                    />
+                  )}
+                  {extensionsNames.includes("mermaid") && (
+                    <BubbleMenuMermaid
+                      disabled={disabled}
+                      editor={editor}
+                      key="mermaid"
+                    />
+                  )} */}
+                  {extensionsNames.includes("drawer") && (
+                    <BubbleMenuDrawer
+                      disabled={disabled}
+                      editor={editor}
+                      key="drawer"
+                    />
+                  )}
+                </>
+              );
+            },
+          }}
+        />
+      </div>
+    </main>
   );
-};
+}
 
 export default Editor;

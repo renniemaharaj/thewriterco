@@ -46,7 +46,7 @@ export const useGlobalShortcuts = () => {
             now - (lastExecuted.get(keyId) ?? 0) > debounce
           ) {
             lastExecuted.set(keyId, now);
-            e.preventDefault();
+            // e.preventDefault();
             s.action();
           }
 
