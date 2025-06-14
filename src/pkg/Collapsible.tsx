@@ -9,6 +9,7 @@ import { toggleReasoningTitle } from "../app/reasoning/reasoningSlice";
 
 type CollapsibleProps = {
   title: ReactNode;
+  renderedTitle?: ReactNode;
   children: React.ReactNode;
   maxHeight?: string;
   className?: string;
@@ -38,6 +39,7 @@ const renderSlashCommand = (command: string, content: ReactNode) => {
 
 const Collapsible = ({
   title,
+  renderedTitle,
   children,
   maxHeight = "200px",
   className,
@@ -99,7 +101,7 @@ const Collapsible = ({
         aria-expanded={isCollapsed()}
         aria-controls="collapsible-content"
       >
-        <span className="font-semibold">{title}</span>
+        <span className="font-semibold">{renderedTitle ?? title}</span>
         <ChevronDown
           className={`transition-transform ${isCollapsed() ? "rotate-180" : ""}`}
         />

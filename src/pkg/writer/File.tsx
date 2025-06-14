@@ -9,17 +9,26 @@ import {
 } from "@radix-ui/themes";
 import {
   ChevronDown,
+  CodeXml,
   DownloadCloud,
   FolderHeart,
+  Trash2,
   UploadCloud,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useDownloader from "../hooks/useDownloader";
-import { saveToLocalStorage, setContent } from "../../app/writer/writerSlice";
+import {
+  deleteByTitle,
+  saveToLocalStorage,
+  setContent,
+  setTitle,
+} from "../../app/writer/writerSlice";
 import Hint from "../Hint";
 import useLocalStorage from "../hooks/useLocalStorage";
+import Collapsible from "../Collapsible";
+import FlexBreak from "./FlexBreak";
 
 type FileProps = {
   triggerRemount: () => void;
@@ -28,56 +37,52 @@ type FileProps = {
 
 const File = ({ triggerRemount, setEditorContent }: FileProps) => {
   const writer = useSelector((state: RootState) => state.writer);
-  const { content, saves } = writer;
+  const { content, saves, title } = writer;
   const dispatch = useDispatch();
   const downloader = useDownloader();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [selectedSave, setSelectedSave] = useState<string | null>(null);
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [showUploadConfirm, setShowUploadConfirm] = useState(false);
-  const [titleDialogOpen, setTitleDialogOpen] = useState(false);
-  const [titleDialogMode, setTitleDialogMode] = useState<"save" | "download">(
-    "save",
-  );
-  const [titleInput, setTitleInput] = useState("");
 
   const [, setValue] = useLocalStorage("writerData", writer);
 
-  const handleTitleDialogOpen = (mode: "save" | "download") => {
-    setTitleDialogMode(mode);
-    setTitleInput("");
-    setTitleDialogOpen(true);
+  const handleSave = () => {
+    if (title.trim()) {
+      dispatch(saveToLocalStorage({ title: title.trim(), content }));
+    }
   };
 
-  const handleTitleSubmit = () => {
-    if (!titleInput.trim()) return;
-    const title = titleInput.trim();
-
-    if (titleDialogMode === "save") {
-      dispatch(saveToLocalStorage({ title, content }));
-    } else if (titleDialogMode === "download") {
-      downloader.download(`${title}.html`, content);
+  const handleDownload = () => {
+    if (title.trim()) {
+      downloader.download(`${title.trim()}.html`, content);
     }
-
-    setTitleDialogOpen(false);
-    setTitleInput("");
   };
 
   useEffect(() => {
     setValue(writer);
-  }, [writer]);
+  }, [writer, setValue]);
 
-  const loadSave = useCallback(() => {
-    const save = saves.find((s) => s.title === selectedSave);
-    if (save) {
-      dispatch(setContent(save.content));
-      setEditorContent(save.content);
-      triggerRemount();
-    }
-    setSelectedSave(null);
-  }, [selectedSave, saves, dispatch, triggerRemount, setEditorContent]);
+  const loadSave = useCallback(
+    (title: string) => {
+      const save = saves.find((s) => s.title === title);
+      if (save) {
+        dispatch(setContent(save.content));
+        dispatch(setTitle(save.title));
+        setEditorContent(save.content);
+        triggerRemount();
+      }
+    },
+    [saves, dispatch, triggerRemount, setEditorContent],
+  );
+
+  const deleteSave = useCallback(
+    (title: string) => {
+      dispatch(deleteByTitle(title));
+    },
+    [dispatch],
+  );
 
   const handleUploadChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,12 +148,20 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
                 Upload
               </Button>
 
+              <TextField.Root
+                value={title}
+                onChange={(e) => dispatch(setTitle(e.target.value))}
+                placeholder="Title required"
+                mt="2"
+              />
+
               <Flex className="!w-full !gap-1">
                 <Button
                   variant="soft"
                   color="green"
                   className="!flex-[3] !justify-start"
-                  onClick={() => handleTitleDialogOpen("download")}
+                  onClick={handleDownload}
+                  disabled={title.trim() === ""}
                 >
                   <DownloadCloud className="mr-2 h-4 w-4" />
                   Download
@@ -157,7 +170,8 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
                 <Button
                   variant="soft"
                   className="!flex-[1]"
-                  onClick={() => handleTitleDialogOpen("save")}
+                  onClick={handleSave}
+                  disabled={title.trim() === ""}
                 >
                   <FolderHeart className="mr-2 h-4 w-4" />
                   Save
@@ -176,66 +190,62 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
               </Text>
 
               <Flex
-                direction="column"
+                direction="row"
                 wrap="wrap"
                 gap="3"
                 justify="start"
-                align={"start"}
-                className="mt-4 max-h-[600px] overflow-auto"
+                align="start"
+                className="mt-4 !max-h-[300px] !overflow-auto"
               >
-                {saves?.length ? (
-                  saves.map((save, index) => (
-                    <Dialog.Root
-                      key={index}
-                      open={selectedSave === save.title}
-                      onOpenChange={(open) =>
-                        setSelectedSave(open ? save.title : null)
-                      }
-                    >
-                      <Dialog.Trigger>
-                        <Button
-                          variant="ghost"
-                          className="flex flex-col items-center justify-center w-24 h-24 rounded-md border border-gray-300 hover:bg-blue-50 transition-all"
-                        >
-                          <span className="text-2xl">📄</span>
-                          <span className="text-xs mt-1 text-center break-words">
-                            {save.title}
-                          </span>
-                        </Button>
-                      </Dialog.Trigger>
-                      <Dialog.Content>
-                        <Dialog.Title>Load "{save.title}"?</Dialog.Title>
-                        <Dialog.Description>
-                          This will overwrite your current document.
-                        </Dialog.Description>
-                        <Flex gap="3" mt="4" justify="end">
-                          <Dialog.Close>
-                            <Button
-                              variant="soft"
-                              color="gray"
-                              onClick={() => setSelectedSave(null)}
-                            >
-                              Cancel
-                            </Button>
-                          </Dialog.Close>
-                          <Dialog.Close>
-                            <Button
-                              variant="solid"
-                              color="blue"
-                              onClick={loadSave}
-                            >
-                              Load
-                            </Button>
-                          </Dialog.Close>
-                        </Flex>
-                      </Dialog.Content>
-                    </Dialog.Root>
-                  ))
+                {saves?.length > 0 ? (
+                  <Text size="1" color="gray">
+                    Save to secure or update documents
+                  </Text>
                 ) : (
                   <Text size="1" color="gray">
                     No saves yet
                   </Text>
                 )}
+                {saves?.length > 0 &&
+                  saves.map((save, index) => (
+                    <Collapsible
+                      key={index}
+                      title={save.title}
+                      renderedTitle={
+                        <Flex>
+                          <span className="text-2xl">📄</span>
+                          <span
+                            className={`text-xs mt-1 text-center font-medium max-w-[5rem] overflow-hidden text-ellipsis whitespace-nowrap ${
+                              title === save.title && "!font-bold"
+                            }`}
+                          >
+                            {save.title}
+                          </span>
+                        </Flex>
+                      }
+                      // variant="soft"
+                      className="!w-full !justify-start"
+                    >
+                      <Flex className="!flex-row !gap-3">
+                        <Button
+                          variant="ghost"
+                          onClick={() => loadSave(save.title)}
+                        >
+                          <CodeXml className="w-4 h-4" />
+                          Render
+                        </Button>
+
+                        <Button
+                          variant="ghost"
+                          onClick={() => deleteSave(save.title)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          Trash
+                        </Button>
+                        <FlexBreak />
+                      </Flex>
+                    </Collapsible>
+                  ))}
               </Flex>
             </Flex>
           </Flex>
@@ -260,38 +270,6 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
             <Dialog.Close>
               <Button variant="solid" color="blue" onClick={confirmUpload}>
                 Upload
-              </Button>
-            </Dialog.Close>
-          </Flex>
-        </Dialog.Content>
-      </Dialog.Root>
-
-      {/* Reusable Title Prompt Dialog */}
-      <Dialog.Root open={titleDialogOpen} onOpenChange={setTitleDialogOpen}>
-        <Dialog.Content>
-          <Dialog.Title>
-            {titleDialogMode === "save" ? "Save" : "Download"} Document
-          </Dialog.Title>
-          <Dialog.Description>Title this document</Dialog.Description>
-          <TextField.Root
-            value={titleInput}
-            onChange={(e) => setTitleInput(e.target.value)}
-            placeholder="Untitled"
-            mt="2"
-          />
-          <Flex gap="3" mt="4" justify="end">
-            <Dialog.Close>
-              <Button
-                variant="soft"
-                color="gray"
-                onClick={() => setTitleDialogOpen(false)}
-              >
-                Cancel
-              </Button>
-            </Dialog.Close>
-            <Dialog.Close>
-              <Button variant="soft" onClick={handleTitleSubmit}>
-                {titleDialogMode === "save" ? "Save" : "Download"}
               </Button>
             </Dialog.Close>
           </Flex>
