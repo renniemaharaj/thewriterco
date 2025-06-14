@@ -215,7 +215,7 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
                         <Flex>
                           <span className="text-2xl">📄</span>
                           <span
-                            className={`text-xs mt-1 text-center font-medium max-w-[5rem] overflow-hidden text-ellipsis whitespace-nowrap ${
+                            className={`text-xs mt-1 text-center font-medium max-w-[11rem] overflow-hidden text-ellipsis whitespace-nowrap ${
                               title === save.title && "!font-bold"
                             }`}
                           >
