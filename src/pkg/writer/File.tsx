@@ -78,7 +78,7 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
       const save = findSaveByTitle(title);
       if (save) {
         setReduxContent(content);
-        dispatch(setTitle(title));
+        dispatch(setTitle(save.title));
         triggerRemount();
       }
     },
