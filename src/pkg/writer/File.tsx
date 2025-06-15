@@ -54,13 +54,6 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
     [saves],
   );
 
-  const setReduxContent = useCallback(
-    (content: string) => {
-      dispatch(setContent(content));
-    },
-    [dispatch],
-  );
-
   const handleSave = () => {
     if (title.trim()) {
       dispatch(saveToLocalStorage({ title: title.trim(), content }));
@@ -77,12 +70,13 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
     (title: string) => {
       const save = findSaveByTitle(title);
       if (save) {
-        setReduxContent(content);
+        dispatch(setContent(save.content));
         dispatch(setTitle(save.title));
+        setEditorContent(save.content);
         triggerRemount();
       }
     },
-    [content, dispatch, findSaveByTitle, triggerRemount, setReduxContent],
+    [dispatch, findSaveByTitle, triggerRemount, setEditorContent],
   );
 
   const deleteSave = useCallback(
