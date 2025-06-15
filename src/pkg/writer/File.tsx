@@ -250,7 +250,7 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
                 gap="3"
                 justify="start"
                 align="start"
-                className="mt-4 !max-h-[300px] !overflow-auto"
+                className="mt-4 !p-1 !max-h-[300px] !overflow-auto"
               >
                 {saves?.length > 0 ? (
                   <Text size="1" color="gray">
