@@ -60,6 +60,13 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
     }
   };
 
+  const handleNewDocument = useCallback(() => {
+    dispatch(setContent(""));
+    dispatch(setTitle(""));
+    setEditorContent("");
+    triggerRemount();
+  }, [dispatch, triggerRemount, setEditorContent]);
+
   const handleDownload = () => {
     if (title.trim()) {
       downloader.download(`${title.trim()}.html`, content);
@@ -152,14 +159,45 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
                 Import / Export
               </Text>
 
-              <Button
-                variant="outline"
-                className="!justify-start"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                <UploadCloud className="mr-2 h-4 w-4" />
-                Upload
-              </Button>
+              <Flex className="!w-full !gap-1">
+                <Button
+                  variant="outline"
+                  className="!flex-[3] !justify-start"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <UploadCloud className="mr-2 h-4 w-4" />
+                  Upload
+                </Button>
+                <Dialog.Root>
+                  <Dialog.Trigger>
+                    <Button variant="soft" className="!flex-[1]">
+                      New
+                    </Button>
+                  </Dialog.Trigger>
+
+                  <Dialog.Content maxWidth="450px">
+                    <Dialog.Title>Edit profile</Dialog.Title>
+                    <Dialog.Description size="2" mb="4">
+                      Are you sure? This will wipe your current document
+                    </Dialog.Description>
+
+                    <Flex direction="column" gap="3"></Flex>
+
+                    <Flex gap="3" mt="4" justify="end">
+                      <Dialog.Close>
+                        <Button variant="soft" color="gray">
+                          Cancel
+                        </Button>
+                      </Dialog.Close>
+                      <Dialog.Close>
+                        <Button variant="soft" onClick={handleNewDocument}>
+                          Confirm
+                        </Button>
+                      </Dialog.Close>
+                    </Flex>
+                  </Dialog.Content>
+                </Dialog.Root>
+              </Flex>
 
               <TextField.Root
                 value={title}
