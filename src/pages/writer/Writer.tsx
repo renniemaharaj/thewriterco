@@ -3,7 +3,11 @@ import Editor from "../../pkg/writer/Editor";
 
 const Writer = () => {
   return (
-    <Page wrapChildren title="Writer" description="Online Writer">
+    <Page
+      wrapChildren
+      title="Online Writer"
+      description="The cleanest, most feature-rich online writer for modern writers"
+    >
       <Editor />
     </Page>
   );

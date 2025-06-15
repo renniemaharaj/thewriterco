@@ -6,8 +6,10 @@ import {
   Text,
   Dialog,
   TextField,
+  Separator,
 } from "@radix-ui/themes";
 import {
+  CheckIcon,
   ChevronDown,
   CodeXml,
   DownloadCloud,
@@ -25,7 +27,6 @@ import {
   setContent,
   setTitle,
 } from "../../app/writer/writerSlice";
-import Hint from "../Hint";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Collapsible from "../Collapsible";
 import FlexBreak from "./FlexBreak";
@@ -48,6 +49,18 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
 
   const [, setValue] = useLocalStorage("writerData", writer);
 
+  const findSaveByTitle = useCallback(
+    (title: string) => saves.find((s) => s.title === title),
+    [saves],
+  );
+
+  const setReduxContent = useCallback(
+    (content: string) => {
+      dispatch(setContent(content));
+    },
+    [dispatch],
+  );
+
   const handleSave = () => {
     if (title.trim()) {
       dispatch(saveToLocalStorage({ title: title.trim(), content }));
@@ -60,21 +73,16 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
     }
   };
 
-  useEffect(() => {
-    setValue(writer);
-  }, [writer, setValue]);
-
   const loadSave = useCallback(
     (title: string) => {
-      const save = saves.find((s) => s.title === title);
+      const save = findSaveByTitle(title);
       if (save) {
-        dispatch(setContent(save.content));
-        dispatch(setTitle(save.title));
-        setEditorContent(save.content);
+        setReduxContent(content);
+        dispatch(setTitle(title));
         triggerRemount();
       }
     },
-    [saves, dispatch, triggerRemount, setEditorContent],
+    [content, dispatch, findSaveByTitle, triggerRemount, setReduxContent],
   );
 
   const deleteSave = useCallback(
@@ -99,7 +107,9 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
     if (uploadFile) {
       const reader = new FileReader();
       reader.onload = () => {
+        const fileName = uploadFile.name.replace(".html", "");
         dispatch(setContent(reader.result as string));
+        dispatch(setTitle(fileName));
         setEditorContent(reader.result as string);
         triggerRemount();
       };
@@ -108,6 +118,15 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
       setShowUploadConfirm(false);
     }
   }, [uploadFile, dispatch, setEditorContent, triggerRemount]);
+
+  const contentExactsSaved = useCallback(
+    () => findSaveByTitle(title)?.content === content,
+    [findSaveByTitle, content, title],
+  );
+
+  useEffect(() => {
+    setValue(writer);
+  }, [writer, setValue]);
 
   return (
     <>
@@ -171,18 +190,22 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
                   variant="soft"
                   className="!flex-[1]"
                   onClick={handleSave}
-                  disabled={title.trim() === ""}
+                  disabled={title.trim() === "" || contentExactsSaved()}
                 >
-                  <FolderHeart className="mr-2 h-4 w-4" />
+                  {contentExactsSaved() ? (
+                    <CheckIcon className="mr-2 h-4 w-4" />
+                  ) : (
+                    <FolderHeart className="mr-2 h-4 w-4" />
+                  )}
                   Save
                 </Button>
               </Flex>
 
-              <Hint>
-                <>Uploaded images or videos won't persist, use link instead</>
-              </Hint>
+              <Text size="1" color="gray">
+                Uploaded images or videos won't persist, use link instead
+              </Text>
             </Flex>
-
+            <Separator orientation={"vertical"} size="3" className="my-auto" />
             {/* RIGHT COLUMN: Saved Files */}
             <Flex direction="column" gap="3" className="w-1/2">
               <Text size="2" weight="bold">
