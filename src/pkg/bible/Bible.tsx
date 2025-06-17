@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Flex, Tabs, Box } from "@radix-ui/themes";
 import { useDispatch } from "react-redux";
 
-import fetchGitBlob, { kjvRepoUrl } from "../hooks/data/gitFetcher";
+import fetchGitBlob from "../hooks/data/useFetchGitBlob";
 import { setOpenState } from "../../app/ereader/ereaderSlice";
 import { EBook } from "../../app/ereader/types";
 
@@ -12,8 +12,9 @@ import { bibleDivisions } from "./config";
 import { SwordProps } from "./types";
 import Search from "./Search";
 import Seeker from "./Seeker";
+import { kvpRepoPath } from "../hooks/data/presets";
 
-const Sword: React.FC<SwordProps> = ({ setEBook, showAnimation }) => {
+const Bible: React.FC<SwordProps> = ({ setEBook, showAnimation }) => {
   const dispatch = useDispatch();
   const [isFetchingContent, setIsFetchingContent] = useState(false);
   const [searchText, setSearchText] = useState("");
@@ -31,7 +32,7 @@ const Sword: React.FC<SwordProps> = ({ setEBook, showAnimation }) => {
     const date = Date.now().toString();
 
     try {
-      const content = await fetchGitBlob(kjvRepoUrl, title, "json");
+      const content = await fetchGitBlob(kvpRepoPath + "/main", title, "json");
       setTimeout(() => dispatch(setOpenState(true)), 100);
       setEBook({
         title,
@@ -132,4 +133,4 @@ const Sword: React.FC<SwordProps> = ({ setEBook, showAnimation }) => {
   );
 };
 
-export default Sword;
+export default Bible;

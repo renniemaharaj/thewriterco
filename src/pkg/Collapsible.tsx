@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useThemeContext } from "./context/theme/useThemeContext";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../app/store";
-import { toggleReasoningTitle } from "../app/reasoning/reasoningSlice";
+import { setCurrentTitle } from "../app/reasoning/reasoningSlice";
 
 type CollapsibleProps = {
   title: ReactNode;
@@ -47,19 +47,12 @@ const Collapsible = ({
   onClose,
   handledChildren,
 }: CollapsibleProps) => {
+  const currentTitle = useSelector(
+    (state: RootState) => state.reasoning.currentTitle,
+  );
+
   const { theme } = useThemeContext();
   const dispatch = useDispatch();
-
-  const toggle = useCallback(
-    (title: string) => {
-      dispatch(toggleReasoningTitle(title));
-    },
-    [dispatch],
-  );
-
-  const currentTitle = useSelector(
-    (state: RootState) => state.reasoning.titleToggled,
-  );
 
   const isCollapsed = useCallback((): boolean => {
     return currentTitle === title;
@@ -69,12 +62,13 @@ const Collapsible = ({
 
   const handleBtnClick = useCallback(() => {
     if (currentTitle === title) {
-      toggle("");
+      dispatch(setCurrentTitle(""));
+
       if (onOpen) onOpen("");
     } else {
-      toggle(title as string);
+      dispatch(setCurrentTitle(title as string));
     }
-  }, [currentTitle, title, toggle, onOpen]);
+  }, [dispatch, currentTitle, title, onOpen]);
 
   useEffect(() => {
     if (currentTitle === title) {
@@ -82,13 +76,12 @@ const Collapsible = ({
     } else {
       if (onClose) onClose();
     }
-  }, [currentTitle, isCollapsed, onOpen, onClose, title, children]);
+  }, [currentTitle, isCollapsed, onClose, onOpen, title, children]);
 
   // ---------- Early return for slash command ----------
   if (isSlashCommand(title)) {
     return renderSlashCommand((title as string).toLowerCase().trim(), children);
   }
-
   return (
     <div
       className={`${theme === "light" && "border"} ${className} w-full rounded-lg shadow-sm`}

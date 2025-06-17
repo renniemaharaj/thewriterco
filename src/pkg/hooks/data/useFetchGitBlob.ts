@@ -4,17 +4,11 @@ type FetchGitBlob = (
   fileExtension: string,
 ) => Promise<string>;
 
-export const kjvRepoUrl =
-  "https://raw.githubusercontent.com/renniemaharaj/kjv-bible/main";
-
-export const templateRepoUrl =
-  "https://raw.githubusercontent.com/renniemaharaj/study-templates/main";
-
 const fetchGitBlob: FetchGitBlob = async (repoUrl, fileName, fileExtension) => {
   try {
     // Construct the GitHub raw URL
-
-    const fileUrl = `${repoUrl}/${fileName}.${fileExtension}`;
+    const rawBlobUrl = "https://raw.githubusercontent.com";
+    const fileUrl = `${rawBlobUrl}/${repoUrl}/${fileName}.${fileExtension}`;
 
     // Fetch the file content
     const response = await fetch(fileUrl);

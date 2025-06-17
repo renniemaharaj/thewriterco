@@ -5,12 +5,15 @@ const reasoningSlice = createSlice({
   name: "reasoning",
   initialState,
   reducers: {
-    toggle: (state, action: PayloadAction<string>) => {
-      state.titleToggled = action.payload;
+    setCurrentTitle: (state, action: PayloadAction<string>) => {
+      state.currentTitle = action.payload;
+    },
+    setCurrentTab: (state, action: PayloadAction<string>) => {
+      state.currentTab = action.payload;
     },
   },
 });
 
-export const { toggle: toggleReasoningTitle } = reasoningSlice.actions;
+export const { setCurrentTitle, setCurrentTab } = reasoningSlice.actions;
 
 export default reasoningSlice;

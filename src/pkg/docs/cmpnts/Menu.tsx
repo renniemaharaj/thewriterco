@@ -1,25 +1,26 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Tabs, Box, ScrollArea } from "@radix-ui/themes";
 
-import Collapsible from "../../Collapsible";
-import { reasoningForAxioms } from "../reasoningForAxioms";
-import { axiomsContent } from "../axioms";
-import { ftevidence } from "../ftevidence";
-import { kjvArguments } from "../kjArguments";
-import { introduction } from "../intro";
+// import Collapsible from "../../Collapsible";
+import { useDispatch, useSelector } from "react-redux";
+
+import Item from "./Item";
+import { useFetchGitDir } from "../../hooks/data/useFetchGitDir";
+import { dirToContents } from "../data/dirToContents";
+import { useURLState } from "../../hooks/useURLState";
 import {
-  fteSourceCommand,
-  kjvSourceCommand,
-  seperatorCommand,
-} from "../commands";
-import { useDispatch } from "react-redux";
-import { toggleReasoningTitle } from "../../../app/reasoning/reasoningSlice";
+  setCurrentTab,
+  setCurrentTitle,
+} from "../../../app/reasoning/reasoningSlice";
+import { RootState } from "../../../app/store";
 
 // Define the shape of each collapsible item
 export type CollapsibleItem = {
   title: string;
   body: ReactNode;
+  fetchPath?: string;
+  filename?: string;
 };
 
 // Tab type definition
@@ -36,6 +37,20 @@ type MenuProps = {
 };
 
 const Menu = ({ className, routeChildren, additionalTabs = [] }: MenuProps) => {
+  const axiomsData = useFetchGitDir("axioms");
+  const verboseData = useFetchGitDir("verbose");
+  const proKJVData = useFetchGitDir("prokjv");
+  const prochristianity = useFetchGitDir("prochristianity");
+  const poetryData = useFetchGitDir("poetry");
+  const articlesData = useFetchGitDir("articles");
+  const creativityData = useFetchGitDir("creativity");
+
+  const currentTab = useSelector(
+    (state: RootState) => state.reasoning.currentTab,
+  );
+
+  const [tabFromUrl, setTabInUrl] = useURLState("ta");
+
   const scrollAreaClass =
     "!flex !mx-auto p-2 flex-col h-full max-h-[100vh] !sticky !top-0";
 
@@ -43,42 +58,117 @@ const Menu = ({ className, routeChildren, additionalTabs = [] }: MenuProps) => {
 
   const dispatch = useDispatch();
 
-  // Example default tabs with structured title + body
-  const defaultTabs: TabItem[] = [
-    {
-      label: "Axioms",
-      value: "axioms",
-      content: axiomsContent,
-    },
-    {
-      label: "Verbose",
-      value: "reasoning",
-      content: [...introduction, seperatorCommand, ...reasoningForAxioms],
-    },
-    {
-      label: "Pro KJV",
-      value: "prokjv",
-      content: [...kjvArguments, kjvSourceCommand],
-    },
-    {
-      label: "Pro Christianity",
-      value: "prochristianity",
-      content: [...ftevidence, fteSourceCommand],
-    },
-  ];
+  const defaultTabs: TabItem[] = useMemo(
+    () => [
+      {
+        label: "Axioms",
+        value: "axioms",
+        content: dirToContents(axiomsData.dir, "axioms"),
+      },
+      {
+        label: "Verbose",
+        value: "reasoning",
+        content: dirToContents(verboseData.dir, "verbose"),
+      },
+      {
+        label: "Pro KJV",
+        value: "prokjv",
+        content: dirToContents(proKJVData.dir, "prokjv"),
+      },
+      {
+        label: "Pro Christianity",
+        value: "prochristianity",
+        content: dirToContents(prochristianity.dir, "prochristianity"),
+      },
+      {
+        label: "Articles",
+        value: "articles",
+        content: dirToContents(articlesData.dir, "articles"),
+      },
+      {
+        label: "Poetry",
+        value: "poetry",
+        content: dirToContents(poetryData.dir, "poetry"),
+      },
+      {
+        label: "Creativity",
+        value: "creativity",
+        content: dirToContents(creativityData.dir, "creativity"),
+      },
+    ],
+    [
+      axiomsData.dir,
+      verboseData.dir,
+      proKJVData.dir,
+      prochristianity.dir,
+      articlesData.dir,
+      poetryData.dir,
+      creativityData.dir,
+    ],
+  );
 
-  const combinedTabs = [...defaultTabs, ...additionalTabs];
+  const combinedTabs = useMemo(
+    () => [...defaultTabs, ...additionalTabs],
+    [defaultTabs, additionalTabs],
+  );
 
   useEffect(() => {
     const firstTitle = additionalTabs[0]?.content[0]?.title;
     if (firstTitle) {
-      dispatch(toggleReasoningTitle(firstTitle));
+      dispatch(setCurrentTitle(firstTitle));
     }
   }, [additionalTabs, dispatch]);
+
+  useEffect(() => {
+    if (tabFromUrl && !currentTab) dispatch(setCurrentTab(tabFromUrl));
+
+    if (currentTab && currentTab != tabFromUrl) setTabInUrl(currentTab);
+  }, [dispatch, currentTab, setTabInUrl, tabFromUrl]);
+
+  const renderedTabContents = useMemo(() => {
+    return combinedTabs.map((tab) => {
+      const renderedItems = tab.content.map((item, index) => (
+        <motion.div
+          key={index + "tabsItem"}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: index * 0.05 }}
+        >
+          <Item
+            title={item.title}
+            body={item.body}
+            routeChildren={routeChildren}
+            fetchPath={item.fetchPath}
+            filename={item.filename}
+          />
+        </motion.div>
+      ));
+
+      return (
+        <Tabs.Content
+          key={tab.value + "tabsContent"}
+          value={tab.value}
+          className="!flex flex-col !gap-2"
+        >
+          {renderedItems}
+        </Tabs.Content>
+      );
+    });
+  }, [combinedTabs, routeChildren]);
+
+  const defaultTabValue = useMemo(() => {
+    if (currentTab !== "" && combinedTabs) {
+      return currentTab;
+    }
+    return combinedTabs[0]?.value ?? defaultTabs[0].value ?? "axioms";
+  }, [currentTab, combinedTabs, defaultTabs]);
+
   return (
     <ScrollArea className={`${className} ${scrollAreaClass}`}>
       <Tabs.Root
-        defaultValue={additionalTabs[0]?.value ?? defaultTabs[0]?.value}
+        onValueChange={(v) => dispatch(setCurrentTab(v))}
+        value={defaultTabValue}
+        defaultValue={defaultTabValue}
         className="!max-w-[100%]"
       >
         <Tabs.List className={tabListClass}>
@@ -94,30 +184,7 @@ const Menu = ({ className, routeChildren, additionalTabs = [] }: MenuProps) => {
         </Tabs.List>
 
         <Box pt="3" className="space-y-4 max-w-[100%]">
-          {combinedTabs.map((tab) => (
-            <Tabs.Content
-              key={tab.value + "tabsContent"}
-              value={tab.value}
-              className="!flex flex-col !gap-2"
-            >
-              {tab.content.map((item, index) => (
-                <motion.div
-                  key={index + "tabsItem"}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                >
-                  <Collapsible
-                    title={item.title}
-                    handledChildren={!!routeChildren}
-                    onOpen={() => routeChildren?.(item.body)}
-                  >
-                    {item.body}
-                  </Collapsible>
-                </motion.div>
-              ))}
-            </Tabs.Content>
-          ))}
+          {renderedTabContents}
         </Box>
       </Tabs.Root>
     </ScrollArea>

@@ -10,8 +10,6 @@ import { ThemeProvider } from "./pkg/context/theme/ThemeProvider";
 import { useThemeContext } from "./pkg/context/theme/useThemeContext";
 import { protectedRoutesFunc, publicRoutesFunc } from "./routing";
 
-// import ChristInMe from "./assets/Christ_In_Me.jpg";
-
 function App() {
   return (
     <ThemeProvider>

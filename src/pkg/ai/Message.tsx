@@ -11,7 +11,7 @@ import {
 import React, { useCallback, useState } from "react";
 import { Block, Code, MarkupResponse, Scripture } from "./types";
 import { BookTextIcon, ShieldAlertIcon } from "lucide-react";
-import fetchGitBlob, { kjvRepoUrl } from "../hooks/data/gitFetcher";
+import fetchGitBlob from "../hooks/data/useFetchGitBlob";
 import { useDispatch } from "react-redux";
 import {
   setEBook,
@@ -24,6 +24,7 @@ import { EBook } from "../../app/ereader/types";
 import { clearMessages } from "../../app/chat/chatSlice";
 import Collapsible from "../Collapsible";
 import Editor from "./Editor";
+import { kvpRepoPath } from "../hooks/data/presets";
 
 export type MessageAction = "fix" | "new";
 
@@ -144,7 +145,7 @@ const Message: React.FC<MessageProps> = ({ block, handleAction }) => {
                       size="1"
                       className="animate-pulse !font-bold "
                       onClick={() => {
-                        fetchGitBlob(kjvRepoUrl, verse.book, "json").then(
+                        fetchGitBlob(kvpRepoPath, verse.book, "json").then(
                           (content) => {
                             dispatch(
                               setEBook({

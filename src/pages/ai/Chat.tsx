@@ -27,11 +27,12 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { clearMessages, setResponseConstraint } from "../../app/chat/chatSlice";
-import fetchGitBlob, { templateRepoUrl } from "../../pkg/hooks/data/gitFetcher";
+import fetchGitBlob from "../../pkg/hooks/data/useFetchGitBlob";
 import { Helmet } from "react-helmet-async";
 import { toggleFlowSlice } from "../../app/flow/flowSlice";
 import Sizer from "../../pkg/page/Sizer";
 import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
+import { templateRepoPath } from "../../pkg/hooks/data/presets";
 
 const AI = () => {
   const { theme } = useThemeContext();
@@ -66,7 +67,7 @@ const AI = () => {
   };
 
   async function fetchTemplateCatalogue() {
-    fetchGitBlob(templateRepoUrl, "catalogue", "json")
+    fetchGitBlob(templateRepoPath, "catalogue", "json")
       .then((content) => {
         const catalogue = JSON.parse(content);
         setTemplates(catalogue.templates);
@@ -75,7 +76,7 @@ const AI = () => {
   }
 
   async function getTemplateContent(template: string) {
-    return fetchGitBlob(templateRepoUrl, template, "html")
+    return fetchGitBlob(templateRepoPath, template, "html")
       .then((content) => {
         return content;
       })

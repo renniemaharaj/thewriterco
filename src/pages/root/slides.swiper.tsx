@@ -131,7 +131,7 @@ export const swiperSlides = [
       <Link
         as="button"
         variant="soft"
-        href="/doc/studyDocument"
+        href="/reasoning?ta=articles&t=Study+Documents"
         aria-label="Learn about study documents"
       >
         Learn More

@@ -45,28 +45,15 @@ import { Katex } from "reactjs-tiptap-editor/katex";
 import { Drawer } from "reactjs-tiptap-editor/drawer";
 // import { Excalidraw } from "reactjs-tiptap-editor/excalidraw";
 import { Twitter } from "reactjs-tiptap-editor/twitter";
+import { convertBase64ToBlob } from "./utils";
 // import { Mermaid } from "reactjs-tiptap-editor/mermaid";
-
-function convertBase64ToBlob(base64: string) {
-  const arr = base64.split(",");
-  const mime = arr[0].match(/:(.*?);/)![1];
-  const bstr = atob(arr[1]);
-  let n = bstr.length;
-  const u8arr = new Uint8Array(n);
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-  return new Blob([u8arr], { type: mime });
-}
 
 const extensions = [
   BaseKit.configure({
-    placeholder: {
-      showOnlyCurrent: true,
-    },
-    characterCount: {
-      //   limit: 50_000,
-    },
+    // placeholder: {
+    //   showOnlyCurrent: true,
+    // },
+    characterCount: false,
   }),
   History,
   SearchAndReplace,

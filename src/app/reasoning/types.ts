@@ -1,3 +1,4 @@
 export type ReasoningSlice = {
-  titleToggled: string;
+  currentTitle: string;
+  currentTab: string;
 };
