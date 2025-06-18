@@ -78,7 +78,7 @@ const Page = ({
         direction="column"
         align="center"
         justify="center"
-        className={`!w-full md:!w-[90%] !flex-col !mx-auto pb-20 blurred-div-light  ${className}`}
+        className={`!w-full md:!w-[99%] !flex-col !mx-auto pb-20 blurred-div-light  ${className}`}
       >
         {wrapChildren && (
           <Card className={`!p-5 !max-w-full blurred-div ${className}`}>

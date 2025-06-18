@@ -1,10 +1,8 @@
-import { Box, Card } from "@radix-ui/themes";
+import { Box, Card, Flex } from "@radix-ui/themes";
 import { ReactNode, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Menu, { TabItem } from "./cmpnts/Menu";
-import SideBar from "../../pkg/SideBar";
-import { useThemeContext } from "../../pkg/context/theme/useThemeContext";
 import { RootState } from "../../app/store";
 import { useURLState } from "../hooks/useURLState";
 import { setCurrentTitle } from "../../app/reasoning/reasoningSlice";
@@ -14,7 +12,6 @@ export type DocumentationProps = {
 };
 
 const Documentation = ({ additionalTabs }: DocumentationProps) => {
-  const { theme } = useThemeContext();
   const { orientation } = useSelector((state: RootState) => state.chat);
   const [routeChildren, setRouteChildren] = useState<ReactNode | null>(null);
   const currentTitle = useSelector(
@@ -25,16 +22,7 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
 
   const [titleFromUrl, setTitleInUrl] = useURLState("t");
 
-  const isDarkMode = theme === "dark";
-
-  // Extracted Styles
-  const sidebarClass =
-    "flex-col !relative flex-wrap md:!flex-nowrap !m-auto !w-[98vw] transition-all gap-1";
-
-  const contentContainerClass = `
-  ${isDarkMode ? "bg-[#171918]" : "border"} !flex !flex-[4] !min-h-[350px]`;
-
-  const innerBoxClass = "space-y-4 space-x-4 !p-2 !py-10 !max-w-full !mx-auto";
+  const innerBoxClass = "space-y-4 space-x-4 !p-2 !py-10 !mx-auto !w-full";
 
   useEffect(() => {
     if (orientation === "vertical") return;
@@ -51,29 +39,27 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
   }, [dispatch, currentTitle, setTitleInUrl, titleFromUrl]);
 
   return (
-    <SideBar
-      variant="center"
-      className={sidebarClass}
-      orientation="horizontal"
-      childLeft={
-        orientation === "horizontal" && (
-          <Card className={contentContainerClass}>
+    <Flex className="gap-2 !overflow-visible">
+      {orientation === "horizontal" && (
+        <Flex className="w-[65%] !min-h-[350px]">
+          <Card className="!w-full !sticky !top-[2rem]">
             {routeChildren && orientation === "horizontal" && (
               <Box className={innerBoxClass}>{routeChildren}</Box>
             )}
           </Card>
-        )
-      }
-      centerBar={<></>}
-      childRight={
-        <Card className="!flex !flex-[2] !max-h-fit !top-0 !sticky">
+        </Flex>
+      )}
+      <Flex
+        className={`${orientation === "horizontal" ? "w-[35%]" : "w-full"}`}
+      >
+        <Card className="!w-full !h-fit !sticky !top-[2rem]">
           <Menu
             routeChildren={setRouteChildren}
             additionalTabs={additionalTabs}
           />
         </Card>
-      }
-    />
+      </Flex>
+    </Flex>
   );
 };
 

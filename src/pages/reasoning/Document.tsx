@@ -7,6 +7,8 @@ const Document = () => {
   return (
     <Page
       title="Rationale"
+      wrapChildren
+      className="!overflow-visible"
       description="Learn how to build study documents using our tools"
       hero={
         <Hero

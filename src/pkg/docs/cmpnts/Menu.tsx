@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Tabs, Box, ScrollArea } from "@radix-ui/themes";
+import { Tabs, Box } from "@radix-ui/themes";
 
 // import Collapsible from "../../Collapsible";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,7 @@ import {
   setCurrentTitle,
 } from "../../../app/reasoning/reasoningSlice";
 import { RootState } from "../../../app/store";
+import { Carousel } from "../../Carousel";
 
 // Define the shape of each collapsible item
 export type CollapsibleItem = {
@@ -36,7 +37,7 @@ type MenuProps = {
   additionalTabs?: TabItem[];
 };
 
-const Menu = ({ className, routeChildren, additionalTabs = [] }: MenuProps) => {
+const Menu = ({ routeChildren, additionalTabs = [] }: MenuProps) => {
   const axiomsData = useFetchGitDir("axioms");
   const verboseData = useFetchGitDir("verbose");
   const proKJVData = useFetchGitDir("prokjv");
@@ -51,10 +52,11 @@ const Menu = ({ className, routeChildren, additionalTabs = [] }: MenuProps) => {
 
   const [tabFromUrl, setTabInUrl] = useURLState("ta");
 
-  const scrollAreaClass =
-    "!flex !mx-auto p-2 flex-col h-full max-h-[100vh] !sticky !top-0";
+  // const scrollAreaClass =
+  //   "!max-w-full !overflow-x-hidden !mx-auto p-2 h-full max-h-[100vh] !sticky !top-0";
 
-  const tabListClass = "!flex !flex-wrap space-x-4 !shadow-none pb-2";
+  // const tabListClass =
+  //   "!flex !overflow-x-auto !max-w-full space-x-4 !shadow-none pb-2";
 
   const dispatch = useDispatch();
 
@@ -164,15 +166,15 @@ const Menu = ({ className, routeChildren, additionalTabs = [] }: MenuProps) => {
   }, [currentTab, combinedTabs, defaultTabs]);
 
   return (
-    <ScrollArea className={`${className} ${scrollAreaClass}`}>
-      <Tabs.Root
-        onValueChange={(v) => dispatch(setCurrentTab(v))}
-        value={defaultTabValue}
-        defaultValue={defaultTabValue}
-        className="!max-w-[100%]"
-      >
-        <Tabs.List className={tabListClass}>
-          {combinedTabs.map((tab) => (
+    <Tabs.Root
+      onValueChange={(v) => dispatch(setCurrentTab(v))}
+      value={defaultTabValue}
+      defaultValue={defaultTabValue}
+    >
+      <Tabs.List>
+        <Carousel
+          variant="no-scrollbar"
+          items={combinedTabs.map((tab) => (
             <Tabs.Trigger
               key={tab.value + "tabsTrigger"}
               value={tab.value}
@@ -181,13 +183,13 @@ const Menu = ({ className, routeChildren, additionalTabs = [] }: MenuProps) => {
               {tab.label}
             </Tabs.Trigger>
           ))}
-        </Tabs.List>
+        />
+      </Tabs.List>
 
-        <Box pt="3" className="space-y-4 max-w-[100%]">
-          {renderedTabContents}
-        </Box>
-      </Tabs.Root>
-    </ScrollArea>
+      <Box pt="3" className="space-y-4 max-w-[100%]">
+        {renderedTabContents}
+      </Box>
+    </Tabs.Root>
   );
 };
 
