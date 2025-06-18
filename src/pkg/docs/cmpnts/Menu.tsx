@@ -15,6 +15,7 @@ import {
 } from "../../../app/reasoning/reasoningSlice";
 import { RootState } from "../../../app/store";
 import { Carousel } from "../../Carousel";
+import Tab from "./Tab";
 
 // Define the shape of each collapsible item
 export type CollapsibleItem = {
@@ -180,7 +181,7 @@ const Menu = ({ routeChildren, additionalTabs = [] }: MenuProps) => {
               value={tab.value}
               className="px-4 py-2"
             >
-              {tab.label}
+              <Tab title={tab.label} />
             </Tabs.Trigger>
           ))}
         />
