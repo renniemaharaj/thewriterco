@@ -15,6 +15,7 @@ type CollapsibleProps = {
   className?: string;
   onOpen?: (content: ReactNode) => void;
   onClose?: () => void;
+  collapsibleRef?: React.Ref<HTMLDivElement>;
   handledChildren?: boolean;
 };
 
@@ -45,6 +46,7 @@ const Collapsible = ({
   className,
   onOpen,
   onClose,
+  collapsibleRef,
   handledChildren,
 }: CollapsibleProps) => {
   const currentTitle = useSelector(
@@ -84,6 +86,7 @@ const Collapsible = ({
   }
   return (
     <div
+      ref={collapsibleRef}
       className={`${theme === "light" && "border"} ${className} w-full rounded-lg shadow-sm`}
     >
       {/* Header / Trigger */}

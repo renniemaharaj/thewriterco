@@ -11,10 +11,8 @@ import {
 import {
   CheckIcon,
   ChevronDown,
-  CodeXml,
   DownloadCloud,
   FolderHeart,
-  Trash2,
   UploadCloud,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,8 +26,7 @@ import {
   setTitle,
 } from "../../app/writer/writerSlice";
 import useLocalStorage from "../hooks/useLocalStorage";
-import Collapsible from "../Collapsible";
-import FlexBreak from "./FlexBreak";
+import Save from "./Save";
 
 type FileProps = {
   triggerRemount: () => void;
@@ -43,6 +40,8 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
   const downloader = useDownloader();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const [fileMenuOpen, setFileMenuOpen] = useState(false);
 
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [showUploadConfirm, setShowUploadConfirm] = useState(false);
@@ -139,7 +138,7 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
         onChange={handleUploadChange}
       />
 
-      <Popover.Root>
+      <Popover.Root onOpenChange={setFileMenuOpen}>
         <Popover.Trigger>
           <Button
             variant="soft"
@@ -263,43 +262,15 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
                 )}
                 {saves?.length > 0 &&
                   saves.map((save, index) => (
-                    <Collapsible
+                    <Save
                       key={index}
-                      title={save.title}
-                      renderedTitle={
-                        <Flex>
-                          <span className="text-2xl">📄</span>
-                          <span
-                            className={`text-xs mt-1 text-center font-medium max-w-[11rem] overflow-hidden text-ellipsis whitespace-nowrap ${
-                              title === save.title && "!font-bold"
-                            }`}
-                          >
-                            {save.title}
-                          </span>
-                        </Flex>
-                      }
-                      // variant="soft"
-                      className="!w-full !justify-start"
-                    >
-                      <Flex className="!flex-row !gap-3">
-                        <Button
-                          variant="ghost"
-                          onClick={() => loadSave(save.title)}
-                        >
-                          <CodeXml className="w-4 h-4" />
-                          Render
-                        </Button>
-
-                        <Button
-                          variant="ghost"
-                          onClick={() => deleteSave(save.title)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                          Trash
-                        </Button>
-                        <FlexBreak />
-                      </Flex>
-                    </Collapsible>
+                      index={index.toString()}
+                      save={save}
+                      title={title}
+                      loadSave={loadSave}
+                      deleteSave={deleteSave}
+                      fileMenuOpen={fileMenuOpen}
+                    />
                   ))}
               </Flex>
             </Flex>
