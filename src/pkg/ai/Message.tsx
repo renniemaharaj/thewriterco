@@ -18,7 +18,6 @@ import {
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
   setOpenState,
-  setRenderStyle,
 } from "../../app/ereader/ereaderSlice";
 import { EBook } from "../../app/ereader/types";
 import { clearMessages } from "../../app/chat/chatSlice";
@@ -154,7 +153,6 @@ const Message: React.FC<MessageProps> = ({ block, handleAction }) => {
                                 date: new Date().toDateString(),
                               } as EBook),
                             );
-                            dispatch(setRenderStyle("bible"));
                             dispatch(
                               setGlobalCurrentChapter(
                                 verse.chapterNo.toString(),

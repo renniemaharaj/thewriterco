@@ -81,7 +81,7 @@ const Page = ({
         className={`!w-full md:!w-[99%] !flex-col !mx-auto pb-20 blurred-div-light  ${className}`}
       >
         {wrapChildren && (
-          <Card className={`!p-5 !max-w-full blurred-div ${className}`}>
+          <Card className={`!p-5 w-full blurred-div ${className}`}>
             <Flex
               data-testid="heroElement"
               className="!flex-col !gap-10  !w-full !max-w-full"

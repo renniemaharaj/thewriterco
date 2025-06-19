@@ -8,5 +8,6 @@ export const getChapterVerses = ({
   eContent: Content;
 }) => {
   if (!currentChapter || typeof eContent === "string") return [];
+  if (!eContent[currentChapter]) return [];
   return Object.keys(eContent[currentChapter]);
 };

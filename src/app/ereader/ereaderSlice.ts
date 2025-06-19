@@ -30,9 +30,6 @@ const ereaderSlice = createSlice({
     ) {
       state.eContent.content = action.payload;
     },
-    setRenderStyle(state, action: PayloadAction<"rich" | "bible">) {
-      state.readerStyle = action.payload;
-    },
     setOpenState(state, action: PayloadAction<boolean>) {
       state.isOpen = action.payload;
     },
@@ -62,7 +59,6 @@ export const {
   setAuthor,
   setDate,
   setContent,
-  setRenderStyle,
   setOpenState,
   toggleOpenState,
   setGlobalCurrentChapter,

@@ -10,7 +10,6 @@ const defaultContent = {
 
 export const initialState: EreaderState = {
   isOpen: false,
-  readerStyle: "rich",
   currentChapter: "1",
   currentVerse: "1",
   eContent: defaultContent,

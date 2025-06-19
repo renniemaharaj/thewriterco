@@ -1,16 +1,8 @@
 import { Button, Dialog, Flex } from "@radix-ui/themes";
 import { ReactNode } from "react";
 import Bible from "./Bible";
-import { EBook } from "../../app/ereader/types";
-import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
-import { useDispatch } from "react-redux";
 
 const Picker = ({ trigger }: { trigger: ReactNode }) => {
-  const dispatch = useDispatch();
-  const setEreaderState = (eBook: EBook) => {
-    dispatch(setEBook(eBook));
-    dispatch(setRenderStyle("bible"));
-  };
   return (
     <Dialog.Root>
       <Dialog.Trigger>{trigger}</Dialog.Trigger>
@@ -22,7 +14,7 @@ const Picker = ({ trigger }: { trigger: ReactNode }) => {
           Explore the various districts of the Holy Bible KJV
         </Dialog.Title>
         <Flex direction="column" gap="3">
-          <Bible asChild showAnimation={false} setEBook={setEreaderState} />
+          <Bible asChild showAnimation={false} />
         </Flex>
         <Flex gap="3" mt="4" justify="end">
           <Dialog.Close>

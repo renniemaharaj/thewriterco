@@ -1,19 +1,45 @@
 import Bible from "../../pkg/bible/Bible";
-import { EBook } from "../../app/ereader/types";
-import { useDispatch } from "react-redux";
-import { setEBook, setRenderStyle } from "../../app/ereader/ereaderSlice";
 import Page from "../../pkg/page/Page";
 import { Card, Flex, Text } from "@radix-ui/themes";
 import Hero from "../../pkg/page/Hero";
 import Link from "../../pkg/link/Link";
+import useBible from "../../pkg/hooks/useBible";
+import { useURLState } from "../../pkg/hooks/useURLState";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { useEffect } from "react";
+import {
+  setGlobalCurrentChapter,
+  setGlobalCurrentVerse,
+} from "../../app/ereader/ereaderSlice";
 
 const KJV = () => {
+  const ereaderSlice = useSelector((state: RootState) => state.ereader);
+  const { handleBookOpen } = useBible();
+
+  const [bookTitle, setBookTitle] = useURLState("bt");
+  const [chapter, setChapter] = useURLState("c");
+  const [verse, setVerse] = useURLState("v");
+  const [open, setOpen] = useURLState("o");
+
   const dispatch = useDispatch();
 
-  const setEreaderState = (eBook: EBook) => {
-    dispatch(setEBook(eBook));
-    dispatch(setRenderStyle("bible"));
-  };
+  useEffect(() => {
+    setBookTitle(ereaderSlice.eContent.title);
+    setChapter(ereaderSlice.currentChapter);
+    setVerse(ereaderSlice.currentVerse);
+    setOpen(ereaderSlice.isOpen ? "1" : "0");
+  }, [ereaderSlice, setBookTitle, setChapter, setVerse, setOpen]);
+
+  useEffect(() => {
+    if (bookTitle && chapter && verse && open) {
+      if (!ereaderSlice.eContent.content) {
+        handleBookOpen(bookTitle);
+        dispatch(setGlobalCurrentChapter(chapter));
+        dispatch(setGlobalCurrentVerse(verse));
+      }
+    }
+  }, [dispatch, ereaderSlice, handleBookOpen, bookTitle, chapter, verse, open]);
 
   return (
     <Page
@@ -40,7 +66,7 @@ const KJV = () => {
         className="w-full md:!w-[80%] mx-auto gap-6"
       >
         {/* Bible Reader */}
-        <Bible showAnimation={true} setEBook={setEreaderState} />
+        <Bible showAnimation={true} />
 
         {/* Static Meta Info */}
         <Card className="!flex text-center w-full !items-center !justify-center">

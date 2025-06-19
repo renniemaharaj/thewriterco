@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo, useCallback } from "react";
+import { useEffect, useRef, useMemo, useCallback } from "react";
 import { Flex, IconButton, Tooltip } from "@radix-ui/themes";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
@@ -28,7 +28,6 @@ const Reader = ({
     currentChapter: reduxChapter,
     currentVerse: reduxVerse,
     eContent,
-    readerStyle,
   } = eReaderState;
 
   const content = eContent.content;
@@ -44,8 +43,6 @@ const Reader = ({
     navigateVerse,
   } = useContentReducers();
 
-  const [readerState, setReaderState] = useState<"rich" | "bible">(readerStyle);
-
   const initialContentLoaded = useRef(false);
 
   // Sync Redux state into local state without triggering updates every render
@@ -54,11 +51,6 @@ const Reader = ({
       initialContentLoaded.current = true;
     }
   }, [reduxChapter, reduxVerse]);
-
-  // Sync reader style changes
-  useEffect(() => {
-    setReaderState(readerStyle);
-  }, [readerStyle]);
 
   // Chapter Verses for Select Picker
   const chapterVerses = useMemo(
@@ -108,16 +100,14 @@ const Reader = ({
 
       {isOpen && (
         <div className="!flex-col p-4 space-y-4">
-          {readerState === "bible" && (
-            <Changer
-              content={content}
-              chapterVerses={chapterVerses}
-              currentChapter={currentChapter}
-              currentVerse={currentVerse}
-              handleVerseChange={handleVerseChange}
-              handleChapterChange={handleChapterChange}
-            />
-          )}
+          <Changer
+            content={content}
+            chapterVerses={chapterVerses}
+            currentChapter={currentChapter}
+            currentVerse={currentVerse}
+            handleVerseChange={handleVerseChange}
+            handleChapterChange={handleChapterChange}
+          />
 
           <Flex className="!justify-center !items-center space-x-4">
             <Tooltip content="⌘ Left Key">

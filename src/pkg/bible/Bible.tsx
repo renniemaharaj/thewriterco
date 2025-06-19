@@ -1,10 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Flex, Tabs, Box } from "@radix-ui/themes";
-import { useDispatch } from "react-redux";
-
-import fetchGitBlob from "../hooks/data/useFetchGitBlob";
-import { setOpenState } from "../../app/ereader/ereaderSlice";
-import { EBook } from "../../app/ereader/types";
 
 import Block from "../page/Block";
 import BookFragment from "./Book";
@@ -12,36 +7,19 @@ import { bibleDivisions } from "./config";
 import { SwordProps } from "./types";
 import Search from "./Search";
 import Seeker from "./Seeker";
-import { kvpRepoPath } from "../hooks/data/presets";
+import useBible from "../hooks/useBible";
 
-const Bible: React.FC<SwordProps> = ({ setEBook, showAnimation }) => {
-  const dispatch = useDispatch();
-  const [isFetchingContent, setIsFetchingContent] = useState(false);
+const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
   const [searchText, setSearchText] = useState("");
+
+  const { handleBookOpen, isLoading } = useBible();
 
   useEffect(() => {
     document.documentElement.scrollTo(0, 0);
-  }, [isFetchingContent]);
+  }, [isLoading]);
 
   const handleSearchChange = (value: string) => {
     setSearchText(value);
-  };
-
-  const handleArticleClick = async (title: string) => {
-    setIsFetchingContent(true);
-    const date = Date.now().toString();
-
-    try {
-      const content = await fetchGitBlob(kvpRepoPath + "/main", title, "json");
-      setTimeout(() => dispatch(setOpenState(true)), 100);
-      setEBook({
-        title,
-        content: JSON.parse(content),
-        date,
-      } as EBook);
-    } finally {
-      setIsFetchingContent(false);
-    }
   };
 
   const getMatchingDivisions = useCallback(() => {
@@ -78,7 +56,7 @@ const Bible: React.FC<SwordProps> = ({ setEBook, showAnimation }) => {
           <Flex className="flex-col items-center justify-center">
             {division}
             {searchText && books.length > 0 && (
-              <Seeker books={books} onClick={handleArticleClick} />
+              <Seeker books={books} onClick={handleBookOpen} />
             )}
           </Flex>
         </Tabs.Trigger>
@@ -102,7 +80,7 @@ const Bible: React.FC<SwordProps> = ({ setEBook, showAnimation }) => {
               book={book}
               title="HB"
               showAnimation={showAnimation}
-              onClick={() => handleArticleClick(book)}
+              onClick={() => handleBookOpen(book)}
             />
           ))}
         </Flex>
@@ -110,7 +88,7 @@ const Bible: React.FC<SwordProps> = ({ setEBook, showAnimation }) => {
     );
   };
 
-  if (isFetchingContent) {
+  if (isLoading) {
     return <Block noPage />;
   }
 

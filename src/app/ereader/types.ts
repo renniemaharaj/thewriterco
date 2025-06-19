@@ -17,7 +17,6 @@ export type EBook = {
 
 export type EreaderState = {
   isOpen: boolean;
-  readerStyle: "rich" | "bible";
   currentChapter: string;
   currentVerse: string;
   eContent: EBook;
