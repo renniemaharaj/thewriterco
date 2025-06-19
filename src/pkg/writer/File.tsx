@@ -7,6 +7,7 @@ import {
   Dialog,
   TextField,
   Separator,
+  Tooltip,
 } from "@radix-ui/themes";
 import {
   CheckIcon,
@@ -145,7 +146,9 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
             className="!absolute !top-4 !flex !items-center !justify-between !w-full !p-3 !transition !max-w-fit !rounded-full"
             aria-controls="file-content"
           >
-            <span className="font-semibold">Files</span>
+            <Tooltip content="File management">
+              <span className="font-semibold">Files</span>
+            </Tooltip>
             <ChevronDown />
           </Button>
         </Popover.Trigger>

@@ -48,14 +48,7 @@ function Editor() {
   return (
     <main>
       <div>
-        <div
-          style={{
-            display: "flex",
-            gap: "12px",
-            marginBottom: 10,
-          }}
-          className="buttonWrap"
-        >
+        <div>
           <File
             setEditorContent={setLocalContent}
             triggerRemount={triggerRemount}
