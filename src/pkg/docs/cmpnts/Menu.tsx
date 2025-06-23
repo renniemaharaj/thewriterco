@@ -15,7 +15,7 @@ import {
 } from "../../../app/reasoning/reasoningSlice";
 import { RootState } from "../../../app/store";
 import { Carousel } from "../../Carousel";
-import Tab from "./Tab";
+import Trigger from "./Trigger";
 
 // Define the shape of each collapsible item
 export type CollapsibleItem = {
@@ -52,12 +52,6 @@ const Menu = ({ routeChildren, additionalTabs = [], className }: MenuProps) => {
   );
 
   const [tabFromUrl, setTabInUrl] = useURLState("ta");
-
-  // const scrollAreaClass =
-  //   "!max-w-full !overflow-x-hidden !mx-auto p-2 h-full max-h-[100vh] !sticky !top-0";
-
-  // const tabListClass =
-  //   "!flex !overflow-x-auto !max-w-full space-x-4 !shadow-none pb-2";
 
   const dispatch = useDispatch();
 
@@ -177,13 +171,7 @@ const Menu = ({ routeChildren, additionalTabs = [], className }: MenuProps) => {
         <Carousel
           variant="no-scrollbar"
           items={combinedTabs.map((tab) => (
-            <Tabs.Trigger
-              key={tab.value + "tabsTrigger"}
-              value={tab.value}
-              className="px-4 py-2"
-            >
-              <Tab title={tab.label} />
-            </Tabs.Trigger>
+            <Trigger key={tab.value} tab={tab} currentTab={currentTab} />
           ))}
         />
       </Tabs.List>

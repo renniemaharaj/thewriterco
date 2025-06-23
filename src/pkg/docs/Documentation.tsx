@@ -1,4 +1,4 @@
-import { Box, Card, Flex } from "@radix-ui/themes";
+import { Box, Text, Card, Flex } from "@radix-ui/themes";
 import { ReactNode, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -63,6 +63,17 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
         onMouseEnter={() => setIsFocused(false)}
       >
         <Card className="!w-full !h-fit !sticky !top-[2rem]">
+          {isFocused && (
+            <Flex className="!w-full !flex-col !justify-center !items-center !py-4">
+              <Text size="2" weight="bold">
+                Focused mode
+              </Text>
+              <Text size="2" color="gray">
+                hover to disable
+              </Text>
+            </Flex>
+          )}
+
           <Menu
             className={isFocused ? "!opacity-0 pointer-events-none" : ""}
             routeChildren={setRouteChildren}
