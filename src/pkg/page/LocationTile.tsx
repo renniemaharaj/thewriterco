@@ -1,11 +1,8 @@
 import { Card, Flex, IconButton, Text } from "@radix-ui/themes";
 import React, { memo, useEffect, useState } from "react";
-import { useThemeContext } from "../context/theme/useThemeContext";
 import { ChevronRightIcon, HomeIcon } from "lucide-react";
 
 const LocationTile = () => {
-  const { theme } = useThemeContext();
-
   const [locationParts, setLocationParts] = useState<string[]>([]);
 
   useEffect(() => {
@@ -21,7 +18,6 @@ const LocationTile = () => {
           variant="ghost"
           onClick={() => (location.href = "/")}
           aria-label="Go to Home"
-          className={`${theme === "dark" ? "!text-white" : "!text-yellow-400"}`}
         >
           <HomeIcon />
         </IconButton>

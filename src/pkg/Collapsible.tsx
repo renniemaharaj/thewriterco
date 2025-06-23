@@ -115,7 +115,9 @@ const Collapsible = ({
           scrollbars="both"
           className={`overflow-auto transition-all duration-300 max-h-[${maxHeight}]`}
         >
-          <Flex className="p-4">
+          <Flex
+            className={`!py-4 ${orientation === "horizontal" ? "!px-4" : "!px-0"}`}
+          >
             {handledChildren && orientation === "horizontal" ? <></> : children}
           </Flex>
         </ScrollArea>

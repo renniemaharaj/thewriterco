@@ -176,7 +176,7 @@ const Menu = ({ routeChildren, additionalTabs = [], className }: MenuProps) => {
         />
       </Tabs.List>
 
-      <Box pt="3" className="space-y-4 max-w-[100%]">
+      <Box pt="3" className="max-w-[100%]">
         {renderedTabContents}
       </Box>
     </Tabs.Root>

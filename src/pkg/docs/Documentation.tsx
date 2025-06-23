@@ -22,7 +22,7 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
   const [routeChildren, setRouteChildren] = useState<ReactNode | null>(null);
   const [isFocused, setIsFocused] = useState(false);
 
-  const innerBoxClass = "space-y-4 space-x-4 !p-2 !py-10 !mx-auto !w-full";
+  const innerBoxClass = `!py-2 ${orientation === "horizontal" ? "!px-2" : "!px-0"} !mx-auto !w-full`;
 
   useEffect(() => {
     if (orientation === "vertical") return;
@@ -64,7 +64,9 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
       >
         <Card className="!w-full !h-fit !sticky !top-[2rem]">
           {isFocused && (
-            <Flex className="!w-full !flex-col !justify-center !items-center !py-4">
+            <Flex
+              className={`!w-full !flex-col !justify-center !items-center ${orientation === "horizontal" ? "!p-4" : "!p-0"}`}
+            >
               <Text size="2" weight="bold">
                 Focused mode
               </Text>

@@ -143,7 +143,7 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
         <Popover.Trigger>
           <Button
             variant="soft"
-            className="!absolute !top-4 !flex !items-center !justify-between !w-full !p-3 !transition !max-w-fit !rounded-full"
+            className="!absolute !top-2 !flex !items-center !justify-between !w-full !p-3 !transition !max-w-fit !rounded-full"
             aria-controls="file-content"
           >
             <Tooltip content="File management">

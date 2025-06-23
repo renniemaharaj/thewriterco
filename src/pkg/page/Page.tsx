@@ -7,11 +7,12 @@ import { Helmet } from "react-helmet-async";
 import Sizer from "./Sizer";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Block from "./Block";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setEBook } from "../../app/ereader/ereaderSlice";
 import { initialState } from "../../app/ereader/utils";
 
 import light from "../../assets/Light.jpg";
+import { RootState } from "../../app/store";
 
 const Page = ({
   children,
@@ -31,6 +32,8 @@ const Page = ({
   description?: string;
 }) => {
   const { isPending, path } = useTransitionNavigation();
+
+  const { orientation } = useSelector((state: RootState) => state.chat);
 
   useEffect(() => {
     document.body.style.overflowX = "hidden";
@@ -70,9 +73,9 @@ const Page = ({
       <Sizer />
       {/* <Navbar /> */}
       <Navbar />
-      <section className="p-2 w-full max-w-full">
-        {/* <LocationTile /> */}
-      </section>
+      {/* <section className="p-2 w-full max-w-full">
+        <LocationTile />
+      </section> */}
       <Reader hidePicker={hideBiblePicker} />
       <Flex
         direction="column"
@@ -81,10 +84,12 @@ const Page = ({
         className={`!w-full md:!w-[99%] !flex-col !mx-auto pb-20 blurred-div-light  ${className}`}
       >
         {wrapChildren && (
-          <Card className={`!p-5 w-full blurred-div ${className}`}>
+          <Card
+            className={`w-full blurred-div ${className} !py-3 top-3 ${orientation === "horizontal" ? "!px-3" : "!px-0"}`}
+          >
             <Flex
               data-testid="heroElement"
-              className="!flex-col !gap-10  !w-full !max-w-full"
+              className="!flex-col !gap-10 !w-full !max-w-full"
             >
               {hero}
               <Separator size={"2"} className="mx-auto" />
