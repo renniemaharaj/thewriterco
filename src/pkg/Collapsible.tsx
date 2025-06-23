@@ -112,7 +112,7 @@ const Collapsible = ({
         className="overflow-hidden"
       >
         <ScrollArea
-          scrollbars="vertical"
+          scrollbars="both"
           className={`overflow-auto transition-all duration-300 max-h-[${maxHeight}]`}
         >
           <Flex className="p-4">
