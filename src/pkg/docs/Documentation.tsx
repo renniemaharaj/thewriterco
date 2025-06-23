@@ -22,7 +22,7 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
   const [routeChildren, setRouteChildren] = useState<ReactNode | null>(null);
   const [isFocused, setIsFocused] = useState(false);
 
-  const innerBoxClass = `!py-2 ${orientation === "horizontal" ? "!px-2" : "!px-0"} !mx-auto !w-full`;
+  const innerBoxClass = `!p-0 !mx-auto !w-full`;
 
   useEffect(() => {
     if (orientation === "vertical") return;
@@ -49,11 +49,11 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
           style={{ width: contentWidth }}
           onMouseEnter={() => setIsFocused(true)}
         >
-          <Card className="!w-full !sticky !top-[2rem]">
+          <Flex className="!w-full">
             {routeChildren && (
               <Box className={innerBoxClass}>{routeChildren}</Box>
             )}
-          </Card>
+          </Flex>
         </Flex>
       )}
 
