@@ -13,14 +13,14 @@ export type DocumentationProps = {
 
 const Documentation = ({ additionalTabs }: DocumentationProps) => {
   const { orientation } = useSelector((state: RootState) => state.chat);
-  const [routeChildren, setRouteChildren] = useState<ReactNode | null>(null);
   const currentTitle = useSelector(
     (state: RootState) => state.reasoning.currentTitle,
   );
-
   const dispatch = useDispatch();
 
   const [titleFromUrl, setTitleInUrl] = useURLState("t");
+  const [routeChildren, setRouteChildren] = useState<ReactNode | null>(null);
+  const [isFocused, setIsFocused] = useState(false);
 
   const innerBoxClass = "space-y-4 space-x-4 !p-2 !py-10 !mx-auto !w-full";
 
@@ -33,27 +33,38 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
 
   useEffect(() => {
     if (titleFromUrl && !currentTitle) dispatch(setCurrentTitle(titleFromUrl));
-
-    if (currentTitle && currentTitle != titleFromUrl)
+    if (currentTitle && currentTitle !== titleFromUrl)
       setTitleInUrl(currentTitle);
   }, [dispatch, currentTitle, setTitleInUrl, titleFromUrl]);
 
+  const menuWidth =
+    orientation === "vertical" ? "100%" : isFocused ? "25%" : "35%";
+  const contentWidth = isFocused ? "75%" : "65%";
+
   return (
-    <Flex className="gap-2 !overflow-visible">
+    <Flex className="gap-2 !overflow-visible w-full">
+      {/* Content View */}
       {orientation === "horizontal" && (
-        <Flex className="w-[65%] !min-h-[350px]">
+        <Flex
+          style={{ width: contentWidth }}
+          onMouseEnter={() => setIsFocused(true)}
+        >
           <Card className="!w-full !sticky !top-[2rem]">
-            {routeChildren && orientation === "horizontal" && (
+            {routeChildren && (
               <Box className={innerBoxClass}>{routeChildren}</Box>
             )}
           </Card>
         </Flex>
       )}
+
+      {/* Menu */}
       <Flex
-        className={`${orientation === "horizontal" ? "w-[35%]" : "w-full"}`}
+        style={{ width: menuWidth }}
+        onMouseEnter={() => setIsFocused(false)}
       >
         <Card className="!w-full !h-fit !sticky !top-[2rem]">
           <Menu
+            className={isFocused ? "!opacity-0 pointer-events-none" : ""}
             routeChildren={setRouteChildren}
             additionalTabs={additionalTabs}
           />

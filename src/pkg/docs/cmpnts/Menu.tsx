@@ -38,7 +38,7 @@ type MenuProps = {
   additionalTabs?: TabItem[];
 };
 
-const Menu = ({ routeChildren, additionalTabs = [] }: MenuProps) => {
+const Menu = ({ routeChildren, additionalTabs = [], className }: MenuProps) => {
   const axiomsData = useFetchGitDir("axioms");
   const verboseData = useFetchGitDir("verbose");
   const proKJVData = useFetchGitDir("prokjv");
@@ -171,6 +171,7 @@ const Menu = ({ routeChildren, additionalTabs = [] }: MenuProps) => {
       onValueChange={(v) => dispatch(setCurrentTab(v))}
       value={defaultTabValue}
       defaultValue={defaultTabValue}
+      className={className}
     >
       <Tabs.List>
         <Carousel
