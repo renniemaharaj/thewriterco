@@ -1,6 +1,14 @@
 import { Flex, IconButton, Tooltip } from "@radix-ui/themes";
 import { AudioLines, PauseIcon, StopCircle } from "lucide-react";
 import { VoiceReaderEngine } from "../hooks/useVoiceReader";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { useEffect } from "react";
+import {
+  registerShortcut,
+  unregisterShortcut,
+  useGlobalShortcuts,
+} from "../hooks/useGlobalShortcuts";
 
 export type VoiceHeaderProps = {
   voiceReaderEngine: VoiceReaderEngine;
@@ -24,6 +32,39 @@ const VoiceHeader = ({
   const voiceReaderIconClass =
     "text-gray-500 hover:animate-pulse transition-colors duration-200";
 
+  const readerOpen = useSelector((state: RootState) => state.ereader.isOpen);
+  useGlobalShortcuts(); // Mount global listener once
+  useEffect(() => {
+    const stopShortcut = {
+      key: "Escape",
+      action: (e: KeyboardEvent) => {
+        if (playing && readerOpen) handleStop();
+        e.preventDefault();
+      },
+    };
+
+    const playStopShortcut = {
+      key: " ",
+      action: (e: KeyboardEvent) => {
+        if (!readerOpen) return;
+        if (playing) {
+          handleStop();
+          e.preventDefault();
+        } else {
+          handlePlay();
+          e.preventDefault();
+        }
+      },
+    };
+
+    registerShortcut(stopShortcut);
+    registerShortcut(playStopShortcut);
+
+    return () => {
+      unregisterShortcut(stopShortcut);
+      unregisterShortcut(playStopShortcut);
+    };
+  }, [handlePlay, handleStop, playing, readerOpen]);
   return (
     <Flex className="gap-2 items-center">
       <Tooltip content="⌘ Space Key">

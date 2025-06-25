@@ -5,7 +5,7 @@ type Shortcut = {
   ctrl?: boolean;
   shift?: boolean;
   alt?: boolean;
-  action: () => void;
+  action: (event: KeyboardEvent) => void;
   debounceMs?: number;
 };
 
@@ -46,8 +46,7 @@ export const useGlobalShortcuts = () => {
             now - (lastExecuted.get(keyId) ?? 0) > debounce
           ) {
             lastExecuted.set(keyId, now);
-            // e.preventDefault();
-            s.action();
+            s.action(e);
           }
 
           break; // only fire one matching shortcut

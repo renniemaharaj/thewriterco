@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { initialState } from "./utils";
 import { EBook } from "./types";
+import { getInitialReaderData } from "./utils";
 
 const ereaderSlice = createSlice({
   name: "ereader",
-  initialState,
+  initialState: getInitialReaderData(),
   reducers: {
     setEBook(state, action: PayloadAction<EBook>) {
       state.eContent = action.payload;
@@ -45,6 +45,12 @@ const ereaderSlice = createSlice({
     setSpeaking(state, action: PayloadAction<boolean>) {
       state.speaking = action.payload;
     },
+    setSpeechEnabled(state, action: PayloadAction<boolean>) {
+      state.speechEnabled = action.payload;
+    },
+    setSelectedVoice(state, action: PayloadAction<string>) {
+      state.selectedVoice = action.payload;
+    },
     toggleSpeaking(state) {
       state.speaking = !state.speaking;
     },
@@ -64,6 +70,8 @@ export const {
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
   setSpeaking,
+  setSpeechEnabled,
+  setSelectedVoice,
   toggleSpeaking,
 } = ereaderSlice.actions;
 

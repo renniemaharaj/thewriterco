@@ -20,5 +20,7 @@ export type EreaderState = {
   currentChapter: string;
   currentVerse: string;
   eContent: EBook;
+  selectedVoice: string;
+  speechEnabled: boolean;
   speaking: boolean;
 };

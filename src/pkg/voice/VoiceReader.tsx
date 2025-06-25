@@ -3,12 +3,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { VoiceReaderEngine } from "../hooks/useVoiceReader";
 import VoiceHeader from "./VoiceHeader";
 
-import {
-  useGlobalShortcuts,
-  registerShortcut,
-  unregisterShortcut,
-} from "../hooks/useGlobalShortcuts";
-
 export type Variant = SpeechSynthesisVoice;
 
 export type VoiceReaderProps = {
@@ -138,36 +132,6 @@ const VoiceReader = ({
     // Only rerun when selectedVoice actually changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedVoice?.voiceURI]);
-
-  useGlobalShortcuts(); // Mount global listener once
-
-  useEffect(() => {
-    const stopShortcut = {
-      key: "Escape",
-      action: () => {
-        if (playing) handleStop();
-      },
-    };
-
-    const playStopShortcut = {
-      key: " ",
-      action: () => {
-        if (playing) {
-          handleStop();
-        } else {
-          handlePlay();
-        }
-      },
-    };
-
-    registerShortcut(stopShortcut);
-    registerShortcut(playStopShortcut);
-
-    return () => {
-      unregisterShortcut(stopShortcut);
-      unregisterShortcut(playStopShortcut);
-    };
-  }, [handlePlay, handleStop, playing]);
 
   return (
     <Flex direction="column" gap="2">

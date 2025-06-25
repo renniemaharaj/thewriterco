@@ -1,7 +1,6 @@
 export const SHADOW_COUNT = 4;
 
 export const DEFAULT_VOICE_BROWSER = "Microsoft Mark - English (United States)";
-export const DEFAULT_VOICE_ELEVEN = "Lily";
 
 // Canonical Gospels
 export const canonicalGospels: string[] = ["Matthew", "Mark", "Luke", "John"];

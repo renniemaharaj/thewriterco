@@ -7,9 +7,9 @@ import { Helmet } from "react-helmet-async";
 import Sizer from "./Sizer";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Block from "./Block";
-import { useDispatch, useSelector } from "react-redux";
-import { setEBook } from "../../app/ereader/ereaderSlice";
-import { initialState } from "../../app/ereader/utils";
+import { useSelector } from "react-redux";
+// import { setEBook } from "../../app/ereader/ereaderSlice";
+// import { initialState } from "../../app/ereader/utils";
 
 import light from "../../assets/Light.jpg";
 import { RootState } from "../../app/store";
@@ -17,7 +17,7 @@ import { RootState } from "../../app/store";
 const Page = ({
   children,
   hero,
-  hideBiblePicker = true,
+  hideBiblePicker = false,
   wrapChildren = false,
   className,
   title,
@@ -25,8 +25,8 @@ const Page = ({
 }: {
   children: ReactNode;
   hero?: ReactNode;
-  hideBiblePicker?: boolean;
   wrapChildren?: boolean;
+  hideBiblePicker?: boolean;
   className?: string;
   title?: string;
   description?: string;
@@ -46,11 +46,11 @@ const Page = ({
     document.documentElement.scrollTo(0, 0);
   }, [isPending, path]);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(setEBook(initialState.eContent));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(setEBook(initialState.eContent));
+  // }, [dispatch]);
 
   return (
     <div>
@@ -73,9 +73,7 @@ const Page = ({
       <Sizer />
       {/* <Navbar /> */}
       <Navbar />
-      {/* <section className="p-2 w-full max-w-full">
-        <LocationTile />
-      </section> */}
+
       <Reader hidePicker={hideBiblePicker} />
       <Flex
         direction="column"

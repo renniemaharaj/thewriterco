@@ -14,7 +14,8 @@ import Shadow from "./Shadow";
 import Current from "./Current";
 import { SHADOW_COUNT } from "../config";
 import Changer from "./Changer";
-import Header from "../Header";
+import Header from "./Header";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const Reader = ({
   hidePicker,
@@ -23,6 +24,9 @@ const Reader = ({
   onSpeechProgress?: (chapter: string, verse: string) => void;
 }) => {
   const eReaderState = useSelector((state: RootState) => state.ereader);
+
+  const [, setValue] = useLocalStorage("readerData", eReaderState);
+
   const {
     isOpen,
     currentChapter: reduxChapter,
@@ -64,12 +68,18 @@ const Reader = ({
   useEffect(() => {
     const nextVerseShortcut = {
       key: "ArrowRight",
-      action: () => navigateVerse("next"),
+      action: (e: KeyboardEvent) => {
+        if (eReaderState.isOpen) navigateVerse("next");
+        e.preventDefault();
+      },
     };
 
     const prevVerseShortcut = {
       key: "ArrowLeft",
-      action: () => navigateVerse("prev"),
+      action: (e: KeyboardEvent) => {
+        if (eReaderState.isOpen) navigateVerse("prev");
+        e.preventDefault();
+      },
     };
 
     registerShortcut(nextVerseShortcut);
@@ -79,12 +89,16 @@ const Reader = ({
       unregisterShortcut(nextVerseShortcut);
       unregisterShortcut(prevVerseShortcut);
     };
-  }, [navigateVerse]);
+  }, [navigateVerse, eReaderState]);
 
   const hasFiveVersesLeft = useCallback(() => {
     const currentIndex = parseInt(currentVerse, 10);
     return currentIndex + SHADOW_COUNT < chapterVerses.length;
   }, [currentVerse, chapterVerses]);
+
+  useEffect(() => {
+    setValue(eReaderState);
+  }, [eReaderState]);
 
   return (
     <div

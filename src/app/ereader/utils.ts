@@ -1,17 +1,11 @@
-import introductionMessage from "./introduction";
+import { initialState } from "./config";
 import { EreaderState } from "./types";
 
-const defaultContent = {
-  title: "Bible",
-  description: "An introduction to the Holy Bible",
-  summary: "The sacred scripture of the Christian faith",
-  content: introductionMessage,
-};
-
-export const initialState: EreaderState = {
-  isOpen: false,
-  currentChapter: "1",
-  currentVerse: "1",
-  eContent: defaultContent,
-  speaking: false,
-};
+export function getInitialReaderData(): EreaderState {
+  // Check local storage for flow data
+  const readerData = localStorage.getItem("readerData");
+  if (readerData) {
+    return { ...initialState, ...JSON.parse(readerData) }; // Use spread operator to combine initial state
+  }
+  return initialState;
+}

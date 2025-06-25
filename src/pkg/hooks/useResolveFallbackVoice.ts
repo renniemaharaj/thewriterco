@@ -7,9 +7,9 @@ import { DEFAULT_VOICE_BROWSER } from "../bible/config";
 const useResolveFallbackVoice = () => {
   const voiceBrowser = useVoiceReader();
 
-  const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
-
-  const selectedVoice = elevenLabs.selectedVoice;
+  const selectedVoice = useSelector(
+    (state: RootState) => state.ereader.selectedVoice,
+  );
 
   const resolveOrFallback = (): SpeechSynthesisVoice => {
     const voices: Variant[] = voiceBrowser.voices;

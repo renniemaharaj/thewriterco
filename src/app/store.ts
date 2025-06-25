@@ -7,7 +7,6 @@ import chatSlice from "./chat/chatSlice";
 import flowSlice from "./flow/flowSlice";
 import reasoningSlice from "./reasoning/reasoningSlice";
 
-import elevenLabsSlice from "./elevenLabs/eleventLabsSlice";
 import errorBoundarySlice from "./errorBoundary/errorBoundarySlice";
 import pageSlice from "./page/pageSlice";
 import writerSlice from "./writer/writerSlice";
@@ -21,7 +20,6 @@ export const store = configureStore({
     flow: flowSlice.reducer,
     reasoning: reasoningSlice.reducer,
     page: pageSlice.reducer,
-    elevenLabs: elevenLabsSlice.reducer,
     errorBoundary: errorBoundarySlice.reducer,
     writer: writerSlice.reducer,
   },

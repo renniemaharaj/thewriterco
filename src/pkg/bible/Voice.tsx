@@ -3,9 +3,10 @@ import { useDispatch } from "react-redux";
 import VoiceReader from "../voice/VoiceReader";
 import VoiceSelect from "../voice/VoiceSelect";
 import { useVoiceReader } from "../hooks/useVoiceReader";
-import useResolveFallbackVoice from "../hooks/useResolveFallbackVoice";
+
 import { RegisterRecoveryFunction } from "../../app/errorBoundary/errorBoundarySlice";
 import { RecoveryFunction } from "../../app/errorBoundary/types";
+import useResolveFallbackVoice from "../hooks/useResolveFallbackVoice";
 
 const Voice = ({
   textContent,

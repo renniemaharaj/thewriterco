@@ -25,7 +25,11 @@ const Suspended = () => {
       }
     >
       <div className="w-full text-center space-y-4 mt-6">
-        <Flex align={"center"} direction="row" className="gap-1">
+        <Flex
+          align={"center"}
+          direction="row"
+          className="gap-1 !justify-center"
+        >
           <Badge color="gold">🔒 https</Badge>
           <Badge color="green">thewriterco.com</Badge>
           <Badge color="green">/</Badge>

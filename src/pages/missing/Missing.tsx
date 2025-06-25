@@ -25,7 +25,11 @@ function Missing() {
       }
     >
       <div className="w-full text-center space-y-4 mt-6">
-        <Flex align={"center"} direction="row" className="gap-1">
+        <Flex
+          align={"center"}
+          direction="row"
+          className="gap-1 !justify-center"
+        >
           {/* <Text as="p" color="green" size="3">
             
           </Text> */}

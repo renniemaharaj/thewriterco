@@ -1,46 +1,39 @@
 import { Select } from "@radix-ui/themes";
 import VoiceList from "./VoiceList";
-import { memo, useCallback, useEffect } from "react";
+import { memo, useEffect } from "react";
 import useResolveFallbackVoice from "../hooks/useResolveFallbackVoice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { SetSelectedVoice } from "../../app/elevenLabs/eleventLabsSlice";
+import { setSelectedVoice } from "../../app/ereader/ereaderSlice";
 
 export type VoiceSelectProps = {
   voices: SpeechSynthesisVoice[];
 };
 
 const VoiceSelect = ({ voices }: VoiceSelectProps) => {
-  const elevenLabs = useSelector((state: RootState) => state.elevenLabs);
-  // const selectedVoice = elevenLabs.selectedVoice?.trim();
-  const useEleven = elevenLabs.enabled;
-
-  const dispatch = useDispatch();
-  const setSelectedVoice = useCallback(
-    (value: string) => dispatch(SetSelectedVoice(value)),
-    [dispatch],
+  const selectedVoice = useSelector(
+    (state: RootState) => state.ereader.selectedVoice,
   );
+  const dispatch = useDispatch();
 
   const resolveVoice = useResolveFallbackVoice().resolveOrFallback();
 
   useEffect(() => {
-    if (elevenLabs.selectedVoice) return;
     if (!resolveVoice) return;
-    setSelectedVoice((resolveVoice as SpeechSynthesisVoice).voiceURI);
-  }, [elevenLabs, setSelectedVoice, resolveVoice]);
+
+    dispatch(setSelectedVoice((resolveVoice as SpeechSynthesisVoice).voiceURI));
+  }, [resolveVoice, dispatch]);
 
   return (
     <Select.Root
-      value={elevenLabs.selectedVoice}
-      onValueChange={(value) => setSelectedVoice(value)}
+      value={selectedVoice}
+      onValueChange={(value) => dispatch(setSelectedVoice(value))}
     >
       <Select.Trigger />
       <Select.Content>
         <Select.Group>
-          <Select.Label>
-            {useEleven ? "ElevenLabs voices" : "Browser voices"}
-          </Select.Label>
-          {<VoiceList voices={voices} useEleven={useEleven} />}
+          <Select.Label>Browser voices</Select.Label>
+          {<VoiceList voices={voices} />}
         </Select.Group>
       </Select.Content>
     </Select.Root>
