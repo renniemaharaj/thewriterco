@@ -8,6 +8,7 @@ import {
   TextField,
   Separator,
   Tooltip,
+  IconButton,
 } from "@radix-ui/themes";
 import {
   CheckIcon,
@@ -141,16 +142,11 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
 
       <Popover.Root onOpenChange={setFileMenuOpen}>
         <Popover.Trigger>
-          <Button
-            variant="soft"
-            className="!absolute !top-2 !flex !items-center !justify-between !w-full !p-3 !transition !max-w-fit !rounded-full"
-            aria-controls="file-content"
-          >
+          <IconButton variant="soft" aria-controls="file-content">
             <Tooltip content="File management">
-              <span className="font-semibold">Files</span>
+              <ChevronDown />
             </Tooltip>
-            <ChevronDown />
-          </Button>
+          </IconButton>
         </Popover.Trigger>
 
         <Popover.Content className="!p-4 !min-w-[40rem]">

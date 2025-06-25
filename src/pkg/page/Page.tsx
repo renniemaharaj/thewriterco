@@ -89,12 +89,11 @@ const Page = ({
           >
             <Flex
               data-testid="heroElement"
-              className="!flex-col !gap-10 !w-full !max-w-full"
+              className={`!flex-col !gap-10 !w-full !max-w-full`}
             >
               {hero}
-              <Separator size={"2"} className="mx-auto" />
-              {children}
             </Flex>
+            {children}
           </Card>
         )}
         {!wrapChildren && (

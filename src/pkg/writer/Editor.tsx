@@ -25,6 +25,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setContent } from "../../app/writer/writerSlice";
 import { debounce } from "lodash";
 import { RootState } from "../../app/store";
+import SideBar from "../SideBar";
+import { useOrientation } from "../hooks/useOrientation";
+import { Card, Flex } from "@radix-ui/themes";
 
 // const DEFAULT = "";
 
@@ -32,6 +35,8 @@ function Editor() {
   const content = useSelector((state: RootState) => state.writer.content);
   const [localContent, setLocalContent] = useState(content);
   const { theme } = useThemeContext();
+
+  const orientation = useOrientation();
 
   const dispatch = useDispatch();
 
@@ -48,41 +53,54 @@ function Editor() {
   return (
     <main>
       <div>
-        <div>
-          <File
-            setEditorContent={setLocalContent}
-            triggerRemount={triggerRemount}
-          />
-        </div>
-
-        <RichTextEditor
-          output="html"
-          key={key}
-          content={localContent as any}
-          onChangeContent={onValueChange}
-          extensions={extensions}
-          dark={theme === "dark"}
-          // disabled={disable}
-          bubbleMenu={{
-            render({ extensionsNames, editor, disabled }, bubbleDefaultDom) {
-              return (
-                <>
-                  {bubbleDefaultDom}
-                  {extensionsNames.includes("twitter") && (
-                    <BubbleMenuTwitter
-                      disabled={disabled}
-                      editor={editor}
-                      key="twitter"
-                    />
-                  )}
-                  {extensionsNames.includes("katex") && (
-                    <BubbleMenuKatex
-                      disabled={disabled}
-                      editor={editor}
-                      key="katex"
-                    />
-                  )}
-                  {/* {extensionsNames.includes("excalidraw") && (
+        <SideBar
+          orientation={orientation}
+          variant="right"
+          className="gap-2"
+          childLeft={<></>}
+          centerBar={
+            <Flex>
+              <Card>
+                <File
+                  setEditorContent={setLocalContent}
+                  triggerRemount={triggerRemount}
+                />
+              </Card>
+            </Flex>
+          }
+          childRight={
+            <Flex>
+              <RichTextEditor
+                output="html"
+                key={key}
+                content={localContent as any}
+                onChangeContent={onValueChange}
+                extensions={extensions}
+                dark={theme === "dark"}
+                // disabled={disable}
+                bubbleMenu={{
+                  render(
+                    { extensionsNames, editor, disabled },
+                    bubbleDefaultDom,
+                  ) {
+                    return (
+                      <>
+                        {bubbleDefaultDom}
+                        {extensionsNames.includes("twitter") && (
+                          <BubbleMenuTwitter
+                            disabled={disabled}
+                            editor={editor}
+                            key="twitter"
+                          />
+                        )}
+                        {extensionsNames.includes("katex") && (
+                          <BubbleMenuKatex
+                            disabled={disabled}
+                            editor={editor}
+                            key="katex"
+                          />
+                        )}
+                        {/* {extensionsNames.includes("excalidraw") && (
                     <BubbleMenuExcalidraw
                       disabled={disabled}
                       editor={editor}
@@ -96,17 +114,20 @@ function Editor() {
                       key="mermaid"
                     />
                   )} */}
-                  {extensionsNames.includes("drawer") && (
-                    <BubbleMenuDrawer
-                      disabled={disabled}
-                      editor={editor}
-                      key="drawer"
-                    />
-                  )}
-                </>
-              );
-            },
-          }}
+                        {extensionsNames.includes("drawer") && (
+                          <BubbleMenuDrawer
+                            disabled={disabled}
+                            editor={editor}
+                            key="drawer"
+                          />
+                        )}
+                      </>
+                    );
+                  },
+                }}
+              />
+            </Flex>
+          }
         />
       </div>
     </main>

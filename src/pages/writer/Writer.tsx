@@ -5,6 +5,7 @@ const Writer = () => {
   return (
     <Page
       wrapChildren
+      className="!mt-0"
       title="Online Writer"
       description="The cleanest, most feature-rich online writer for modern writers"
     >
