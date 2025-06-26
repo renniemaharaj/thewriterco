@@ -69,16 +69,20 @@ const Reader = ({
     const nextVerseShortcut = {
       key: "ArrowRight",
       action: (e: KeyboardEvent) => {
-        if (eReaderState.isOpen) navigateVerse("next");
-        e.preventDefault();
+        if (eReaderState.isOpen) {
+          navigateVerse("next");
+          e.preventDefault();
+        }
       },
     };
 
     const prevVerseShortcut = {
       key: "ArrowLeft",
       action: (e: KeyboardEvent) => {
-        if (eReaderState.isOpen) navigateVerse("prev");
-        e.preventDefault();
+        if (eReaderState.isOpen) {
+          navigateVerse("prev");
+          e.preventDefault();
+        }
       },
     };
 

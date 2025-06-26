@@ -10,6 +10,7 @@ type Shortcut = {
 };
 
 let shortcuts: Shortcut[] = [];
+let shortcutsEnabled = true;
 const lastExecuted: Map<string, number> = new Map();
 
 export const registerShortcut = (shortcut: Shortcut) => {
@@ -20,15 +21,35 @@ export const unregisterShortcut = (shortcut: Shortcut) => {
   shortcuts = shortcuts.filter((s) => s !== shortcut);
 };
 
+export const disableGlobalShortcuts = () => {
+  shortcutsEnabled = false;
+};
+
+export const enableGlobalShortcuts = () => {
+  shortcutsEnabled = true;
+};
+
 const getShortcutKey = (s: Shortcut) => {
-  return `${s.ctrl ? "Ctrl+" : ""}${s.shift ? "Shift+" : ""}${
-    s.alt ? "Alt+" : ""
-  }${s.key.toLowerCase()}`;
+  return `${s.ctrl ? "Ctrl+" : ""}${s.shift ? "Shift+" : ""}${s.alt ? "Alt+" : ""}${s.key.toLowerCase()}`;
+};
+
+const isTypingElement = (el: Element | null): boolean => {
+  if (!el) return false;
+  const tag = el.tagName.toLowerCase();
+  return (
+    tag === "input" ||
+    tag === "textarea" ||
+    (el as HTMLElement).isContentEditable
+  );
 };
 
 export const useGlobalShortcuts = () => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (!shortcutsEnabled || isTypingElement(document.activeElement)) {
+        return;
+      }
+
       for (const s of shortcuts) {
         const match =
           e.key.toLowerCase() === s.key.toLowerCase() &&
