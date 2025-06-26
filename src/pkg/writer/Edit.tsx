@@ -22,16 +22,16 @@ const Edit = ({ content }: { content: any }) => {
           variant="soft"
           className="!absolute !bottom-1 !left-1 !z-10"
         >
-          <Tooltip content="Scan Document">
+          <Tooltip content="Copy Document">
             <ScanText />
           </Tooltip>
         </IconButton>
       </Dialog.Trigger>
 
       <Dialog.Content maxWidth="450px">
-        <Dialog.Title>Scan Document</Dialog.Title>
+        <Dialog.Title>Copy Document</Dialog.Title>
         <Dialog.Description size="2" mb="4">
-          Scan and launch this document in the online writer? This will clear
+          Copy and launch this document in the online writer? This will clear
           any unsaved work.
         </Dialog.Description>
 
@@ -43,7 +43,7 @@ const Edit = ({ content }: { content: any }) => {
           </Dialog.Close>
           <Dialog.Close>
             <Button variant="soft" onClick={copyAndLaunch}>
-              Lunch
+              Confirm
             </Button>
           </Dialog.Close>
         </Flex>
