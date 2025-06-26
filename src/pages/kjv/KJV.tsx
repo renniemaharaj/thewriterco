@@ -1,29 +1,60 @@
-import Bible from "../../pkg/bible/Bible";
-import Page from "../../pkg/page/Page";
-import { Card, Flex, Text } from "@radix-ui/themes";
-import Hero from "../../pkg/page/Hero";
-import Link from "../../pkg/link/Link";
-import useBible from "../../pkg/hooks/useBible";
-import { useURLState } from "../../pkg/hooks/useURLState";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { useEffect } from "react";
+import useBible from "../../pkg/hooks/useBible";
+import { useURLState } from "../../pkg/hooks/useURLState";
+import { AlertDialog, Button, Card, Flex, Text } from "@radix-ui/themes";
+import Page from "../../pkg/page/Page";
+import Hero from "../../pkg/page/Hero";
 import {
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
 } from "../../app/ereader/ereaderSlice";
+import Bible from "../../pkg/bible/Bible";
+import Link from "../../pkg/link/Link";
 
 const KJV = () => {
   const ereaderSlice = useSelector((state: RootState) => state.ereader);
   const { handleBookOpen } = useBible();
+
+  const [initialURLState, setInitialURLState] = useState<{
+    bookTitle: string | null;
+    chapter: string | null;
+    verse: string | null;
+  } | null>(null);
 
   const [bookTitle, setBookTitle] = useURLState("bt");
   const [chapter, setChapter] = useURLState("c");
   const [verse, setVerse] = useURLState("v");
   const [open, setOpen] = useURLState("o");
 
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    // Only run once to capture the initial URL state before anything overrides it
+    setInitialURLState({
+      bookTitle,
+      chapter,
+      verse,
+    });
+
+    if (
+      bookTitle &&
+      chapter &&
+      verse &&
+      open &&
+      (bookTitle !== ereaderSlice.eContent.title ||
+        chapter !== ereaderSlice.currentChapter ||
+        verse !== ereaderSlice.currentVerse)
+    ) {
+      setDialogOpen(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // run only once on mount
+
+  // Set URL from Redux state
   useEffect(() => {
     setBookTitle(ereaderSlice.eContent.title);
     setChapter(ereaderSlice.currentChapter);
@@ -31,63 +62,98 @@ const KJV = () => {
     setOpen(ereaderSlice.isOpen ? "1" : "0");
   }, [ereaderSlice, setBookTitle, setChapter, setVerse, setOpen]);
 
-  useEffect(() => {
-    if (bookTitle && chapter && verse && open) {
-      if (!ereaderSlice.eContent.content) {
-        handleBookOpen(bookTitle);
-        dispatch(setGlobalCurrentChapter(chapter));
-        dispatch(setGlobalCurrentVerse(verse));
-      }
-    }
-  }, [dispatch, ereaderSlice, handleBookOpen, bookTitle, chapter, verse, open]);
+  // Handle confirm
+  const handleConfirmLoadFromURL = () => {
+    if (!initialURLState) return;
+
+    handleBookOpen(initialURLState.bookTitle!);
+    dispatch(setGlobalCurrentChapter(initialURLState.chapter!));
+    dispatch(setGlobalCurrentVerse(initialURLState.verse!));
+    setDialogOpen(false);
+
+    // Sync URL after confirmed load
+    setBookTitle(initialURLState.bookTitle!);
+    setChapter(initialURLState.chapter!);
+    setVerse(initialURLState.verse!);
+    setOpen("1");
+  };
 
   return (
-    <Page
-      wrapChildren={true}
-      title="KJV Bible"
-      description="Read the KJV Bible"
-      hero={
-        <Hero
-          header="The Word of God"
-          subHeader="KJV"
-          hint={
-            <Text>
-              The Writer Company is KJV first. We are against the subtle
-              conditioning towards an ultimate acceptance of a watered-down
-              bible version. 😬
-            </Text>
-          }
-        />
-      }
-    >
-      <Flex
-        direction="column"
-        align="center"
-        className="w-full md:!w-[80%] mx-auto gap-6"
-      >
-        {/* Bible Reader */}
-        <Bible showAnimation={true} />
+    <>
+      {/* AlertDialog Confirmation */}
+      <AlertDialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
+        <AlertDialog.Content maxWidth="450px">
+          <AlertDialog.Title>Load Scripture</AlertDialog.Title>
+          <AlertDialog.Description size="2">
+            Would you like to load{" "}
+            <strong>
+              {initialURLState?.bookTitle} {initialURLState?.chapter}:
+              {initialURLState?.verse}
+            </strong>{" "}
+            from the URL? This will override your current state
+          </AlertDialog.Description>
 
-        {/* Static Meta Info */}
-        <Card className="!flex text-center w-full !items-center !justify-center">
-          <Flex className="flex-row gap-4">
-            <Text size="3" className="text-md font-bold mb-4" weight="bold">
-              KJV Bible
-            </Text>
-            <Text size="3" color="gray">
-              66 Books • 1,189 Chapters • 31,102 Verses
-            </Text>
-            <Link
-              animate
-              external
-              href="https://github.com/renniemaharaj/kjv-bible"
-            >
-              Git Source
-            </Link>
+          <Flex gap="3" mt="4" justify="end">
+            <AlertDialog.Cancel>
+              <Button variant="soft" color="gray">
+                Cancel
+              </Button>
+            </AlertDialog.Cancel>
+            <AlertDialog.Action>
+              <Button onClick={handleConfirmLoadFromURL} variant="soft">
+                Load
+              </Button>
+            </AlertDialog.Action>
           </Flex>
-        </Card>
-      </Flex>
-    </Page>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
+
+      {/* Page layout */}
+      <Page
+        wrapChildren={true}
+        title="KJV Bible"
+        description="Read the KJV Bible"
+        hero={
+          <Hero
+            header="The Word of God"
+            subHeader="KJV"
+            hint={
+              <Text>
+                The Writer Company is KJV first. We are against the subtle
+                conditioning towards an ultimate acceptance of a watered-down
+                bible version. 😬
+              </Text>
+            }
+          />
+        }
+      >
+        <Flex
+          direction="column"
+          align="center"
+          className="w-full md:!w-[80%] mx-auto gap-6"
+        >
+          <Bible showAnimation={true} />
+
+          <Card className="!flex text-center w-full !items-center !justify-center">
+            <Flex className="flex-row gap-4">
+              <Text size="3" className="text-md font-bold mb-4" weight="bold">
+                KJV Bible
+              </Text>
+              <Text size="3" color="gray">
+                66 Books • 1,189 Chapters • 31,102 Verses
+              </Text>
+              <Link
+                animate
+                external
+                href="https://github.com/renniemaharaj/kjv-bible"
+              >
+                Git Source
+              </Link>
+            </Flex>
+          </Card>
+        </Flex>
+      </Page>
+    </>
   );
 };
 
