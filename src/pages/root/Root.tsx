@@ -73,7 +73,7 @@ const Root: React.FC = () => {
           </Swiper>
         </Flex>
       </Flex>
-      <Flex className="mt-10">
+      <Flex className="mt-10 !overflow-auto">
         <Renderer content={home_art} />
       </Flex>
     </Page>
