@@ -1,4 +1,4 @@
-import { Box, Text, Card, Flex } from "@radix-ui/themes";
+import { Box, Card, Flex, IconButton, Tooltip } from "@radix-ui/themes";
 import { ReactNode, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -6,6 +6,7 @@ import Menu, { TabItem } from "./cmpnts/Menu";
 import { RootState } from "../../app/store";
 import { useURLState } from "../hooks/useURLState";
 import { setCurrentTitle } from "../../app/reasoning/reasoningSlice";
+import { ChevronDown } from "lucide-react";
 
 export type DocumentationProps = {
   additionalTabs?: TabItem[];
@@ -38,11 +39,33 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
   }, [dispatch, currentTitle, setTitleInUrl, titleFromUrl]);
 
   const menuWidth =
-    orientation === "vertical" ? "100%" : isFocused ? "25%" : "35%";
-  const contentWidth = isFocused ? "75%" : "65%";
+    orientation === "vertical" ? "100%" : isFocused ? "3.7rem" : "35%";
+  const contentWidth = isFocused ? "100%" : "65%";
 
   return (
     <Flex className="gap-2 !overflow-visible w-full">
+      {/* Menu */}
+      <Flex
+        style={{ width: menuWidth }}
+        onMouseEnter={() => setIsFocused(false)}
+      >
+        <Card className="!w-full !h-fit !sticky !top-[3rem]">
+          {isFocused && (
+            <IconButton variant="soft" aria-controls="file-content">
+              <Tooltip content="File management">
+                <ChevronDown className="h-4 w-4" />
+              </Tooltip>
+            </IconButton>
+          )}
+
+          <Menu
+            className={isFocused ? "!opacity-0 pointer-events-none" : ""}
+            routeChildren={setRouteChildren}
+            additionalTabs={additionalTabs}
+          />
+        </Card>
+      </Flex>
+
       {/* Content View */}
       {orientation === "horizontal" && (
         <Flex
@@ -56,33 +79,6 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
           </Flex>
         </Flex>
       )}
-
-      {/* Menu */}
-      <Flex
-        style={{ width: menuWidth }}
-        onMouseEnter={() => setIsFocused(false)}
-      >
-        <Card className="!w-full !h-fit !sticky !top-[2rem]">
-          {isFocused && (
-            <Flex
-              className={`!w-full !flex-col !justify-center !items-center ${orientation === "horizontal" ? "!p-4" : "!p-0"}`}
-            >
-              <Text size="2" weight="bold">
-                Focused mode
-              </Text>
-              <Text size="2" color="gray">
-                hover to disable
-              </Text>
-            </Flex>
-          )}
-
-          <Menu
-            className={isFocused ? "!opacity-0 pointer-events-none" : ""}
-            routeChildren={setRouteChildren}
-            additionalTabs={additionalTabs}
-          />
-        </Card>
-      </Flex>
     </Flex>
   );
 };

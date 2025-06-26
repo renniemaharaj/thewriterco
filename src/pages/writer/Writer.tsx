@@ -6,7 +6,7 @@ const Writer = () => {
     <Page
       wrapChildren
       hideBiblePicker={false}
-      className="!mt-0"
+      className="!overflow-visible"
       title="Online Writer"
       description="The cleanest, most feature-rich online writer for modern writers"
     >

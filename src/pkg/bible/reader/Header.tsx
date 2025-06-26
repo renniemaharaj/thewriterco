@@ -4,7 +4,14 @@ import {
   toggleOpenState,
 } from "../../../app/ereader/ereaderSlice";
 import Picker from "../Picker";
-import { Button, Flex, IconButton, Switch, Tooltip } from "@radix-ui/themes";
+import {
+  Button,
+  Card,
+  Flex,
+  IconButton,
+  Switch,
+  Tooltip,
+} from "@radix-ui/themes";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
 import Voice from "../Voice";
@@ -53,7 +60,7 @@ const Header = ({
   }, [reader, navigateVerse]);
 
   const displayHeaderClassName =
-    "!gap-2 !p-2 !max-w-full overflow-auto !flex !justify-center !items-center !border-b";
+    "!gap-2 !p-2 !max-w-full !overflow-auto !flex !justify-center !items-center";
 
   const handleDownload = useCallback(() => {
     download(
@@ -83,52 +90,54 @@ const Header = ({
   }, [navigateVerse, reader, dispatch]);
 
   return (
-    <Flex
-      className={`${hidePicker && !isOpen ? "!hidden" : ""} ${displayHeaderClassName}`}
-    >
-      <Picker
-        trigger={<Button variant="soft">{reader.eContent.title}</Button>}
-      />
-
-      <Tooltip content="Toggle Ereader">
-        <IconButton
-          onClick={() => dispatch(toggleOpenState())}
-          aria-label="Toggle Ereader"
-          variant="soft"
-        >
-          {isOpen ? <BookDownIcon /> : <BookUpIcon />}
-        </IconButton>
-      </Tooltip>
-
-      <Tooltip content="Speech | ⌘ V">
-        <Switch
-          size="1"
-          checked={reader.speechEnabled}
-          onCheckedChange={() =>
-            dispatch(setSpeechEnabled(!reader.speechEnabled))
-          }
-          variant="soft"
-          className={`${!reader.speechEnabled && "!animate-pulse"}`}
+    <Card className="!p-1">
+      <Flex
+        className={`${hidePicker && !isOpen ? "!hidden" : ""} ${displayHeaderClassName}`}
+      >
+        <Picker
+          trigger={<Button variant="soft">{reader.eContent.title}</Button>}
         />
-      </Tooltip>
 
-      {/* Pass the whole array at once */}
-      <Voice
-        defaultModel={useBrowser}
-        textContent={textContent}
-        onSpeechProgress={onSpeechProgress}
-      />
+        <Tooltip content="Toggle Ereader">
+          <IconButton
+            onClick={() => dispatch(toggleOpenState())}
+            aria-label="Toggle Ereader"
+            variant="soft"
+          >
+            {isOpen ? <BookDownIcon /> : <BookUpIcon />}
+          </IconButton>
+        </Tooltip>
 
-      <Tooltip content={`Download JSON - ${reader.eContent.title}`}>
-        <IconButton
-          onClick={handleDownload}
-          aria-label="Download Book"
-          variant="soft"
-        >
-          <DownloadIcon />
-        </IconButton>
-      </Tooltip>
-    </Flex>
+        <Tooltip content="Speech | ⌘ V">
+          <Switch
+            size="1"
+            checked={reader.speechEnabled}
+            onCheckedChange={() =>
+              dispatch(setSpeechEnabled(!reader.speechEnabled))
+            }
+            variant="soft"
+            className={`${!reader.speechEnabled && "!animate-pulse"}`}
+          />
+        </Tooltip>
+
+        {/* Pass the whole array at once */}
+        <Voice
+          defaultModel={useBrowser}
+          textContent={textContent}
+          onSpeechProgress={onSpeechProgress}
+        />
+
+        <Tooltip content={`Download JSON - ${reader.eContent.title}`}>
+          <IconButton
+            onClick={handleDownload}
+            aria-label="Download Book"
+            variant="soft"
+          >
+            <DownloadIcon />
+          </IconButton>
+        </Tooltip>
+      </Flex>
+    </Card>
   );
 };
 

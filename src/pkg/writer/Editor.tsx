@@ -52,7 +52,7 @@ function Editor() {
   return (
     <Flex className="gap-3 !overflow-visible">
       <Flex className="!hidden md:!flex">
-        <Card className="!p-1 h-fit w-fit !sticky">
+        <Card className="!p-1 h-fit w-fit !sticky !top-[3rem]">
           <File
             setEditorContent={setLocalContent}
             triggerRemount={triggerRemount}
