@@ -3,7 +3,7 @@
 import { Button, Dialog, Flex, IconButton, Tooltip } from "@radix-ui/themes";
 import { ScanText } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { setContent } from "../../app/writer/writerSlice";
+import { setContent, setTitle } from "../../app/writer/writerSlice";
 import { useCallback } from "react";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 
@@ -12,6 +12,7 @@ const Edit = ({ content }: { content: any }) => {
   const { navigateWT } = useTransitionNavigation();
   const copyAndLaunch = useCallback(() => {
     dispatch(setContent(content));
+    dispatch(setTitle(""));
     navigateWT("/writer");
   }, [content, dispatch, navigateWT]);
 
