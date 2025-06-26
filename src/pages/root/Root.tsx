@@ -10,6 +10,8 @@ import Link from "../../pkg/link/Link";
 import android_192 from "../../assets/favicon_io/android-chrome-192x192.png";
 import Book from "../../pkg/book/Book";
 import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
+import Renderer from "../../pkg/writer/Renderer";
+import { home_art } from "./art/home_art";
 
 const Root: React.FC = () => {
   const { navigateWT } = useTransitionNavigation();
@@ -17,7 +19,7 @@ const Root: React.FC = () => {
     <Page
       title="Home"
       description="Welcome to The Writer Company"
-      className="!gap-5"
+      className="!gap-5 !w-[95%]"
       wrapChildren
       hero={
         <Hero
@@ -91,6 +93,9 @@ const Root: React.FC = () => {
             ))}
           </Swiper>
         </Flex>
+      </Flex>
+      <Flex className="mt-10">
+        <Renderer content={home_art} />
       </Flex>
     </Page>
   );

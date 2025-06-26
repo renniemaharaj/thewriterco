@@ -79,11 +79,11 @@ const Page = ({
         direction="column"
         align="center"
         justify="center"
-        className={`!w-full md:!w-[99%] !flex-col !mx-auto pb-20 blurred-div-light  ${className}`}
+        className={`!w-full md:!w-[99%] !flex-col !mx-auto pb-20 blurred-div-light`}
       >
         {wrapChildren && (
           <Card
-            className={`w-full blurred-div ${className} !py-3 top-3 ${orientation === "horizontal" ? "!px-3" : "!px-0"}`}
+            className={`w-full blurred-div !py-3 top-3 ${className} ${orientation === "horizontal" ? "!px-3" : "!px-0"}`}
           >
             <Flex
               data-testid="heroElement"

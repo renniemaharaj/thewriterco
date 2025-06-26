@@ -1,0 +1,1 @@
+export const turn_screen = `<p dir="auto"><div style="text-align: center;" class="image"><img height="auto" style="" src="https://img.freepik.com/premium-vector/smartphone-screen-turning-mobile-phone_71609-8464.jpg?ga=GA1.1.1908083006.1741786740&amp;semt=ais_items_boosted&amp;w=740" flipx="false" flipy="false" align="center" inline="false"></div></p>`;
