@@ -10,6 +10,7 @@ import "react-image-crop/dist/ReactCrop.css";
 import extensions from "./extenstions";
 import { useThemeContext } from "../context/theme/useThemeContext";
 import { useEffect, useState } from "react";
+import Edit from "./Edit";
 
 function Renderer({ content }: { content: string }) {
   const [localContent, setLocalContent] = useState(content);
@@ -25,7 +26,8 @@ function Renderer({ content }: { content: string }) {
 
   return (
     <main>
-      <div>
+      <div className="relative">
+        <Edit content={content} />
         <RichTextEditor
           output="html"
           key={key}
