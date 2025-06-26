@@ -83,7 +83,7 @@ const Page = ({
       >
         {wrapChildren && (
           <Card
-            className={`w-full blurred-div !py-3 top-3 ${className} ${orientation === "horizontal" ? "!px-3" : "!px-0"}`}
+            className={`w-full blurred-div !py-6 top-3 ${className} ${orientation === "horizontal" ? "!px-3" : "!px-0"}`}
           >
             <Flex
               data-testid="heroElement"
