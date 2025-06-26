@@ -1,13 +1,10 @@
-import { Card, Flex, Heading, Text } from "@radix-ui/themes";
+import { Card, Flex, Heading, Separator, Text } from "@radix-ui/themes";
 import Hero from "../../pkg/page/Hero";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import Page from "../../pkg/page/Page";
 import { swiperSlides } from "./slides.swiper";
 import { swiperProps } from "./config.swiper";
-import { HandCoinsIcon } from "lucide-react";
-import Link from "../../pkg/link/Link";
-import android_192 from "../../assets/favicon_io/android-chrome-192x192.png";
 import Book from "../../pkg/book/Book";
 import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
 import Renderer from "../../pkg/writer/Renderer";
@@ -35,6 +32,7 @@ const Root: React.FC = () => {
               We're here to: give reasoning for faith; reinforcement to your
               shield, 🛡️ Wherewith ye shall quench all the fiery darts of the
               wicked. For his bow is set with a fiery deception 🏹
+              <Separator size="3" className="my-5 mx-auto" />
             </>
           }
         />
@@ -43,25 +41,6 @@ const Root: React.FC = () => {
       {/* <Separator size={"4"} /> */}
       <Flex className="flex-row !w-full gap-5">
         <Flex className="!flex-col !hidden !w-0 md:!w-[25%] gap-5 mx-auto !max-w-[400px] md:!flex">
-          <Card>
-            <Flex className="!flex-col !items-center !gap-5">
-              <img
-                src={android_192}
-                alt="Android Chrome Icon"
-                className="w-20 h-20 mx-auto mt-2 animate-pulse rounded-lg"
-              />
-              <Heading size="4" className="text-md font-bold">
-                Support Us
-              </Heading>
-              <Flex className="items-center gap-2 text-sm mt-2">
-                <HandCoinsIcon className="h-5 w-5 text-primary" />
-                <Link href="https://paypal.me/newrennie" external animate>
-                  Paypal Contribute
-                </Link>
-              </Flex>
-            </Flex>
-          </Card>
-
           <Card>
             <Flex className="!flex-col !items-center !gap-5">
               <Book
