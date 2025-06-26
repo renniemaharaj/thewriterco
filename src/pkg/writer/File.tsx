@@ -131,7 +131,15 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
   }, [writer, setValue]);
 
   return (
-    <>
+    <Popover.Root onOpenChange={setFileMenuOpen}>
+      <Popover.Trigger>
+        <IconButton variant="soft" aria-controls="file-content">
+          <Tooltip content="File management">
+            <ChevronDown className="h-4 w-4" />
+          </Tooltip>
+        </IconButton>
+      </Popover.Trigger>
+
       <input
         type="file"
         ref={fileInputRef}
@@ -139,143 +147,6 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
         accept=".html"
         onChange={handleUploadChange}
       />
-
-      <Popover.Root onOpenChange={setFileMenuOpen}>
-        <Popover.Trigger>
-          <IconButton variant="soft" aria-controls="file-content">
-            <Tooltip content="File management">
-              <ChevronDown />
-            </Tooltip>
-          </IconButton>
-        </Popover.Trigger>
-
-        <Popover.Content className="!p-4 !min-w-[40rem]">
-          <Flex direction="row" gap="6" className="blurred-div">
-            {/* LEFT COLUMN: Import/Export */}
-            <Flex direction="column" gap="3" className="w-1/2">
-              <Text size="2" weight="bold">
-                Import / Export
-              </Text>
-
-              <Flex className="!w-full !gap-1">
-                <Button
-                  variant="outline"
-                  className="!flex-[3] !justify-start"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  <UploadCloud className="mr-2 h-4 w-4" />
-                  Upload
-                </Button>
-                <Dialog.Root>
-                  <Dialog.Trigger>
-                    <Button variant="soft" className="!flex-[1]">
-                      New
-                    </Button>
-                  </Dialog.Trigger>
-
-                  <Dialog.Content maxWidth="450px">
-                    <Dialog.Title>Edit profile</Dialog.Title>
-                    <Dialog.Description size="2" mb="4">
-                      Are you sure? This will wipe your current document
-                    </Dialog.Description>
-
-                    <Flex direction="column" gap="3"></Flex>
-
-                    <Flex gap="3" mt="4" justify="end">
-                      <Dialog.Close>
-                        <Button variant="soft" color="gray">
-                          Cancel
-                        </Button>
-                      </Dialog.Close>
-                      <Dialog.Close>
-                        <Button variant="soft" onClick={handleNewDocument}>
-                          Confirm
-                        </Button>
-                      </Dialog.Close>
-                    </Flex>
-                  </Dialog.Content>
-                </Dialog.Root>
-              </Flex>
-
-              <TextField.Root
-                value={title}
-                onChange={(e) => dispatch(setTitle(e.target.value))}
-                placeholder="Title required"
-                mt="2"
-              />
-
-              <Flex className="!w-full !gap-1">
-                <Button
-                  variant="soft"
-                  color="green"
-                  className="!flex-[3] !justify-start"
-                  onClick={handleDownload}
-                  disabled={title.trim() === ""}
-                >
-                  <DownloadCloud className="mr-2 h-4 w-4" />
-                  Download
-                </Button>
-
-                <Button
-                  variant="soft"
-                  className="!flex-[1]"
-                  onClick={handleSave}
-                  disabled={title.trim() === "" || contentExactsSaved()}
-                >
-                  {contentExactsSaved() ? (
-                    <CheckIcon className="mr-2 h-4 w-4" />
-                  ) : (
-                    <FolderHeart className="mr-2 h-4 w-4" />
-                  )}
-                  Save
-                </Button>
-              </Flex>
-
-              <Text size="1" color="gray">
-                Uploaded images or videos won't persist, use link instead
-              </Text>
-            </Flex>
-            <Separator orientation={"vertical"} size="3" className="my-auto" />
-            {/* RIGHT COLUMN: Saved Files */}
-            <Flex direction="column" gap="3" className="w-1/2">
-              <Text size="2" weight="bold">
-                Local Storage
-              </Text>
-
-              <Flex
-                direction="row"
-                wrap="wrap"
-                gap="3"
-                justify="start"
-                align="start"
-                className="mt-4 !p-1 !max-h-[300px] !overflow-auto"
-              >
-                {saves?.length > 0 ? (
-                  <Text size="1" color="gray">
-                    Save to secure or update documents
-                  </Text>
-                ) : (
-                  <Text size="1" color="gray">
-                    No saves yet
-                  </Text>
-                )}
-                {saves?.length > 0 &&
-                  saves.map((save, index) => (
-                    <Save
-                      key={index}
-                      index={index.toString()}
-                      save={save}
-                      title={title}
-                      loadSave={loadSave}
-                      deleteSave={deleteSave}
-                      fileMenuOpen={fileMenuOpen}
-                    />
-                  ))}
-              </Flex>
-            </Flex>
-          </Flex>
-        </Popover.Content>
-      </Popover.Root>
 
       {/* Upload Overwrite Warning Dialog */}
       <Dialog.Root open={showUploadConfirm} onOpenChange={setShowUploadConfirm}>
@@ -300,7 +171,134 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
           </Flex>
         </Dialog.Content>
       </Dialog.Root>
-    </>
+
+      <Popover.Content className="!p-4 !min-w-[40rem]">
+        <Flex direction="row" gap="6" className="blurred-div">
+          {/* LEFT COLUMN: Import/Export */}
+          <Flex direction="column" gap="3" className="w-1/2">
+            <Text size="2" weight="bold">
+              Import / Export
+            </Text>
+
+            <Flex className="!w-full !gap-1">
+              <Button
+                variant="outline"
+                className="!flex-[3] !justify-start"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <UploadCloud className="mr-2 h-4 w-4" />
+                Upload
+              </Button>
+              <Dialog.Root>
+                <Dialog.Trigger>
+                  <Button variant="soft" className="!flex-[1]">
+                    New
+                  </Button>
+                </Dialog.Trigger>
+
+                <Dialog.Content maxWidth="450px">
+                  <Dialog.Title>Edit profile</Dialog.Title>
+                  <Dialog.Description size="2" mb="4">
+                    Are you sure? This will wipe your current document
+                  </Dialog.Description>
+
+                  <Flex direction="column" gap="3"></Flex>
+
+                  <Flex gap="3" mt="4" justify="end">
+                    <Dialog.Close>
+                      <Button variant="soft" color="gray">
+                        Cancel
+                      </Button>
+                    </Dialog.Close>
+                    <Dialog.Close>
+                      <Button variant="soft" onClick={handleNewDocument}>
+                        Confirm
+                      </Button>
+                    </Dialog.Close>
+                  </Flex>
+                </Dialog.Content>
+              </Dialog.Root>
+            </Flex>
+
+            <TextField.Root
+              value={title}
+              onChange={(e) => dispatch(setTitle(e.target.value))}
+              placeholder="Title required"
+              mt="2"
+            />
+
+            <Flex className="!w-full !gap-1">
+              <Button
+                variant="soft"
+                color="green"
+                className="!flex-[3] !justify-start"
+                onClick={handleDownload}
+                disabled={title.trim() === ""}
+              >
+                <DownloadCloud className="mr-2 h-4 w-4" />
+                Download
+              </Button>
+
+              <Button
+                variant="soft"
+                className="!flex-[1]"
+                onClick={handleSave}
+                disabled={title.trim() === "" || contentExactsSaved()}
+              >
+                {contentExactsSaved() ? (
+                  <CheckIcon className="mr-2 h-4 w-4" />
+                ) : (
+                  <FolderHeart className="mr-2 h-4 w-4" />
+                )}
+                Save
+              </Button>
+            </Flex>
+
+            <Text size="1" color="gray">
+              Uploaded images or videos won't persist, use link instead
+            </Text>
+          </Flex>
+          <Separator orientation={"vertical"} size="3" className="my-auto" />
+          {/* RIGHT COLUMN: Saved Files */}
+          <Flex direction="column" gap="3" className="w-1/2">
+            <Text size="2" weight="bold">
+              Local Storage
+            </Text>
+
+            <Flex
+              direction="row"
+              wrap="wrap"
+              gap="3"
+              justify="start"
+              align="start"
+              className="mt-4 !p-1 !max-h-[300px] !overflow-auto"
+            >
+              {saves?.length > 0 ? (
+                <Text size="1" color="gray">
+                  Save to secure or update documents
+                </Text>
+              ) : (
+                <Text size="1" color="gray">
+                  No saves yet
+                </Text>
+              )}
+              {saves?.length > 0 &&
+                saves.map((save, index) => (
+                  <Save
+                    key={index}
+                    index={index.toString()}
+                    save={save}
+                    title={title}
+                    loadSave={loadSave}
+                    deleteSave={deleteSave}
+                    fileMenuOpen={fileMenuOpen}
+                  />
+                ))}
+            </Flex>
+          </Flex>
+        </Flex>
+      </Popover.Content>
+    </Popover.Root>
   );
 };
 

@@ -25,8 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setContent } from "../../app/writer/writerSlice";
 import { debounce } from "lodash";
 import { RootState } from "../../app/store";
-import SideBar from "../SideBar";
-import { useOrientation } from "../hooks/useOrientation";
+// import { useOrientation } from "../hooks/useOrientation";
 import { Card, Flex } from "@radix-ui/themes";
 
 // const DEFAULT = "";
@@ -36,7 +35,7 @@ function Editor() {
   const [localContent, setLocalContent] = useState(content);
   const { theme } = useThemeContext();
 
-  const orientation = useOrientation();
+  // const orientation = useOrientation();
 
   const dispatch = useDispatch();
 
@@ -51,56 +50,45 @@ function Editor() {
   }, [localContent, dispatch]);
 
   return (
-    <main>
-      <div>
-        <SideBar
-          orientation={orientation}
-          variant="right"
-          className="gap-2"
-          childLeft={<></>}
-          centerBar={
-            <Flex>
-              <Card>
-                <File
-                  setEditorContent={setLocalContent}
-                  triggerRemount={triggerRemount}
-                />
-              </Card>
-            </Flex>
-          }
-          childRight={
-            <Flex>
-              <RichTextEditor
-                output="html"
-                key={key}
-                content={localContent as any}
-                onChangeContent={onValueChange}
-                extensions={extensions}
-                dark={theme === "dark"}
-                // disabled={disable}
-                bubbleMenu={{
-                  render(
-                    { extensionsNames, editor, disabled },
-                    bubbleDefaultDom,
-                  ) {
-                    return (
-                      <>
-                        {bubbleDefaultDom}
-                        {extensionsNames.includes("twitter") && (
-                          <BubbleMenuTwitter
-                            disabled={disabled}
-                            editor={editor}
-                            key="twitter"
-                          />
-                        )}
-                        {extensionsNames.includes("katex") && (
-                          <BubbleMenuKatex
-                            disabled={disabled}
-                            editor={editor}
-                            key="katex"
-                          />
-                        )}
-                        {/* {extensionsNames.includes("excalidraw") && (
+    <Flex className="gap-3 !overflow-visible">
+      <Flex className="!hidden md:!flex">
+        <Card className="!p-1 h-fit w-fit !sticky">
+          <File
+            setEditorContent={setLocalContent}
+            triggerRemount={triggerRemount}
+          />
+        </Card>
+      </Flex>
+
+      <Flex>
+        <RichTextEditor
+          output="html"
+          key={key}
+          content={localContent as any}
+          onChangeContent={onValueChange}
+          extensions={extensions}
+          dark={theme === "dark"}
+          // disabled={disable}
+          bubbleMenu={{
+            render({ extensionsNames, editor, disabled }, bubbleDefaultDom) {
+              return (
+                <>
+                  {bubbleDefaultDom}
+                  {extensionsNames.includes("twitter") && (
+                    <BubbleMenuTwitter
+                      disabled={disabled}
+                      editor={editor}
+                      key="twitter"
+                    />
+                  )}
+                  {extensionsNames.includes("katex") && (
+                    <BubbleMenuKatex
+                      disabled={disabled}
+                      editor={editor}
+                      key="katex"
+                    />
+                  )}
+                  {/* {extensionsNames.includes("excalidraw") && (
                     <BubbleMenuExcalidraw
                       disabled={disabled}
                       editor={editor}
@@ -114,23 +102,20 @@ function Editor() {
                       key="mermaid"
                     />
                   )} */}
-                        {extensionsNames.includes("drawer") && (
-                          <BubbleMenuDrawer
-                            disabled={disabled}
-                            editor={editor}
-                            key="drawer"
-                          />
-                        )}
-                      </>
-                    );
-                  },
-                }}
-              />
-            </Flex>
-          }
+                  {extensionsNames.includes("drawer") && (
+                    <BubbleMenuDrawer
+                      disabled={disabled}
+                      editor={editor}
+                      key="drawer"
+                    />
+                  )}
+                </>
+              );
+            },
+          }}
         />
-      </div>
-    </main>
+      </Flex>
+    </Flex>
   );
 }
 
