@@ -133,9 +133,13 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
   return (
     <Popover.Root onOpenChange={setFileMenuOpen}>
       <Popover.Trigger>
-        <IconButton variant="soft" aria-controls="file-content">
+        <IconButton
+          variant="soft"
+          aria-controls="file-content"
+          className="!sticky !top-[3.2rem]"
+        >
           <Tooltip content="File management">
-            <ChevronDown className="h-4 w-4" />
+            <ChevronDown className="h-4 w-4 " />
           </Tooltip>
         </IconButton>
       </Popover.Trigger>

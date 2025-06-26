@@ -39,7 +39,7 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
   }, [dispatch, currentTitle, setTitleInUrl, titleFromUrl]);
 
   const menuWidth =
-    orientation === "vertical" ? "100%" : isFocused ? "3.7rem" : "35%";
+    orientation === "vertical" ? "100%" : isFocused ? "2.7rem" : "35%";
   const contentWidth = isFocused ? "100%" : "65%";
 
   return (
@@ -49,10 +49,10 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
         style={{ width: menuWidth }}
         onMouseEnter={() => setIsFocused(false)}
       >
-        <Card className="!w-full !h-fit !sticky !top-[3rem]">
+        <Card className="w-fit !p-1 !h-fit !sticky !top-[3.2rem]">
           {isFocused && (
             <IconButton variant="soft" aria-controls="file-content">
-              <Tooltip content="File management">
+              <Tooltip content="Menu">
                 <ChevronDown className="h-4 w-4" />
               </Tooltip>
             </IconButton>
