@@ -1,11 +1,9 @@
 import { Box, Card, Flex, IconButton, Tooltip } from "@radix-ui/themes";
-import { ReactNode, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { ReactNode, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 import Menu, { TabItem } from "./cmpnts/Menu";
 import { RootState } from "../../app/store";
-import { useURLState } from "../hooks/useURLState";
-import { setCurrentTitle } from "../../app/reasoning/reasoningSlice";
 import { ChevronDown } from "lucide-react";
 
 export type DocumentationProps = {
@@ -17,11 +15,11 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
   const currentTitle = useSelector(
     (state: RootState) => state.reasoning.currentTitle,
   );
-  const dispatch = useDispatch();
 
-  const [titleFromUrl, setTitleInUrl] = useURLState("t");
   const [routeChildren, setRouteChildren] = useState<ReactNode | null>(null);
   const [isFocused, setIsFocused] = useState(false);
+
+  const initialMount = useRef(true);
 
   const innerBoxClass = `!p-0 !mx-auto !w-full`;
 
@@ -32,15 +30,14 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
     });
   }, [currentTitle, orientation]);
 
-  useEffect(() => {
-    if (titleFromUrl && !currentTitle) dispatch(setCurrentTitle(titleFromUrl));
-    if (currentTitle && currentTitle !== titleFromUrl)
-      setTitleInUrl(currentTitle);
-  }, [dispatch, currentTitle, setTitleInUrl, titleFromUrl]);
-
   const menuWidth =
     orientation === "vertical" ? "100%" : isFocused ? "2.7rem" : "35%";
   const contentWidth = isFocused ? "100%" : "65%";
+
+  useEffect(() => {
+    if (initialMount && routeChildren) setIsFocused(true);
+    initialMount.current = false;
+  }, [routeChildren]);
 
   return (
     <Flex className="gap-2 !overflow-visible w-full">

@@ -29,9 +29,11 @@ function Renderer({ content }: { content: string }) {
 
   return (
     <main>
-      <div className={`relative overflow-visible`}>
+      <div className={`!relative !overflow-visible`}>
         <div className={`${animationClass}`} />
-        <Edit animateCopy={animateCopy} content={content} />
+        <div className="sticky top-[3.2rem] left-0 z-10">
+          <Edit animateCopy={animateCopy} content={content} />
+        </div>
         <RichTextEditor
           output="html"
           key={key}

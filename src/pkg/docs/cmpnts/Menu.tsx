@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Item from "./Item";
 import { useFetchGitDir } from "../../hooks/data/useFetchGitDir";
 import { dirToContents } from "../data/dirToContents";
-import { useURLState } from "../../hooks/useURLState";
 import {
   setCurrentTab,
   setCurrentTitle,
@@ -16,6 +15,8 @@ import {
 import { RootState } from "../../../app/store";
 import { Carousel } from "../../Carousel";
 import Trigger from "./Trigger";
+import { useParams } from "react-router-dom";
+import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 
 // Define the shape of each collapsible item
 export type CollapsibleItem = {
@@ -47,13 +48,19 @@ const Menu = ({ routeChildren, additionalTabs = [], className }: MenuProps) => {
   const articlesData = useFetchGitDir("articles");
   const creativityData = useFetchGitDir("creativity");
 
-  const currentTab = useSelector(
-    (state: RootState) => state.reasoning.currentTab,
-  );
-
-  const [tabFromUrl, setTabInUrl] = useURLState("ta");
+  const doc = useSelector((state: RootState) => state.reasoning);
+  const currentTab = doc.currentTab || "axioms"; // Default to "axioms" if currentTab is not set
+  const currentTitle = doc.currentTitle || "Existence of God"; // Default to "Existence of God" if currentTitle is not set
 
   const dispatch = useDispatch();
+
+  const { tab, title } = useParams<{ tab: string; title: string }>();
+  const { navigateWT } = useTransitionNavigation();
+
+  useEffect(() => {
+    dispatch(setCurrentTab(tab || currentTab));
+    dispatch(setCurrentTitle(title || currentTitle));
+  }, [tab, title, currentTab, currentTitle, dispatch]);
 
   const defaultTabs: TabItem[] = useMemo(
     () => [
@@ -64,7 +71,7 @@ const Menu = ({ routeChildren, additionalTabs = [], className }: MenuProps) => {
       },
       {
         label: "Verbose",
-        value: "reasoning",
+        value: "verbose",
         content: dirToContents(verboseData.dir, "verbose"),
       },
       {
@@ -109,19 +116,6 @@ const Menu = ({ routeChildren, additionalTabs = [], className }: MenuProps) => {
     [defaultTabs, additionalTabs],
   );
 
-  useEffect(() => {
-    const firstTitle = additionalTabs[0]?.content[0]?.title;
-    if (firstTitle) {
-      dispatch(setCurrentTitle(firstTitle));
-    }
-  }, [additionalTabs, dispatch]);
-
-  useEffect(() => {
-    if (tabFromUrl && !currentTab) dispatch(setCurrentTab(tabFromUrl));
-
-    if (currentTab && currentTab != tabFromUrl) setTabInUrl(currentTab);
-  }, [dispatch, currentTab, setTabInUrl, tabFromUrl]);
-
   const renderedTabContents = useMemo(() => {
     return combinedTabs.map((tab) => {
       const renderedItems = tab.content.map((item, index) => (
@@ -153,18 +147,13 @@ const Menu = ({ routeChildren, additionalTabs = [], className }: MenuProps) => {
     });
   }, [combinedTabs, routeChildren]);
 
-  const defaultTabValue = useMemo(() => {
-    if (currentTab !== "" && combinedTabs) {
-      return currentTab;
-    }
-    return combinedTabs[0]?.value ?? defaultTabs[0].value ?? "axioms";
-  }, [currentTab, combinedTabs, defaultTabs]);
-
   return (
     <Tabs.Root
-      onValueChange={(v) => dispatch(setCurrentTab(v))}
-      value={defaultTabValue}
-      defaultValue={defaultTabValue}
+      onValueChange={(v) => {
+        navigateWT(`/reasoning/${v}/${currentTitle}`);
+      }}
+      value={currentTab}
+      defaultValue={currentTab}
       className={className}
     >
       <Tabs.List>

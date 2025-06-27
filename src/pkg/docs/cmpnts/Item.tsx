@@ -6,9 +6,13 @@ import { Flex } from "@radix-ui/themes";
 import { Spinner } from "@radix-ui/themes";
 import { Card, Text, Button } from "@radix-ui/themes";
 import Renderer from "../../writer/Renderer";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../app/store";
+import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
+import { useParams } from "react-router-dom";
 
 const Item = ({
-  title,
+  title: itemTitle,
   body,
   fetchPath,
   filename,
@@ -18,6 +22,13 @@ const Item = ({
     fetchPath: fetchPath || "",
     filename: filename || "index",
   });
+
+  const doc = useSelector((state: RootState) => state.reasoning);
+  const currentTab = doc.currentTab;
+  const currentTitle = doc.currentTitle;
+
+  const { title } = useParams<{ title: string }>();
+  const { navigateWT } = useTransitionNavigation();
 
   const renderContent = useCallback(() => {
     if (loading) {
@@ -53,9 +64,15 @@ const Item = ({
 
   return (
     <Collapsible
-      title={title}
+      title={itemTitle}
       handledChildren={!!routeChildren}
-      onOpen={() => routeChildren?.(memoizedContent)}
+      onOpen={() => {
+        if (title !== currentTitle) {
+          navigateWT(`/reasoning/${currentTab}/${itemTitle}`);
+          return;
+        }
+        routeChildren?.(memoizedContent);
+      }}
     >
       {memoizedContent}
     </Collapsible>

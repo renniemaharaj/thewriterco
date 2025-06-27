@@ -14,7 +14,7 @@ const Kjv = lazy(() => import("./pages/kjv/KJV"));
 
 const Writer = lazy(() => import("./pages/writer/Writer.tsx"));
 
-const Study = lazy(() => import("./pages/reasoning/Document"));
+const Documentation = lazy(() => import("./pages/reasoning/Document"));
 
 export const protectedRoutes: CustomRoute[] = [
   { path: "office", element: <></> },
@@ -28,7 +28,9 @@ export const publicRoutes: (CustomRoute | IndexRoute)[] = [
   { path: "login", element: <Login /> },
   { path: "ai", element: <AI />, suspended: true },
   { path: "kjv", element: <Kjv /> },
-  { path: "reasoning", element: <Study /> },
+  { path: "kjv/:title/:chapter/:verse", element: <Kjv /> },
+  { path: "reasoning", element: <Documentation /> },
+  { path: "reasoning/:tab/:title", element: <Documentation /> },
   { path: "daily", element: <Daily /> },
   { path: "doc/presenter", element: <Presenter /> },
   { path: "writer", element: <Writer />, suspended: false },
