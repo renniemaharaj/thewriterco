@@ -70,7 +70,9 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
       {orientation === "horizontal" && (
         <Flex
           style={{ width: contentWidth }}
-          onMouseEnter={() => setIsFocused(true)}
+          onMouseEnter={() => {
+            if (routeChildren) setIsFocused(true);
+          }}
         >
           <Flex className="!w-full">
             {routeChildren && (
