@@ -60,7 +60,7 @@ const Menu = ({ routeChildren, additionalTabs = [], className }: MenuProps) => {
   useEffect(() => {
     dispatch(setCurrentTab(tab || currentTab));
     dispatch(setCurrentTitle(title || currentTitle));
-  }, [tab, title, currentTab, currentTitle, dispatch]);
+  }, [tab, title, dispatch]);
 
   const defaultTabs: TabItem[] = useMemo(
     () => [

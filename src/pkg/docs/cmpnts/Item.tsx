@@ -6,10 +6,11 @@ import { Flex } from "@radix-ui/themes";
 import { Spinner } from "@radix-ui/themes";
 import { Card, Text, Button } from "@radix-ui/themes";
 import Renderer from "../../writer/Renderer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 import { useParams } from "react-router-dom";
+import { setCurrentTitle } from "../../../app/reasoning/reasoningSlice";
 
 const Item = ({
   title: itemTitle,
@@ -22,10 +23,9 @@ const Item = ({
     fetchPath: fetchPath || "",
     filename: filename || "index",
   });
-
+  const dispatch = useDispatch();
   const doc = useSelector((state: RootState) => state.reasoning);
   const currentTab = doc.currentTab;
-  const currentTitle = doc.currentTitle;
 
   const { title } = useParams<{ title: string }>();
   const { navigateWT } = useTransitionNavigation();
@@ -67,7 +67,9 @@ const Item = ({
       title={itemTitle}
       handledChildren={!!routeChildren}
       onOpen={() => {
-        if (title !== currentTitle) {
+        if (title !== itemTitle) {
+          // Update the current tab
+          dispatch(setCurrentTitle(itemTitle));
           navigateWT(`/reasoning/${currentTab}/${itemTitle}`);
           return;
         }
