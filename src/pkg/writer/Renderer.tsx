@@ -11,9 +11,12 @@ import extensions from "./extenstions";
 import { useThemeContext } from "../context/theme/useThemeContext";
 import { useEffect, useState } from "react";
 import Edit from "./Edit";
+import { useAnimateCopy } from "../hooks/useAnimateCopy";
 
 function Renderer({ content }: { content: string }) {
   const [localContent, setLocalContent] = useState(content);
+
+  const { animateCopy, animationClass } = useAnimateCopy(1000);
 
   const [key, setKey] = useState(1);
 
@@ -26,8 +29,9 @@ function Renderer({ content }: { content: string }) {
 
   return (
     <main>
-      <div className="relative">
-        <Edit content={content} />
+      <div className={`relative overflow-visible`}>
+        <div className={`${animationClass}`} />
+        <Edit animateCopy={animateCopy} content={content} />
         <RichTextEditor
           output="html"
           key={key}

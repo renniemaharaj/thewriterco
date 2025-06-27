@@ -110,7 +110,7 @@ export const Carousel: React.FC<CarouselProps> = ({
         })}
       >
         {items.map((item, index) => (
-          <div key={index} className="flex-shrink-0 m-2">
+          <div key={index} className="flex-shrink-1">
             {item}
           </div>
         ))}

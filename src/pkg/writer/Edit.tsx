@@ -7,22 +7,27 @@ import { setContent, setTitle } from "../../app/writer/writerSlice";
 import { useCallback } from "react";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 
-const Edit = ({ content }: { content: any }) => {
+const Edit = ({
+  content,
+  animateCopy,
+}: {
+  content: any;
+  animateCopy: () => Promise<void>;
+}) => {
   const dispatch = useDispatch();
   const { navigateWT } = useTransitionNavigation();
   const copyAndLaunch = useCallback(() => {
     dispatch(setContent(content));
     dispatch(setTitle(""));
-    navigateWT("/writer");
-  }, [content, dispatch, navigateWT]);
+    animateCopy().then(() => {
+      navigateWT("/writer");
+    });
+  }, [content, dispatch, navigateWT, animateCopy]);
 
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <IconButton
-          variant="soft"
-          className="!absolute !bottom-1 !left-1 !z-10"
-        >
+        <IconButton variant="soft" className="!absolute !top-1 !right-1 !z-10">
           <Tooltip content="Copy Document">
             <ScanText />
           </Tooltip>
