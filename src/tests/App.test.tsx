@@ -41,7 +41,7 @@ describe("App component", () => {
       /TheWriterCo/,
       /Writer/,
       /KJV/,
-      /Rationale/,
+      /Read/,
     ]);
   });
 });

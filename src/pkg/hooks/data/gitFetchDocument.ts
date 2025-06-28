@@ -13,19 +13,18 @@ export const useGitFetchDocument = ({
   fetchPath,
   filename,
 }: {
-  filename: string;
-  fetchPath: string;
+  filename?: string;
+  fetchPath?: string;
 }): UseGitFetchDocumentResult => {
   const [content, setContent] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
   const fetchDocument = useCallback(async () => {
-    if (!fetchPath) {
-      setError(new Error("File path is required"));
+    if (!fetchPath || !filename) {
+      setError(new Error("File path and name is required"));
       return;
     }
-
     try {
       setLoading(true);
       setError(null);

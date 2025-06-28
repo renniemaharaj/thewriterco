@@ -5,7 +5,6 @@ import authReducer from "./api/auth/authSlice";
 import ereaderSlice from "./ereader/ereaderSlice";
 import chatSlice from "./chat/chatSlice";
 import flowSlice from "./flow/flowSlice";
-import reasoningSlice from "./reasoning/reasoningSlice";
 
 import errorBoundarySlice from "./errorBoundary/errorBoundarySlice";
 import pageSlice from "./page/pageSlice";
@@ -18,7 +17,6 @@ export const store = configureStore({
     ereader: ereaderSlice.reducer,
     chat: chatSlice.reducer,
     flow: flowSlice.reducer,
-    reasoning: reasoningSlice.reducer,
     page: pageSlice.reducer,
     errorBoundary: errorBoundarySlice.reducer,
     writer: writerSlice.reducer,

@@ -1,18 +1,10 @@
-import { ReactNode, useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { Tabs, Box } from "@radix-ui/themes";
-
-// import Collapsible from "../../Collapsible";
-import { useDispatch, useSelector } from "react-redux";
 
 import Item from "./Item";
 import { useFetchGitDir } from "../../hooks/data/useFetchGitDir";
 import { dirToContents } from "../data/dirToContents";
-import {
-  setCurrentTab,
-  setCurrentTitle,
-} from "../../../app/reasoning/reasoningSlice";
-import { RootState } from "../../../app/store";
 import { Carousel } from "../../Carousel";
 import Trigger from "./Trigger";
 import { useParams } from "react-router-dom";
@@ -21,9 +13,6 @@ import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 // Define the shape of each collapsible item
 export type CollapsibleItem = {
   title: string;
-  body: ReactNode;
-  fetchPath?: string;
-  filename?: string;
 };
 
 // Tab type definition
@@ -35,11 +24,10 @@ export type TabItem = {
 
 type MenuProps = {
   className?: string;
-  routeChildren?: (content: ReactNode) => void;
   additionalTabs?: TabItem[];
 };
 
-const Menu = ({ routeChildren, additionalTabs = [], className }: MenuProps) => {
+const Menu = ({ additionalTabs = [], className }: MenuProps) => {
   const axiomsData = useFetchGitDir("axioms");
   const verboseData = useFetchGitDir("verbose");
   const proKJVData = useFetchGitDir("prokjv");
@@ -48,19 +36,12 @@ const Menu = ({ routeChildren, additionalTabs = [], className }: MenuProps) => {
   const articlesData = useFetchGitDir("articles");
   const creativityData = useFetchGitDir("creativity");
 
-  const doc = useSelector((state: RootState) => state.reasoning);
-  const currentTab = doc.currentTab || "axioms"; // Default to "axioms" if currentTab is not set
-  const currentTitle = doc.currentTitle || "Existence of God"; // Default to "Existence of God" if currentTitle is not set
+  const { tab: urlTab, title: urlTitle } = useParams<{
+    tab: string;
+    title: string;
+  }>();
 
-  const dispatch = useDispatch();
-
-  const { tab, title } = useParams<{ tab: string; title: string }>();
   const { navigateWT } = useTransitionNavigation();
-
-  useEffect(() => {
-    dispatch(setCurrentTab(tab || currentTab));
-    dispatch(setCurrentTitle(title || currentTitle));
-  }, [tab, title, dispatch]);
 
   const defaultTabs: TabItem[] = useMemo(
     () => [
@@ -125,13 +106,7 @@ const Menu = ({ routeChildren, additionalTabs = [], className }: MenuProps) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.05 }}
         >
-          <Item
-            title={item.title}
-            body={item.body}
-            routeChildren={routeChildren}
-            fetchPath={item.fetchPath}
-            filename={item.filename}
-          />
+          <Item urlTab={tab.value} title={item.title} />
         </motion.div>
       ));
 
@@ -145,22 +120,22 @@ const Menu = ({ routeChildren, additionalTabs = [], className }: MenuProps) => {
         </Tabs.Content>
       );
     });
-  }, [combinedTabs, routeChildren]);
+  }, [combinedTabs]);
 
   return (
     <Tabs.Root
       onValueChange={(v) => {
-        navigateWT(`/reasoning/${v}/${currentTitle}`);
+        navigateWT(`/read/${v}`);
       }}
-      value={currentTab}
-      defaultValue={currentTab}
+      value={urlTab || combinedTabs[0].value}
+      defaultValue={urlTab || combinedTabs[0].value}
       className={className}
     >
       <Tabs.List>
         <Carousel
           variant="no-scrollbar"
           items={combinedTabs.map((tab) => (
-            <Trigger key={tab.value} tab={tab} currentTab={currentTab} />
+            <Trigger key={tab.value} tab={tab} currentTab={urlTitle || ""} />
           ))}
         />
       </Tabs.List>

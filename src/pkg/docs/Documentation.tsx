@@ -1,87 +1,67 @@
-import { Box, Card, Flex, IconButton, Tooltip } from "@radix-ui/themes";
-import { ReactNode, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { Box, Button, Card, Flex, Spinner, Text } from "@radix-ui/themes";
 
 import Menu, { TabItem } from "./cmpnts/Menu";
-import { RootState } from "../../app/store";
-import { ChevronDown } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { useGitFetchDocument } from "../hooks/data/gitFetchDocument";
+import { useCallback, useMemo } from "react";
+import Renderer from "../writer/Renderer";
 
 export type DocumentationProps = {
   additionalTabs?: TabItem[];
 };
 
 const Documentation = ({ additionalTabs }: DocumentationProps) => {
-  const { orientation } = useSelector((state: RootState) => state.chat);
-  const currentTitle = useSelector(
-    (state: RootState) => state.reasoning.currentTitle,
-  );
+  const { tab: urlTab, title: urlTitle } = useParams<{
+    tab: string;
+    title: string;
+  }>();
 
-  const [routeChildren, setRouteChildren] = useState<ReactNode | null>(null);
-  const [isFocused, setIsFocused] = useState(false);
+  const { content, loading, error, refetch } = useGitFetchDocument({
+    fetchPath: urlTab,
+    filename: urlTitle,
+  });
 
-  const initialMount = useRef(true);
+  const renderContent = useCallback(() => {
+    if (loading) {
+      return (
+        <Flex align="center" justify="center" py="4">
+          <Spinner />
+        </Flex>
+      );
+    }
+
+    if (error) {
+      return (
+        <Card variant="surface">
+          <Flex direction="column" gap="2" align="center" py="4">
+            <Text color="red" size="2">
+              Error loading content
+            </Text>
+            <Button variant="soft" onClick={() => refetch()}>
+              Retry
+            </Button>
+          </Flex>
+        </Card>
+      );
+    } else {
+      if (content) {
+        return <Renderer content={content} />;
+      }
+    }
+  }, [loading, content, error, refetch]);
+
+  const memoizedContent = useMemo(() => renderContent(), [renderContent]);
 
   const innerBoxClass = `!p-0 !mx-auto !w-full`;
 
-  useEffect(() => {
-    if (orientation === "vertical") return;
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  }, [currentTitle, orientation]);
-
-  const menuWidth =
-    orientation === "vertical" ? "100%" : isFocused ? "2.7rem" : "35%";
-  const contentWidth = isFocused ? "100%" : "65%";
-
-  useEffect(() => {
-    if (orientation === "vertical") {
-      setIsFocused(false);
-      return;
-    }
-
-    if (initialMount && routeChildren) setIsFocused(true);
-    initialMount.current = false;
-  }, [routeChildren, orientation]);
-
   return (
-    <Flex className="gap-2 !overflow-visible w-full">
-      {/* Menu */}
-      <Flex
-        style={{ width: menuWidth }}
-        onMouseEnter={() => setIsFocused(false)}
-      >
+    <Flex className="gap-2 !overflow-visible w-full !justify-center">
+      {urlTab && urlTitle ? (
+        <Box className={innerBoxClass}>{memoizedContent}</Box>
+      ) : (
         <Card className="w-fit !p-1 !h-fit !sticky !top-[3.2rem]">
-          {isFocused && (
-            <IconButton variant="soft" aria-controls="file-content">
-              <Tooltip content="Menu">
-                <ChevronDown className="h-4 w-4" />
-              </Tooltip>
-            </IconButton>
-          )}
-
-          <Menu
-            className={isFocused ? "!opacity-0 pointer-events-none" : ""}
-            routeChildren={setRouteChildren}
-            additionalTabs={additionalTabs}
-          />
+          <Menu additionalTabs={additionalTabs} />
         </Card>
-      </Flex>
-
-      {/* Content View */}
-      {orientation === "horizontal" && (
-        <Flex
-          style={{ width: contentWidth }}
-          onMouseEnter={() => {
-            if (routeChildren) setIsFocused(true);
-          }}
-        >
-          <Flex className="!w-full">
-            {routeChildren && (
-              <Box className={innerBoxClass}>{routeChildren}</Box>
-            )}
-          </Flex>
-        </Flex>
       )}
     </Flex>
   );
