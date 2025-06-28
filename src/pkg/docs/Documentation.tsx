@@ -35,9 +35,14 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
   const contentWidth = isFocused ? "100%" : "65%";
 
   useEffect(() => {
+    if (orientation === "vertical") {
+      setIsFocused(false);
+      return;
+    }
+
     if (initialMount && routeChildren) setIsFocused(true);
     initialMount.current = false;
-  }, [routeChildren]);
+  }, [routeChildren, orientation]);
 
   return (
     <Flex className="gap-2 !overflow-visible w-full">
