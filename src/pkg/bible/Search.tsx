@@ -19,7 +19,7 @@ const Search = ({ onChange }: { onChange: (str: string) => void }) => {
   return (
     <Flex className="ml-auto flex gap-2 items-center">
       <TextField.Root
-        placeholder="Search"
+        placeholder="Search the word of God KJV"
         value={searchTerm}
         onFocus={() => disableGlobalShortcuts()}
         onBlur={() => enableGlobalShortcuts()}

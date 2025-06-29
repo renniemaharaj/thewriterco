@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Flex, Tabs, Box } from "@radix-ui/themes";
+import { Flex, Tabs, Box, Card } from "@radix-ui/themes";
 
 import Block from "../page/Block";
 import BookFragment from "./Book";
@@ -8,10 +8,11 @@ import { SwordProps } from "./types";
 import Search from "./Search";
 import Seeker from "./Seeker";
 import useBible from "../hooks/useBible";
+import { Carousel } from "../Carousel";
+import Tab from "./Tab";
 
 const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
   const [searchText, setSearchText] = useState("");
-
   const { handleBookOpen, isLoading } = useBible();
 
   useEffect(() => {
@@ -43,6 +44,8 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
     ? matchingDivisions.map((d) => d.division)
     : allTabs;
 
+  const [selectedTab, setSelectedTab] = useState(tabsToShow[0]);
+
   const getBooksForDivision = (division: string) => {
     return matchingDivisions.find((d) => d.division === division)?.books || [];
   };
@@ -54,7 +57,8 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
       return (
         <Tabs.Trigger key={division} value={division} className="!h-fit">
           <Flex className="flex-col items-center justify-center">
-            {division}
+            <Tab title={division} selected={selectedTab === division} />
+
             {searchText && books.length > 0 && (
               <Seeker books={books} onClick={handleBookOpen} />
             )}
@@ -93,20 +97,26 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
   }
 
   return (
-    <Flex className="w-full mx-auto pb-10 gap-10 flex-col items-center text-center">
-      <Box>
-        <Search onChange={handleSearchChange} />
-      </Box>
+    <Flex className="max-w-full mx-auto pb-10 gap-10 flex-col items-center text-center">
+      <Card className="w-full !h-fit">
+        <Flex className="!w-full !items-center !justify-center">
+          <Box>
+            <Search onChange={handleSearchChange} />
+          </Box>
+        </Flex>
 
-      <Tabs.Root
-        defaultValue={tabsToShow[0]}
-        className="!h-fit !overflow-visible"
-      >
-        <Tabs.List className="!flex-wrap !overflow-visible">
-          {renderTabs()}
-        </Tabs.List>
-        <Box pt="3">{tabsToShow.map(renderBooks)}</Box>
-      </Tabs.Root>
+        <Tabs.Root
+          defaultValue={tabsToShow[0]}
+          onValueChange={setSelectedTab}
+          className="w-full !h-fit"
+        >
+          <Tabs.List className="!flex-wrap p-2">
+            <Carousel variant="no-scrollbar" items={renderTabs()} />
+            {/* {renderTabs()} */}
+          </Tabs.List>
+          <Box pt="3">{tabsToShow.map(renderBooks)}</Box>
+        </Tabs.Root>
+      </Card>
     </Flex>
   );
 };

@@ -5,7 +5,6 @@ import useBible from "../../pkg/hooks/useBible";
 import { useURLState } from "../../pkg/hooks/useURLState";
 import { AlertDialog, Button, Card, Flex, Text } from "@radix-ui/themes";
 import Page from "../../pkg/page/Page";
-import Hero from "../../pkg/page/Hero";
 import {
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
@@ -113,19 +112,6 @@ const KJV = () => {
         wrapChildren={true}
         title="KJV Bible"
         description="Read the KJV Bible"
-        hero={
-          <Hero
-            header="The Word of God"
-            subHeader="KJV"
-            hint={
-              <Text>
-                The Writer Company is KJV first. We are against the subtle
-                conditioning towards an ultimate acceptance of a watered-down
-                bible version. 😬
-              </Text>
-            }
-          />
-        }
       >
         <Flex
           direction="column"
