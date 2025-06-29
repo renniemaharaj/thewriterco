@@ -3,12 +3,11 @@ import { motion } from "framer-motion";
 import { Tabs, Box } from "@radix-ui/themes";
 
 import Item from "./Item";
-import { useFetchGitDir } from "../../hooks/data/useFetchGitDir";
-import { dirToContents } from "../data/dirToContents";
 import { Carousel } from "../../Carousel";
 import Trigger from "./Trigger";
 import { useParams } from "react-router-dom";
 import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
+import useDefaultTabs from "../../hooks/useDefaultTabs";
 
 // Define the shape of each collapsible item
 export type CollapsibleItem = {
@@ -28,69 +27,13 @@ type MenuProps = {
 };
 
 const Menu = ({ additionalTabs = [], className }: MenuProps) => {
-  const axiomsData = useFetchGitDir("axioms");
-  const verboseData = useFetchGitDir("verbose");
-  const proKJVData = useFetchGitDir("prokjv");
-  const prochristianity = useFetchGitDir("prochristianity");
-  const poetryData = useFetchGitDir("poetry");
-  const articlesData = useFetchGitDir("articles");
-  const creativityData = useFetchGitDir("creativity");
-
-  const { tab: urlTab, title: urlTitle } = useParams<{
+  const { tab: urlTab } = useParams<{
     tab: string;
-    title: string;
   }>();
 
   const { navigateWT } = useTransitionNavigation();
 
-  const defaultTabs: TabItem[] = useMemo(
-    () => [
-      {
-        label: "Axioms",
-        value: "axioms",
-        content: dirToContents(axiomsData.dir, "axioms"),
-      },
-      {
-        label: "Verbose",
-        value: "verbose",
-        content: dirToContents(verboseData.dir, "verbose"),
-      },
-      {
-        label: "Pro KJV",
-        value: "prokjv",
-        content: dirToContents(proKJVData.dir, "prokjv"),
-      },
-      {
-        label: "Pro Christianity",
-        value: "prochristianity",
-        content: dirToContents(prochristianity.dir, "prochristianity"),
-      },
-      {
-        label: "Articles",
-        value: "articles",
-        content: dirToContents(articlesData.dir, "articles"),
-      },
-      {
-        label: "Poetry",
-        value: "poetry",
-        content: dirToContents(poetryData.dir, "poetry"),
-      },
-      {
-        label: "Creativity",
-        value: "creativity",
-        content: dirToContents(creativityData.dir, "creativity"),
-      },
-    ],
-    [
-      axiomsData.dir,
-      verboseData.dir,
-      proKJVData.dir,
-      prochristianity.dir,
-      articlesData.dir,
-      poetryData.dir,
-      creativityData.dir,
-    ],
-  );
+  const defaultTabs = useDefaultTabs();
 
   const combinedTabs = useMemo(
     () => [...defaultTabs, ...additionalTabs],
@@ -114,7 +57,7 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
         <Tabs.Content
           key={tab.value + "tabsContent"}
           value={tab.value}
-          className="!flex flex-col !gap-2"
+          className="grid grid-cols-1 gap-4 p-2 sm:grid-cols-2 lg:grid-cols-3"
         >
           {renderedItems}
         </Tabs.Content>
@@ -131,11 +74,12 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
       defaultValue={urlTab || combinedTabs[0].value}
       className={className}
     >
-      <Tabs.List>
+      <Tabs.List className="!w-full">
         <Carousel
           variant="no-scrollbar"
+          className="!w-full"
           items={combinedTabs.map((tab) => (
-            <Trigger key={tab.value} tab={tab} currentTab={urlTitle || ""} />
+            <Trigger key={tab.value} tab={tab} currentTab={urlTab || ""} />
           ))}
         />
       </Tabs.List>

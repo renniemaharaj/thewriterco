@@ -1,31 +1,41 @@
-import { ReactNode } from "react";
-import Collapsible from "../../Collapsible";
-import { CollapsibleItem } from "./Menu";
-import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 import { useParams } from "react-router-dom";
+import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
+import { CollapsibleItem } from "./Menu";
+import { Card, Flex, Text } from "@radix-ui/themes";
+import "./index.css";
 
 const Item = ({
   urlTab,
   title: itemTitle,
 }: CollapsibleItem & {
   urlTab: string;
-  routeChildren?: (content: ReactNode) => void;
 }) => {
   const { title } = useParams<{ title: string }>();
   const { navigateWT } = useTransitionNavigation();
+  const isSelected = title === itemTitle;
 
   return (
-    <Collapsible
-      title={itemTitle}
-      children={<></>}
-      onOpen={() => {
-        if (title !== itemTitle) {
-          // Update the current tab
+    <Card
+      asChild
+      variant={isSelected ? "surface" : "classic"}
+      className={`holographic-container cursor-pointer overflow-hidden transition-all duration-300`}
+      onClick={() => {
+        if (!isSelected) {
           navigateWT(`/read/${urlTab}/${itemTitle}`);
-          return;
         }
       }}
-    />
+    >
+      <Flex
+        direction="column"
+        gap="1"
+        p="3"
+        className="holographic-card relative z-10"
+      >
+        <Text weight="bold" title={itemTitle}>
+          {itemTitle.length > 32 ? itemTitle.slice(0, 32) + "…" : itemTitle}
+        </Text>
+      </Flex>
+    </Card>
   );
 };
 

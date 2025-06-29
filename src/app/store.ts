@@ -9,6 +9,7 @@ import flowSlice from "./flow/flowSlice";
 import errorBoundarySlice from "./errorBoundary/errorBoundarySlice";
 import pageSlice from "./page/pageSlice";
 import writerSlice from "./writer/writerSlice";
+import cacheSlice from "./cache/cacheSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     page: pageSlice.reducer,
     errorBoundary: errorBoundarySlice.reducer,
     writer: writerSlice.reducer,
+    cache: cacheSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
