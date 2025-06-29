@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 import { CollapsibleItem } from "./Menu";
-import { Card, Flex, Text } from "@radix-ui/themes";
-import "./item.css";
+import { Card } from "@radix-ui/themes";
 
 const Item = ({
   urlTab,
@@ -15,27 +14,22 @@ const Item = ({
   const isSelected = title === itemTitle;
 
   return (
-    <Card
-      asChild
-      variant={isSelected ? "surface" : "classic"}
-      className={`holographic-container cursor-pointer overflow-hidden transition-all duration-300`}
+    <div
+      className={`holographic-container cursor-pointer overflow-hidden !transition-all !duration-300 p-2`}
       onClick={() => {
         if (!isSelected) {
           navigateWT(`/read/${urlTab}/${itemTitle}`);
         }
       }}
     >
-      <Flex
-        direction="column"
-        gap="1"
-        p="3"
-        className="holographic-card relative z-10"
-      >
-        <Text weight="bold" title={itemTitle}>
-          {itemTitle.length > 32 ? itemTitle.slice(0, 32) + "…" : itemTitle}
-        </Text>
-      </Flex>
-    </Card>
+      <div className="holographic-card !transition-all !duration-300">
+        <Card>
+          <h4 title={itemTitle}>
+            {itemTitle.length > 32 ? itemTitle.slice(0, 32) + "…" : itemTitle}
+          </h4>
+        </Card>
+      </div>
+    </div>
   );
 };
 

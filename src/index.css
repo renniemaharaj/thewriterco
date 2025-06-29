@@ -7,6 +7,18 @@
   --hrtm-theme-background: #fff;
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --hrtm-theme-background: #fff;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --hrtm-theme-background: #111110;
+  }
+}
+
 * {
   scroll-behavior: smooth;
   font-family: "Roboto Serif", serif;
@@ -61,18 +73,6 @@
   color: transparent;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --hrtm-theme-background: #fff;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --hrtm-theme-background: #111110;
-  }
-}
-
 @keyframes scan {
   0% {
     background-position: -150% 0;
@@ -100,8 +100,8 @@
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .hrtm-theme-background {
@@ -109,17 +109,15 @@
 }
 
 .blurred-div {
-  backdrop-filter: blur(10px); /* Blurs the content behind */
-  -webkit-backdrop-filter: blur(10px); /* For Safari support */
-  border-radius: 12px; /* Optional, for rounded corners */
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); Optional, for aesthetics */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
 }
 
 .blurred-div-light {
-  backdrop-filter: blur(2px); /* Blurs the content behind */
-  -webkit-backdrop-filter: blur(2px); /* For Safari support */
-  border-radius: 12px; /* Optional, for rounded corners */
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); Optional, for aesthetics */
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border-radius: 12px;
 }
 
 .animate-fade-in {
@@ -129,22 +127,20 @@
 .hero-container {
   display: flex;
   justify-content: center;
-  /* align-items: center; */
 }
 
 .hero-skeleton {
-  width: 70%; /* Adjust width */
+  width: 70%;
   height: 40px;
   background: linear-gradient(90deg, #6a6052 25%, #6e5e45 50%, transparent 75%);
   opacity: 0.5;
   background-size: 400% 100%;
   animation: skeleton-loading 1s ease-out;
-  /* border-radius: 8px; */
 }
 
 .hero-text {
   font-size: 2rem;
-  color: var(--hrtm-blue); /* Same color used in your text */
+  color: var(--hrtm-blue);
   text-align: center;
   animation: fade-in 1s forwards;
 }
@@ -153,7 +149,56 @@
   transition: all 800ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Skeleton Animation */
+.holographic-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.holographic-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  transition: all 0.5s ease;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.holographic-card h4 {
+  position: relative;
+  z-index: 2;
+}
+
+.holographic-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 240%;
+  height: 240%;
+  background: linear-gradient(
+    0deg,
+    transparent,
+    transparent 30%,
+    rgba(255, 215, 0, 0.25)
+  );
+  transform: rotate(-45deg);
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+.holographic-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.holographic-card:hover::before {
+  opacity: 1;
+  transform: rotate(-45deg) translateY(100%);
+}
+
 @keyframes skeleton-loading {
   0% {
     background-position: 100% 0;
@@ -163,7 +208,6 @@
   }
 }
 
-/* Glowing Effect Animation */
 @keyframes glowing-effect {
   0% {
     text-shadow:
@@ -179,7 +223,6 @@
   }
 }
 
-/* Fade-in Animation */
 @keyframes fade-in {
   0% {
     opacity: 0;
