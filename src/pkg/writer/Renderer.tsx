@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import Edit from "./Edit";
 import { useAnimateCopy } from "../hooks/useAnimateCopy";
 import { motion } from "framer-motion";
+import { Spinner } from "@radix-ui/themes";
 
 function Renderer({ content }: { content: string }) {
   const [localContent, setLocalContent] = useState(content);
@@ -32,6 +33,9 @@ function Renderer({ content }: { content: string }) {
     <main>
       <div className={`!relative !overflow-visible`}>
         <div className={`${animationClass}`} />
+        <div className="absolute flex justify-center z-0 w-full h-full">
+          <Spinner className="animate-spin w-5 h-5" />
+        </div>
         <div className="sticky top-[3.2rem] left-0 z-10">
           <Edit animateCopy={animateCopy} content={content} />
         </div>
@@ -40,18 +44,20 @@ function Renderer({ content }: { content: string }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.8 }}
         >
-          <RichTextEditor
-            output="html"
-            key={key}
-            content={localContent as any}
-            extensions={extensions}
-            dark={theme === "dark"}
-            disableBubble
-            hideBubble
-            removeDefaultWrapper
-            hideToolbar
-            disabled
-          />
+          <div className="blurred-div z-10">
+            <RichTextEditor
+              output="html"
+              key={key}
+              content={localContent as any}
+              extensions={extensions}
+              dark={theme === "dark"}
+              disableBubble
+              hideBubble
+              removeDefaultWrapper
+              hideToolbar
+              disabled
+            />
+          </div>
         </motion.div>
       </div>
     </main>

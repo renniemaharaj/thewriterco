@@ -184,12 +184,14 @@ const Navbar: React.FC = () => {
           </IconButton>
 
           {/* Navigation Links */}
-          <ul className={`md:flex hidden space-x-6 mt-2 md:mt-0 items-center`}>
+          <ul
+            className={`md:flex hidden gap-2 space-x-6 mt-2 md:mt-0 items-center`}
+          >
             {navLinks.map(
               (link, index) =>
                 !link.disabled && (
                   <li key={index}>
-                    <Link href={link.href} animate>
+                    <Link href={link.href} animate as="button">
                       {link.label}
                     </Link>
                   </li>

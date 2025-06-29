@@ -1,5 +1,5 @@
 import { useThemeContext } from "../context/theme/useThemeContext";
-import { Link as RLink, Button as RButton } from "@radix-ui/themes";
+import { Link as RLink, Button as RButton, Box, Card } from "@radix-ui/themes";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import { LinkProps } from "./types";
 
@@ -9,9 +9,7 @@ const Link = ({
   children,
   external,
   as = "link",
-  variant = "ghost",
-  color = "gray",
-  highContrast = false,
+  color,
 }: LinkProps) => {
   const { navigateWT } = useTransitionNavigation();
   const { theme } = useThemeContext();
@@ -30,14 +28,30 @@ const Link = ({
 
   if (as === "button") {
     return (
-      <RButton
-        variant={variant}
-        color={color}
-        highContrast={highContrast}
-        onClick={handleClick}
+      <Box
+        className={`holographic-container !transition-all !duration-300 py-2`}
       >
-        {children}
-      </RButton>
+        <Card
+          variant="ghost"
+          className={`holographic-card !transition-all !duration-300 !p-0`}
+        >
+          <RButton
+            color={color}
+            variant="soft"
+            className="holographic-card"
+            onClick={handleClick}
+          >
+            <RLink
+              href={href}
+              underline="none"
+              className={`${linkClassName} ${animate ? linkHoverClassName : ""}`}
+              onClick={handleClick}
+            >
+              {children}
+            </RLink>
+          </RButton>
+        </Card>
+      </Box>
     );
   }
 

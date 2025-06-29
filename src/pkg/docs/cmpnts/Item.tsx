@@ -72,7 +72,7 @@ const Item = ({
           {description ? (
             description
           ) : (
-            <div className="inline-block opacity-5 bg-gray-300 rounded w-full h-full animate-pulse" />
+            <span className="inline-block opacity-5 bg-gray-300 rounded w-full h-full animate-pulse" />
           )}
         </p>
       </Card>
