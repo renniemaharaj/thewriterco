@@ -59,7 +59,7 @@ const Documentation = ({ additionalTabs }: DocumentationProps) => {
       {urlTab && urlTitle ? (
         <Box className={innerBoxClass}>{memoizedContent}</Box>
       ) : (
-        <Card className="w-fit !p-1 !h-fit !sticky !top-[3.2rem]">
+        <Card className="!w-full !min-h-[300px] !p-1 !h-fit !sticky !top-[3.2rem]">
           <Menu additionalTabs={additionalTabs} />
         </Card>
       )}

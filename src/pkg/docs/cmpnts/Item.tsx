@@ -42,14 +42,14 @@ const Item = ({
 
   return (
     <div
-      className="holographic-container cursor-pointer p-2 transition-all duration-300 "
+      className="holographic-container cursor-pointer p-2"
       onClick={() => {
         if (!isSelected) {
           navigateWT(`/read/${urlTab}/${itemTitle}`);
         }
       }}
     >
-      <Card className="holographic-card p-4 border-l-4 border-yellow-300 w-[22rem]">
+      <Card className="holographic-card p-4 border-l-4 border-yellow-300 w-full md:!w-[22rem]">
         <div className="flex justify-between items-center mb-1">
           <span className="text-xs font-bold uppercase text-pink-600 truncate">
             {urlTab}
@@ -65,11 +65,14 @@ const Item = ({
 
         <h4 className="text-lg font-bold leading-snug truncate">{itemTitle}</h4>
 
-        <p className="text-sm mt-1 line-clamp-2">
+        <p
+          className="text-sm mt-1 line-clamp-2"
+          style={{ height: "2.5rem", width: "100%", overflow: "hidden" }}
+        >
           {description ? (
             description
           ) : (
-            <span className="inline-block opacity-5 bg-gray-300 rounded w-full h-[2.5rem] animate-pulse"></span>
+            <div className="inline-block opacity-5 bg-gray-300 rounded w-full h-full animate-pulse" />
           )}
         </p>
       </Card>
