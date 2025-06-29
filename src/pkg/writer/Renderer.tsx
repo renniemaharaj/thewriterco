@@ -12,6 +12,7 @@ import { useThemeContext } from "../context/theme/useThemeContext";
 import { useEffect, useState } from "react";
 import Edit from "./Edit";
 import { useAnimateCopy } from "../hooks/useAnimateCopy";
+import { motion } from "framer-motion";
 
 function Renderer({ content }: { content: string }) {
   const [localContent, setLocalContent] = useState(content);
@@ -34,18 +35,24 @@ function Renderer({ content }: { content: string }) {
         <div className="sticky top-[3.2rem] left-0 z-10">
           <Edit animateCopy={animateCopy} content={content} />
         </div>
-        <RichTextEditor
-          output="html"
-          key={key}
-          content={localContent as any}
-          extensions={extensions}
-          dark={theme === "dark"}
-          disableBubble
-          hideBubble
-          removeDefaultWrapper
-          hideToolbar
-          disabled
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.8 }}
+        >
+          <RichTextEditor
+            output="html"
+            key={key}
+            content={localContent as any}
+            extensions={extensions}
+            dark={theme === "dark"}
+            disableBubble
+            hideBubble
+            removeDefaultWrapper
+            hideToolbar
+            disabled
+          />
+        </motion.div>
       </div>
     </main>
   );

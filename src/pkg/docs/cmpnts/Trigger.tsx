@@ -3,7 +3,15 @@ import { Tabs } from "@radix-ui/themes";
 import Tab from "./Tab";
 import { TabItem } from "./Menu";
 
-const Trigger = ({ tab, currentTab }: { tab: TabItem; currentTab: string }) => {
+const Trigger = ({
+  tab,
+  currentTab,
+  defaultTab,
+}: {
+  tab: TabItem;
+  currentTab: string;
+  defaultTab: string;
+}) => {
   const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -21,9 +29,14 @@ const Trigger = ({ tab, currentTab }: { tab: TabItem; currentTab: string }) => {
       ref={triggerRef}
       key={tab.value + "tabsTrigger"}
       value={tab.value}
-      className="px-4 py-2 !border-0 !outline-none"
+      className="px-4 py-2"
     >
-      <Tab title={tab.label} selected={tab.value === currentTab} />
+      <Tab
+        title={tab.label}
+        selected={
+          tab.value === currentTab || (!currentTab && tab.value === defaultTab)
+        }
+      />
     </Tabs.Trigger>
   );
 };

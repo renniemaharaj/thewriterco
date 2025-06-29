@@ -14,7 +14,6 @@ const ThemeButton = () => {
 
   return (
     <MotionIcon
-      key={theme} // causes re-render and fresh animation on theme change
       initial={{
         opacity: 0,
         rotate: theme === "dark" ? 360 : 0,

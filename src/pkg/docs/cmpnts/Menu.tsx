@@ -110,7 +110,12 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
         <Carousel
           variant="no-scrollbar"
           items={combinedTabs.map((tab) => (
-            <Trigger key={tab.value} tab={tab} currentTab={urlTab || ""} />
+            <Trigger
+              key={tab.value}
+              tab={tab}
+              currentTab={urlTab || ""}
+              defaultTab={combinedTabs[0].value}
+            />
           ))}
         />
       </Tabs.List>

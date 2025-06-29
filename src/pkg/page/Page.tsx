@@ -8,11 +8,10 @@ import Sizer from "./Sizer";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Block from "./Block";
 import { useSelector } from "react-redux";
-// import { setEBook } from "../../app/ereader/ereaderSlice";
-// import { initialState } from "../../app/ereader/utils";
 
-import light from "../../assets/Light.jpg";
+// import light from "../../assets/Light.jpg";
 import { RootState } from "../../app/store";
+// import useTheme from "../hooks/useTheme";
 
 const Page = ({
   children,
@@ -36,34 +35,11 @@ const Page = ({
   const { orientation } = useSelector((state: RootState) => state.chat);
 
   useEffect(() => {
-    document.body.style.overflowX = "hidden";
-    return () => {
-      document.body.style.overflowX = "hidden";
-    };
-  }, []);
-
-  useEffect(() => {
     document.documentElement.scrollTo(0, 0);
   }, [isPending, path]);
 
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(setEBook(initialState.eContent));
-  // }, [dispatch]);
-
   return (
     <div>
-      <div
-        style={{
-          backgroundImage: `url(${light})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          filter: "blur(2px)",
-        }}
-        className="absolute inset-0 z-[-1] opacity-50 !top-0 !left-0 w-[100vw] h-[100vh]"
-      />
       <Helmet>
         {title !== "" && <title>{`TheWriterCo - ${title}`}</title>}
         {description !== "" && (
