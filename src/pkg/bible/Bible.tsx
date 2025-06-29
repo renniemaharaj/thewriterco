@@ -111,7 +111,7 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
           className="w-full !h-fit"
         >
           <Tabs.List className="!flex-wrap p-2">
-            <Carousel variant="no-scrollbar" items={renderTabs()} />
+            <Carousel items={renderTabs()} />
             {/* {renderTabs()} */}
           </Tabs.List>
           <Box pt="3">{tabsToShow.map(renderBooks)}</Box>

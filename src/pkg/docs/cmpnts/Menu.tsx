@@ -108,7 +108,6 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
     >
       <Tabs.List className="!w-full p-2">
         <Carousel
-          variant="no-scrollbar"
           items={combinedTabs.map((tab) => (
             <Trigger
               key={tab.value}
