@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 import { CollapsibleItem } from "./Menu";
 import { Card, Flex, Text } from "@radix-ui/themes";
-import "./index.css";
+import "./item.css";
 
 const Item = ({
   urlTab,
