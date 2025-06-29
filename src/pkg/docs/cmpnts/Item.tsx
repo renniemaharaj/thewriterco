@@ -58,7 +58,7 @@ const Item = ({
             {date ? (
               date
             ) : (
-              <span className="inline-block bg-gray-300 rounded w-full h-[1rem] animate-pulse"></span>
+              <span className="inline-block rounded w-full h-[1rem] animate-pulse"></span>
             )}
           </span>
         </div>
@@ -69,7 +69,7 @@ const Item = ({
           {description ? (
             description
           ) : (
-            <span className="inline-block bg-gray-300 rounded w-full h-[2.5rem] animate-pulse"></span>
+            <span className="inline-block opacity-5 bg-gray-300 rounded w-full h-[2.5rem] animate-pulse"></span>
           )}
         </p>
       </Card>

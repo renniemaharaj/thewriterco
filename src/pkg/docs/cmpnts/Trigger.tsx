@@ -21,9 +21,9 @@ const Trigger = ({ tab, currentTab }: { tab: TabItem; currentTab: string }) => {
       ref={triggerRef}
       key={tab.value + "tabsTrigger"}
       value={tab.value}
-      className="px-4 py-2"
+      className="px-4 py-2 !border-0 !outline-none"
     >
-      <Tab title={tab.label} />
+      <Tab title={tab.label} selected={tab.value === currentTab} />
     </Tabs.Trigger>
   );
 };

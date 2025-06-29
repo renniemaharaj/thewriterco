@@ -1,9 +1,16 @@
-import { Box } from "@radix-ui/themes";
+import { Box, Card } from "@radix-ui/themes";
 
-const Tab = ({ title }: { title: string }) => {
+const Tab = ({ title, selected }: { title: string; selected: boolean }) => {
   return (
-    <Box className="py-2">
-      <h2>{title}</h2>
+    <Box
+      className={`${!selected && "holographic-container"} !transition-all !duration-300 py-2`}
+    >
+      <Card
+        variant={selected ? "ghost" : "surface"}
+        className={`${!selected && "holographic-card"} !transition-all !duration-300 !py-2`}
+      >
+        <h2>{title}</h2>
+      </Card>
     </Box>
   );
 };

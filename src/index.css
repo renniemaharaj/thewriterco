@@ -161,9 +161,7 @@
   align-items: center;
   position: relative;
   overflow: hidden;
-  border-radius: 15px;
   transition: all 0.5s ease;
-  border: 1px solid rgba(255, 215, 0, 0.2);
 }
 
 .holographic-card h4 {
@@ -190,7 +188,6 @@
 }
 
 .holographic-card:hover {
-  transform: scale(1.05);
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
