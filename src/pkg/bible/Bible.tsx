@@ -112,7 +112,7 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
   }
 
   return (
-    <Flex className="max-w-[50rem] mx-auto pb-10 gap-10 flex-col items-center text-center">
+    <Flex className="w-full md:!w-[50rem] mx-auto pb-10 gap-10 flex-col items-center text-center">
       <Flex className="!w-full !items-center !justify-center">
         <Box>
           <Search onChange={handleSearchChange} />
