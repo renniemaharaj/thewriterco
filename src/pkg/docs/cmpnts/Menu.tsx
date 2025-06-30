@@ -109,13 +109,20 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
     >
       <Tabs.List className="!w-full p-2 pb-2">
         <Carousel
-          items={combinedTabs.map((tab) => (
-            <Trigger
-              key={tab.value}
-              tab={tab}
-              currentTab={urlTab || ""}
-              defaultTab={combinedTabs[0].value}
-            />
+          items={combinedTabs.map((tab, index) => (
+            <motion.div
+              key={index + "tabsItem"}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+            >
+              <Trigger
+                key={tab.value}
+                tab={tab}
+                currentTab={urlTab || ""}
+                defaultTab={combinedTabs[0].value}
+              />
+            </motion.div>
           ))}
         />
       </Tabs.List>
