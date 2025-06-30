@@ -130,7 +130,7 @@ const KJV = () => {
         <Flex
           direction="column"
           align="center"
-          className="w-full !mt-5 md:!w-[80%] mx-auto gap-6"
+          className="w-full !mt-5 mx-auto gap-6"
         >
           <Bible showAnimation={true} />
 

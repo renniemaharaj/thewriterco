@@ -55,7 +55,7 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
       const books = getBooksForDivision(division);
 
       return (
-        <Tabs.Trigger key={division} value={division} className="!h-fit">
+        <Tabs.Trigger key={division} value={division} className="!h-fit !p-1">
           <Flex className="flex-col items-center justify-center">
             <Tab title={division} selected={selectedTab === division} />
 
@@ -110,7 +110,7 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
         onValueChange={setSelectedTab}
         className="w-full !h-fit"
       >
-        <Tabs.List className="!flex-wrap p-2">
+        <Tabs.List className="!flex-wrap !h-fit">
           <Carousel items={renderTabs()} />
           {/* {renderTabs()} */}
         </Tabs.List>

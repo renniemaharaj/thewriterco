@@ -49,7 +49,7 @@ const Item = ({
         }
       }}
     >
-      <Card className="holographic-card p-4 border-l-4 border-yellow-300 w-full md:!w-[22rem]">
+      <Card className="holographic-card !p-4 w-full md:!w-[21rem]">
         <div className="flex justify-between items-center mb-1">
           <span className="text-xs font-bold uppercase text-pink-600 truncate">
             {urlTab}

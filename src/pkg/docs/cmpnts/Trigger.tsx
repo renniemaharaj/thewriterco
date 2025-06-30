@@ -29,7 +29,7 @@ const Trigger = ({
       ref={triggerRef}
       key={tab.value + "tabsTrigger"}
       value={tab.value}
-      className="px-4 py-2"
+      className="!p-0"
     >
       <Tab
         title={tab.label}

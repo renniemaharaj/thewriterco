@@ -89,7 +89,7 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
         <Tabs.Content
           key={tab.value + "tabsContent"}
           value={tab.value}
-          className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3"
+          className="!flex !flex-row !flex-wrap"
         >
           {renderedItems}
         </Tabs.Content>
@@ -119,7 +119,7 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
         />
       </Tabs.List>
 
-      <Box pt="3" className="max-w-[100%] !min-h-full">
+      <Box pt="3" className="!w-full !min-h-full !p-0">
         {renderedTabContents}
       </Box>
 
