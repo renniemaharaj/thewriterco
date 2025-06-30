@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 
 // import light from "../../assets/Light.jpg";
 import { RootState } from "../../app/store";
+import { motion } from "framer-motion";
 // import useTheme from "../hooks/useTheme";
 
 const Page = ({
@@ -51,39 +52,47 @@ const Page = ({
       <Navbar />
 
       <Reader hidePicker={hideBiblePicker} />
-      <Flex
-        direction="column"
-        align="center"
-        justify="center"
-        className={`!w-full md:!w-[99%] !flex-col !mx-auto pb-20 blurred-div-light`}
+      <motion.div
+        key={"tabsItem"}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
       >
-        {wrapChildren && (
-          <Card
-            className={`w-full blurred-div !py-6 top-3 ${className} ${orientation === "horizontal" ? "!px-3" : "!px-0"}`}
-          >
-            <Flex
-              data-testid="heroElement"
-              className={`!flex-col !gap-10 !w-full !max-w-full`}
+        <Flex
+          direction="column"
+          align="center"
+          justify="center"
+          className={`!w-full md:!w-[99%] !flex-col !mx-auto pb-20 blurred-div-light`}
+        >
+          {wrapChildren && (
+            <Card
+              className={`w-full blurred-div !py-6 top-3 ${className} ${orientation === "horizontal" ? "!px-3" : "!px-0"}`}
             >
-              {hero}
-            </Flex>
-            {children}
-          </Card>
-        )}
-        {!wrapChildren && (
-          <>
-            {hero}{" "}
-            {isPending ? (
-              <Block />
-            ) : (
-              <Flex className="!flex-col !gap-10">
-                <Separator size={"2"} className="mx-auto mt-10" />
-                {children}
+              <Flex
+                data-testid="heroElement"
+                className={`!flex-col !gap-10 !w-full !max-w-full`}
+              >
+                {hero}
               </Flex>
-            )}
-          </>
-        )}
-      </Flex>
+              {isPending ? <Block noPage /> : children}
+            </Card>
+          )}
+          {!wrapChildren && (
+            <>
+              {hero}{" "}
+              {isPending ? (
+                <Block noPage />
+              ) : (
+                <Flex className="!flex-col !gap-10">
+                  <Separator size={"2"} className="mx-auto mt-10" />
+                  {children}
+                </Flex>
+              )}
+            </>
+          )}
+        </Flex>
+      </motion.div>
+
       {/* </Flex> */}
       <Separator size={"4"} />
       <Separator size={"4"} />
