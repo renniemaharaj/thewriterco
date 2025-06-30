@@ -105,7 +105,7 @@ export default function Book({
             </div>
           ))}
           <div
-            className={`cursor-default holographic-card p-1 cover ${theme === "light" ? "bg-gray-400" : "bg-[#111110]"} bg-brown-700 text-white flex flex-col items-center justify-center shadow-2xl text-center`}
+            className={`cursor-default book-holographic-card p-1 cover ${theme === "light" ? "bg-gray-400" : "bg-[#111110]"} bg-brown-700 text-white flex flex-col items-center justify-center shadow-2xl text-center`}
           >
             <span
               className="text-md font-bold w-full"
