@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  Button,
   Flex,
   Popover,
   Text,
@@ -29,6 +28,7 @@ import {
 } from "../../app/writer/writerSlice";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Save from "./Save";
+import Button from "../button/Button";
 
 type FileProps = {
   triggerRemount: () => void;

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Flex, Tabs, Box, Card } from "@radix-ui/themes";
+import { Flex, Tabs, Box } from "@radix-ui/themes";
 
 import Block from "../page/Block";
 import BookFragment from "./Book";
@@ -98,25 +98,25 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
 
   return (
     <Flex className="max-w-full mx-auto pb-10 gap-10 flex-col items-center text-center">
-      <Card className="w-full !h-fit">
-        <Flex className="!w-full !items-center !justify-center">
-          <Box>
-            <Search onChange={handleSearchChange} />
-          </Box>
-        </Flex>
+      {/* <Card className="w-full !h-fit"> */}
+      <Flex className="!w-full !items-center !justify-center">
+        <Box>
+          <Search onChange={handleSearchChange} />
+        </Box>
+      </Flex>
 
-        <Tabs.Root
-          defaultValue={tabsToShow[0]}
-          onValueChange={setSelectedTab}
-          className="w-full !h-fit"
-        >
-          <Tabs.List className="!flex-wrap p-2">
-            <Carousel items={renderTabs()} />
-            {/* {renderTabs()} */}
-          </Tabs.List>
-          <Box pt="3">{tabsToShow.map(renderBooks)}</Box>
-        </Tabs.Root>
-      </Card>
+      <Tabs.Root
+        defaultValue={tabsToShow[0]}
+        onValueChange={setSelectedTab}
+        className="w-full !h-fit"
+      >
+        <Tabs.List className="!flex-wrap p-2">
+          <Carousel items={renderTabs()} />
+          {/* {renderTabs()} */}
+        </Tabs.List>
+        <Box pt="3">{tabsToShow.map(renderBooks)}</Box>
+      </Tabs.Root>
+      {/* </Card> */}
     </Flex>
   );
 };

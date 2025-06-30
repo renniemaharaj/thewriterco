@@ -184,9 +184,7 @@ const Navbar: React.FC = () => {
           </IconButton>
 
           {/* Navigation Links */}
-          <ul
-            className={`md:flex hidden gap-2 space-x-6 mt-2 md:mt-0 items-center`}
-          >
+          <ul className={`md:flex hidden gap-2 mt-2 md:mt-0`}>
             {navLinks.map(
               (link, index) =>
                 !link.disabled && (

@@ -1,7 +1,8 @@
 import { useThemeContext } from "../context/theme/useThemeContext";
-import { Link as RLink, Button as RButton, Box, Card } from "@radix-ui/themes";
+import { Link as RLink } from "@radix-ui/themes";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import { LinkProps } from "./types";
+import Button from "../button/Button";
 
 const Link = ({
   href,
@@ -28,30 +29,16 @@ const Link = ({
 
   if (as === "button") {
     return (
-      <Box
-        className={`holographic-container !transition-all !duration-300 py-2`}
-      >
-        <Card
-          variant="ghost"
-          className={`holographic-card !transition-all !duration-300 !p-0`}
+      <Button onClick={handleClick} variant="soft" color={color}>
+        <RLink
+          href={href}
+          underline="none"
+          className={`${linkClassName} ${animate ? linkHoverClassName : ""}`}
+          onClick={handleClick}
         >
-          <RButton
-            color={color}
-            variant="soft"
-            className="holographic-card"
-            onClick={handleClick}
-          >
-            <RLink
-              href={href}
-              underline="none"
-              className={`${linkClassName} ${animate ? linkHoverClassName : ""}`}
-              onClick={handleClick}
-            >
-              {children}
-            </RLink>
-          </RButton>
-        </Card>
-      </Box>
+          {children}
+        </RLink>
+      </Button>
     );
   }
 

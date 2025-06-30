@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Button, Dialog, Flex, IconButton, Tooltip } from "@radix-ui/themes";
+import FButton from "../button/Button";
 import { ScanText } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { setContent, setTitle } from "../../app/writer/writerSlice";
@@ -48,9 +49,9 @@ const Edit = ({
             </Button>
           </Dialog.Close>
           <Dialog.Close>
-            <Button variant="soft" onClick={copyAndLaunch}>
+            <FButton variant="soft" onClick={copyAndLaunch}>
               Confirm
-            </Button>
+            </FButton>
           </Dialog.Close>
         </Flex>
       </Dialog.Content>

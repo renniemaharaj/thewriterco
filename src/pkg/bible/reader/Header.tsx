@@ -5,10 +5,10 @@ import {
 } from "../../../app/ereader/ereaderSlice";
 import Picker from "../Picker";
 import {
-  Button,
   Card,
   Flex,
   IconButton,
+  Separator,
   Switch,
   Tooltip,
 } from "@radix-ui/themes";
@@ -24,6 +24,7 @@ import {
   registerShortcut,
   unregisterShortcut,
 } from "../../hooks/useGlobalShortcuts";
+import Button from "../../button/Button";
 
 const Header = ({
   hidePicker,
@@ -60,7 +61,7 @@ const Header = ({
   }, [reader, navigateVerse]);
 
   const displayHeaderClassName =
-    "!gap-2 !p-2 !max-w-full !overflow-auto !flex !justify-center !items-center";
+    "!gap-3 !p-2 !max-w-full !overflow-auto !flex !justify-center !items-center";
 
   const handleDownload = useCallback(() => {
     download(
@@ -97,7 +98,7 @@ const Header = ({
         <Picker
           trigger={<Button variant="soft">{reader.eContent.title}</Button>}
         />
-
+        <Separator orientation="vertical" size="2" />
         <Tooltip content="Toggle Ereader">
           <IconButton
             onClick={() => dispatch(toggleOpenState())}
