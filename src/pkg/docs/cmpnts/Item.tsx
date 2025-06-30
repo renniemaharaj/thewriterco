@@ -42,14 +42,14 @@ const Item = ({
 
   return (
     <div
-      className="holographic-container cursor-pointer p-2"
+      className="holographic-container cursor-pointer p-2 w-full md:!w-[21rem]"
       onClick={() => {
         if (!isSelected) {
           navigateWT(`/read/${urlTab}/${itemTitle}`);
         }
       }}
     >
-      <Card className="holographic-card !p-4 w-full md:!w-[21rem]">
+      <Card className="holographic-card !p-4 ">
         <div className="flex justify-between items-center mb-1">
           <span className="text-xs font-bold uppercase text-pink-600 truncate">
             {urlTab}

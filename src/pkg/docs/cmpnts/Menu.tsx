@@ -80,6 +80,7 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: min([index * 0.2, 0.8]) }}
+          className="w-full md:!w-[21rem]"
         >
           <Item urlTab={tab.value} title={item.title} />
         </motion.div>
@@ -119,7 +120,7 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
         />
       </Tabs.List>
 
-      <Box pt="3" className="!w-full !min-h-full !p-0">
+      <Box pt="3" className="!min-w-full !min-h-full !pt-4">
         {renderedTabContents}
       </Box>
 
