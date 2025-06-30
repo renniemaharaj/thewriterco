@@ -11,7 +11,7 @@ const Seeker: React.FC<SeekerProps> = ({ books, onClick }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Box ref={containerRef}>
+    <Box ref={containerRef} className="!pt-2">
       <ul className="text-left text-sm">
         <Card className="blurred-div !flex !gap-2 max-w-[600px] !flex-wrap">
           <AnimatePresence>

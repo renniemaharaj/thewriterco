@@ -29,7 +29,7 @@ const Button = ({
 }) => {
   return (
     <Flex
-      className={`${!noHolographic && "holographic-container"} rounded-full !transition-all !duration-300 !p-0 m-0`}
+      className={`${!noHolographic && "holographic-container"} rounded-full !p-0 m-0`}
     >
       <Flex
         className={`${!noHolographic && "holographic-card"} rounded-full !transition-all !duration-300 !p-0 m-0`}

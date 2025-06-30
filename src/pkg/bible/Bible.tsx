@@ -114,7 +114,7 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
           <Carousel items={renderTabs()} />
           {/* {renderTabs()} */}
         </Tabs.List>
-        <Box pt="3">{tabsToShow.map(renderBooks)}</Box>
+        <Box className="!pt-10">{tabsToShow.map(renderBooks)}</Box>
       </Tabs.Root>
       {/* </Card> */}
     </Flex>

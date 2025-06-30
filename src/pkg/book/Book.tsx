@@ -82,9 +82,7 @@ export default function Book({
   }, [actionPagesFlipped, openBook, closeBook]);
 
   return (
-    <div
-      className={`w-[250px] aspect-[2/3] ${className} hover:animate-pulse border-yellow-600`}
-    >
+    <div className={`w-[250px] aspect-[2/3] ${className} relative`}>
       <div
         className="w-full h-[100%] relative book-container m-auto"
         ref={bookRef}
@@ -107,7 +105,7 @@ export default function Book({
             </div>
           ))}
           <div
-            className={`cursor-default p-1 cover ${theme === "light" ? "bg-gray-400" : "bg-[#111110]"} bg-brown-700 text-white flex flex-col items-center justify-center shadow-2xl text-center`}
+            className={`cursor-default holographic-card p-1 cover ${theme === "light" ? "bg-gray-400" : "bg-[#111110]"} bg-brown-700 text-white flex flex-col items-center justify-center shadow-2xl text-center`}
           >
             <span
               className="text-md font-bold w-full"
