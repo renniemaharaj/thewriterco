@@ -112,13 +112,13 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
   }
 
   return (
-    <Flex className="w-full !max-w-full md:!w-[50rem] mx-auto pb-10 gap-10 flex-col items-center text-center">
-      <Flex className="!w-full !items-center !justify-center">
-        <Box>
-          <Search onChange={handleSearchChange} />
-        </Box>
-      </Flex>
+    <Flex className="w-full !max-w-full md:!w-[50rem] mx-auto pb-10 flex-col items-center text-center">
       <Card className="w-full !h-fit">
+        <Flex className="!w-full !items-center !justify-center">
+          <Box>
+            <Search onChange={handleSearchChange} />
+          </Box>
+        </Flex>
         <Tabs.Root
           defaultValue={tabsToShow[0]}
           onValueChange={setSelectedTab}

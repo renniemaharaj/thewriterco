@@ -11,7 +11,6 @@ import {
 } from "../../app/ereader/ereaderSlice";
 import Bible from "../../pkg/bible/Bible";
 import Link from "../../pkg/link/Link";
-import Hero from "../../pkg/page/Hero";
 
 const KJV = () => {
   const ereaderSlice = useSelector((state: RootState) => state.ereader);
@@ -113,24 +112,11 @@ const KJV = () => {
         wrapChildren={true}
         title="KJV Bible"
         description="Read the KJV Bible"
-        hero={
-          <Hero
-            header="The Word of God"
-            subHeader="KJV"
-            hint={
-              <Text>
-                The Writer Company is KJV first. We are against the subtle
-                conditioning towards an ultimate acceptance of a watered-down
-                bible version. 😬
-              </Text>
-            }
-          />
-        }
       >
         <Flex
           direction="column"
           align="center"
-          className="w-full !mt-5 mx-auto gap-6"
+          className="w-full mx-auto gap-6"
         >
           <Bible showAnimation={true} />
 

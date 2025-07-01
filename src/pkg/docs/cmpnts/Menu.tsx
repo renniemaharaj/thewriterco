@@ -1,5 +1,4 @@
-import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useMemo, useState } from "react";
 import { Tabs, Box } from "@radix-ui/themes";
 
 import Item from "./Item";
@@ -9,6 +8,8 @@ import { useParams } from "react-router-dom";
 import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 import useDefaultTabs from "../../hooks/useDefaultTabs";
 import { min } from "lodash";
+import Motion from "./Motion";
+import Content from "./Content";
 
 // Define the shape of each collapsible item
 export type CollapsibleItem = {
@@ -37,6 +38,8 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
   const { navigateWT } = useTransitionNavigation();
 
   const defaultTabs = useDefaultTabs();
+
+  const [delayListing, setDelayListing] = useState(true);
 
   const combinedTabs = useMemo(
     () => [...defaultTabs, ...additionalTabs],
@@ -75,29 +78,22 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
         : tab.content;
 
       const renderedItems = itemsToRender.map((item, index) => (
-        <motion.div
-          key={index + "tabsItem"}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: min([index * 0.2, 0.8]) }}
-          className="w-full md:!w-[21rem]"
-        >
+        <Motion className="w-full md:!w-[21rem]" index={index}>
           <Item urlTab={tab.value} title={item.title} />
-        </motion.div>
+        </Motion>
       ));
 
       return (
-        <Tabs.Content
-          key={tab.value + "tabsContent"}
-          value={tab.value}
-          className="!flex !flex-row !flex-wrap"
-        >
+        <Content key={tab.value + "tabsContent"} value={tab.value}>
           {renderedItems}
-        </Tabs.Content>
+        </Content>
       );
     });
   }, [combinedTabs, currentTab.value, maxItems]);
 
+  useEffect(() => {
+    setTimeout(() => setDelayListing(false), 1000);
+  }, []);
   return (
     <Tabs.Root
       onValueChange={(v) => {
@@ -110,25 +106,34 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
       <Tabs.List className="!w-full p-2 pb-2">
         <Carousel
           items={combinedTabs.map((tab, index) => (
-            <motion.div
-              key={index + "tabsItem"}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-            >
+            <Motion index={index} cap={false}>
               <Trigger
                 key={tab.value}
                 tab={tab}
                 currentTab={urlTab || ""}
                 defaultTab={combinedTabs[0].value}
               />
-            </motion.div>
+            </Motion>
           ))}
         />
       </Tabs.List>
 
       <Box pt="3" className="!min-w-full !min-h-full !pt-4">
-        {renderedTabContents}
+        {!renderedTabContents.length || delayListing ? (
+          <Content key="skeleton-content" value={currentTab.value}>
+            {Array.from({ length: 3 }).map((_i, index) => (
+              <Motion
+                className="w-full md:!w-[21rem]"
+                index={index}
+                key={index}
+              >
+                <Item urlTab="" title="" />
+              </Motion>
+            ))}
+          </Content>
+        ) : (
+          renderedTabContents
+        )}
       </Box>
 
       {pagination}
