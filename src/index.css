@@ -187,10 +187,12 @@
 
 .holographic-card:hover::before {
   opacity: 1;
+  z-index: -1;
   transform: rotate(-45deg) translateY(100%);
 }
 
 .md-holographic-card:hover::before {
+  z-index: 2;
   transform: rotate(-45deg) translateY(70%) !important;
 }
 
