@@ -3,7 +3,6 @@ import Navbar from "./Header";
 import Reader from "../bible/reader/Reader";
 import Footer from "./Footer";
 import { ReactNode, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
 import Sizer from "./Sizer";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Block from "./Block";
@@ -12,6 +11,7 @@ import { useSelector } from "react-redux";
 // import light from "../../assets/Light.jpg";
 import { RootState } from "../../app/store";
 import { motion } from "framer-motion";
+import Seo from "./Seo";
 // import useTheme from "../hooks/useTheme";
 
 const Page = ({
@@ -41,32 +41,36 @@ const Page = ({
 
   return (
     <div>
-      <Helmet>
-        {title !== "" && <title>{`TheWriterCo - ${title}`}</title>}
-        {description !== "" && (
-          <meta name="description" content={description} />
-        )}
-      </Helmet>
+      {/** React Helmet */}
+      <Seo title={title} description={description} />
+
+      {/** Records page orientation */}
       <Sizer />
+
       {/* <Navbar /> */}
       <Navbar />
 
+      {/** Voice reader */}
       <Reader hidePicker={hideBiblePicker} />
-      <motion.div
-        key={"tabsItem"}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.1 }}
+
+      {/** Page body*/}
+      <Flex
+        direction="column"
+        align="center"
+        justify="center"
+        className={`!w-full !flex-col !mx-auto pb-20 blurred-div-light`}
       >
-        <Flex
-          direction="column"
-          align="center"
-          justify="center"
-          className={`!w-full md:!w-[99%] !flex-col !mx-auto pb-20 blurred-div-light`}
+        {/** Page children on motion transition in */}
+        <motion.div
+          key={"tabsItem"}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+          className="max-w-full"
         >
           {wrapChildren && (
             <Card
-              className={`w-full blurred-div !py-6 top-3 ${className} ${orientation === "horizontal" ? "!px-3" : "!px-0"}`}
+              className={`w-full blurred-div !py-6 top-3 !transition-all !delay-300 ${className} ${orientation === "horizontal" ? "!px-3" : "!px-0"}`}
             >
               <Flex
                 data-testid="heroElement"
@@ -90,8 +94,8 @@ const Page = ({
               )}
             </>
           )}
-        </Flex>
-      </motion.div>
+        </motion.div>
+      </Flex>
 
       {/* </Flex> */}
       <Separator size={"4"} />

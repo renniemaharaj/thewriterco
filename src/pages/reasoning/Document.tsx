@@ -7,7 +7,7 @@ const Document = () => {
       title="Rationale"
       wrapChildren
       className="!overflow-visible"
-      description="Learn how to build study documents using our tools"
+      description="Read articles, poetry, theological material and more"
     >
       {/* Actual documentation */}
       <Documentation />

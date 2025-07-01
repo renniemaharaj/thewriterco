@@ -13,7 +13,6 @@ const Root: React.FC = () => {
     <Page
       title="Home"
       description="Welcome to The Writer Company"
-      className="!gap-5 !w-[95%]"
       wrapChildren
       hero={
         <Hero
