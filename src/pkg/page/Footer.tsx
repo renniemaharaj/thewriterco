@@ -9,14 +9,11 @@ import {
   MapPin,
   Mail,
   Phone,
-  HandCoinsIcon,
 } from "lucide-react";
 import Hero from "./Hero";
 import Hint from "../Hint";
 import Link from "../link/Link";
 import FlexBreak from "./FlexBreak";
-
-import android_192 from "../../assets/favicon_io/android-chrome-192x192.png";
 
 const companyName = "The Writer Company";
 const companyMission = `Advocacy of a KJV first approach and preservation of strong
@@ -27,7 +24,10 @@ const companyPhone = "(***) ***-****";
 
 const Footer: React.FC = () => {
   return (
-    <footer id="footer" className="flex !flex-col !gap-5 py-16">
+    <footer
+      id="footer"
+      className="flex lg-holographic-card holographic-card !flex-col !gap-5 py-16"
+    >
       {/* First Column: Information Section */}
       <Hero
         header={companyName}
@@ -122,25 +122,6 @@ const Footer: React.FC = () => {
           <Flex className="items-center gap-2 text-sm mt-2">
             <Phone className="h-5 w-5 text-primary" />
             <Text>Phone: {companyPhone}</Text>
-          </Flex>
-        </Flex>
-
-        <FlexBreak />
-        {/* Fifth Column: Support */}
-        <Flex className="!flex-col !items-center !gap-5">
-          <img
-            src={android_192}
-            alt="Android Chrome Icon"
-            className="w-20 h-20 mx-auto mt-2 animate-pulse rounded-lg"
-          />
-          <Heading size="4" className="text-md font-bold">
-            Support Us
-          </Heading>
-          <Flex className="items-center gap-2 text-sm mt-2">
-            <HandCoinsIcon className="h-5 w-5 text-primary" />
-            <Link href="https://paypal.me/newrennie" external animate>
-              Paypal Contribute
-            </Link>
           </Flex>
         </Flex>
 
