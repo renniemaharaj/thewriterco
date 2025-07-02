@@ -1,4 +1,4 @@
-import { Flex, Button, Text, Code, Card, Separator } from "@radix-ui/themes";
+import { Flex, Text, Code, Card, Separator } from "@radix-ui/themes";
 import { ShieldAlert, RotateCcw, RefreshCw, Bug } from "lucide-react";
 import { RootState } from "../../app/store";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { recoveryFunctionMap } from "./config";
 import { RecoveryCard } from "./RecoveryCard";
 import RecoveryButton from "./RecoveryButton";
+import Button from "../button/Button";
+import { sharedActionClass } from "./classes";
 
 interface ErrorFallbackProps {
   error: Error;
@@ -41,17 +43,14 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
     }
   };
 
-  const sharedActionClass =
-    "error-action !w-full !max-w-[300px] !h-12 !p-4 text-sm rounded-md flex items-center";
-
   return (
     <Flex
       direction="column"
       align="center"
       justify="center"
-      className="min-h-screen px-6 py-10 bg-gray-50"
+      className="min-h-screen"
     >
-      <Card className="w-full max-w-2xl p-8 shadow-xl rounded-2xl bg-white">
+      <Card className="!max-w-2xl !p-8 shadow-xl !rounded-2xl">
         <Flex direction="column" align="center" gap="6">
           <Flex direction="column" align="center" className="flex-col !gap-2">
             {/* Header Icon */}
@@ -72,60 +71,54 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
           </Flex>
 
           {/* Actions */}
-          <Flex direction="column" className="w-full !gap-2">
+          <Flex direction="column" className="!w-full !my-8 !gap-2">
             {/* Error Message */}
             <Code
               variant="solid"
-              color="red"
-              className={sharedActionClass}
-              // className="!w-full !p-4 !overflow-auto !max-h-40 rounded-md bg-red-100 text-red-800"
+              className="!w-full !p-4 !overflow-auto !max-h-40 rounded-md !bg-red-100 !text-red-800"
             >
               {error.message}
             </Code>
+          </Flex>
+          <Flex className="flex-row !justify-start !flex-wrap !gap-2">
+            <RecoveryButton
+              onClick={async () => {
+                resetErrorBoundary();
+                // simulate recovery logic
+                await new Promise((res) => setTimeout(res, 1500));
+                return true; // or "error" based on logic
+              }}
+              textContent={
+                <>
+                  <RotateCcw className="w-5 h-5 mr-2 flip" />
+                  "Retry"
+                </>
+              }
+            />
 
-            <Flex className="flex-row !justify-start !flex-wrap !gap-2">
-              <RecoveryButton
-                onClick={async () => {
-                  resetErrorBoundary();
-                  // simulate recovery logic
-                  await new Promise((res) => setTimeout(res, 1500));
-                  return true; // or "error" based on logic
-                }}
-                textContent={
-                  <>
-                    <RotateCcw className="w-5 h-5 mr-2 flip" />
-                    "Retry"
-                  </>
-                }
-              />
+            <Button
+              variant="soft"
+              color="gold"
+              onClick={() => window.location.reload()}
+              className={sharedActionClass}
+              aria-label="Restart application"
+            >
+              <RefreshCw className="w-5 h-5 mr-2" />
+              Reload
+            </Button>
 
-              <Button
-                variant="solid"
-                color="blue"
-                onClick={() => window.location.reload()}
-                className={`${sharedActionClass} !max-w-[300px]`}
-                aria-label="Restart application"
-              >
-                <RefreshCw className="w-5 h-5 mr-2" />
-                Restart
-              </Button>
-
-              <Button
-                size="4"
-                radius="full"
-                variant="ghost"
-                color="red"
-                onClick={() =>
-                  (window.location.href =
-                    "mailto:rvesprey@gmail.com?subject=App Crash Report")
-                }
-                className="!max-w-[300px] !p-2"
-                aria-label="Report crash issue"
-              >
-                <Bug className="w-5 h-5 mr-2" />
-                Report Issue
-              </Button>
-            </Flex>
+            <Button
+              color="gold"
+              onClick={() =>
+                (window.location.href =
+                  "mailto:rvesprey@gmail.com?subject=App Crash Report")
+              }
+              className={sharedActionClass}
+              aria-label="Report crash issue"
+            >
+              <Bug className="w-5 h-5 mr-2" />
+              Report
+            </Button>
           </Flex>
 
           {/* Recovery Options */}
