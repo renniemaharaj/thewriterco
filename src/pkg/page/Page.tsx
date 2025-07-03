@@ -53,7 +53,7 @@ const Page = ({
   useEffect(() => {
     dispatch(
       pushResult({
-        route: "Documentation",
+        route: "Catalogue",
         title: "Documentation",
         hint: "Discover poetry, articles, axioms, verbose, creativity, pro christianity, pro kjv and other Christian writings",
         action: { menu: "" },
