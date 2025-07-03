@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 import useDefaultTabs from "../../hooks/useDefaultTabs";
 import { min } from "lodash";
-import Motion from "./Motion";
+import Motion from "../../page/Motion";
 import Content from "./Content";
 
 // Define the shape of each collapsible item
@@ -103,8 +103,9 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
       defaultValue={urlTab || combinedTabs[0].value}
       className={className}
     >
-      <Tabs.List className="!w-full p-2 pb-2">
+      <Tabs.List className="!w-full p-2 py-2">
         <Carousel
+          className="py-2"
           items={combinedTabs.map((tab, index) => (
             <Motion index={index} cap={false}>
               <Trigger

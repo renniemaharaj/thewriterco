@@ -3,19 +3,21 @@ import { min } from "lodash";
 import { ReactNode } from "react";
 
 const Motion = ({
+  unique,
   index,
   children,
   className,
   cap,
 }: {
   index: number;
+  unique?: string;
   children: ReactNode;
   className?: string;
   cap?: boolean;
 }) => {
   return (
     <motion.div
-      key={index + "tabsItem"}
+      key={index + "tabsItem" + unique}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{

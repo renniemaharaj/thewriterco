@@ -1,5 +1,5 @@
 import { Flex, Button as RButton } from "@radix-ui/themes";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { AllowedColors } from "../RadixColors";
 
 type Variants =
@@ -13,19 +13,23 @@ type Variants =
 const Button = ({
   color,
   variant = "soft",
-  onClick,
   children,
   disabled,
   className,
   noHolographic = false,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
 }: {
   color?: AllowedColors;
   variant?: Variants;
-  onClick?: (e: React.MouseEvent) => void;
   children: ReactNode;
   disabled?: boolean;
   className?: string;
   noHolographic?: boolean;
+  onClick?: (e: React.MouseEvent) => void;
+  onMouseEnter?: (e: React.MouseEvent) => void;
+  onMouseLeave?: (e: React.MouseEvent) => void;
 }) => {
   return (
     <Flex
@@ -41,6 +45,8 @@ const Button = ({
           className={className}
           disabled={disabled}
           onClick={onClick}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
         >
           {children}
         </RButton>

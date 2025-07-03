@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getInitialPageData } from "./utils";
+import { ResultType } from "../../pkg/page/Search/type";
 
 const pageSlice = createSlice({
   name: "pageData",
@@ -8,9 +9,21 @@ const pageSlice = createSlice({
     dismissDeclaration(state, action: PayloadAction<number>) {
       state.dismissedDeclaration = action.payload;
     },
+    pushResult(state, action: PayloadAction<ResultType>) {
+      const exists = state.searchResults.some(
+        (item: ResultType) => item.title === action.payload.title,
+      );
+      if (!exists) {
+        state.searchResults.push(action.payload);
+      }
+    },
+    setSearchQuery(state, action: PayloadAction<string>) {
+      state.searchQuery = action.payload;
+    },
   },
 });
 
-export const { dismissDeclaration } = pageSlice.actions;
+export const { dismissDeclaration, pushResult, setSearchQuery } =
+  pageSlice.actions;
 
 export default pageSlice;
