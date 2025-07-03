@@ -50,6 +50,16 @@ const Page = ({
     });
   }, [dispatch, pageActions]);
 
+  useEffect(() => {
+    dispatch(
+      pushResult({
+        route: "Documentation",
+        title: "Documentation",
+        hint: "Discover poetry, articles, axioms, verbose, creativity, pro christianity, pro kjv and other Christian writings",
+        action: { menu: "" },
+      }),
+    );
+  }, [dispatch]);
   return (
     <div>
       {/** React Helmet */}

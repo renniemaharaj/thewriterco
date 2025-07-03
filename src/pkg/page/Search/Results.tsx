@@ -42,7 +42,7 @@ const Results = ({ children }: { children: ReactNode }) => {
     <HoverCard.Root>
       <HoverCard.Trigger>{children}</HoverCard.Trigger>
       <HoverCard.Content
-        className={`${!groupedEntries.length && "!hidden"} !max-w-[600px] !min-w-[300px]`}
+        className={`${!groupedEntries.length && "!hidden"} !overflow-auto !max-h-[400px] !min-w-[300px]`}
       >
         <Tabs.Root defaultValue={groupedEntries[0]?.[0]}>
           <Tabs.List className="!w-full p-2 pb-2">

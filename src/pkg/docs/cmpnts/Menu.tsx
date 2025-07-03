@@ -106,15 +106,15 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
       <Tabs.List className="!w-full p-2 py-2">
         <Carousel
           className="py-2"
-          items={combinedTabs.map((tab, index) => (
-            <Motion index={index} cap={false}>
-              <Trigger
-                key={tab.value}
-                tab={tab}
-                currentTab={urlTab || ""}
-                defaultTab={combinedTabs[0].value}
-              />
-            </Motion>
+          items={combinedTabs.map((tab) => (
+            // <Motion index={index} cap={false}>
+            <Trigger
+              key={tab.value}
+              tab={tab}
+              currentTab={urlTab || ""}
+              defaultTab={combinedTabs[0].value}
+            />
+            // </Motion>
           ))}
         />
       </Tabs.List>

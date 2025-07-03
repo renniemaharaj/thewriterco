@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 import { Card } from "@radix-ui/themes";
 import { useGitFetchDocument } from "../../hooks/data/gitFetchDocument";
+import useDocumentParser from "../../hooks/useDocumentParser";
 
 const Item = ({
   urlTab,
@@ -20,31 +21,11 @@ const Item = ({
     filename: itemTitle,
   });
 
-  const [date, setDate] = useState<string | null>(null);
-  const [description, setDescription] = useState<string | null>(null);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [hovered, setHovered] = useState(false);
 
-  useEffect(() => {
-    if (!content) return;
+  const { date, description, imageUrl } = useDocumentParser(content);
 
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(content, "text/html");
-    const children = doc.body.children;
-
-    if (children.length >= 4) {
-      const firstChildText = children[0]?.textContent?.trim();
-      const fourthChildText = children[3]?.textContent?.trim();
-
-      setDate(firstChildText || null);
-      setDescription(fourthChildText || null);
-    }
-
-    const firstImg = doc.querySelector("img");
-    if (firstImg?.src) {
-      setImageUrl(firstImg.src);
-    }
-  }, [content]);
+  // useEffect removed: now using date, description, and imageUrl from useDocumentParser
 
   return (
     <div

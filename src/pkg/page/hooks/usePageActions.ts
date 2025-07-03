@@ -1,86 +1,83 @@
 import { useMemo } from "react";
-import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 
 type PageAction = {
   route: string;
   title: string;
   hint: string;
-  action: () => void;
+  action: { href: string };
 };
 
 const usePageActions = (): PageAction[] => {
-  const { navigateWT } = useTransitionNavigation();
-
   return useMemo(
     () => [
       {
         route: "/",
         title: "Home",
         hint: "Go Home",
-        action: () => navigateWT("/"),
+        action: { href: "/" },
       },
       {
         route: "/",
         title: "Writer",
         hint: "Open Writer",
-        action: () => navigateWT("/writer"),
+        action: { href: "/writer" },
       },
       {
         route: "/",
         title: "KJV",
         hint: "King James Version",
-        action: () => navigateWT("/kjv"),
+        action: { href: "/kjv" },
       },
       {
         route: "/",
         title: "Read",
         hint: "Read Bible",
-        action: () => navigateWT("/read"),
+        action: { href: "/read" },
       },
       {
         route: "Read",
         title: "Articles",
         hint: "View Articles",
-        action: () => navigateWT("/read/articles"),
+        action: { href: "/read/articles" },
       },
       {
         route: "Read",
         title: "Axioms",
         hint: "View Axioms",
-        action: () => navigateWT("/read/axioms"),
+        action: { href: "/read/axioms" },
       },
       {
         route: "Read",
         title: "Verbose",
         hint: "View Verbose",
-        action: () => navigateWT("/read/verbose"),
+        action: { href: "/read/verbose" },
       },
       {
         route: "Read",
         title: "Creativity",
         hint: "View Creativity",
-        action: () => navigateWT("/read/creativity"),
+        action: { href: "/read/creativity" },
       },
       {
         route: "Read",
         title: "Poetry",
         hint: "View Poetry",
-        action: () => navigateWT("/read/poetry"),
+        action: { href: "/read/poetry" },
       },
       {
         route: "Read",
         title: "Pro KJV",
         hint: "Pro King James Version",
-        action: () => navigateWT("/read/prokjv"),
+        action: { href: "/read/prokjv" },
       },
       {
         route: "Read",
         title: "Pro Christianity",
         hint: "Pro Christianity",
-        action: () => navigateWT("/read/prochristianity"),
+        action: { href: "/read/prochristianity" },
       },
     ],
-    [navigateWT],
+    [],
   );
 };
 
