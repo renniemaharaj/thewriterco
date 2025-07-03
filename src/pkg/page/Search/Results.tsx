@@ -42,7 +42,7 @@ const Results = ({ children }: { children: ReactNode }) => {
     <HoverCard.Root>
       <HoverCard.Trigger>{children}</HoverCard.Trigger>
       <HoverCard.Content
-        className={`${!groupedEntries.length && "!hidden"} !overflow-auto !max-h-[400px] !min-w-[300px]`}
+        className={`${!groupedEntries.length && "!hidden"} !overflow-y-auto !overflow-x-hidden !max-h-[400px] !min-w-[300px]`}
       >
         <Tabs.Root defaultValue={groupedEntries[0]?.[0]}>
           <Tabs.List className="!w-full p-2 pb-2">
@@ -60,10 +60,16 @@ const Results = ({ children }: { children: ReactNode }) => {
             <Tabs.Content
               key={title}
               value={title}
-              className="!flex !p-2 !gap-2 !flex-row !flex-wrap"
+              className="!flex !overflow-hidden !max-h-full !max-w-full !p-2 !gap-2 !flex-row !flex-wrap"
             >
               {results.map((result, index) => (
-                <Motion unique="res-i" index={index} cap={false} key={index}>
+                <Motion
+                  className="!overflow-hidden !max-w-full !max-h-full"
+                  unique="res-i"
+                  index={index}
+                  cap={false}
+                  key={index}
+                >
                   <Result {...result} />
                 </Motion>
               ))}

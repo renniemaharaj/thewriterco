@@ -14,7 +14,7 @@ const Content = ({
     <Tabs.Content
       key={key}
       value={value}
-      className="!flex !flex-row !flex-wrap"
+      className="!flex !flex-row !flex-wrap !justify-center"
     >
       {children}
     </Tabs.Content>

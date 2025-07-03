@@ -15,7 +15,7 @@ const Result = ({ title, action }: ResultType) => {
     //   return <Item urlTab="articles" title={title} />;
     // }
     if ("menu" in action && typeof action.menu === "string") {
-      return <Menu />;
+      return <Menu className="!max-h-full" />;
     }
     return null;
   }, [action, navigateWT, title]);
