@@ -45,11 +45,11 @@ const Results = ({ children }: { children: ReactNode }) => {
         className={`${!groupedEntries.length && "!hidden"} !overflow-y-auto !overflow-x-hidden !max-h-[400px] !min-w-[300px]`}
       >
         <Tabs.Root defaultValue={groupedEntries[0]?.[0]}>
-          <Tabs.List className="!w-full p-2 pb-2">
+          <Tabs.List className="!w-full pb-2">
             <Carousel
               items={groupedEntries.map(([title], index) => (
                 <Motion unique="res" index={index} cap={false} key={title}>
-                  <Tabs.Trigger value={title}>
+                  <Tabs.Trigger className="!p-0" value={title}>
                     <Button>{title}</Button>
                   </Tabs.Trigger>
                 </Motion>
@@ -60,7 +60,7 @@ const Results = ({ children }: { children: ReactNode }) => {
             <Tabs.Content
               key={title}
               value={title}
-              className="!flex !overflow-hidden !max-h-full !max-w-full !p-2 !gap-2 !flex-row !flex-wrap"
+              className="!flex !overflow-hidden !max-h-full !max-w-full !pt-2 !gap-2 !flex-row !flex-wrap"
             >
               {results.map((result, index) => (
                 <Motion

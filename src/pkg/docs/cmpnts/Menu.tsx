@@ -103,7 +103,7 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
       defaultValue={urlTab || combinedTabs[0].value}
       className={className}
     >
-      <Tabs.List className="!w-full p-2 py-2">
+      <Tabs.List className="!w-full">
         <Carousel
           className="py-2"
           items={combinedTabs.map((tab) => (

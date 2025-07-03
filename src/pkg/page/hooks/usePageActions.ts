@@ -11,25 +11,25 @@ const usePageActions = (): PageAction[] => {
   return useMemo(
     () => [
       {
-        route: "/",
+        route: "Pages",
         title: "Home",
         hint: "Go Home",
         action: { href: "/" },
       },
       {
-        route: "/",
+        route: "Pages",
         title: "Writer",
         hint: "Open Writer",
         action: { href: "/writer" },
       },
       {
-        route: "/",
+        route: "Pages",
         title: "KJV",
         hint: "King James Version",
         action: { href: "/kjv" },
       },
       {
-        route: "/",
+        route: "Pages",
         title: "Read",
         hint: "Read Bible",
         action: { href: "/read" },
