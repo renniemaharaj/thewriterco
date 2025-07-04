@@ -6,6 +6,13 @@ export type Content =
     }
   | string;
 
+export type Favorite = {
+  title: string;
+  book: string;
+  chapter: string;
+  verse: string;
+};
+
 export type EBook = {
   title: string;
   description?: string;
@@ -17,6 +24,7 @@ export type EBook = {
 
 export type EreaderState = {
   isOpen: boolean;
+  favorites: Favorite[];
   currentChapter: string;
   currentVerse: string;
   eContent: EBook;

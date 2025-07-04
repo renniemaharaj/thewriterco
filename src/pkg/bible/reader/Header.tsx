@@ -1,4 +1,9 @@
-import { BookDownIcon, BookUpIcon, DownloadIcon } from "lucide-react";
+import {
+  BookDownIcon,
+  BookUpIcon,
+  DownloadIcon,
+  FolderHeart,
+} from "lucide-react";
 import {
   setSpeechEnabled,
   toggleOpenState,
@@ -25,6 +30,7 @@ import {
   unregisterShortcut,
 } from "../../hooks/useGlobalShortcuts";
 import Button from "../../button/Button";
+import Favorites from "../../page/Favorites";
 
 const Header = ({
   hidePicker,
@@ -136,6 +142,16 @@ const Header = ({
           >
             <DownloadIcon />
           </IconButton>
+        </Tooltip>
+
+        <Tooltip content="Favorites">
+          <Favorites
+            trigger={
+              <IconButton variant="soft">
+                <FolderHeart />
+              </IconButton>
+            }
+          />
         </Tooltip>
       </Flex>
     </Card>

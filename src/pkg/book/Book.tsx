@@ -89,7 +89,7 @@ export default function Book({
         onClick={onClick}
       >
         <div
-          className={`book relative w-full h-full ${isBookOpen ? "open" : ""}`}
+          className={`book relative w-full h-full ${isBookOpen && showAnimation ? "open" : ""}`}
           onClick={isBookOpen ? closeBook : openBook}
         >
           <div className="back-cover flex items-center w-full h-full justify-center shadow-[gray] shadow-sm cursor-pointer">

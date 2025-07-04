@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { EBook } from "./types";
+import { EBook, Favorite } from "./types";
 import { getInitialReaderData } from "./utils";
 
 const ereaderSlice = createSlice({
@@ -54,6 +54,19 @@ const ereaderSlice = createSlice({
     toggleSpeaking(state) {
       state.speaking = !state.speaking;
     },
+    removeFavorite(state, action: PayloadAction<string>) {
+      state.favorites = state.favorites.filter(
+        (fav: Favorite) => fav.title !== action.payload,
+      );
+    },
+    pushFavorite(state, action: PayloadAction<Favorite>) {
+      const exists = state.favorites.some(
+        (fav: Favorite) => fav.title === action.payload.title,
+      );
+      if (!exists) {
+        state.favorites.push(action.payload);
+      }
+    },
   },
 });
 
@@ -73,6 +86,8 @@ export const {
   setSpeechEnabled,
   setSelectedVoice,
   toggleSpeaking,
+  pushFavorite,
+  removeFavorite,
 } = ereaderSlice.actions;
 
 export default ereaderSlice;

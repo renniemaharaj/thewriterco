@@ -10,8 +10,8 @@ const Picker = ({ trigger }: { trigger: ReactNode }) => {
         aria-describedby="Explore the various districts of the Holy Bible KJV"
         maxWidth="450px"
       >
-        <Dialog.Title>
-          Explore the various districts of the Holy Bible KJV
+        <Dialog.Title className="w-full text-center">
+          Holy Bible KJV
         </Dialog.Title>
         <Flex direction="column" gap="3">
           <Bible asChild showAnimation={false} />

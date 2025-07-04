@@ -1,6 +1,6 @@
 import { useEffect, useRef, useMemo, useCallback } from "react";
 import { Flex, IconButton, Tooltip } from "@radix-ui/themes";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import { ArrowBigLeft, ArrowBigRight, ArrowBigRightDash } from "lucide-react";
 import { getChapterVerses } from "../utils/reader";
@@ -16,6 +16,8 @@ import { SHADOW_COUNT } from "../config";
 import Changer from "./Changer";
 import Header from "./Header";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import HeartPlus from "./HeartPlus";
+import { pushFavorite } from "../../../app/ereader/ereaderSlice";
 
 const Reader = ({
   hidePicker,
@@ -25,7 +27,11 @@ const Reader = ({
 }) => {
   const eReaderState = useSelector((state: RootState) => state.ereader);
 
+  const favorites = eReaderState.favorites;
+
   const [, setValue] = useLocalStorage("readerData", eReaderState);
+
+  const dispatch = useDispatch();
 
   const {
     isOpen,
@@ -47,7 +53,16 @@ const Reader = ({
     navigateVerse,
   } = useContentReducers();
 
+  const currentBook = eReaderState.eContent.title;
+
   const initialContentLoaded = useRef(false);
+
+  const currentIsFavorite = useCallback(() => {
+    const fav = favorites.some(
+      (fav) => fav.title === `${currentBook} ${currentChapter}:${currentVerse}`,
+    );
+    return fav;
+  }, [favorites, currentBook, currentChapter, currentVerse]);
 
   // Sync Redux state into local state without triggering updates every render
   useEffect(() => {
@@ -166,6 +181,22 @@ const Reader = ({
                 onClick={() => slideCurrentVerses()}
               >
                 <ArrowBigRightDash />
+              </IconButton>
+            </Tooltip>
+            <Tooltip content="Favorite This">
+              <IconButton disabled={currentIsFavorite()} variant="soft">
+                <HeartPlus
+                  onClick={() =>
+                    dispatch(
+                      pushFavorite({
+                        title: `${currentBook} ${currentChapter}:${currentVerse}`,
+                        book: currentBook,
+                        chapter: currentChapter,
+                        verse: currentVerse,
+                      }),
+                    )
+                  }
+                />
               </IconButton>
             </Tooltip>
           </Flex>

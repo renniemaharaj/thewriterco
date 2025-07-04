@@ -9,6 +9,10 @@ const pageSlice = createSlice({
     dismissDeclaration(state, action: PayloadAction<number>) {
       state.dismissedDeclaration = action.payload;
     },
+    setSearchQuery(state, action: PayloadAction<string>) {
+      state.searchQuery = action.payload;
+    },
+
     pushResult(state, action: PayloadAction<ResultType>) {
       const exists = state.searchResults.some(
         (item: ResultType) => item.title === action.payload.title,
@@ -16,9 +20,6 @@ const pageSlice = createSlice({
       if (!exists) {
         state.searchResults.push(action.payload);
       }
-    },
-    setSearchQuery(state, action: PayloadAction<string>) {
-      state.searchQuery = action.payload;
     },
   },
 });

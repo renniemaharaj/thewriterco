@@ -10,6 +10,7 @@ const defaultContent = {
 
 export const initialState: EreaderState = {
   isOpen: false,
+  favorites: [],
   currentChapter: "1",
   currentVerse: "1",
   selectedVoice: "",
