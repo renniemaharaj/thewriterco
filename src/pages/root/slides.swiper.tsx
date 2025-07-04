@@ -64,29 +64,6 @@ export const swiperSlides = [
       </Link>
     }
   />,
-  <Slide
-    title={
-      <>
-        Biblical Perspective <br /> on Today's Headlines
-      </>
-    }
-    quote={
-      <>
-        And he said unto them, Take heed what ye hear. <br />
-        With what measure ye mete, it shall be measured to you.
-      </>
-    }
-    actionBar={
-      <Link
-        as="button"
-        variant="soft"
-        href="/daily"
-        aria-label="View daily news report"
-      >
-        View News Report
-      </Link>
-    }
-  />,
 
   <Slide
     title={
@@ -105,36 +82,10 @@ export const swiperSlides = [
       <Link
         as="button"
         variant="soft"
-        href="/reasoning"
+        href="/read"
         aria-label="Study reasoning"
       >
-        Study reasoning
-      </Link>
-    }
-  />,
-
-  <Slide
-    title={
-      <>
-        Create study-ready documents <br />
-        as web pages, with our tools
-      </>
-    }
-    quote={
-      <>
-        But sanctify the Lord God in your hearts: <br />
-        and be ready always to give an answer to every man that asketh you a
-        reason of the hope that is in you with meekness and fear.
-      </>
-    }
-    actionBar={
-      <Link
-        as="button"
-        variant="soft"
-        href="/reasoning?ta=articles&t=Study+Documents"
-        aria-label="Learn about study documents"
-      >
-        Learn More
+        Study rationale
       </Link>
     }
   />,
