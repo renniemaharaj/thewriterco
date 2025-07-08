@@ -5,7 +5,7 @@ import { Theme } from "@radix-ui/themes";
 
 // import PersistLogin from "./pkg/PersistLogin";
 import ErrorFallback from "./pkg/eboundary/ErrorBoundary";
-import { RequireAuth } from "./pkg/firebase/auth/component/RequireAuth";
+import { AuthRouter } from "./pkg/firebase/auth/component/AuthRouter";
 import { ThemeProvider } from "./pkg/context/theme/ThemeProvider";
 import { useThemeContext } from "./pkg/context/theme/useThemeContext";
 import { protectedRoutesFunc, publicRoutesFunc } from "./routing";
@@ -49,7 +49,7 @@ function AppRoutes() {
       {publicRoutesFunc()}
       {/* Protected Routes */}
       {/* <Route element={<PersistLogin />}> */}
-      <Route element={<RequireAuth />}>{protectedRoutesFunc()}</Route>
+      <Route element={<AuthRouter />}>{protectedRoutesFunc()}</Route>
       {/* </Route> */}
     </Routes>
   );

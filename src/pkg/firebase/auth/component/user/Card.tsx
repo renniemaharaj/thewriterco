@@ -8,28 +8,28 @@ import {
   Link,
 } from "@radix-ui/themes";
 import { User } from "firebase/auth";
-import { ReactNode } from "react";
+import Avatar from "./Avatar";
 
-const UserCard = ({
+const Card = ({
   user,
-  renderAvatar,
   handleSignOut,
   handleSignIn,
 }: {
   user: User | null;
-  renderAvatar: (s: "1" | "2" | "3") => ReactNode;
   handleSignOut: () => Promise<void>;
   handleSignIn: () => Promise<void>;
 }) => {
   return (
     <HoverCard.Root>
       <HoverCard.Trigger>
-        <IconButton variant="soft">{renderAvatar("1")}</IconButton>
+        <IconButton variant="soft">
+          <Avatar size={"1"} />
+        </IconButton>
       </HoverCard.Trigger>
 
       <HoverCard.Content className="max-w-xs p-4">
         <Flex gap="4" align="start">
-          {renderAvatar("2")}
+          <Avatar size={"2"} />
           <Flex direction="column" gap="3" className="w-full">
             <DataList.Root size="2">
               <DataList.Item>
@@ -85,4 +85,4 @@ const UserCard = ({
   );
 };
 
-export default UserCard;
+export default Card;
