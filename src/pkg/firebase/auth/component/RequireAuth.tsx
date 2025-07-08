@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import { auth } from "./firebase/firebase";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import Unauthenticated from "./page/views/Unauthenticated";
+import Unauthenticated from "../../../page/views/Unauthenticated";
+import { auth } from "../../firebase";
 
 export const RequireAuth = () => {
   const [token, setToken] = useState<string>("?");

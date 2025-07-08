@@ -17,6 +17,7 @@ const Writer = lazy(() => import("./pages/writer/Writer.tsx"));
 const Documentation = lazy(() => import("./pages/reasoning/Document"));
 
 export const protectedRoutes: CustomRoute[] = [
+  { path: "ai", element: <AI />, suspended: false },
   { path: "office", element: <></> },
   { path: "studies", element: <></> },
   { path: "writer", element: <Writer />, suspended: false },
@@ -27,7 +28,6 @@ export const publicRoutes: (CustomRoute | IndexRoute)[] = [
   { index: true, element: <Root /> },
   { path: "*", element: <Missing /> },
   { path: "login", element: <Login /> },
-  { path: "ai", element: <AI />, suspended: true },
   { path: "kjv", element: <Kjv /> },
   { path: "kjv/:title/:chapter/:verse", element: <Kjv /> },
   { path: "read", element: <Documentation /> },

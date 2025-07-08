@@ -5,7 +5,7 @@ import { Theme } from "@radix-ui/themes";
 
 // import PersistLogin from "./pkg/PersistLogin";
 import ErrorFallback from "./pkg/eboundary/ErrorBoundary";
-import { RequireAuth } from "./pkg/RequireAuth";
+import { RequireAuth } from "./pkg/firebase/auth/component/RequireAuth";
 import { ThemeProvider } from "./pkg/context/theme/ThemeProvider";
 import { useThemeContext } from "./pkg/context/theme/useThemeContext";
 import { protectedRoutesFunc, publicRoutesFunc } from "./routing";

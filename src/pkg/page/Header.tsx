@@ -7,7 +7,7 @@ import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Link from "../link/Link";
 import ThemeButton from "./ThemeButton";
 import Search from "./Search/Search";
-import Auth from "../firebase/auth/Auth";
+import Auth from "../firebase/auth/component/Auth";
 
 const navLinks = [
   { label: "Writer", href: "/writer", disabled: false },

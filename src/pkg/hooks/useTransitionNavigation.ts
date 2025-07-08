@@ -13,10 +13,6 @@ export const useTransitionNavigation = () => {
     });
   };
 
-  useEffect(() => {
-    console.log(isPending);
-  }, [isPending]);
-
   const location = useLocation();
   useEffect(() => {
     const path = location.pathname.split("/").slice(1).join("/");

@@ -14,7 +14,6 @@ import {
 } from "@radix-ui/themes";
 import Reader from "../../pkg/bible/reader/Reader";
 import SideBar from "../../pkg/SideBar";
-import Menu from "../../pkg/docs/cmpnts/Menu";
 import { useThemeContext } from "../../pkg/context/theme/useThemeContext";
 import Chat from "../../pkg/ai/Chat";
 import {
@@ -120,7 +119,7 @@ const AI = () => {
 
   const PanelBar = (
     <Flex
-      className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${chatData.orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}  !items-center gap-2 !p-1`}
+      className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${chatData.orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}  !items-center gap-3 !p-3`}
     >
       <Sizer />
       {/* <Flex> */}
@@ -230,9 +229,9 @@ const AI = () => {
       {/* <BeforeHeader /> */}
       <SideBar
         variant="center"
-        className="flex-col relative m-auto !w-[100vw] !h-[100vh] transition-all gap-1"
+        className="flex-col relative m-auto !w-[100vw] !max-w-[700px] !h-[100vh] transition-all gap-1"
         orientation={chatData.orientation}
-        childLeft={<Menu className="!hidden md:!flex" />}
+        childLeft={<></>}
         centerBar={PanelBar}
         childRight={
           /* Chatbox Section */

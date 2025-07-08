@@ -7,7 +7,7 @@ import {
   forwardRef,
   useState,
 } from "react";
-import { useSendAskReqMutation } from "../../app/api/apiSlice.ts";
+// import { useSendAskReqMutation } from "../../app/api/apiSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store.ts";
 
@@ -24,7 +24,7 @@ import React from "react";
 import { setOpenState } from "../../app/ereader/ereaderSlice.ts";
 
 import * as msgpack from "@msgpack/msgpack";
-import { fromByteArray } from "base64-js";
+// import { fromByteArray } from "base64-js";
 import Input from "./Input.tsx";
 import {
   addMessage,
@@ -40,6 +40,7 @@ import Message, { MessageAction } from "./Message.tsx";
 import { toggleFlowSlice } from "../../app/flow/flowSlice.ts";
 import { getInitialChatState } from "../../app/chat/utils.ts";
 import Models from "./Models.tsx";
+import { prompt } from "../firebase/ai/ai.ts";
 
 const Chat = forwardRef(
   (
@@ -53,7 +54,7 @@ const Chat = forwardRef(
     ref,
   ) => {
     const dispatch = useDispatch();
-    const [sendAskReq] = useSendAskReqMutation();
+    // const [sendAskReq] = useSendAskReqMutation();
 
     const [isTyping, setIsTyping] = useState(false);
     const [maxTokens, setMaxTokens] = useState(10000);
@@ -230,7 +231,7 @@ const Chat = forwardRef(
 
         const attachedResponseConstraint = chatState.responseConstraint;
         const context = [
-          { themeMode: "should support both light and dark modes" },
+          { themeMode: "Please don't use custom colors styles" },
           { bookState: attachedBookState },
           { responseConstraint: attachedResponseConstraint },
           {
@@ -259,17 +260,21 @@ const Chat = forwardRef(
           });
         }
 
-        const msgPackData = msgpack.encode(conversation);
-        const base64String = fromByteArray(new Uint8Array(msgPackData));
+        // const msgPackData = msgpack.encode(conversation);
+        // const base64String = fromByteArray(new Uint8Array(msgPackData));
 
-        askSchema.encoded = base64String;
+        // askSchema.encoded = base64String;
+
+        askSchema.encoded = JSON.stringify(conversation);
 
         let data = { response: "" };
 
         try {
-          data = await sendAskReq({
-            message: JSON.stringify(askSchema),
-          }).unwrap();
+          // data = await sendAskReq({
+          //   message: JSON.stringify(askSchema),
+          // }).unwrap();
+          const result = await prompt(JSON.stringify(askSchema));
+          if (result) data = { response: result };
         } catch (error) {
           console.error(error);
           dispatchAddMessage({
@@ -308,7 +313,7 @@ const Chat = forwardRef(
         dispatchAddMessage,
         eReaderState,
         maxTokens,
-        sendAskReq,
+        // sendAskReq,
         scrollMessageBoxToBottom,
         parseAIResponse,
       ],

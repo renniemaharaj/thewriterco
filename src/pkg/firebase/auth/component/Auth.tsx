@@ -1,5 +1,4 @@
 import { useEffect, useCallback, useState, useMemo } from "react";
-import { auth } from "../firebase";
 import {
   GoogleAuthProvider,
   signOut,
@@ -11,8 +10,9 @@ import {
 import UserCard from "./UserCard";
 import { useDispatch } from "react-redux";
 import { Avatar, Button } from "@radix-ui/themes";
-import { AuthResult } from "../../../app/api/auth/authTypes";
-import { setCredentials } from "../../../app/api/auth/authSlice";
+import { AuthResult } from "../../../../app/api/auth/authTypes";
+import { setCredentials } from "../../../../app/api/auth/authSlice";
+import { auth } from "../../firebase";
 
 const Auth = ({ variant = "button" }: { variant?: "image" | "button" }) => {
   const [user, setUser] = useState<User | null>(null);
