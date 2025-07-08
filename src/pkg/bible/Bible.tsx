@@ -108,7 +108,7 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
   };
 
   if (isLoading) {
-    return <Block noPage />;
+    return <Block />;
   }
 
   return (

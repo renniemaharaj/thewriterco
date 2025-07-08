@@ -1,14 +1,24 @@
-import { useLocation, Navigate, Outlet } from "react-router-dom";
-import { useAppSelector } from "../app/hooks";
-import { selectCurrentToken } from "../app/api/auth/authSlice";
+import { Outlet } from "react-router-dom";
+import { auth } from "./firebase/firebase";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import Unauthenticated from "./page/views/Unauthenticated";
 
 export const RequireAuth = () => {
-  const token = useAppSelector(selectCurrentToken);
+  const [token, setToken] = useState<string>("?");
 
-  const location = useLocation();
-  return token ? (
-    <Outlet />
-  ) : (
-    <Navigate to="login" state={{ from: location }} replace />
-  );
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        const token = await firebaseUser.getIdToken();
+        if (token) {
+          setToken(token);
+        }
+        return;
+      }
+      setToken("?");
+    });
+    return () => unsub();
+  }, []);
+  return token === "?" ? <Unauthenticated /> : <Outlet />;
 };

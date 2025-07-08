@@ -1,12 +1,7 @@
-import Block from "../../pkg/page/Block";
-import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
+import Unauthenticated from "../../pkg/page/views/Unauthenticated";
 
 const Login = () => {
-  const { navigateWT } = useTransitionNavigation();
-  setTimeout(() => {
-    navigateWT("/");
-  }, 1000);
-  return <Block />;
+  return <Unauthenticated />;
 };
 
 export default Login;

@@ -61,7 +61,10 @@ const Page = ({
     );
   }, [dispatch]);
   return (
-    <div>
+    <div className="w-full">
+      {/** Firebase Auth */}
+      {/* <Auth /> */}
+
       {/** React Helmet */}
       <Seo title={title} description={description} />
 
@@ -91,7 +94,7 @@ const Page = ({
         >
           {wrapChildren && (
             <Card
-              className={`w-full blurred-div !py-6 top-3 !transition-all !delay-300 ${className} ${orientation === "horizontal" ? "!px-3" : "!px-0"}`}
+              className={`w-full blurred-div !py-6 top-3 !transition-all !delay-300 ${className} ${orientation === "horizontal" ? "!px-3" : "!px-1"}`}
             >
               <Flex
                 data-testid="heroElement"
@@ -99,14 +102,14 @@ const Page = ({
               >
                 {hero}
               </Flex>
-              {isPending ? <Block noPage /> : children}
+              {isPending ? <Block /> : children}
             </Card>
           )}
           {!wrapChildren && (
             <>
               {hero}{" "}
               {isPending ? (
-                <Block noPage />
+                <Block />
               ) : (
                 <Flex className="!flex-col !gap-10">
                   <Separator size={"2"} className="mx-auto mt-10" />

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IconButton, Flex, Text } from "@radix-ui/themes";
+import { IconButton, Flex, Text, Separator } from "@radix-ui/themes";
 import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
@@ -7,6 +7,7 @@ import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Link from "../link/Link";
 import ThemeButton from "./ThemeButton";
 import Search from "./Search/Search";
+import Auth from "../firebase/auth/Auth";
 
 const navLinks = [
   { label: "Writer", href: "/writer", disabled: false },
@@ -68,6 +69,10 @@ const Navbar: React.FC = () => {
                   </li>
                 ),
             )}
+            <Separator orientation="vertical" className="my-auto" />
+            <li>
+              <Auth variant="image" />
+            </li>
           </ul>
         </Flex>
 

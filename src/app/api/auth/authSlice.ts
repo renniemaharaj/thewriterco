@@ -1,14 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 import { AuthResult, ServerError } from "./authTypes";
-
-const initialState: AuthResult = {
-  user: null,
-  accessToken: "",
-};
+import { initialState } from "./config";
 
 const authSlice = createSlice({
   name: "auth",
+  initialState,
   reducers: {
     setCredentials: (state, action: PayloadAction<AuthResult>) => {
       const { user, accessToken } = action.payload;
@@ -27,7 +24,6 @@ const authSlice = createSlice({
       if (user) state.user = JSON.parse(user);
     },
   },
-  initialState,
 });
 
 export const selectCurrentUser = (state: RootState) => state.auth.user;

@@ -1,17 +1,30 @@
 import { Text, Button, Link, Flex, Badge } from "@radix-ui/themes";
-import Page from "../../pkg/page/Page";
-import Hero from "../../pkg/page/Hero";
-import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
 import { FlagIcon, HomeIcon } from "lucide-react";
+import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
+import Page from "../Page";
+import Hero from "../Hero";
+import { ReactNode } from "react";
 // import Link from "next/link";
 
-function Missing() {
+function Missing({
+  title,
+  description,
+  error,
+  cause,
+  actions,
+}: {
+  title: string;
+  description: string;
+  error: string;
+  cause: string;
+  actions?: ReactNode[];
+}) {
   const { path } = useTransitionNavigation();
   return (
     <Page
       wrapChildren
-      title="Page Not Found"
-      description="404 - Page Not Found"
+      title={title}
+      description={description}
       hero={
         <Hero
           header="Welcome to"
@@ -30,9 +43,6 @@ function Missing() {
           direction="row"
           className="gap-1 !justify-center"
         >
-          {/* <Text as="p" color="green" size="3">
-            
-          </Text> */}
           <Badge color="gold">🔒 https</Badge>
           {/* <Text as="p" color="green" size="3"></Text> */}
           <Badge color="green">thewriterco.com</Badge>
@@ -44,26 +54,32 @@ function Missing() {
         </Flex>
 
         <Text as="div" color="red" size="3" className="animate-pulse">
-          Oops! This page doesn't exist
+          {error}
         </Text>
 
         <Text as="p" color="gray" size="3">
-          You may have followed a broken link
+          {cause}
         </Text>
 
         <div className="flex justify-center gap-4 flex-wrap">
-          <Link href="/">
-            <Button size="1" variant="soft">
-              <HomeIcon className="scale-75" />
-              Home
-            </Button>
-          </Link>
-          <Link href="/contact">
-            <Button size="1" variant="soft" disabled>
-              <FlagIcon className="scale-75" />
-              Report
-            </Button>
-          </Link>
+          {actions ? (
+            <>{actions}</>
+          ) : (
+            <>
+              <Link href="/">
+                <Button size="1" variant="soft">
+                  <HomeIcon className="scale-75" />
+                  Home
+                </Button>
+              </Link>
+              <Link href="/contact">
+                <Button size="1" variant="soft" disabled>
+                  <FlagIcon className="scale-75" />
+                  Report
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </Page>

@@ -3,7 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { HelmetProvider } from "react-helmet-async";
 import { Theme } from "@radix-ui/themes";
 
-import PersistLogin from "./pkg/PersistLogin";
+// import PersistLogin from "./pkg/PersistLogin";
 import ErrorFallback from "./pkg/eboundary/ErrorBoundary";
 import { RequireAuth } from "./pkg/RequireAuth";
 import { ThemeProvider } from "./pkg/context/theme/ThemeProvider";
@@ -48,9 +48,9 @@ function AppRoutes() {
       {/* Public Routes */}
       {publicRoutesFunc()}
       {/* Protected Routes */}
-      <Route element={<PersistLogin />}>
-        <Route element={<RequireAuth />}>{protectedRoutesFunc()}</Route>
-      </Route>
+      {/* <Route element={<PersistLogin />}> */}
+      <Route element={<RequireAuth />}>{protectedRoutesFunc()}</Route>
+      {/* </Route> */}
     </Routes>
   );
 }
