@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { EBook, Favorite } from "./types";
+import { EBook } from "./types";
 import { getInitialReaderData } from "./utils";
+import { Favorite } from "../../pkg/bible/reader/favorites/types";
 
 const ereaderSlice = createSlice({
   name: "ereader",
