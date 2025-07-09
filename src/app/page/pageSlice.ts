@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getInitialPageData } from "./utils";
-import { ResultType } from "../../pkg/page/search-/type";
+import { ResultType } from "../../pkg/page/search/type";
 
 const pageSlice = createSlice({
   name: "pageData",
