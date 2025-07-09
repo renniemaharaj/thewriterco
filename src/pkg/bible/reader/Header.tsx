@@ -30,7 +30,7 @@ import {
   unregisterShortcut,
 } from "../../hooks/useGlobalShortcuts";
 import Button from "../../button/Button";
-import Favorites from "../../page/Favorites";
+import Favorites from "./favorites/Favorites";
 
 const Header = ({
   hidePicker,

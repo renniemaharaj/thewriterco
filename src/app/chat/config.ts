@@ -4,7 +4,6 @@ import { Chat } from "./types";
 export const initialState: Chat = {
   messages: [],
   messageBoxRef: React.createRef<HTMLDivElement>(),
-  viewMode: "standard",
   conversationMode: "exchange",
   conversationTokens: 0,
   responseConstraint: "short",

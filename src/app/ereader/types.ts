@@ -1,3 +1,5 @@
+import { Favorite } from "../../pkg/bible/reader/favorites/types";
+
 export type Content =
   | {
       [chapterId: string]: {
@@ -5,13 +7,6 @@ export type Content =
       };
     }
   | string;
-
-export type Favorite = {
-  title: string;
-  book: string;
-  chapter: string;
-  verse: string;
-};
 
 export type EBook = {
   title: string;

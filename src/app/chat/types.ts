@@ -13,7 +13,6 @@ export type Model = {
 export type Chat = {
   messages: Block[];
   messageBoxRef: React.RefObject<HTMLDivElement>;
-  viewMode: "standard" | "canvas";
   conversationMode: "none" | "exchange";
   conversationTokens: number;
   responseConstraint: "short" | "shorter" | "detailed";

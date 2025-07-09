@@ -25,10 +25,6 @@ const ereaderSlice = createSlice({
     clearMessages(state) {
       state.messages = [];
     },
-    // Set the view mode of the chat
-    setViewMode(state, action: PayloadAction<"standard" | "canvas">) {
-      state.viewMode = action.payload;
-    },
     // Set the conversation mode of the chat
     setConversationMode(state, action: PayloadAction<"none" | "exchange">) {
       state.conversationMode = action.payload;
@@ -52,7 +48,6 @@ export const {
   spliceMessage,
   nukeSystemMessages,
   clearMessages,
-  setViewMode,
   setConversationMode,
   setResponseConstraint,
   setConversationTokens,

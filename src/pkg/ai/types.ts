@@ -36,8 +36,8 @@ type MarkupResponse = {
 
 type Verse = {
   book: string; // Valid Bible book name
-  chapterNo: number;
-  verseNo: number;
+  chapterNo: string;
+  verseNo: string;
   verseContent: string;
 };
 

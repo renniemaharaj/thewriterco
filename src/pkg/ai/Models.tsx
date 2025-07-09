@@ -18,12 +18,12 @@ const Models = ({ className }: { className?: string }) => {
             <PlusCircleIcon onClick={() => setMenuOpen(!menuOpen)} />
           </IconButton>
         </Tooltip>
-        <Select.Root defaultValue="pool">
+        <Select.Root defaultValue="firebase">
           <Select.Trigger />
           <Select.Content variant="soft">
             <Select.Group>
               <Select.Label>Google</Select.Label>
-              <Select.Item value="pool">gemini pool</Select.Item>
+              <Select.Item value="firebase">Firebase</Select.Item>
               {chatData.models?.map((model) => (
                 <Select.Item value="custom">{model.displayName}</Select.Item>
               ))}

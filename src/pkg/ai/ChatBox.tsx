@@ -1,4 +1,4 @@
-import { Flex, Button, Skeleton, Card } from "@radix-ui/themes";
+import { Flex, Button } from "@radix-ui/themes";
 import {
   useCallback,
   useImperativeHandle,
@@ -18,9 +18,6 @@ import {
   ResponseBlock,
   Scripture,
 } from "./types.ts";
-import Flow from "../flow/Flow.tsx";
-import { Node } from "@xyflow/react";
-import React from "react";
 import { setOpenState } from "../../app/ereader/ereaderSlice.ts";
 
 import * as msgpack from "@msgpack/msgpack";
@@ -31,16 +28,14 @@ import {
   clearMessages,
   nukeSystemMessages,
   setConversationTokens,
-  // setViewMode,
 } from "../../app/chat/chatSlice.ts";
 import { buildConversation } from "./utils.ts";
-import { initialSuggestions } from "./configuration.ts";
 import useLocalStorage from "../hooks/useLocalStorage.ts";
-import Message, { MessageAction } from "./Message.tsx";
 import { toggleFlowSlice } from "../../app/flow/flowSlice.ts";
 import { getInitialChatState } from "../../app/chat/utils.ts";
 import Models from "./Models.tsx";
 import { prompt } from "../firebase/ai/ai.ts";
+import View from "./View.tsx";
 
 const ChatBox = forwardRef(
   (
@@ -59,14 +54,10 @@ const ChatBox = forwardRef(
     const [isTyping, setIsTyping] = useState(false);
     const [maxTokens, setMaxTokens] = useState(10000);
 
-    const [suggestions, setSuggestions] =
-      useState<string[]>(initialSuggestions);
-
     const eReaderState = useSelector((state: RootState) => state.ereader);
 
     const chatState = useSelector((state: RootState) => state.chat);
 
-    // const [chatState, setChatState] = useState(getInitialChatState());
     const [, setValue] = useLocalStorage("chatData", chatState);
 
     // Update local storage when chat state changes
@@ -324,16 +315,6 @@ const ChatBox = forwardRef(
       handleMessageSend,
     }));
 
-    const handleSuggestionClick = useCallback(
-      (msg: string) => {
-        setSuggestions((prev) =>
-          prev.filter((suggestion) => suggestion !== msg),
-        );
-        handleMessageSend(msg);
-      },
-      [handleMessageSend, setSuggestions],
-    );
-
     const computeTokens = useCallback(async () => {
       const conversation = await buildConversation(chatState.messages);
       const msgPackData = msgpack.encode(conversation);
@@ -351,54 +332,6 @@ const ChatBox = forwardRef(
 
       dispatch(toggleFlowSlice());
     }, [chatState.messages, computeTokens, dispatch, scrollMessageBoxToBottom]);
-
-    const handleActions = useCallback(
-      (action: MessageAction) => {
-        switch (action) {
-          case "fix":
-            handleMessageSend(
-              "-@here Respond correctly, in defined schema. Validation failing.",
-              false,
-            );
-            dispatch(nukeSystemMessages());
-
-            break;
-        }
-      },
-      [handleMessageSend, dispatch],
-    );
-
-    const SkeletonTextBlock = () => {
-      const [blockMounted, setBlockMounted] = useState(false);
-
-      useEffect(() => {
-        setTimeout(() => setBlockMounted(true), 100);
-      }, []);
-
-      const baseClassName =
-        "w-3/4 !h-3 rounded mb-2 opacity-0 transition-opacity duration-700";
-
-      return (
-        <Card
-          variant="ghost"
-          className="!border-none !w-full !mx-auto !outline-none"
-        >
-          <Skeleton
-            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-[70%] mt-5 delay-100 !p-2`}
-          />
-          <Skeleton
-            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-2/4 delay-200 !p-2`}
-          />
-          <Skeleton
-            className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} !w-1/4 delay-300 !p-2`}
-          />
-        </Card>
-      );
-    };
-
-    const countMessageBlocks = useCallback(() => {
-      return chatState.messages.length;
-    }, [chatState.messages]);
 
     const chatRef = useRef<HTMLDivElement>(null);
     const [chatBoxRespectiveWidth, setChatBoxRespectiveWidth] = useState(0);
@@ -421,107 +354,13 @@ const ChatBox = forwardRef(
       return () => resizeObserver.disconnect();
     }, []);
 
-    const ViewContainer = useCallback(() => {
-      const MessageBlock = ({
-        block,
-        onAnimated,
-      }: {
-        block: Block;
-        onAnimated: () => void;
-      }) => {
-        useEffect(() => {
-          onAnimated();
-        }, [onAnimated]);
-        return (
-          <Message
-            block={block}
-            handleAction={
-              block.role === "system"
-                ? (action: MessageAction) => handleActions(action)
-                : () => {}
-            }
-          />
-        );
-      };
-      return (
-        <Card
-          className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-[9rem] my-auto`}
-          variant="ghost"
-        >
-          {chatState.messages.length === 0 && (
-            <Flex className={`gap-1 px-8 mb-4 pt-2 !justify-center !flex-wrap`}>
-              {suggestions.map((msg, index) => (
-                <Button
-                  key={index}
-                  variant="soft"
-                  className="cursor-pointer"
-                  onClick={() => handleSuggestionClick(msg)}
-                  disabled={isTyping}
-                >
-                  {msg}
-                </Button>
-              ))}
-            </Flex>
-          )}
-
-          {chatState.messages.map((block, index) => (
-            <React.Fragment key={index}>
-              <Flex className="w-[99%] !max-auto !mx-auto">
-                <MessageBlock
-                  block={block}
-                  onAnimated={scrollMessageBoxToBottom}
-                />
-              </Flex>
-            </React.Fragment>
-          ))}
-
-          {isTyping && (
-            <React.Fragment>
-              <Flex className="w-[99%] !mx-auto !my-10">
-                <SkeletonTextBlock />
-              </Flex>
-            </React.Fragment>
-          )}
-        </Card>
-      );
-    }, [
-      chatState,
-      isTyping,
-      suggestions,
-      handleActions,
-      handleSuggestionClick,
-      scrollMessageBoxToBottom,
-    ]);
-
-    //Build node from scroll area
-    const MessageContainerNode = useCallback(
-      () =>
-        ({
-          id: "scroll-area",
-          type: "scrollArea",
-          data: {
-            label: "Scroll Area",
-            children: <ViewContainer />,
-          },
-          position: { x: 0, y: 0 },
-        }) as Node,
-      [ViewContainer],
-    );
-
     return (
       <Flex ref={chatRef} className={`${className} !pb-32`}>
-        {/* <Card className="bg-red-400 !top-0" variant="ghost"> */}
-        {/* {canvasView ? ( */}
-        {chatState.viewMode === "canvas" ? (
-          <Card className="!w-full h-[99vh] !pb-28">
-            <Flow
-              nodes={[MessageContainerNode()]}
-              messageBlocksCount={countMessageBlocks()}
-            />
-          </Card>
-        ) : (
-          <ViewContainer />
-        )}
+        <View
+          isTyping={isTyping}
+          handleMessageSend={handleMessageSend}
+          scrollMessageBoxToBottom={scrollMessageBoxToBottom}
+        />
 
         <Input
           disabled={isTyping}
@@ -538,18 +377,6 @@ const ChatBox = forwardRef(
                 >
                   Bible
                 </Button>
-                {/* <Button
-                  variant={chatState.viewMode === "canvas" ? "soft" : "outline"}
-                  onClick={() =>
-                    dispatch(
-                      setViewMode(
-                        chatState.viewMode === "canvas" ? "standard" : "canvas",
-                      ),
-                    )
-                  }
-                >
-                  Canvas
-                </Button> */}
               </Flex>
             </Flex>
           }

@@ -1,29 +1,13 @@
-import {
-  Avatar,
-  Blockquote,
-  Button,
-  Card,
-  Flex,
-  IconButton,
-  Text,
-  Tooltip,
-} from "@radix-ui/themes";
+import { Avatar, Blockquote, Button, Card, Flex, Text } from "@radix-ui/themes";
 import React, { useCallback, useState } from "react";
 import { Block, Code, MarkupResponse, Scripture } from "./types";
-import { BookTextIcon, ShieldAlertIcon } from "lucide-react";
-import fetchGitBlob from "../hooks/data/useFetchGitBlob";
+import { ShieldAlertIcon } from "lucide-react";
 import { useDispatch } from "react-redux";
-import {
-  setEBook,
-  setGlobalCurrentChapter,
-  setGlobalCurrentVerse,
-  setOpenState,
-} from "../../app/ereader/ereaderSlice";
-import { EBook } from "../../app/ereader/types";
 import { clearMessages } from "../../app/chat/chatSlice";
 import Collapsible from "../Collapsible";
 import Editor from "./Editor";
-import { kvpRepoPath } from "../hooks/data/presets";
+import useUserLikelySignedIn from "../firebase/auth/hooks/useUserLikelySignedIn";
+import VerseItem from "./blocks/VerseItem";
 
 export type MessageAction = "fix" | "new";
 
@@ -34,13 +18,16 @@ type MessageProps = {
 
 const Message: React.FC<MessageProps> = ({ block, handleAction }) => {
   const [collapseCode, setCollapseCode] = useState(true);
+
+  const { user } = useUserLikelySignedIn();
+  const dispatch = useDispatch();
+
   const CodeBlock = useCallback(
     ({ block }: { block: Block }) => {
       return collapseCode ? <></> : <Editor block={block} />;
     },
     [collapseCode],
   );
-  const dispatch = useDispatch();
   return (
     <Card variant="ghost" className="!flex !flex-col !w-full !justify-center">
       <Flex
@@ -56,16 +43,14 @@ const Message: React.FC<MessageProps> = ({ block, handleAction }) => {
           animationFillMode: "forwards",
         }}
       >
-        {block.role === "model" && (
+        {
           <Avatar
-            color="gold"
             size={"1"}
-            className={`h-6 w-6 relative ml-2 !my-10`}
-            fallback="M"
-          >
-            {"M"}
-          </Avatar>
-        )}
+            className={`${block.role === "model" ? "ml-2 !my-10" : "!mr-2 !my-6 !self-end"} h-6 w-6 relative`}
+            src={block.role === "model" ? "M" : (user?.photoURL ?? "U")}
+            fallback={block.role === "model" ? "M" : "U"}
+          />
+        }
 
         {block.role === "user" && (
           <Card
@@ -138,38 +123,7 @@ const Message: React.FC<MessageProps> = ({ block, handleAction }) => {
             <Flex className="!flex-row !gap-3 !justify-center !items-center !flex-wrap">
               {(block.content as Scripture).verses.map((verse, idx) => (
                 <React.Fragment key={`verse-${idx}`}>
-                  <Tooltip content={verse.verseContent}>
-                    <IconButton
-                      variant="ghost"
-                      size="1"
-                      className="animate-pulse !font-bold "
-                      onClick={() => {
-                        fetchGitBlob(kvpRepoPath, verse.book, "json").then(
-                          (content) => {
-                            dispatch(
-                              setEBook({
-                                title: verse.book,
-                                content: JSON.parse(content),
-                                date: new Date().toDateString(),
-                              } as EBook),
-                            );
-                            dispatch(
-                              setGlobalCurrentChapter(
-                                verse.chapterNo.toString(),
-                              ),
-                            );
-                            dispatch(
-                              setGlobalCurrentVerse(verse.verseNo.toString()),
-                            );
-                            setTimeout(() => dispatch(setOpenState(true)), 100);
-                          },
-                        );
-                      }}
-                    >
-                      <BookTextIcon /> {verse.book} {verse.chapterNo} {" : "}
-                      {verse.verseNo}
-                    </IconButton>
-                  </Tooltip>
+                  <VerseItem verse={verse} />
                 </React.Fragment>
               ))}
             </Flex>

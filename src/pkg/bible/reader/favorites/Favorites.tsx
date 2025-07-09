@@ -1,0 +1,68 @@
+import { Dialog, Flex, Text, Box, Button, IconButton } from "@radix-ui/themes";
+import { ReactNode } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../../../app/store";
+import { removeFavorite } from "../../../../app/ereader/ereaderSlice";
+import VerseItem from "../../../ai/blocks/VerseItem";
+import { XIcon } from "lucide-react";
+
+const Favorites = ({ trigger }: { trigger: ReactNode }) => {
+  const favorites = useSelector((state: RootState) => state.ereader.favorites);
+
+  const dispatch = useDispatch();
+
+  const handleRemove = (title: string) => {
+    dispatch(removeFavorite(title));
+  };
+
+  return (
+    <Dialog.Root>
+      <Dialog.Trigger>{trigger}</Dialog.Trigger>
+
+      <Dialog.Content maxWidth="450px" maxHeight="500px">
+        <Dialog.Title className="w-full text-center">Favorites</Dialog.Title>
+        <Dialog.Description size="2" mb="4">
+          Manage your favorites
+        </Dialog.Description>
+
+        <Flex direction="column" gap="3">
+          {favorites.length === 0 ? (
+            <Text size="2" color="gray">
+              No favorites yet.
+            </Text>
+          ) : (
+            favorites.map((fav) => (
+              <Box key={fav.title}>
+                <Flex justify="between" align="center" gap="3">
+                  <VerseItem
+                    verse={{
+                      book: fav.book,
+                      chapterNo: fav.chapter,
+                      verseNo: fav.verse,
+                      verseContent: "Open this verse",
+                    }}
+                  />
+                  <IconButton
+                    variant="soft"
+                    color="gray"
+                    onClick={() => handleRemove(fav.title)}
+                  >
+                    <XIcon />
+                  </IconButton>
+                </Flex>
+              </Box>
+            ))
+          )}
+        </Flex>
+
+        <Flex gap="3" mt="4" justify="end">
+          <Dialog.Close>
+            <Button variant="soft">Done</Button>
+          </Dialog.Close>
+        </Flex>
+      </Dialog.Content>
+    </Dialog.Root>
+  );
+};
+
+export default Favorites;
