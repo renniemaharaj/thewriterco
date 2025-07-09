@@ -17,7 +17,7 @@ const navLinks = [
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const eReaderState = useSelector((state: RootState) => state.ereader);
+  const readerState = useSelector((state: RootState) => state.reader);
 
   const { navigateWT } = useTransitionNavigation();
 
@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
     <>
       <Flex
         data-testid="header"
-        className={`w-full !justify-evenly py-2 shadow-md sticky top-0 blurred-div !rounded-none transition-all ${eReaderState.isOpen ? "z-0" : "z-10"}`}
+        className={`w-full !justify-evenly py-2 shadow-md sticky top-0 blurred-div !rounded-none transition-all ${readerState.isOpen ? "z-0" : "z-10"}`}
       >
         <Flex className="gap-4 flex-row md:flex-row items-center justify-between px-4">
           <Text

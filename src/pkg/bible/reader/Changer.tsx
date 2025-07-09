@@ -1,7 +1,7 @@
 import { Flex } from "@radix-ui/themes";
 import Chapter from "./Chapter";
 import Verse from "./Verse";
-import { Content } from "../../../app/ereader/types";
+import { Content } from "../../../app/reader/types";
 
 const Changer = ({
   content,

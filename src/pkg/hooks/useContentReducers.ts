@@ -6,13 +6,15 @@ import { SHADOW_COUNT } from "../bible/config";
 import {
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
-} from "../../app/ereader/ereaderSlice";
+} from "../../app/reader/readerSlice";
 
 export const useContentReducers = () => {
   const dispatch = useDispatch();
-  const { eContent, currentChapter, currentVerse } = useSelector(
-    (state: RootState) => state.ereader,
-  );
+  const {
+    eBook: eContent,
+    currentChapter,
+    currentVerse,
+  } = useSelector((state: RootState) => state.reader);
   const content = eContent.content;
 
   const contentTitle = eContent.title;

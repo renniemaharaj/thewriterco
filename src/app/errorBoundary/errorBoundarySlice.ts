@@ -3,7 +3,7 @@ import { initialState } from "./config";
 import { RecoveryFunction } from "./types";
 
 const errorBoundarySlice = createSlice({
-  name: "elevenLabs",
+  name: "errorBoundary",
   initialState,
   reducers: {
     RegisterRecoveryFunction(state, action: PayloadAction<RecoveryFunction>) {

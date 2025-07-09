@@ -10,7 +10,7 @@ export type SpeakProps = {
 };
 
 const SpeakIcon = ({ onClick, className, disabled }: SpeakProps) => {
-  const speaking = useSelector((state: RootState) => state.ereader.speaking);
+  const speaking = useSelector((state: RootState) => state.reader.speaking);
   return (
     <IconButton
       className={`!animate-pulse ${className}`}

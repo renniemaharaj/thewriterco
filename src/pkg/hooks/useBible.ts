@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
 import { useState, useCallback } from "react";
-import { EBook } from "../../app/ereader/types";
+import { EBook } from "../../app/reader/types";
 import fetchGitBlob from "./data/useFetchGitBlob";
 import { kvpRepoPath } from "./data/presets";
-import { setEBook, setOpenState } from "../../app/ereader/ereaderSlice";
+import { setEBook, setOpenState } from "../../app/reader/readerSlice";
 
 const useBible = () => {
   const dispatch = useDispatch();

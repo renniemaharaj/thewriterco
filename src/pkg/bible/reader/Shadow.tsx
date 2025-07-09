@@ -1,5 +1,5 @@
 import { Flex } from "@radix-ui/themes";
-import { Content } from "../../../app/ereader/types";
+import { Content } from "../../../app/reader/types";
 
 const Shadow = ({
   currentSlice,

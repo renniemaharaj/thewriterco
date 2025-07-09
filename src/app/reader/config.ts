@@ -1,5 +1,5 @@
 import introductionMessage from "./introduction";
-import { EreaderState } from "./types";
+import { readerState } from "./types";
 
 const defaultContent = {
   title: "Bible",
@@ -8,13 +8,13 @@ const defaultContent = {
   content: introductionMessage,
 };
 
-export const initialState: EreaderState = {
+export const initialState: readerState = {
   isOpen: false,
   favorites: [],
   currentChapter: "1",
   currentVerse: "1",
   selectedVoice: "",
-  eContent: defaultContent,
+  eBook: defaultContent,
   speechEnabled: false,
   speaking: false,
 };

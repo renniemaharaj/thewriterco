@@ -6,7 +6,7 @@ import {
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
   setOpenState,
-} from "../../../app/ereader/ereaderSlice";
+} from "../../../app/reader/readerSlice";
 import { BookTextIcon } from "lucide-react";
 
 const VerseItem = ({ verse }: { verse: Verse }) => {

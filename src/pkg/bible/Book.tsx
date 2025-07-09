@@ -16,7 +16,7 @@ const BookFragment: React.FC<BookFragmentProps> = ({
   onClick,
   showAnimation,
 }) => {
-  const eReaderState = useSelector((state: RootState) => state.ereader);
+  const eReaderState = useSelector((state: RootState) => state.reader);
 
   return (
     <Book
@@ -26,7 +26,7 @@ const BookFragment: React.FC<BookFragmentProps> = ({
       className="!w-[6rem]"
       showAnimation={showAnimation}
       actionPagesFlipped={
-        eReaderState.eContent.title === book && eReaderState.isOpen
+        eReaderState.eBook.title === book && eReaderState.isOpen
       }
       onClick={onClick}
     />

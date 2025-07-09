@@ -18,7 +18,7 @@ import {
   ResponseBlock,
   Scripture,
 } from "./types.ts";
-import { setOpenState } from "../../app/ereader/ereaderSlice.ts";
+import { setOpenState } from "../../app/reader/readerSlice.ts";
 
 import * as msgpack from "@msgpack/msgpack";
 // import { fromByteArray } from "base64-js";
@@ -54,7 +54,7 @@ const ChatBox = forwardRef(
     const [isTyping, setIsTyping] = useState(false);
     const [maxTokens, setMaxTokens] = useState(10000);
 
-    const eReaderState = useSelector((state: RootState) => state.ereader);
+    const eReaderState = useSelector((state: RootState) => state.reader);
 
     const chatState = useSelector((state: RootState) => state.chat);
 
@@ -218,7 +218,7 @@ const ChatBox = forwardRef(
         setIsTyping(true);
 
         // Attach additional context to the message
-        const attachedBookState = `${eReaderState.eContent.title} ${eReaderState.currentChapter}:${eReaderState.currentVerse}`;
+        const attachedBookState = `${eReaderState.eBook.title} ${eReaderState.currentChapter}:${eReaderState.currentVerse}`;
 
         const attachedResponseConstraint = chatState.responseConstraint;
         const context = [

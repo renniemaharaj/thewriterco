@@ -32,7 +32,7 @@ const VoiceHeader = ({
   const voiceReaderIconClass =
     "text-gray-500 hover:animate-pulse transition-colors duration-200";
 
-  const readerOpen = useSelector((state: RootState) => state.ereader.isOpen);
+  const readerOpen = useSelector((state: RootState) => state.reader.isOpen);
   useGlobalShortcuts(); // Mount global listener once
   useEffect(() => {
     const stopShortcut = {

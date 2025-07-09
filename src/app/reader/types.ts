@@ -17,12 +17,12 @@ export type EBook = {
   content: Content;
 };
 
-export type EreaderState = {
+export type readerState = {
   isOpen: boolean;
   favorites: Favorite[];
   currentChapter: string;
   currentVerse: string;
-  eContent: EBook;
+  eBook: EBook;
   selectedVoice: string;
   speechEnabled: boolean;
   speaking: boolean;

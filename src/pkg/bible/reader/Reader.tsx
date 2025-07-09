@@ -17,7 +17,7 @@ import Changer from "./Changer";
 import Header from "./Header";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import HeartPlus from "./HeartPlus";
-import { pushFavorite } from "../../../app/ereader/ereaderSlice";
+import { pushFavorite } from "../../../app/reader/readerSlice";
 
 const Reader = ({
   hidePicker,
@@ -25,7 +25,7 @@ const Reader = ({
   hidePicker?: boolean;
   onSpeechProgress?: (chapter: string, verse: string) => void;
 }) => {
-  const eReaderState = useSelector((state: RootState) => state.ereader);
+  const eReaderState = useSelector((state: RootState) => state.reader);
 
   const favorites = eReaderState.favorites;
 
@@ -37,7 +37,7 @@ const Reader = ({
     isOpen,
     currentChapter: reduxChapter,
     currentVerse: reduxVerse,
-    eContent,
+    eBook: eContent,
   } = eReaderState;
 
   const content = eContent.content;
@@ -53,7 +53,7 @@ const Reader = ({
     navigateVerse,
   } = useContentReducers();
 
-  const currentBook = eReaderState.eContent.title;
+  const currentBook = eReaderState.eBook.title;
 
   const initialContentLoaded = useRef(false);
 
@@ -117,6 +117,7 @@ const Reader = ({
 
   useEffect(() => {
     setValue(eReaderState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eReaderState]);
 
   return (

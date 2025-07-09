@@ -8,7 +8,7 @@ const useResolveFallbackVoice = () => {
   const voiceBrowser = useVoiceReader();
 
   const selectedVoice = useSelector(
-    (state: RootState) => state.ereader.selectedVoice,
+    (state: RootState) => state.reader.selectedVoice,
   );
 
   const resolveOrFallback = (): SpeechSynthesisVoice => {

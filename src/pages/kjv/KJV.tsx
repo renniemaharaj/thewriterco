@@ -8,12 +8,12 @@ import Page from "../../pkg/page/Page";
 import {
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
-} from "../../app/ereader/ereaderSlice";
+} from "../../app/reader/readerSlice";
 import Bible from "../../pkg/bible/Bible";
 import Link from "../../pkg/link/Link";
 
 const KJV = () => {
-  const ereaderSlice = useSelector((state: RootState) => state.ereader);
+  const ereaderSlice = useSelector((state: RootState) => state.reader);
   const { handleBookOpen } = useBible();
 
   const [initialURLState, setInitialURLState] = useState<{
@@ -44,7 +44,7 @@ const KJV = () => {
       chapter &&
       verse &&
       open &&
-      (bookTitle !== ereaderSlice.eContent.title ||
+      (bookTitle !== ereaderSlice.eBook.title ||
         chapter !== ereaderSlice.currentChapter ||
         verse !== ereaderSlice.currentVerse)
     ) {
@@ -55,7 +55,7 @@ const KJV = () => {
 
   // Set URL from Redux state
   useEffect(() => {
-    setBookTitle(ereaderSlice.eContent.title);
+    setBookTitle(ereaderSlice.eBook.title);
     setChapter(ereaderSlice.currentChapter);
     setVerse(ereaderSlice.currentVerse);
     setOpen(ereaderSlice.isOpen ? "1" : "0");

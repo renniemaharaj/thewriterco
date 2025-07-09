@@ -7,7 +7,7 @@ import {
 import {
   setSpeechEnabled,
   toggleOpenState,
-} from "../../../app/ereader/ereaderSlice";
+} from "../../../app/reader/readerSlice";
 import Picker from "../Picker";
 import {
   Card,
@@ -42,7 +42,7 @@ const Header = ({
   isOpen: boolean;
   routeTextContent?: string;
 }) => {
-  const reader = useSelector((state: RootState) => state.ereader);
+  const reader = useSelector((state: RootState) => state.reader);
 
   const { download } = useDownloader();
 
@@ -70,10 +70,10 @@ const Header = ({
 
   const handleDownload = useCallback(() => {
     download(
-      `${reader.eContent.title}.json`,
-      JSON.stringify(reader.eContent, null, 2),
+      `${reader.eBook.title}.json`,
+      JSON.stringify(reader.eBook, null, 2),
     );
-  }, [reader.eContent, download]);
+  }, [reader.eBook, download]);
 
   useGlobalShortcuts(); // Mount global listener once
 
@@ -101,7 +101,7 @@ const Header = ({
         className={`${hidePicker && !isOpen ? "!hidden" : ""} ${displayHeaderClassName}`}
       >
         <Picker
-          trigger={<Button variant="soft">{reader.eContent.title}</Button>}
+          trigger={<Button variant="soft">{reader.eBook.title}</Button>}
         />
         <Separator orientation="vertical" size="2" />
         <Tooltip content="Toggle Ereader">
@@ -133,7 +133,7 @@ const Header = ({
           onSpeechProgress={onSpeechProgress}
         />
 
-        <Tooltip content={`Download JSON - ${reader.eContent.title}`}>
+        <Tooltip content={`Download JSON - ${reader.eBook.title}`}>
           <IconButton
             onClick={handleDownload}
             aria-label="Download Book"

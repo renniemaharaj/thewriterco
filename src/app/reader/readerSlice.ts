@@ -3,33 +3,33 @@ import { EBook } from "./types";
 import { getInitialReaderData } from "./utils";
 import { Favorite } from "../../pkg/bible/reader/favorites/types";
 
-const ereaderSlice = createSlice({
+const readerSlice = createSlice({
   name: "ereader",
   initialState: getInitialReaderData(),
   reducers: {
     setEBook(state, action: PayloadAction<EBook>) {
-      state.eContent = action.payload;
+      state.eBook = action.payload;
     },
     setTitle(state, action: PayloadAction<string>) {
-      state.eContent.title = action.payload;
+      state.eBook.title = action.payload;
     },
     setDescription(state, action: PayloadAction<string | undefined>) {
-      state.eContent.description = action.payload;
+      state.eBook.description = action.payload;
     },
     setSummary(state, action: PayloadAction<string | undefined>) {
-      state.eContent.summary = action.payload;
+      state.eBook.summary = action.payload;
     },
     setAuthor(state, action: PayloadAction<string | undefined>) {
-      state.eContent.author = action.payload;
+      state.eBook.author = action.payload;
     },
     setDate(state, action: PayloadAction<string | undefined>) {
-      state.eContent.date = action.payload;
+      state.eBook.date = action.payload;
     },
     setContent(
       state,
       action: PayloadAction<string | Record<string, Record<string, string>>>,
     ) {
-      state.eContent.content = action.payload;
+      state.eBook.content = action.payload;
     },
     setOpenState(state, action: PayloadAction<boolean>) {
       state.isOpen = action.payload;
@@ -89,6 +89,6 @@ export const {
   toggleSpeaking,
   pushFavorite,
   removeFavorite,
-} = ereaderSlice.actions;
+} = readerSlice.actions;
 
-export default ereaderSlice;
+export default readerSlice;

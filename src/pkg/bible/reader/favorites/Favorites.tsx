@@ -2,12 +2,12 @@ import { Dialog, Flex, Text, Box, Button, IconButton } from "@radix-ui/themes";
 import { ReactNode } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../app/store";
-import { removeFavorite } from "../../../../app/ereader/ereaderSlice";
+import { removeFavorite } from "../../../../app/reader/readerSlice";
 import VerseItem from "../../../ai/blocks/VerseItem";
 import { XIcon } from "lucide-react";
 
 const Favorites = ({ trigger }: { trigger: ReactNode }) => {
-  const favorites = useSelector((state: RootState) => state.ereader.favorites);
+  const favorites = useSelector((state: RootState) => state.reader.favorites);
 
   const dispatch = useDispatch();
 

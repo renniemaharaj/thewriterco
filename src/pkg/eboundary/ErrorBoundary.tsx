@@ -1,9 +1,7 @@
 import { Flex, Text, Code, Card, Separator } from "@radix-ui/themes";
 import { ShieldAlert, RotateCcw, RefreshCw, Bug } from "lucide-react";
 import { RootState } from "../../app/store";
-import { useSelector, useDispatch } from "react-redux";
-import { ResetElevenLabsState } from "../../app/elevenLabs/eleventLabsSlice";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { recoveryFunctionMap } from "./config";
 import { RecoveryCard } from "./RecoveryCard";
 import RecoveryButton from "./RecoveryButton";
@@ -19,20 +17,6 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
   const recoveryFunctions = useSelector(
     (state: RootState) => state.errorBoundary.recoveryFunctions,
   );
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const handleRecoverElevenLabs = () => {
-      dispatch(ResetElevenLabsState());
-    };
-
-    window.addEventListener("recover-elevenlabs", handleRecoverElevenLabs);
-
-    return () => {
-      window.removeEventListener("recover-elevenlabs", handleRecoverElevenLabs);
-    };
-  }, [dispatch]);
 
   const handleRecovery = (title: string) => {
     const recoverFn = recoveryFunctionMap[title];

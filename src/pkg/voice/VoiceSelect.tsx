@@ -4,7 +4,7 @@ import { memo, useEffect } from "react";
 import useResolveFallbackVoice from "../hooks/useResolveFallbackVoice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { setSelectedVoice } from "../../app/ereader/ereaderSlice";
+import { setSelectedVoice } from "../../app/reader/readerSlice";
 
 export type VoiceSelectProps = {
   voices: SpeechSynthesisVoice[];
@@ -12,7 +12,7 @@ export type VoiceSelectProps = {
 
 const VoiceSelect = ({ voices }: VoiceSelectProps) => {
   const selectedVoice = useSelector(
-    (state: RootState) => state.ereader.selectedVoice,
+    (state: RootState) => state.reader.selectedVoice,
   );
   const dispatch = useDispatch();
 

@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./api/apiSlice";
 import authReducer from "./api/auth/authSlice";
 // import flowReducer from "./flow/flowSlice"; // Import the new slice
-import ereaderSlice from "./ereader/ereaderSlice";
+import readerSlice from "./reader/readerSlice";
 import chatSlice from "./chat/chatSlice";
 import flowSlice from "./flow/flowSlice";
 
@@ -15,7 +15,7 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
-    ereader: ereaderSlice.reducer,
+    reader: readerSlice.reducer,
     chat: chatSlice.reducer,
     flow: flowSlice.reducer,
     page: pageSlice.reducer,
