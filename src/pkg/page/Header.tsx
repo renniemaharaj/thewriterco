@@ -6,7 +6,7 @@ import { RootState } from "../../app/store";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Link from "../link/Link";
 import ThemeButton from "./ThemeButton";
-import Search from "./search/Search";
+import Search from "./search-/Search";
 import Auth from "../firebase/auth/component/Auth";
 
 const navLinks = [
