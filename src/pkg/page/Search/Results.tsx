@@ -1,4 +1,4 @@
-import { HoverCard, Tabs } from "@radix-ui/themes";
+import { HoverCard, Separator, Tabs } from "@radix-ui/themes";
 import { ReactNode, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
@@ -63,15 +63,20 @@ const Results = ({ children }: { children: ReactNode }) => {
               className="!flex !overflow-hidden !max-h-full !max-w-full !pt-2 !gap-2 !flex-row !flex-wrap"
             >
               {results.map((result, index) => (
-                <Motion
-                  className="!overflow-hidden !max-w-full !max-h-full"
-                  unique="res-i"
-                  index={index}
-                  cap={false}
-                  key={index}
-                >
-                  <Result {...result} />
-                </Motion>
+                <>
+                  <Motion
+                    className="!overflow-hidden !max-w-full !max-h-full"
+                    unique="res-i"
+                    index={index}
+                    cap={false}
+                    key={index}
+                  >
+                    <Result {...result} />
+                  </Motion>
+                  {index !== results.length - 1 && (
+                    <Separator className="my-auto" orientation="vertical" />
+                  )}
+                </>
               ))}
             </Tabs.Content>
           ))}

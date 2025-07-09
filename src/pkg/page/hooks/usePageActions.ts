@@ -35,6 +35,12 @@ const usePageActions = (): PageAction[] => {
         action: { href: "/read" },
       },
       {
+        route: "Pages",
+        title: "AI Chat",
+        hint: "TheWriterCoAI",
+        action: { href: "/ai" },
+      },
+      {
         route: "Read",
         title: "Articles",
         hint: "View Articles",

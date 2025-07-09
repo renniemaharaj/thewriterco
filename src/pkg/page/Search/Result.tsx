@@ -1,24 +1,21 @@
-import Button from "../../button/Button";
-import { ResultType } from "./type";
-import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 import { useCallback, ReactNode } from "react";
-// import Item from "../../docs/cmpnts/Item";
 import Menu from "../../docs/cmpnts/Menu";
+import { ResultType } from "./type";
+import Link from "../../link/Link";
 
 const Result = ({ title, action }: ResultType) => {
-  const { navigateWT } = useTransitionNavigation();
   const interpret = useCallback((): ReactNode => {
-    if ("href" in action && typeof action.href === "string") {
-      return <Button onClick={() => navigateWT(action.href)}>{title}</Button>;
-    }
-    // if ("article" in action && typeof action.article === "string") {
-    //   return <Item urlTab="articles" title={title} />;
-    // }
-    if ("menu" in action && typeof action.menu === "string") {
+    if ("href" in action) {
+      return (
+        <Link animate href={action.href}>
+          {title}
+        </Link>
+      );
+    } else if ("menu" in action) {
       return <Menu className="!max-h-full" />;
     }
     return null;
-  }, [action, navigateWT, title]);
+  }, [action, title]);
   return interpret();
 };
 
