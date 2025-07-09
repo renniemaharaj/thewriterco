@@ -3,17 +3,16 @@ import Navbar from "./Header";
 import Reader from "../bible/reader/Reader";
 import Footer from "./Footer";
 import { ReactNode, useEffect } from "react";
-import Sizer from "./Sizer";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Block from "./Block";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 // import light from "../../assets/Light.jpg";
-import { RootState } from "../../app/store";
 import { motion } from "framer-motion";
 import Seo from "./Seo";
 import { pushResult } from "../../app/page/pageSlice";
 import usePageActions from "./hooks/usePageActions";
+import { useOrientation } from "../hooks/useOrientation";
 // import useTheme from "../hooks/useTheme";
 
 const Page = ({
@@ -34,7 +33,8 @@ const Page = ({
   description?: string;
 }) => {
   const { isPending, path } = useTransitionNavigation();
-  const { orientation } = useSelector((state: RootState) => state.chat);
+
+  const orientation = useOrientation();
 
   const pageActions = usePageActions();
 
@@ -67,9 +67,6 @@ const Page = ({
 
       {/** React Helmet */}
       <Seo title={title} description={description} />
-
-      {/** Records page orientation */}
-      <Sizer />
 
       {/* <Navbar /> */}
       <Navbar />

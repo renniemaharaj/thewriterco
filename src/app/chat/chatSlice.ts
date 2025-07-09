@@ -25,10 +25,6 @@ const ereaderSlice = createSlice({
     clearMessages(state) {
       state.messages = [];
     },
-    // Set the orientation of the chat
-    setOrientation(state, action: PayloadAction<"horizontal" | "vertical">) {
-      state.orientation = action.payload;
-    },
     // Set the view mode of the chat
     setViewMode(state, action: PayloadAction<"standard" | "canvas">) {
       state.viewMode = action.payload;
@@ -56,7 +52,6 @@ export const {
   spliceMessage,
   nukeSystemMessages,
   clearMessages,
-  setOrientation,
   setViewMode,
   setConversationMode,
   setResponseConstraint,

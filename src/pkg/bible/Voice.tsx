@@ -9,8 +9,8 @@ const Voice = ({
   onSpeechProgress,
 }: {
   defaultModel: boolean;
-  textContent: string[];
-  onSpeechProgress: (i: number) => void;
+  textContent: string;
+  onSpeechProgress: () => void;
 }) => {
   const voiceBrowser = useVoiceReader();
   const voiceResolved = useResolveFallbackVoice().resolveOrFallback();

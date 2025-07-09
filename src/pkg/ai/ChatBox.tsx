@@ -42,7 +42,7 @@ import { getInitialChatState } from "../../app/chat/utils.ts";
 import Models from "./Models.tsx";
 import { prompt } from "../firebase/ai/ai.ts";
 
-const Chat = forwardRef(
+const ChatBox = forwardRef(
   (
     {
       className,
@@ -559,4 +559,4 @@ const Chat = forwardRef(
   },
 );
 
-export default Chat;
+export default ChatBox;

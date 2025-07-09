@@ -1,16 +1,16 @@
 import { Flex } from "@radix-ui/themes";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { VoiceReaderEngine } from "../hooks/useVoiceReader";
 import VoiceHeader from "./VoiceHeader";
 
 export type Variant = SpeechSynthesisVoice;
 
 export type VoiceReaderProps = {
-  textContent: string[];
+  textContent: string;
   defaultModel: boolean;
   selectedVoice: Variant;
   voiceReaderEngine: VoiceReaderEngine;
-  onSpeechProgress: (i: number) => void;
+  onSpeechProgress: () => void;
 };
 
 const VoiceReader = ({
@@ -19,38 +19,21 @@ const VoiceReader = ({
   voiceReaderEngine,
   onSpeechProgress,
 }: VoiceReaderProps) => {
-  const currentIndexRef = useRef(-1);
   const [playing, setPlaying] = useState(false);
   const [paused, setPaused] = useState(false);
-  const [currentText, setCurrentText] = useState<string[]>([]);
-
-  // Utility
-  const not = (val: boolean) => !val;
-
-  // Sync currentText with textContent
-  useEffect(() => {
-    const isDifferent =
-      textContent.length !== currentText.length ||
-      textContent.some((t, i) => t !== currentText[i]);
-
-    if (isDifferent) {
-      setCurrentText(textContent);
-    }
-  }, [textContent, currentText]);
 
   const speakCurrent = useCallback(
-    async (index: number, onSpoken?: () => void) => {
-      const chunk = currentText[index];
-      if (!chunk) return false;
+    async () => {
+      if (!textContent) return;
 
       setPlaying(true);
       setPaused(false);
 
       try {
-        await voiceReaderEngine.speakAsync(chunk, {
+        await voiceReaderEngine.speakAsync(textContent, {
           voiceName: selectedVoice?.voiceURI,
         });
-        onSpoken?.();
+        onSpeechProgress?.();
         return true;
       } catch {
         return false;
@@ -59,21 +42,16 @@ const VoiceReader = ({
 
     // Only rerun when selectedVoice actually changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentText, selectedVoice],
+    [textContent, selectedVoice],
   );
 
   const handlePlay = useCallback(() => {
-    currentIndexRef.current = 0;
-    speakCurrent(0);
+    speakCurrent();
   }, [speakCurrent]);
-
-  // Wrapping these will require unstable dependencies
 
   const handleResume = () => {
     handlePlay();
   };
-
-  // Wrapping these will require unstable dependencies
 
   const handlePause = () => {
     handleStop();
@@ -83,45 +61,7 @@ const VoiceReader = ({
     voiceReaderEngine.stop();
     setPlaying(false);
     setPaused(false);
-    currentIndexRef.current = 0;
   }, [voiceReaderEngine]);
-
-  const trySpeakNext = useCallback(() => {
-    const canSpeak =
-      not(voiceReaderEngine.speaking) && not(voiceReaderEngine.paused);
-    const hasMore = currentIndexRef.current < currentText.length;
-
-    if (canSpeak && hasMore) {
-      const index = currentIndexRef.current;
-      speakCurrent(index, () => {
-        onSpeechProgress(index);
-        currentIndexRef.current++;
-      });
-    } else if (!hasMore) {
-      setPlaying(false);
-    }
-  }, [
-    voiceReaderEngine.speaking,
-    voiceReaderEngine.paused,
-    currentText.length,
-    onSpeechProgress,
-    speakCurrent,
-  ]);
-
-  // Speak loop runner
-  useEffect(() => {
-    if (playing && selectedVoice) {
-      trySpeakNext();
-    }
-  }, [playing, trySpeakNext, selectedVoice]);
-
-  // Restart reading when currentText changes
-  useEffect(() => {
-    if (currentText.length > 0) {
-      currentIndexRef.current = 0;
-      speakCurrent(0);
-    }
-  }, [currentText, speakCurrent]);
 
   // Restart if voice changes while playing and not paused
   useEffect(() => {
@@ -131,8 +71,7 @@ const VoiceReader = ({
     }
     // Only rerun when selectedVoice actually changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedVoice?.voiceURI]);
-
+  }, [selectedVoice?.voiceURI, textContent]);
   return (
     <Flex direction="column" gap="2">
       <VoiceHeader

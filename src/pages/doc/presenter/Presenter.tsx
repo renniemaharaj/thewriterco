@@ -81,7 +81,7 @@ const Presenter = () => {
       <Flex mt="4" direction={"row"} gap="4">
         <Voice
           defaultModel
-          textContent={parts[index] ? [parts[index]] : []}
+          textContent={parts[index] ?? ""}
           onSpeechProgress={handleSpeechProgress}
         />
       </Flex>

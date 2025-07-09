@@ -40,14 +40,13 @@ const Header = ({
 }: {
   hidePicker: boolean;
   isOpen: boolean;
-  routeTextContent?: string[];
-  // onSpeechProgress: (i: number) => void;
+  routeTextContent?: string;
 }) => {
   const reader = useSelector((state: RootState) => state.ereader);
 
   const { download } = useDownloader();
 
-  const [textContent, setTextContent] = useState<string[]>([]);
+  const [textContent, setTextContent] = useState<string>("");
 
   const [useBrowser] = useState<boolean>(true);
   const dispatch = useDispatch();
@@ -58,7 +57,7 @@ const Header = ({
     if (!reader.speechEnabled) return;
     const x = routeTextContent?.length;
     if (x) setTextContent(routeTextContent);
-    if (!x) setTextContent(narrate().slice(0, 1));
+    if (!x) setTextContent(narrate()[0]);
   }, [routeTextContent, narrate, reader]);
 
   const onSpeechProgress = useCallback(() => {

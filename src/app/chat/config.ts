@@ -3,7 +3,6 @@ import { Chat } from "./types";
 
 export const initialState: Chat = {
   messages: [],
-  orientation: "horizontal",
   messageBoxRef: React.createRef<HTMLDivElement>(),
   viewMode: "standard",
   conversationMode: "exchange",

@@ -12,7 +12,6 @@ export type Model = {
 
 export type Chat = {
   messages: Block[];
-  orientation: "horizontal" | "vertical";
   messageBoxRef: React.RefObject<HTMLDivElement>;
   viewMode: "standard" | "canvas";
   conversationMode: "none" | "exchange";
