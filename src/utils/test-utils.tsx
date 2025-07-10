@@ -3,19 +3,9 @@ import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import { Theme } from "@radix-ui/themes";
-import { MsalProvider } from "@azure/msal-react";
-import { PublicClientApplication } from "@azure/msal-browser";
 import { store } from "../app/store";
 import { ReactNode } from "react";
 import { vi } from "vitest";
-import { logOut, setAccessToken } from "../app/api/auth/authSlice";
-
-export const mockAuth = (token = "exampleToken") => {
-  store.dispatch(setAccessToken(token));
-};
-export const mockAuthEmpty = () => {
-  store.dispatch(logOut());
-};
 
 Object.defineProperty(window, "matchMedia", {
   writable: false,
@@ -40,15 +30,6 @@ Object.defineProperty(window, "IntersectionObserver", {
   })),
 });
 
-// Mock MSAL instance
-const msalInstance = new PublicClientApplication({
-  auth: {
-    clientId: "TEST_CLIENT_ID",
-    authority: "https://login.microsoftonline.com/common",
-    redirectUri: "http://localhost:3000",
-  },
-});
-
 interface CustomRenderOptions {
   route?: string;
   useMemoryRouter?: boolean;
@@ -64,11 +45,9 @@ const customRender = (
   return render(
     <Provider store={store}>
       <Router {...(useMemoryRouter && { initialEntries })}>
-        <MsalProvider instance={msalInstance}>
-          <Theme appearance="light" accentColor="indigo" grayColor="sand">
-            {ui}
-          </Theme>
-        </MsalProvider>
+        <Theme appearance="light" accentColor="indigo" grayColor="sand">
+          {ui}
+        </Theme>
       </Router>
     </Provider>,
   );

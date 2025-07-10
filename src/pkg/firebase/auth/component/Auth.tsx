@@ -5,11 +5,9 @@ import { Button } from "@radix-ui/themes";
 import { auth } from "../../firebase";
 import Card from "./user/Card";
 import useUserLikelySignedIn from "../hooks/useUserLikelySignedIn";
-import useAuthResultSyncer from "../hooks/useAuthResultSyncer";
 
 const Auth = ({ variant = "button" }: { variant?: "image" | "button" }) => {
   const { user } = useUserLikelySignedIn();
-  const syncAuthResult = useAuthResultSyncer();
 
   const handleSignIn = useCallback(async () => {
     try {
@@ -23,7 +21,6 @@ const Auth = ({ variant = "button" }: { variant?: "image" | "button" }) => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      syncAuthResult(null);
     } catch (err) {
       console.error("Logout failed", err);
     }

@@ -1,15 +1,11 @@
-import {
-  BookDownIcon,
-  BookUpIcon,
-  DownloadIcon,
-  FolderHeart,
-} from "lucide-react";
+import { BookDownIcon, BookUpIcon, DownloadIcon } from "lucide-react";
 import {
   setSpeechEnabled,
   toggleOpenState,
 } from "../../../../app/reader/readerSlice";
 import Picker from "../../Picker";
 import {
+  Button,
   Card,
   Flex,
   IconButton,
@@ -29,7 +25,6 @@ import {
   registerShortcut,
   unregisterShortcut,
 } from "../../../hooks/useGlobalShortcuts";
-import Button from "../../../button/Button";
 import Favorites from "../favorites/Favorites";
 import { useAtomValue } from "jotai";
 import { extraHeaderItemsAtom } from "../../../../app/_atoms/reader/atoms";
@@ -148,13 +143,7 @@ const Header = ({
         </Tooltip>
 
         <Tooltip content="Favorites">
-          <Favorites
-            trigger={
-              <IconButton variant="soft">
-                <FolderHeart />
-              </IconButton>
-            }
-          />
+          <Favorites />
         </Tooltip>
         {extraHeaderItems.length > 0 && (
           <Separator orientation="vertical" className="my-auto" />

@@ -1,6 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { apiSlice } from "./api/apiSlice";
-import authReducer from "./api/auth/authSlice";
 // import flowReducer from "./flow/flowSlice"; // Import the new slice
 import readerSlice from "./reader/readerSlice";
 import chatSlice from "./chat/chatSlice";
@@ -13,8 +11,6 @@ import cacheSlice from "./cache/cacheSlice";
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer,
     reader: readerSlice.reducer,
     chat: chatSlice.reducer,
     flow: flowSlice.reducer,
@@ -23,8 +19,6 @@ export const store = configureStore({
     writer: writerSlice.reducer,
     cache: cacheSlice.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
   //Switch to false for production
   devTools: true,
 });

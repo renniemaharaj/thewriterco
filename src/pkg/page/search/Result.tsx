@@ -2,6 +2,7 @@ import { useCallback, ReactNode } from "react";
 import Menu from "../../docs/cmpnts/Menu";
 import { ResultType } from "./type";
 import Link from "../../link/Link";
+import React from "react";
 
 const Result = ({ title, action }: ResultType) => {
   const interpret = useCallback((): ReactNode => {
@@ -16,7 +17,7 @@ const Result = ({ title, action }: ResultType) => {
     }
     return null;
   }, [action, title]);
-  return interpret();
+  return <React.Fragment>{interpret()}</React.Fragment>;
 };
 
 export default Result;

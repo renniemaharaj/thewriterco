@@ -6,6 +6,7 @@ import { Carousel } from "../../Carousel";
 import Motion from "../Motion";
 import Result from "./Result";
 import Button from "../../button/Button";
+import React from "react";
 
 const Results = ({ children }: { children: ReactNode }) => {
   const { searchResults, searchQuery } = useSelector(
@@ -56,27 +57,26 @@ const Results = ({ children }: { children: ReactNode }) => {
               ))}
             />
           </Tabs.List>
-          {groupedEntries.map(([title, results]) => (
+          {groupedEntries.map(([title, results], index) => (
             <Tabs.Content
-              key={title}
+              key={title + "-" + index}
               value={title}
               className="!flex !overflow-hidden !max-h-full !max-w-full !pt-2 !gap-2 !flex-row !flex-wrap"
             >
               {results.map((result, index) => (
-                <>
+                <React.Fragment key={"motion" + index}>
                   <Motion
                     className="!overflow-hidden !max-w-full !max-h-full"
                     unique="res-i"
                     index={index}
                     cap={false}
-                    key={index}
                   >
                     <Result {...result} />
                   </Motion>
                   {index !== results.length - 1 && (
                     <Separator className="my-auto" orientation="vertical" />
                   )}
-                </>
+                </React.Fragment>
               ))}
             </Tabs.Content>
           ))}

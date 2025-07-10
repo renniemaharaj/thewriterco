@@ -1,12 +1,11 @@
 import { Dialog, Flex, Text, Box, Button, IconButton } from "@radix-ui/themes";
-import { ReactNode } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../app/store";
 import { removeFavorite } from "../../../../app/reader/readerSlice";
 import VerseItem from "../../../ai/blocks/VerseItem";
-import { XIcon } from "lucide-react";
+import { FolderHeart, XIcon } from "lucide-react";
 
-const Favorites = ({ trigger }: { trigger: ReactNode }) => {
+const Favorites = () => {
   const favorites = useSelector((state: RootState) => state.reader.favorites);
 
   const dispatch = useDispatch();
@@ -17,7 +16,11 @@ const Favorites = ({ trigger }: { trigger: ReactNode }) => {
 
   return (
     <Dialog.Root>
-      <Dialog.Trigger>{trigger}</Dialog.Trigger>
+      <Dialog.Trigger>
+        <IconButton variant="soft">
+          <FolderHeart />
+        </IconButton>
+      </Dialog.Trigger>
 
       <Dialog.Content maxWidth="450px" maxHeight="500px">
         <Dialog.Title className="w-full text-center">Favorites</Dialog.Title>
@@ -31,8 +34,8 @@ const Favorites = ({ trigger }: { trigger: ReactNode }) => {
               No favorites yet.
             </Text>
           ) : (
-            favorites.map((fav) => (
-              <Box key={fav.title}>
+            favorites.map((fav, index) => (
+              <Box key={fav.title + index}>
                 <Flex justify="between" align="center" gap="3">
                   <VerseItem
                     verse={{
