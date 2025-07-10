@@ -7,8 +7,8 @@ import {
 import {
   setSpeechEnabled,
   toggleOpenState,
-} from "../../../app/reader/readerSlice";
-import Picker from "../Picker";
+} from "../../../../app/reader/readerSlice";
+import Picker from "../../Picker";
 import {
   Card,
   Flex,
@@ -19,20 +19,20 @@ import {
 } from "@radix-ui/themes";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
-import Voice from "../Voice";
-import { RootState } from "../../../app/store";
-import { useContentReducers } from "../../hooks/useContentReducers";
-import useDownloader from "../../hooks/useDownloader";
+import Voice from "../../Voice";
+import { RootState } from "../../../../app/store";
+import { useContentReducers } from "../../../hooks/useContentReducers";
+import useDownloader from "../../../hooks/useDownloader";
 
 import {
   useGlobalShortcuts,
   registerShortcut,
   unregisterShortcut,
-} from "../../hooks/useGlobalShortcuts";
-import Button from "../../button/Button";
-import Favorites from "./favorites/Favorites";
+} from "../../../hooks/useGlobalShortcuts";
+import Button from "../../../button/Button";
+import Favorites from "../favorites/Favorites";
 import { useAtomValue } from "jotai";
-import { extraHeaderItemsAtom } from "../../../app/_atoms/reader/atoms";
+import { extraHeaderItemsAtom } from "../../../../app/_atoms/reader/atoms";
 
 const Header = ({
   hidePicker,
@@ -156,7 +156,9 @@ const Header = ({
             }
           />
         </Tooltip>
-
+        {extraHeaderItems.length > 0 && (
+          <Separator orientation="vertical" className="my-auto" />
+        )}
         {extraHeaderItems}
       </Flex>
     </Card>

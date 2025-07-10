@@ -14,10 +14,10 @@ import Shadow from "./Shadow";
 import Current from "./Current";
 import { SHADOW_COUNT } from "../config";
 import Changer from "./Changer";
-import Header from "./Header";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import HeartPlus from "./HeartPlus";
 import { pushFavorite } from "../../../app/reader/readerSlice";
+import Header from "./header/Header";
 
 const Reader = ({
   hidePicker,
