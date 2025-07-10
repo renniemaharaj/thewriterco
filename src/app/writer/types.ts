@@ -9,5 +9,6 @@ export type Save = {
 export type WriterProps = {
   title: string;
   content: Content;
+  fullscreen: boolean;
   saves: Save[];
 };

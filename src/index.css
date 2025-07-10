@@ -72,6 +72,10 @@
   background-clip: text;
   color: transparent;
 }
+.richtext-outline,
+.richtext-outline-1 {
+  outline: none;
+}
 
 @keyframes scan {
   0% {

@@ -31,7 +31,7 @@ function Renderer({ content }: { content: string }) {
 
   return (
     <main>
-      <div className={`!relative !overflow-visible`}>
+      <div className="relative overflow-visible">
         <div className={`${animationClass}`} />
         <div className="absolute flex justify-center z-0 w-full h-full">
           <Spinner className="animate-spin w-5 h-5" />

@@ -17,18 +17,19 @@ import {
   UploadCloud,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../app/store";
+import { RootState } from "../../../../app/store";
 import { useCallback, useEffect, useRef, useState } from "react";
-import useDownloader from "../hooks/useDownloader";
+import useDownloader from "../../../hooks/useDownloader";
 import {
   deleteByTitle,
   saveToLocalStorage,
   setContent,
   setTitle,
-} from "../../app/writer/writerSlice";
-import useLocalStorage from "../hooks/useLocalStorage";
-import Save from "./Save";
-import Button from "../button/Button";
+} from "../../../../app/writer/writerSlice";
+import useLocalStorage from "../../../hooks/useLocalStorage";
+import Save from "../../Save";
+import Button from "../../../button/Button";
+import Overwrite from "./dialogs/Overwrite";
 
 type FileProps = {
   triggerRemount: () => void;
@@ -133,11 +134,7 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
   return (
     <Popover.Root onOpenChange={setFileMenuOpen}>
       <Popover.Trigger>
-        <IconButton
-          variant="soft"
-          aria-controls="file-content"
-          className="!sticky !top-[3.2rem]"
-        >
+        <IconButton variant="soft" aria-controls="file-content">
           <Tooltip content="File management">
             <ChevronDown className="h-4 w-4 " />
           </Tooltip>
@@ -153,28 +150,11 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
       />
 
       {/* Upload Overwrite Warning Dialog */}
-      <Dialog.Root open={showUploadConfirm} onOpenChange={setShowUploadConfirm}>
-        <Dialog.Content>
-          <Dialog.Title>Upload Document</Dialog.Title>
-          <Dialog.Description>Overwrite your current work?</Dialog.Description>
-          <Flex gap="3" mt="4" justify="end">
-            <Dialog.Close>
-              <Button
-                variant="soft"
-                color="gray"
-                onClick={() => setShowUploadConfirm(false)}
-              >
-                Cancel
-              </Button>
-            </Dialog.Close>
-            <Dialog.Close>
-              <Button variant="solid" color="blue" onClick={confirmUpload}>
-                Upload
-              </Button>
-            </Dialog.Close>
-          </Flex>
-        </Dialog.Content>
-      </Dialog.Root>
+      <Overwrite
+        showUploadConfirm={showUploadConfirm}
+        setShowUploadConfirm={setShowUploadConfirm}
+        confirmUpload={confirmUpload}
+      />
 
       <Popover.Content className="!p-4 !min-w-[40rem]">
         <Flex direction="row" gap="6" className="blurred-div">
@@ -257,7 +237,7 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
                 Save
               </Button>
             </Flex>
-
+            <Separator size={"4"} />
             <Text size="1" color="gray">
               Uploaded images or videos won't persist, use link instead
             </Text>
@@ -286,6 +266,7 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
                   No saves yet
                 </Text>
               )}
+              <Separator size={"4"} />
               {saves?.length > 0 &&
                 saves.map((save, index) => (
                   <Save

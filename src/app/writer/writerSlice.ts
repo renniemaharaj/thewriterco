@@ -27,6 +27,9 @@ const writerSlice = createSlice({
     deleteByTitle: (state, action: PayloadAction<string>) => {
       state.saves = state.saves.filter((save) => save.title !== action.payload);
     },
+    setFullScreen: (state, action: PayloadAction<boolean>) => {
+      state.fullscreen = action.payload;
+    },
     renameByTitle: (
       state,
       action: PayloadAction<{ oldTitle: string; newTitle: string }>,
@@ -43,6 +46,7 @@ const writerSlice = createSlice({
 export const {
   setTitle,
   setContent,
+  setFullScreen,
   saveToLocalStorage,
   deleteByTitle,
   renameByTitle,

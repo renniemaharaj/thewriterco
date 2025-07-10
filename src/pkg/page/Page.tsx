@@ -17,20 +17,22 @@ import { useOrientation } from "../hooks/useOrientation";
 
 const Page = ({
   children,
-  hero,
-  hideBiblePicker = false,
   wrapChildren = false,
-  className,
-  title,
+  returnChildren = false,
+  hideBiblePicker = false,
   description,
+  className,
+  hero,
+  title,
 }: {
   children: ReactNode;
-  hero?: ReactNode;
+  returnChildren?: boolean;
   wrapChildren?: boolean;
   hideBiblePicker?: boolean;
-  className?: string;
-  title?: string;
   description?: string;
+  className?: string;
+  hero?: ReactNode;
+  title?: string;
 }) => {
   const { isPending, path } = useTransitionNavigation();
 
@@ -60,71 +62,79 @@ const Page = ({
       }),
     );
   }, [dispatch]);
-  return (
-    <div className="w-full">
-      {/** Firebase Auth */}
-      {/* <Auth /> */}
 
-      {/** React Helmet */}
-      <Seo title={title} description={description} />
+  if (returnChildren)
+    return [
+      children,
+      <Reader hidePicker={hideBiblePicker} />,
+      <Seo title={title} description={description} />,
+    ];
+  else
+    return (
+      <div className="w-full">
+        {/** Firebase Auth */}
+        {/* <Auth /> */}
 
-      {/* <Navbar /> */}
-      <Navbar />
+        {/** React Helmet */}
+        <Seo title={title} description={description} />
 
-      {/** Voice reader */}
-      <Reader hidePicker={hideBiblePicker} />
+        {/* <Navbar /> */}
+        <Navbar />
 
-      {/** Page body*/}
-      <Flex
-        direction="column"
-        align="center"
-        justify="center"
-        className={`!w-full !flex-col !mx-auto pb-20 blurred-div-light`}
-      >
-        {/** Page children on motion transition in */}
-        <motion.div
-          key={"tabsItem"}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-          className="max-w-full"
+        {/** Voice reader */}
+        <Reader hidePicker={hideBiblePicker} />
+
+        {/** Page body*/}
+        <Flex
+          direction="column"
+          align="center"
+          justify="center"
+          className={`!w-full !flex-col !mx-auto pb-20 blurred-div-light`}
         >
-          {wrapChildren && (
-            <Card
-              className={`w-full blurred-div !py-6 top-3 !transition-all !delay-300 ${className} ${orientation === "horizontal" ? "!px-3" : "!px-1"}`}
-            >
-              <Flex
-                data-testid="heroElement"
-                className={`!flex-col !gap-10 !w-full !max-w-full`}
+          {/** Page children on motion transition in */}
+          <motion.div
+            key={"tabsItem"}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="max-w-full"
+          >
+            {wrapChildren && (
+              <Card
+                className={`w-full blurred-div !py-6 top-3 !min-w-[300px] !transition-all !delay-300 ${className} ${orientation === "horizontal" ? "!px-3" : "!px-1"}`}
               >
-                {hero}
-              </Flex>
-              {isPending ? <Block /> : children}
-            </Card>
-          )}
-          {!wrapChildren && (
-            <>
-              {hero}{" "}
-              {isPending ? (
-                <Block />
-              ) : (
-                <Flex className="!flex-col !gap-10">
-                  <Separator size={"2"} className="mx-auto mt-10" />
-                  {children}
+                <Flex
+                  data-testid="heroElement"
+                  className={`!flex-col !gap-10 !w-full !max-w-full`}
+                >
+                  {hero}
                 </Flex>
-              )}
-            </>
-          )}
-        </motion.div>
-      </Flex>
+                {isPending ? <Block /> : children}
+              </Card>
+            )}
+            {!wrapChildren && (
+              <>
+                {hero}{" "}
+                {isPending ? (
+                  <Block />
+                ) : (
+                  <Flex className="!flex-col !gap-10">
+                    <Separator size={"2"} className="mx-auto mt-10" />
+                    {children}
+                  </Flex>
+                )}
+              </>
+            )}
+          </motion.div>
+        </Flex>
 
-      {/* </Flex> */}
-      <Separator size={"4"} />
-      <Separator size={"4"} />
-      {/* <Footer /> */}
-      <Footer />
-    </div>
-  );
+        {/* </Flex> */}
+        <Separator size={"4"} />
+        <Separator size={"4"} />
+        {/* <Footer /> */}
+        <Footer />
+      </div>
+    );
 };
 
 export default Page;

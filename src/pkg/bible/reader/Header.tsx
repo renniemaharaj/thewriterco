@@ -31,6 +31,8 @@ import {
 } from "../../hooks/useGlobalShortcuts";
 import Button from "../../button/Button";
 import Favorites from "./favorites/Favorites";
+import { useAtomValue } from "jotai";
+import { extraHeaderItemsAtom } from "../../../app/_atoms/reader/atoms";
 
 const Header = ({
   hidePicker,
@@ -52,6 +54,8 @@ const Header = ({
   const dispatch = useDispatch();
 
   const { narrate, navigateVerse } = useContentReducers();
+
+  const extraHeaderItems = useAtomValue(extraHeaderItemsAtom);
 
   useEffect(() => {
     if (!reader.speechEnabled) return;
@@ -152,6 +156,8 @@ const Header = ({
             }
           />
         </Tooltip>
+
+        {extraHeaderItems}
       </Flex>
     </Card>
   );
