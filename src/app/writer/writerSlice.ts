@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getInitialWriterData } from "./utils";
 import { Save } from "./types";
+import { initialStateWithLocalStorage } from "../utils";
+import { initialState } from "./config";
 
 const writerSlice = createSlice({
   name: "writer",
-  initialState: getInitialWriterData(),
+  initialState: initialStateWithLocalStorage("writerData", initialState),
   reducers: {
     setTitle: (state, action: PayloadAction<string>) => {
       state.title = action.payload;

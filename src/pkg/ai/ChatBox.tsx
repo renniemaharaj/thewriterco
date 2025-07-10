@@ -31,11 +31,10 @@ import {
 } from "../../app/chat/chatSlice.ts";
 import { buildConversation } from "./utils.ts";
 import useLocalStorage from "../hooks/useLocalStorage.ts";
-import { toggleFlowSlice } from "../../app/flow/flowSlice.ts";
-import { getInitialChatState } from "../../app/chat/utils.ts";
 import Models from "./Models.tsx";
 import { prompt } from "../firebase/ai/ai.ts";
 import View from "./View.tsx";
+import { initialState } from "../../app/chat/config.ts";
 
 const ChatBox = forwardRef(
   (
@@ -151,7 +150,7 @@ const ChatBox = forwardRef(
 
           case "reset":
             dispatch(clearMessages());
-            setValue(getInitialChatState());
+            setValue(initialState);
             location.reload();
             break;
 
@@ -329,8 +328,6 @@ const ChatBox = forwardRef(
       computeTokens().then((tokens) => {
         dispatch(setConversationTokens(tokens));
       });
-
-      dispatch(toggleFlowSlice());
     }, [chatState.messages, computeTokens, dispatch, scrollMessageBoxToBottom]);
 
     const chatRef = useRef<HTMLDivElement>(null);

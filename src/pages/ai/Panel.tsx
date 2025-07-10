@@ -16,7 +16,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useThemeContext } from "../../pkg/context/theme/useThemeContext";
 import { setResponseConstraint, clearMessages } from "../../app/chat/chatSlice";
-import { toggleFlowSlice } from "../../app/flow/flowSlice";
 import { RootState } from "../../app/store";
 import { useOrientation } from "../../pkg/hooks/useOrientation";
 import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
@@ -112,7 +111,6 @@ const Panel = ({ chatRef }: { chatRef: React.MutableRefObject<any> }) => {
           onClick={() => {
             {
               dispatch(clearMessages());
-              dispatch(toggleFlowSlice());
             }
           }}
         >

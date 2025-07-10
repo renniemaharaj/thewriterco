@@ -1,5 +1,7 @@
-import introductionMessage from "./introduction";
 import { readerState } from "./types";
+
+const introductionMessage = ``;
+export default introductionMessage;
 
 const defaultContent = {
   title: "Bible",

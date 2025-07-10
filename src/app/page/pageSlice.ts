@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getInitialPageData } from "./utils";
 import { ResultType } from "../../pkg/page/search/type";
+import { initialStateWithLocalStorage } from "../utils";
+import { initialState } from "./config";
 
 const pageSlice = createSlice({
   name: "pageData",
-  initialState: getInitialPageData(),
+  initialState: initialStateWithLocalStorage("pageData", initialState),
   reducers: {
     dismissDeclaration(state, action: PayloadAction<number>) {
       state.dismissedDeclaration = action.payload;

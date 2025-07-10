@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getInitialChatState } from "./utils";
 import { CachedValue } from "./types";
+import { initialStateWithLocalStorage } from "../utils";
+import { initialState } from "./config";
 
 const cacheSlice = createSlice({
   name: "cache",
-  initialState: getInitialChatState(),
+  initialState: initialStateWithLocalStorage("cacheData", initialState),
   reducers: {
     setCache(
       state,

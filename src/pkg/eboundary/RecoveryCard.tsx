@@ -1,6 +1,6 @@
 import { Card, Text } from "@radix-ui/themes";
 import { useState } from "react";
-import { RecoveryFunction } from "../../app/errorBoundary/types";
+import { RecoveryFunction } from "../../app/eBoundary/types";
 
 export function RecoveryCard({
   recovery,

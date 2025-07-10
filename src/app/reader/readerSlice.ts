@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { EBook } from "./types";
-import { getInitialReaderData } from "./utils";
 import { Favorite } from "../../pkg/bible/reader/favorites/types";
+import { initialStateWithLocalStorage } from "../utils";
+import { initialState } from "./config";
 
 const readerSlice = createSlice({
-  name: "ereader",
-  initialState: getInitialReaderData(),
+  name: "reader",
+  initialState: initialStateWithLocalStorage("readerData", initialState),
   reducers: {
     setEBook(state, action: PayloadAction<EBook>) {
       state.eBook = action.payload;

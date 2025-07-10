@@ -19,8 +19,6 @@ import { nodeData } from "./config";
 import { useThemeContext } from "../context/theme/useThemeContext";
 import ResourceMonitor from "./pkg/ResourceMonitor";
 import { cloneDeep } from "lodash";
-import { useSelector } from "react-redux";
-import { RootState } from "../../app/store";
 
 const FlowComponent = ({
   nodes,
@@ -33,8 +31,6 @@ const FlowComponent = ({
 }) => {
   const { theme } = useThemeContext();
   const nodeTypes = useRef(nodeData).current;
-
-  const flowState = useSelector((state: RootState) => state.flow);
 
   const [nodesLocal, setNodesLocal] = useState<Node[]>(nodes);
 
@@ -70,7 +66,7 @@ const FlowComponent = ({
     setTimeout(() => {
       fitView(fitViewOptionsConfig);
     }, 500);
-  }, [flowState, fitView, fitViewOptionsConfig]);
+  }, [fitView, fitViewOptionsConfig]);
 
   return (
     <Box className={`w-auto h-full !flex-col ${width} ${height}`}>
