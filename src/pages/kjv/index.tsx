@@ -12,7 +12,7 @@ import {
 import Bible from "../../pkg/bible/Bible";
 import Link from "../../pkg/link/Link";
 
-const KJV = () => {
+const Index = () => {
   const ereaderSlice = useSelector((state: RootState) => state.reader);
   const { handleBookOpen } = useBible();
 
@@ -143,4 +143,4 @@ const KJV = () => {
   );
 };
 
-export default KJV;
+export default Index;

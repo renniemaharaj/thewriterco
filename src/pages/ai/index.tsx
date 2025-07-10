@@ -8,7 +8,7 @@ import { useOrientation } from "../../pkg/hooks/useOrientation";
 import Seo from "../../pkg/page/Seo";
 import Wrap from "./Wrap";
 
-const AI = () => {
+const Index = () => {
   const orientation = useOrientation();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const chatRef = useRef<any>(null);
@@ -49,4 +49,4 @@ const AI = () => {
   );
 };
 
-export default AI;
+export default Index;

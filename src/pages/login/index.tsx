@@ -1,7 +1,7 @@
 import Unauthenticated from "../../pkg/page/views/Unauthenticated";
 
-const Login = () => {
+const Index = () => {
   return <Unauthenticated />;
 };
 
-export default Login;
+export default Index;

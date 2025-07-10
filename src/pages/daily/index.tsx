@@ -18,7 +18,7 @@ import { getRandomElement } from "./utils";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import Link from "../../pkg/link/Link";
 
-const Reports = () => {
+const Index = () => {
   const { reports, loading, error } = useDailyReports();
   const [currentReport, setCurrentReport] = useState<ReportObject | null>(null);
 
@@ -128,4 +128,4 @@ const Reports = () => {
   );
 };
 
-export default Reports;
+export default Index;

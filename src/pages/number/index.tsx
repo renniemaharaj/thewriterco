@@ -22,7 +22,7 @@ type Mind = {
   reveal: boolean;
 };
 
-const Number = () => {
+const Index = () => {
   const [workingRange, setWorkingRange] = useState([rangeStart, rangeEnd]);
   const [gamingStatus, setGamingStatus] = useState(false);
   const [queryForm, setQueryForm] = useState<QueryForm>(defaultQueryForm);
@@ -293,4 +293,4 @@ const Number = () => {
   );
 };
 
-export default Number;
+export default Index;

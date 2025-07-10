@@ -6,7 +6,7 @@ import Renderer from "../../pkg/writer/Renderer";
 import { turn_screen } from "./art/turn_screen";
 import { RootState } from "../../app/store";
 
-const Writer = () => {
+const Index = () => {
   const fullscreen = useSelector((state: RootState) => state.writer.fullscreen);
   const orientation = useOrientation();
   return (
@@ -27,4 +27,4 @@ const Writer = () => {
   );
 };
 
-export default Writer;
+export default Index;

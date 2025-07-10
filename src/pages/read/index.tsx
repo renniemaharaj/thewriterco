@@ -1,7 +1,7 @@
 import Page from "../../pkg/page/Page";
 import Documentation from "../../pkg/docs/Documentation";
 
-const Document = () => {
+const Index = () => {
   return (
     <Page
       title="Rationale"
@@ -15,4 +15,4 @@ const Document = () => {
   );
 };
 
-export default Document;
+export default Index;

@@ -3,33 +3,9 @@ import Hero from "../../../pkg/page/Hero";
 import Voice from "../../../pkg/bible/Voice";
 import { useState, useEffect } from "react";
 import { Card, TextArea, Button, Flex } from "@radix-ui/themes";
+import { splitIntoChunksByLength } from "./utils";
 
-function splitIntoChunksByLength(
-  text: string,
-  maxLength: number = 400,
-): string[] {
-  const sentences = text.split(/(?<=[.!?])\s+/);
-  const chunks: string[] = [];
-
-  let currentChunk = "";
-
-  for (const sentence of sentences) {
-    if ((currentChunk + sentence).length > maxLength) {
-      if (currentChunk) chunks.push(currentChunk.trim());
-      currentChunk = sentence;
-    } else {
-      currentChunk += " " + sentence;
-    }
-  }
-
-  if (currentChunk) {
-    chunks.push(currentChunk.trim());
-  }
-
-  return chunks;
-}
-
-const Presenter = () => {
+const Index = () => {
   const [rawText, setRawText] = useState("");
   const [parts, setParts] = useState<string[]>([]);
   const [index, setIndex] = useState(0);
@@ -137,4 +113,4 @@ const Presenter = () => {
   );
 };
 
-export default Presenter;
+export default Index;

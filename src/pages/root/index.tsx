@@ -8,7 +8,7 @@ import { swiperProps } from "./config.swiper";
 import Renderer from "../../pkg/writer/Renderer";
 import { home_art } from "./art/home_art";
 
-const Root: React.FC = () => {
+const Index: React.FC = () => {
   return (
     <Page
       title="Home"
@@ -56,4 +56,4 @@ const Root: React.FC = () => {
   );
 };
 
-export default Root;
+export default Index;
