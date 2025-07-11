@@ -6,6 +6,8 @@ import errorBoundarySlice from "./eBoundary/eBoundarySlice";
 import pageSlice from "./page/pageSlice";
 import writerSlice from "./writer/writerSlice";
 import cacheSlice from "./cache/cacheSlice";
+import { saveSliceToLocalStorage } from "./utils";
+import { throttle } from "lodash";
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +21,16 @@ export const store = configureStore({
   //Switch to false for production
   devTools: false,
 });
+
+store.subscribe(
+  throttle(() => {
+    const state = store.getState();
+    saveSliceToLocalStorage("readerData", state.reader);
+    saveSliceToLocalStorage("chatData", state.chat);
+    saveSliceToLocalStorage("writerData", state.writer);
+    saveSliceToLocalStorage("cacheData", state.cache);
+  }, 1000), // Save at most once per second
+);
 
 // Infer the `RootState`,  `AppDispatch`, and `AppStore` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

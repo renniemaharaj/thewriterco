@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import useDownloader from "../../../hooks/useDownloader";
 import {
   deleteByTitle,
@@ -26,7 +26,6 @@ import {
   setContent,
   setTitle,
 } from "../../../../app/writer/writerSlice";
-import useLocalStorage from "../../../hooks/useLocalStorage";
 import Save from "../../Save";
 import Button from "../../../button/Button";
 import Overwrite from "./dialogs/Overwrite";
@@ -48,8 +47,6 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
 
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [showUploadConfirm, setShowUploadConfirm] = useState(false);
-
-  const [, setValue] = useLocalStorage("writerData", writer);
 
   const findSaveByTitle = useCallback(
     (title: string) => saves.find((s) => s.title === title),
@@ -126,10 +123,6 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
     () => findSaveByTitle(title)?.content === content,
     [findSaveByTitle, content, title],
   );
-
-  useEffect(() => {
-    setValue(writer);
-  }, [writer, setValue]);
 
   return (
     <Popover.Root onOpenChange={setFileMenuOpen}>

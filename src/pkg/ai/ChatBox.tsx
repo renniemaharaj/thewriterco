@@ -30,11 +30,9 @@ import {
   setConversationTokens,
 } from "../../app/chat/chatSlice.ts";
 import { buildConversation } from "./utils.ts";
-import useLocalStorage from "../hooks/useLocalStorage.ts";
 import Models from "./Models.tsx";
 import { prompt } from "../firebase/ai/ai.ts";
 import View from "./View.tsx";
-import { initialState } from "../../app/chat/config.ts";
 
 type ChatBoxProps = {
   className: string;
@@ -53,13 +51,6 @@ const ChatBox = forwardRef(
     const readerState = useSelector((state: RootState) => state.reader);
 
     const chatState = useSelector((state: RootState) => state.chat);
-
-    const [, setValue] = useLocalStorage("chatData", chatState);
-
-    // Update local storage when chat state changes
-    useEffect(() => {
-      setValue(chatState);
-    }, [chatState, setValue]);
 
     const dispatchAddMessage = useCallback(
       (content: Block) => {
@@ -147,7 +138,6 @@ const ChatBox = forwardRef(
 
           case "reset":
             dispatch(clearMessages());
-            setValue(initialState);
             location.reload();
             break;
 
@@ -170,7 +160,7 @@ const ChatBox = forwardRef(
             });
         }
       },
-      [dispatch, dispatchAddMessage, setValue],
+      [dispatch, dispatchAddMessage],
     );
 
     const handleMessageSend = useCallback(

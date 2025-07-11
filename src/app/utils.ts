@@ -14,3 +14,11 @@ export function initialStateWithLocalStorage<T>(
   }
   return initialState;
 }
+
+export const saveSliceToLocalStorage = <T>(key: string, slice: T) => {
+  try {
+    localStorage.setItem(key, JSON.stringify(slice));
+  } catch {
+    console.log("Could not save to local storage in store utils");
+  }
+};

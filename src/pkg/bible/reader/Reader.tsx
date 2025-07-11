@@ -14,7 +14,6 @@ import Shadow from "./Shadow";
 import Current from "./Current";
 import { SHADOW_COUNT } from "../config";
 import Changer from "./Changer";
-import useLocalStorage from "../../hooks/useLocalStorage";
 import HeartPlus from "./HeartPlus";
 import { pushFavorite } from "../../../app/reader/readerSlice";
 import Header from "./header/Header";
@@ -28,8 +27,6 @@ const Reader = ({
   const eReaderState = useSelector((state: RootState) => state.reader);
 
   const favorites = eReaderState.favorites;
-
-  const [, setValue] = useLocalStorage("readerData", eReaderState);
 
   const dispatch = useDispatch();
 
@@ -114,11 +111,6 @@ const Reader = ({
     const currentIndex = parseInt(currentVerse, 10);
     return currentIndex + SHADOW_COUNT < chapterVerses.length;
   }, [currentVerse, chapterVerses]);
-
-  useEffect(() => {
-    setValue(eReaderState);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eReaderState]);
 
   return (
     <div

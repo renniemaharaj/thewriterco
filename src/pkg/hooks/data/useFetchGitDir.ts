@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { documentRepoPath } from "./presets";
 import { RootState } from "../../../app/store";
 import { setCache } from "../../../app/cache/cacheSlice";
-import useLocalStorage from "../useLocalStorage";
-import { initialState } from "../../../app/cache/config";
 
 export type GitHubFile = {
   name: string;
@@ -23,8 +21,6 @@ export function useFetchGitDir(folderPath: string) {
   const [dir, setDir] = useState<string[]>([]);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(true);
-
-  const [, setValue] = useLocalStorage("cacheData", initialState);
 
   useEffect(() => {
     let isCancelled = false;
@@ -82,10 +78,6 @@ export function useFetchGitDir(folderPath: string) {
       isCancelled = true;
     };
   }, [folderPath, globalCache, dispatch]);
-
-  useEffect(() => {
-    setValue(globalCache);
-  }, [globalCache]);
 
   return { dir, error, loading };
 }
