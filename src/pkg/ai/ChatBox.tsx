@@ -36,24 +36,21 @@ import { prompt } from "../firebase/ai/ai.ts";
 import View from "./View.tsx";
 import { initialState } from "../../app/chat/config.ts";
 
+type ChatBoxProps = {
+  className: string;
+  scrollHandler: () => void;
+};
+
 const ChatBox = forwardRef(
-  (
-    {
-      className,
-      scrollMessageBoxToBottom,
-    }: {
-      className?: string;
-      scrollMessageBoxToBottom: () => void;
-    },
-    ref,
-  ) => {
+  ({ className, scrollHandler }: ChatBoxProps, ref) => {
     const dispatch = useDispatch();
     // const [sendAskReq] = useSendAskReqMutation();
 
-    const [isTyping, setIsTyping] = useState(false);
+    const [isModelTyping, setIsModelTyping] = useState(false);
+
     const [maxTokens, setMaxTokens] = useState(10000);
 
-    const eReaderState = useSelector((state: RootState) => state.reader);
+    const readerState = useSelector((state: RootState) => state.reader);
 
     const chatState = useSelector((state: RootState) => state.chat);
 
@@ -213,11 +210,11 @@ const ChatBox = forwardRef(
           }
         }
 
-        scrollMessageBoxToBottom();
-        setIsTyping(true);
+        scrollHandler();
+        setIsModelTyping(true);
 
         // Attach additional context to the message
-        const attachedBookState = `${eReaderState.eBook.title} ${eReaderState.currentChapter}:${eReaderState.currentVerse}`;
+        const attachedBookState = `${readerState.eBook.title} ${readerState.currentChapter}:${readerState.currentVerse}`;
 
         const attachedResponseConstraint = chatState.responseConstraint;
         const context = [
@@ -276,7 +273,7 @@ const ChatBox = forwardRef(
                 "A connection error occurred or you are required to wait 15 seconds.",
             },
           });
-          setIsTyping(false);
+          setIsModelTyping(false);
           return; // Exit early to prevent further execution
         }
 
@@ -294,17 +291,17 @@ const ChatBox = forwardRef(
             },
           });
         } finally {
-          setIsTyping(false);
+          setIsModelTyping(false);
         }
       },
       [
         handleCommand,
         chatState,
         dispatchAddMessage,
-        eReaderState,
+        readerState,
         maxTokens,
         // sendAskReq,
-        scrollMessageBoxToBottom,
+        scrollHandler,
         parseAIResponse,
       ],
     );
@@ -322,13 +319,13 @@ const ChatBox = forwardRef(
 
     useEffect(() => {
       if (chatState.messages.length > 0) {
-        scrollMessageBoxToBottom();
+        scrollHandler();
       }
 
       computeTokens().then((tokens) => {
         dispatch(setConversationTokens(tokens));
       });
-    }, [chatState.messages, computeTokens, dispatch, scrollMessageBoxToBottom]);
+    }, [chatState.messages, computeTokens, dispatch, scrollHandler]);
 
     const chatRef = useRef<HTMLDivElement>(null);
     const [chatBoxRespectiveWidth, setChatBoxRespectiveWidth] = useState(0);
@@ -354,13 +351,13 @@ const ChatBox = forwardRef(
     return (
       <Flex ref={chatRef} className={`${className} !pb-32`}>
         <View
-          isTyping={isTyping}
+          isTyping={isModelTyping}
           handleMessageSend={handleMessageSend}
-          scrollMessageBoxToBottom={scrollMessageBoxToBottom}
+          scrollMessageBoxToBottom={scrollHandler}
         />
 
         <Input
-          disabled={isTyping}
+          disabled={isModelTyping}
           handleRecieve={(text: string) => handleMessageSend(text)}
           className={`!absolute md:bottom-[1rem] bottom-[0.1rem] animate-fade-in  blurred-div`}
           style={{ width: chatBoxRespectiveWidth }}

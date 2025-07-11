@@ -65,14 +65,8 @@ const Results = ({ children }: { children: ReactNode }) => {
             >
               {results.map((result, index) => (
                 <React.Fragment key={"motion" + index}>
-                  <Motion
-                    className="!overflow-hidden !max-w-full !max-h-full"
-                    unique="res-i"
-                    index={index}
-                    cap={false}
-                  >
-                    <Result {...result} />
-                  </Motion>
+                  <Result {...result} />
+
                   {index !== results.length - 1 && (
                     <Separator className="my-auto" orientation="vertical" />
                   )}

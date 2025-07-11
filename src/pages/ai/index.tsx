@@ -30,7 +30,7 @@ const Index = () => {
       />
       <SideBar
         variant="center"
-        className="flex-col relative m-auto !w-[100vw] !max-w-[700px] !h-[100vh] transition-all gap-1"
+        className="flex-col relative m-auto !w-[100vw] !max-w-[800px] !h-[100vh] transition-all gap-1"
         orientation={orientation}
         childLeft={<></>}
         centerBar={<Panel chatRef={chatRef} />}
@@ -38,7 +38,7 @@ const Index = () => {
           <Wrap ref={messageBoxRef}>
             <ChatBox
               className="!w-full mx-auto sm:!w-[100%] md:!w-[90%]"
-              scrollMessageBoxToBottom={scrollMessageBoxToBottom}
+              scrollHandler={scrollMessageBoxToBottom}
               ref={chatRef}
             />
           </Wrap>

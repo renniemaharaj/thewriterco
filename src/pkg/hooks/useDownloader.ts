@@ -1,6 +1,10 @@
 const useDownloader = () => {
-  const download = (filename: string, content: string) => {
-    const blob = new Blob([content], { type: "application/json" });
+  const download = (
+    filename: string,
+    content: string,
+    type = "application/json",
+  ) => {
+    const blob = new Blob([content], { type: type });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = filename;

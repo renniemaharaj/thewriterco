@@ -2,7 +2,7 @@ import { Dialog, Flex, Text, Box, Button, IconButton } from "@radix-ui/themes";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../app/store";
 import { removeFavorite } from "../../../../app/reader/readerSlice";
-import VerseItem from "../../../ai/blocks/VerseItem";
+import Verse from "../../../ai/blocks/Verse";
 import { FolderHeart, XIcon } from "lucide-react";
 
 const Favorites = () => {
@@ -37,7 +37,7 @@ const Favorites = () => {
             favorites.map((fav, index) => (
               <Box key={fav.title + index}>
                 <Flex justify="between" align="center" gap="3">
-                  <VerseItem
+                  <Verse
                     verse={{
                       book: fav.book,
                       chapterNo: fav.chapter,

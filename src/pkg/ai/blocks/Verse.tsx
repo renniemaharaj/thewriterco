@@ -1,5 +1,5 @@
 import { IconButton, Tooltip } from "@radix-ui/themes";
-import { Verse } from "../types";
+import { Verse as WVerse } from "../types";
 import useBible from "../../hooks/useBible";
 import { useDispatch } from "react-redux";
 import {
@@ -9,7 +9,7 @@ import {
 } from "../../../app/reader/readerSlice";
 import { BookTextIcon } from "lucide-react";
 
-const VerseItem = ({ verse }: { verse: Verse }) => {
+const Verse = ({ verse }: { verse: WVerse }) => {
   const { handleBookOpen } = useBible();
   const dispatch = useDispatch();
 
@@ -34,4 +34,4 @@ const VerseItem = ({ verse }: { verse: Verse }) => {
   );
 };
 
-export default VerseItem;
+export default Verse;
