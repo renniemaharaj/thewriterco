@@ -11,11 +11,15 @@ import { MessageAction } from "./blocks/types";
 const View = ({
   isTyping,
   handleMessageSend,
-  scrollMessageBoxToBottom,
+  scrollHandler,
 }: {
   isTyping: boolean;
-  handleMessageSend: (s: string, d?: boolean) => void;
-  scrollMessageBoxToBottom: () => void;
+  handleMessageSend: (
+    msg: string,
+    defaultSending: boolean,
+    scrollHandler: () => void,
+  ) => void;
+  scrollHandler: () => void;
 }) => {
   const [suggestions, setSuggestions] = useState<string[]>(initialSuggestions);
 
@@ -26,9 +30,9 @@ const View = ({
   const handleSuggestionClick = useCallback(
     (msg: string) => {
       setSuggestions((prev) => prev.filter((suggestion) => suggestion !== msg));
-      handleMessageSend(msg);
+      handleMessageSend(msg, false, scrollHandler);
     },
-    [handleMessageSend, setSuggestions],
+    [handleMessageSend, scrollHandler, setSuggestions],
   );
 
   const handleActions = useCallback(
@@ -38,13 +42,14 @@ const View = ({
           handleMessageSend(
             "-@here Respond correctly, in defined schema. Validation failing.",
             false,
+            scrollHandler,
           );
           dispatch(nukeSystemMessages());
 
           break;
       }
     },
-    [handleMessageSend, dispatch],
+    [handleMessageSend, scrollHandler, dispatch],
   );
   return (
     <Card
@@ -73,7 +78,7 @@ const View = ({
             <Message
               block={block}
               handleAction={handleActions}
-              onMount={scrollMessageBoxToBottom}
+              onMount={scrollHandler}
             />
           </Flex>
         </React.Fragment>

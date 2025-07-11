@@ -20,12 +20,12 @@ type Exchange = {
   content: string;
 };
 
-type ResponseBlock = {
+type Response = {
   type: "markup" | "scripture" | "code";
   content: MarkupResponse | Scripture | Code;
 };
 
-interface Block extends ResponseBlock {
+interface Block extends Response {
   role: "user" | "model" | "system";
 }
 
@@ -56,13 +56,13 @@ type Code = {
 };
 
 type DefaultResponseSchema = {
-  responseBlocks: ResponseBlock[];
+  responseBlocks: Response[];
 };
 
 export type {
   Executable,
   Context,
-  ResponseBlock,
+  Response,
   MarkupResponse,
   Scripture,
   Verse,
