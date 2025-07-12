@@ -1,16 +1,16 @@
 import { Action } from "../blocks/types";
 
-export type ScrollHAndler = () => void;
+export type ScrollHandler = () => void;
 
 export type ActionHandler = {
   action: Action;
-  scrollHandler: ScrollHAndler;
+  scrollHandler: ScrollHandler;
 };
 
 export type SendHandler = {
   msg: string;
-  defaultSending: boolean;
-  scrollHandler: ScrollHAndler;
+  defaultSending?: boolean;
+  scrollHandler: ScrollHandler;
 };
 
 export type Command = {

@@ -1,12 +1,15 @@
 import { useDispatch } from "react-redux";
-import { addMessage } from "../../../app/chat/chatSlice";
+import { addMessage, setConversationTokens } from "../../../app/chat/chatSlice";
 import { Block } from "../types";
+import useTokensComputer from "./useTokensComputer";
 
 const useDispatchMessage = () => {
+  const { computeTokens } = useTokensComputer();
   const dispatch = useDispatch();
 
   const dispatchBlock = (block: Block) => {
     dispatch(addMessage(block));
+    computeTokens().then((tokens) => dispatch(setConversationTokens(tokens)));
   };
 
   const dispatchUserMessage = (msg: string) => {

@@ -6,15 +6,14 @@ import { initialSuggestions } from "./configuration";
 import Message from "./blocks/Message";
 import Skeleton from "./blocks/Skeleton";
 import useSendHandler from "./hooks/useSendHandler";
+import { useAtomValue } from "jotai";
+import { modelTyping } from "./atoms/typing";
+import { ScrollHandler } from "./hooks/types";
 
-const View = ({
-  isTyping,
-  scrollHandler,
-}: {
-  isTyping: boolean;
-  scrollHandler: () => void;
-}) => {
+const View = ({ scrollHandler }: { scrollHandler: ScrollHandler }) => {
   const chatState = useSelector((state: RootState) => state.chat);
+
+  const isModelTyping = useAtomValue(modelTyping);
 
   const { sendHandler } = useSendHandler();
 
@@ -30,7 +29,7 @@ const View = ({
 
   return (
     <Card
-      className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-[9rem] mx-auto my-auto`}
+      className={`${isModelTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-[9rem] mx-auto my-auto`}
       variant="ghost"
     >
       {chatState.messages.length === 0 && (
@@ -41,7 +40,7 @@ const View = ({
               variant="soft"
               className="cursor-pointer"
               onClick={() => suggestionHandler(msg)}
-              disabled={isTyping}
+              disabled={isModelTyping}
             >
               {msg}
             </Button>
@@ -51,7 +50,7 @@ const View = ({
 
       {chatState.messages.map((block, index) => (
         <React.Fragment key={index}>
-          <Flex className="w-[99%]">
+          <Flex>
             <Message
               block={block}
               scrollHandler={scrollHandler}
@@ -61,9 +60,9 @@ const View = ({
         </React.Fragment>
       ))}
 
-      {isTyping && (
+      {isModelTyping && (
         <React.Fragment>
-          <Flex className="w-[99%] !mx-auto !my-10">
+          <Flex className="!mx-auto !my-10">
             <Skeleton />
           </Flex>
         </React.Fragment>
