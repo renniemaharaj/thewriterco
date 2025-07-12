@@ -54,15 +54,17 @@ const ChatBox = ({ className, scrollHandler }: ChatBoxProps) => {
 
   return (
     <Flex ref={chatRef} className={`${className} !pb-32`}>
-      <View
-        isTyping={isModelTyping}
-        handleMessageSend={sendHandler}
-        scrollHandler={scrollHandler}
-      />
+      <View isTyping={isModelTyping} scrollHandler={scrollHandler} />
 
       <Input
         disabled={isModelTyping}
-        handleSend={(text: string) => sendHandler(text, true, scrollHandler)}
+        handleSend={(text: string) =>
+          sendHandler({
+            msg: text,
+            defaultSending: true,
+            scrollHandler: scrollHandler,
+          })
+        }
         className={`!absolute md:bottom-[1rem] bottom-[0.1rem] animate-fade-in  blurred-div`}
         style={{ width: chatBoxWidth }}
         children={

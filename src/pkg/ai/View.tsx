@@ -1,51 +1,33 @@
 import { Button, Card, Flex } from "@radix-ui/themes";
 import React, { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { initialSuggestions } from "./configuration";
 import Message from "./blocks/Message";
-import { nukeSystemMessages } from "../../app/chat/chatSlice";
 import Skeleton from "./blocks/Skeleton";
-import { MessageAction } from "./blocks/types";
+import useSendHandler from "./hooks/useSendHandler";
 
 const View = ({
   isTyping,
-  handleMessageSend,
   scrollHandler,
 }: {
   isTyping: boolean;
-  handleMessageSend: (
-    msg: string,
-    defaultSending: boolean,
-    scrollHandler: () => void,
-  ) => void;
   scrollHandler: () => void;
 }) => {
   const chatState = useSelector((state: RootState) => state.chat);
 
-  const dispatch = useDispatch();
+  const { sendHandler } = useSendHandler();
 
-  const handleSuggestionClick = useCallback(
-    (msg: string) => handleMessageSend(msg, true, scrollHandler),
-    [handleMessageSend, scrollHandler],
+  const suggestionHandler = useCallback(
+    (msg: string) =>
+      sendHandler({
+        msg: msg,
+        defaultSending: true,
+        scrollHandler: scrollHandler,
+      }),
+    [sendHandler, scrollHandler],
   );
 
-  const handleActions = useCallback(
-    (action: MessageAction) => {
-      switch (action) {
-        case "fix":
-          handleMessageSend(
-            "-@here Respond correctly, in defined schema. Validation failing.",
-            false,
-            scrollHandler,
-          );
-          dispatch(nukeSystemMessages());
-
-          break;
-      }
-    },
-    [handleMessageSend, scrollHandler, dispatch],
-  );
   return (
     <Card
       className={`${isTyping && "animate-pulse"} flex-col !w-full !h-fit !pb-[9rem] mx-auto my-auto`}
@@ -58,7 +40,7 @@ const View = ({
               key={index}
               variant="soft"
               className="cursor-pointer"
-              onClick={() => handleSuggestionClick(msg)}
+              onClick={() => suggestionHandler(msg)}
               disabled={isTyping}
             >
               {msg}
@@ -72,7 +54,7 @@ const View = ({
           <Flex className="w-[99%]">
             <Message
               block={block}
-              handleAction={handleActions}
+              scrollHandler={scrollHandler}
               onMount={scrollHandler}
             />
           </Flex>

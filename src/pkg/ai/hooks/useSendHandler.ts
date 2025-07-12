@@ -10,6 +10,7 @@ import { buildConversation } from "../utils";
 import useResponseParser from "./useResponseParser";
 import useCommandHandler from "./useCommandHandler";
 import { prompt } from "../../firebase/ai/ai";
+import { SendHandler } from "./types";
 
 const useSendHandler = () => {
   const chatState = useSelector((state: RootState) => state.chat);
@@ -23,13 +24,13 @@ const useSendHandler = () => {
   const { commandHandler } = useCommandHandler();
 
   const sendHandler = useCallback(
-    async (msg: string, defaultSending = true, scrollHandler: () => void) => {
+    async ({ msg, defaultSending = true, scrollHandler }: SendHandler) => {
       if (!msg.trim()) return;
 
       // Handle commands
       if (msg.startsWith("/")) {
         const arg = msg.replace("/", "").split(" ");
-        commandHandler(arg[0], arg.slice(1));
+        commandHandler({ command: arg[0], args: arg.slice(1) });
         return;
       }
 

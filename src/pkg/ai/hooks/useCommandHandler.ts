@@ -4,13 +4,14 @@ import { clearMessages, nukeSystemMessages } from "../../../app/chat/chatSlice";
 import useDispatchMessage from "./useDispatchMessage";
 import { useSetAtom } from "jotai";
 import { maxTokensAllowed } from "../atoms/tokens";
+import { Command } from "./types";
 
 const useCommandHandler = () => {
   const { dispatchSystemMessage } = useDispatchMessage();
   const setMaxTokens = useSetAtom(maxTokensAllowed);
   const dispatch = useDispatch();
   const commandHandler = useCallback(
-    (command: string, args: string[]) => {
+    ({ command, args }: Command) => {
       switch (command) {
         case "clear":
           dispatch(clearMessages());

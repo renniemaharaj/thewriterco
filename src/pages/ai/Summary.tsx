@@ -40,11 +40,11 @@ const Summary = ({
 
   async function requestSummarizedDocument() {
     getTemplateContent(selectedTemplate).then((content) => {
-      sendHandler(
-        content + "\n" + getRequestInstructions(),
-        false,
-        scrollHandler,
-      );
+      sendHandler({
+        msg: content + "\n" + getRequestInstructions(),
+        defaultSending: false,
+        scrollHandler: scrollHandler,
+      });
     });
   }
 

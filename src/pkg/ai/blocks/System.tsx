@@ -3,15 +3,16 @@ import { ShieldAlertIcon } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { clearMessages } from "../../../app/chat/chatSlice";
 import { Block, MarkupResponse } from "../types";
-import { MessageAction } from "./types";
+import useActionHandler from "../hooks/useActionHandler";
 
 const System = ({
   block,
-  handleAction,
+  scrollHandler,
 }: {
   block: Block;
-  handleAction?: (a: MessageAction) => void;
+  scrollHandler: () => void;
 }) => {
+  const { actionHandler } = useActionHandler();
   const dispatch = useDispatch();
   return (
     <Card
@@ -27,7 +28,9 @@ const System = ({
         <Button
           variant="soft"
           className="mt-2"
-          onClick={() => handleAction?.("fix")}
+          onClick={() =>
+            actionHandler?.({ action: "fix", scrollHandler: scrollHandler })
+          }
         >
           Fix
         </Button>

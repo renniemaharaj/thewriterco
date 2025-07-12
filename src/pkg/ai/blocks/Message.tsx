@@ -8,9 +8,8 @@ import Code from "./Code";
 import Scripture from "./Scripture";
 import { MessageProps } from "./types";
 
-const Message: React.FC<MessageProps> = ({ block, handleAction, onMount }) => {
+const Message: React.FC<MessageProps> = ({ block, scrollHandler, onMount }) => {
   useEffect(() => onMount?.(), [onMount]);
-
   return (
     <Flex
       className={`${block.role === "user" && "!flex-row-reverse"} 
@@ -36,7 +35,7 @@ const Message: React.FC<MessageProps> = ({ block, handleAction, onMount }) => {
         )}
 
         {block.role === "system" && (
-          <System block={block} handleAction={handleAction} />
+          <System block={block} scrollHandler={scrollHandler} />
         )}
       </Flex>
     </Flex>
