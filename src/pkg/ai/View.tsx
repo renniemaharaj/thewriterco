@@ -1,5 +1,5 @@
 import { Button, Card, Flex } from "@radix-ui/themes";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { initialSuggestions } from "./configuration";
@@ -21,18 +21,13 @@ const View = ({
   ) => void;
   scrollHandler: () => void;
 }) => {
-  const [suggestions, setSuggestions] = useState<string[]>(initialSuggestions);
-
   const chatState = useSelector((state: RootState) => state.chat);
 
   const dispatch = useDispatch();
 
   const handleSuggestionClick = useCallback(
-    (msg: string) => {
-      setSuggestions((prev) => prev.filter((suggestion) => suggestion !== msg));
-      handleMessageSend(msg, false, scrollHandler);
-    },
-    [handleMessageSend, scrollHandler, setSuggestions],
+    (msg: string) => handleMessageSend(msg, true, scrollHandler),
+    [handleMessageSend, scrollHandler],
   );
 
   const handleActions = useCallback(
@@ -57,8 +52,8 @@ const View = ({
       variant="ghost"
     >
       {chatState.messages.length === 0 && (
-        <Flex className={`gap-1 px-8 mb-4 !justify-center !flex-wrap`}>
-          {suggestions.map((msg, index) => (
+        <Flex className={`gap-1 px-8 !justify-center my-8 !flex-wrap`}>
+          {initialSuggestions.map((msg, index) => (
             <Button
               key={index}
               variant="soft"
