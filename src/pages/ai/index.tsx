@@ -10,12 +10,10 @@ import Wrap from "./Wrap";
 
 const Index = () => {
   const orientation = useOrientation();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const chatRef = useRef<any>(null);
 
   const messageBoxRef = useRef<HTMLDivElement>(null);
 
-  const scrollMessageBoxToBottom = () => {
+  const scrollHandler = () => {
     messageBoxRef.current?.scrollTo({
       top: messageBoxRef.current.scrollHeight,
       behavior: "smooth",
@@ -33,13 +31,12 @@ const Index = () => {
         className="flex-col relative m-auto !w-[100vw] !max-w-[800px] !h-[100vh] transition-all gap-1"
         orientation={orientation}
         childLeft={<></>}
-        centerBar={<Panel chatRef={chatRef} />}
+        centerBar={<Panel scrollHandler={scrollHandler} />}
         childRight={
           <Wrap ref={messageBoxRef}>
             <ChatBox
               className="!w-full mx-auto sm:!w-[100%] md:!w-[90%]"
-              scrollHandler={scrollMessageBoxToBottom}
-              ref={chatRef}
+              scrollHandler={scrollHandler}
             />
           </Wrap>
         }

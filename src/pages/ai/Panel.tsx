@@ -14,20 +14,19 @@ import {
   Trash2Icon,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { useThemeContext } from "../../pkg/context/theme/useThemeContext";
 import { setResponseConstraint, clearMessages } from "../../app/chat/chatSlice";
 import { RootState } from "../../app/store";
 import { useOrientation } from "../../pkg/hooks/useOrientation";
 import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
 import Summary from "./Summary";
 import { useState } from "react";
+import useCustomBG from "../../pkg/page/hooks/useCustomBG";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Panel = ({ chatRef }: { chatRef: React.MutableRefObject<any> }) => {
+const Panel = ({ scrollHandler }: { scrollHandler: () => void }) => {
   const [summaryVisible, setSummaryVisible] = useState(false);
   const chatState = useSelector((state: RootState) => state.chat);
   const orientation = useOrientation();
-  const { theme } = useThemeContext();
+  const { customBG } = useCustomBG();
   const { navigateWT } = useTransitionNavigation();
   const dispatch = useDispatch();
   function displaySummaizerDialog() {
@@ -35,12 +34,12 @@ const Panel = ({ chatRef }: { chatRef: React.MutableRefObject<any> }) => {
   }
   return (
     <Flex
-      className={`${theme === "dark" ? "bg-[#171918]" : "border"} ${orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}  !items-center gap-3 !p-3`}
+      className={`${customBG} ${orientation === "horizontal" ? " pt-2 !flex-col" : "!flex-row !justify-center"}  !items-center gap-3 !p-3`}
     >
       <Summary
-        chatRef={chatRef}
         summaryVisible={summaryVisible}
         setSummaryVisible={setSummaryVisible}
+        scrollHandler={scrollHandler}
       />
       {/* <Flex> */}
       <Tooltip content="go home">

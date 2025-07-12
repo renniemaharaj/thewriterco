@@ -1,4 +1,4 @@
-const getRequestInstructions = (authorValue: string) => {
+const getRequestInstructions = () => {
   const instructions = ` 
       -@here Please analyze conversation with the user and generate a document using the provided template.
       Include the following:
@@ -14,7 +14,7 @@ const getRequestInstructions = (authorValue: string) => {
 
       Ensure to respond through the appropriate schemas!
 
-      Please add author: ${authorValue || "Anonymous"}.
+      Please add author from context.
       `;
 
   return instructions;

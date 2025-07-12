@@ -1,32 +1,25 @@
-import {
-  Button,
-  Dialog,
-  Flex,
-  Select,
-  Text,
-  TextField,
-  Tooltip,
-} from "@radix-ui/themes";
+import { Button, Dialog, Flex, Select, Text, Tooltip } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import fetchGitBlob from "../../pkg/hooks/data/useFetchGitBlob";
 import { templateRepoPath } from "../../pkg/hooks/data/presets";
 import getRequestInstructions from "./utils";
+import useSendHandler from "../../pkg/ai/hooks/useSendHandler";
 
 const Summary = ({
   summaryVisible,
   setSummaryVisible,
-  chatRef,
+  scrollHandler,
 }: {
   summaryVisible: boolean;
   setSummaryVisible: (v: boolean) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  chatRef: React.MutableRefObject<any>;
+  scrollHandler: () => void;
 }) => {
   const [selectedTemplate, setSelectedTemplate] = useState<string>("default"); // Default to the first template
-  const [authorValue, setAuthorValue] = useState("");
   const [templates, setTemplates] = useState<
     { id: number; name: string; description: string }[]
   >([]);
+
+  const { sendHandler } = useSendHandler();
 
   async function fetchTemplateCatalogue() {
     fetchGitBlob(templateRepoPath, "/main/catalogue", "json")
@@ -47,9 +40,10 @@ const Summary = ({
 
   async function requestSummarizedDocument() {
     getTemplateContent(selectedTemplate).then((content) => {
-      chatRef.current?.handleMessageSend(
-        content + "\n" + getRequestInstructions(authorValue),
+      sendHandler(
+        content + "\n" + getRequestInstructions(),
         false,
+        scrollHandler,
       );
     });
   }
@@ -90,11 +84,6 @@ const Summary = ({
               </Select.Content>
             </Select.Root>
           </Flex>
-          <TextField.Root
-            placeholder="Author's Name"
-            value={authorValue}
-            onChange={(e) => setAuthorValue(e.target.value)}
-          />
         </Flex>
 
         <Flex gap="3" mt="4" justify="end">

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 interface InputProps {
-  handleRecieve: (input: string) => void;
+  handleSend: (input: string) => void;
   disabled: boolean;
   children?: React.ReactNode;
   className?: string;
@@ -12,7 +12,7 @@ interface InputProps {
 }
 
 const Input: React.FC<InputProps> = ({
-  handleRecieve,
+  handleSend,
   disabled,
   children,
   className,
@@ -33,7 +33,7 @@ const Input: React.FC<InputProps> = ({
 
   const sendMessage = () => {
     if (!message.trim()) return;
-    handleRecieve(message);
+    handleSend(message);
     setMessage("");
   };
 
