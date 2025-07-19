@@ -33,7 +33,7 @@ export const publicRoutes: (CustomRoute | IndexRoute)[] = [
   { path: "read/:tab", element: <Documentation /> },
   { path: "read/:tab/:title", element: <Documentation /> },
   { path: "daily", element: <Daily /> },
-  { path: "daily/read/:searchQuery/:resultTitle", element: <Daily /> },
+  { path: "daily/:searchQuery/:resultTitle", element: <Daily /> },
 
   // Depreciated
   { path: "reasoning/:tab/:title", element: <Documentation /> },

@@ -124,7 +124,7 @@ const Result = ({
             )}
             <StarRating alignment={result.alignment} />
             <Link
-              href={`/read/${encodeURIComponent(
+              href={`/daily/${encodeURIComponent(
                 ReportSearchQuery.toLowerCase(),
               )}/${encodeURIComponent(result.title.toLowerCase())}`}
             >
