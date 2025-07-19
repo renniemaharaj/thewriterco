@@ -12,8 +12,8 @@ import { AllowedColors } from "../../pkg/RadixColors.ts";
 import Hint from "../../pkg/Hint.tsx";
 // import Footer from "../../pkg/Footer";
 import { BrainCircuit } from "lucide-react";
-import Page from "../../pkg/page/Page.tsx";
-import Hero from "../../pkg/page/Hero.tsx";
+import Hero from "../../page/Hero.tsx";
+import Page from "../../page/Page.tsx";
 // import Footer from "../../pkg/additional/footer";
 
 type Mind = {

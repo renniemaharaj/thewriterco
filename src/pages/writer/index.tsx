@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { useOrientation } from "../../pkg/hooks/useOrientation";
-import Page from "../../pkg/page/Page";
 import Editor from "../../pkg/writer/Editor";
 import Renderer from "../../pkg/writer/Renderer";
 import { turn_screen } from "./art/turn_screen";
 import { RootState } from "../../app/store";
+import Page from "../../page/Page";
 
 const Index = () => {
   const fullscreen = useSelector((state: RootState) => state.writer.fullscreen);

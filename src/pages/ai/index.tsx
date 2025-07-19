@@ -5,8 +5,8 @@ import ChatBox from "../../pkg/ai/ChatBox";
 import Panel from "./Panel";
 import { useRef } from "react";
 import { useOrientation } from "../../pkg/hooks/useOrientation";
-import Seo from "../../pkg/page/Seo";
 import Wrap from "./Wrap";
+import Seo from "../../page/Seo";
 
 const Index = () => {
   const orientation = useOrientation();

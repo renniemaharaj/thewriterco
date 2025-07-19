@@ -1,7 +1,7 @@
 import { IconButton } from "@radix-ui/themes";
 import { SunIcon, SunMoonIcon } from "lucide-react";
-import { useThemeContext } from "../context/theme/useThemeContext";
 import { motion } from "framer-motion";
+import { useThemeContext } from "../pkg/context/theme/useThemeContext";
 
 const ThemeButton = () => {
   const { theme, specifyTheme } = useThemeContext();

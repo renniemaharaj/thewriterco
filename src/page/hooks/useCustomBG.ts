@@ -1,4 +1,4 @@
-import { useThemeContext } from "../../context/theme/useThemeContext";
+import { useThemeContext } from "../../pkg/context/theme/useThemeContext";
 
 const useCustomBG = () => {
   const { theme } = useThemeContext();

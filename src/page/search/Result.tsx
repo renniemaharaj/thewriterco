@@ -1,8 +1,8 @@
 import { useCallback, ReactNode } from "react";
-import Menu from "../../docs/cmpnts/Menu";
 import { ResultType } from "./type";
-import Link from "../../link/Link";
 import React from "react";
+import Menu from "../../pkg/docs/cmpnts/Menu";
+import Link from "../../pkg/link/Link";
 
 const Result = ({ title, action }: ResultType) => {
   const interpret = useCallback((): ReactNode => {

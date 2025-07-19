@@ -1,20 +1,11 @@
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Heading, Text, Flex, TextField, Button } from "@radix-ui/themes";
-import {
-  Facebook,
-  //   Instagram,
-  //   Twitter,
-  //   Linkedin,
-  //   Youtube,
-  MapPin,
-  Mail,
-  Phone,
-} from "lucide-react";
+import { Facebook, MapPin, Mail, Phone } from "lucide-react";
 import Hero from "./Hero";
-import Hint from "../Hint";
-import Link from "../link/Link";
 import FlexBreak from "./FlexBreak";
 
+import Link from "../pkg/link/Link";
+import Hint from "../pkg/Hint";
 const companyName = "The Writer Company";
 const companyMission = `Advocacy of a KJV first approach and preservation of strong
             theological reasoning for faith.`;

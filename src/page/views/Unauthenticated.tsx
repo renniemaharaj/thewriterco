@@ -1,4 +1,4 @@
-import Auth from "../../firebase/auth/component/Auth";
+import Auth from "../../pkg/firebase/auth/component/Auth";
 import Base from "./Base";
 
 const Unauthenticated = () => {

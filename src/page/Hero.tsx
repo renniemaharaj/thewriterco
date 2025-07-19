@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
-import Hint from "../Hint";
 import { Flex } from "@radix-ui/themes";
+import Hint from "../pkg/Hint";
 
 export type HeroProps = {
   header: ReactNode;

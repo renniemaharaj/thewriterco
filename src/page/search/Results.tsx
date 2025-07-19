@@ -1,12 +1,12 @@
 import { HoverCard, Separator, Tabs } from "@radix-ui/themes";
 import { ReactNode, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../app/store";
-import { Carousel } from "../../Carousel";
 import Motion from "../Motion";
 import Result from "./Result";
-import Button from "../../button/Button";
 import React from "react";
+import { RootState } from "../../app/store";
+import { Carousel } from "../../pkg/Carousel";
+import Button from "../../pkg/button/Button";
 
 const Results = ({ children }: { children: ReactNode }) => {
   const { searchResults, searchQuery } = useSelector(

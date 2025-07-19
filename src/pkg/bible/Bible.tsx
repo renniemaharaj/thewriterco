@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Flex, Tabs, Box, Card } from "@radix-ui/themes";
 
-import Block from "../page/Block";
 import BookFragment from "./Book";
 import { bibleDivisions } from "./config";
 import { SwordProps } from "./types";
@@ -11,6 +10,7 @@ import useBible from "../hooks/useBible";
 import { Carousel } from "../Carousel";
 import Tab from "./Tab";
 import { motion } from "framer-motion";
+import Block from "../../page/Block";
 
 const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
   const [searchText, setSearchText] = useState("");

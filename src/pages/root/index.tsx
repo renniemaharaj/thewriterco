@@ -1,12 +1,12 @@
 import { Card, Flex, Separator } from "@radix-ui/themes";
-import Hero from "../../pkg/page/Hero";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import Page from "../../pkg/page/Page";
 import { swiperSlides } from "./slides.swiper";
 import { swiperProps } from "./config.swiper";
 import Renderer from "../../pkg/writer/Renderer";
 import { home_art } from "./art/home_art";
+import Page from "../../page/Page";
+import Hero from "../../page/Hero";
 
 const Index: React.FC = () => {
   return (

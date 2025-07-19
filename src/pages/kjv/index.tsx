@@ -4,13 +4,13 @@ import { RootState } from "../../app/store";
 import useBible from "../../pkg/hooks/useBible";
 import { useURLState } from "../../pkg/hooks/useURLState";
 import { AlertDialog, Button, Card, Flex, Text } from "@radix-ui/themes";
-import Page from "../../pkg/page/Page";
 import {
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
 } from "../../app/reader/readerSlice";
 import Bible from "../../pkg/bible/Bible";
 import Link from "../../pkg/link/Link";
+import Page from "../../page/Page";
 
 const Index = () => {
   const ereaderSlice = useSelector((state: RootState) => state.reader);

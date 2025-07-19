@@ -2,12 +2,12 @@ import { useState } from "react";
 import { IconButton, Flex, Text, Separator } from "@radix-ui/themes";
 import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { useSelector } from "react-redux";
-import { RootState } from "../../app/store";
-import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
-import Link from "../link/Link";
 import ThemeButton from "./ThemeButton";
 import Search from "./search/Search";
-import Auth from "../firebase/auth/component/Auth";
+import { RootState } from "../app/store";
+import { useTransitionNavigation } from "../pkg/hooks/useTransitionNavigation";
+import Link from "../pkg/link/Link";
+import Auth from "../pkg/firebase/auth/component/Auth";
 
 const navLinks = [
   { label: "Writer", href: "/writer", disabled: false },

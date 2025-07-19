@@ -1,4 +1,4 @@
-import Page from "../../pkg/page/Page";
+import Page from "../../page/Page";
 import Documentation from "../../pkg/docs/Documentation";
 
 const Index = () => {

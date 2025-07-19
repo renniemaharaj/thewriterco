@@ -1,4 +1,4 @@
-import Unauthenticated from "../../pkg/page/views/Unauthenticated";
+import Unauthenticated from "../../page/views/Unauthenticated";
 
 const Index = () => {
   return <Unauthenticated />;

@@ -1,9 +1,9 @@
 import { Text, Button, Link, Flex, Badge } from "@radix-ui/themes";
 import { FlagIcon, HomeIcon } from "lucide-react";
-import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 import Page from "../Page";
 import Hero from "../Hero";
 import { ReactNode } from "react";
+import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
 // import Link from "next/link";
 
 function Missing({

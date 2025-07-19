@@ -8,8 +8,8 @@ import { useParams } from "react-router-dom";
 import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 import useDefaultTabs from "../../hooks/useDefaultTabs";
 import { min } from "lodash";
-import Motion from "../../page/Motion";
 import Content from "./Content";
+import Motion from "../../../page/Motion";
 
 // Define the shape of each collapsible item
 export type CollapsibleItem = {

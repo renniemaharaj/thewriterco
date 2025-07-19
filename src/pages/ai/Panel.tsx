@@ -20,7 +20,7 @@ import { useOrientation } from "../../pkg/hooks/useOrientation";
 import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
 import Summary from "./Summary";
 import { useState } from "react";
-import useCustomBG from "../../pkg/page/hooks/useCustomBG";
+import useCustomBG from "../../page/hooks/useCustomBG";
 
 const Panel = ({ scrollHandler }: { scrollHandler: () => void }) => {
   const [summaryVisible, setSummaryVisible] = useState(false);

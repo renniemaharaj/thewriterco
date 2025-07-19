@@ -1,18 +1,18 @@
 import { Card, Flex, Separator } from "@radix-ui/themes";
 import Navbar from "./Header";
-import Reader from "../bible/reader/Reader";
+import Reader from "../pkg/bible/reader/Reader";
 import Footer from "./Footer";
 import { ReactNode, useEffect } from "react";
-import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Block from "./Block";
 import { useDispatch } from "react-redux";
 
 // import light from "../../assets/Light.jpg";
 import { motion } from "framer-motion";
 import Seo from "./Seo";
-import { pushResult } from "../../app/page/pageSlice";
 import usePageActions from "./hooks/usePageActions";
-import { useOrientation } from "../hooks/useOrientation";
+import { useTransitionNavigation } from "../pkg/hooks/useTransitionNavigation";
+import { useOrientation } from "../pkg/hooks/useOrientation";
+import { pushResult } from "../app/page/pageSlice";
 // import useTheme from "../hooks/useTheme";
 
 const Page = ({

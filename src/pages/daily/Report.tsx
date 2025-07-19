@@ -1,76 +1,43 @@
-import {
-  Card,
-  Flex,
-  Heading,
-  Inset,
-  Text,
-  Link,
-  Button,
-} from "@radix-ui/themes";
-import { ReportObject } from "../../pkg/hooks/data/useDailyReports";
-import { getRandomElement } from "./utils";
+import React, { useCallback } from "react";
+import { Flex, Heading, Text } from "@radix-ui/themes";
+import { Report as ReportProps } from "./hooks/types";
+import Result from "./Result";
+import useReportFilter from "./hooks/useReportFilter";
+import { capitalizeBigWords } from "./utils";
+import Motion from "../../page/Motion";
 
-const PlaceholderImage =
-  "https://aharvey.com/wp-content/uploads/2018/03/bg-placeholder.jpg";
+export const Report = ({ report }: { report: ReportProps }) => {
+  const { resultMatchesQuery } = useReportFilter();
 
-export const Report = ({
-  report,
-  onFocus,
-}: {
-  report: ReportObject;
-  onFocus?: (title: string) => void;
-}) => {
-  const image = getRandomElement(
-    "images" in report &&
-      Array.isArray(report.images) &&
-      report.images.length > 0
-      ? report.images
-      : [PlaceholderImage],
-  );
-
-  const handleReadMore = () => {
-    if (onFocus) {
-      onFocus(report.title);
-    }
-  };
+  const oneOrMoreResultMatches = useCallback(() => {
+    if (!report.results) return false;
+    return report.results.some((result) => resultMatchesQuery(result));
+  }, [report, resultMatchesQuery]);
 
   return (
-    <Card size="3" variant="classic" style={{ maxWidth: 400 }}>
-      <Inset clip="padding-box" side="top" pb="current">
-        <img
-          src={image}
-          alt={report.title}
-          style={{
-            display: "block",
-            width: "100%",
-            height: 200,
-            objectFit: "cover",
-          }}
-        />
-      </Inset>
-      <Flex direction="column" gap="2" mt="3">
-        <Heading size="4">{report.title}</Heading>
-        <Text size="1" color="gray">
+    oneOrMoreResultMatches() && (
+      <Flex className="!flex-col !w-full" mt="3">
+        <Heading size="4" mb="1">
+          {capitalizeBigWords(report.searchQuery)}
+        </Heading>
+        <Text size="1" color="gray" mb="4">
           {new Date(report.date).toLocaleDateString()}
         </Text>
-        <Text size="2" className="max-h-60 overflow-hidden text-ellipsis">
-          {report.summary}
-        </Text>
-        <Button variant="soft" onClick={handleReadMore}>
-          Read more...
-        </Button>
-        <Flex gap="1" wrap="wrap" mt="2">
-          {report.tags.map((tag) => (
-            <Text size="1" color="blue" key={tag}>
-              #{tag}
-            </Text>
+
+        <Flex className="!flex-row flex-wrap gap-4">
+          {report.results.map((result, i) => (
+            <React.Fragment key={"result" + i}>
+              <Motion index={i} className="w-full md:!w-[48%]">
+                <Result
+                  result={result}
+                  ReportSearchQuery={report.searchQuery}
+                />
+              </Motion>
+            </React.Fragment>
           ))}
         </Flex>
-        <Link href={report.url} target="_blank" mt="2">
-          View source →
-        </Link>
       </Flex>
-    </Card>
+    )
   );
 };
 

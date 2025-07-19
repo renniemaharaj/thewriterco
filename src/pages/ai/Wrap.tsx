@@ -1,6 +1,6 @@
 import { Flex } from "@radix-ui/themes";
 import { forwardRef } from "react";
-import useCustomBG from "../../pkg/page/hooks/useCustomBG";
+import useCustomBG from "../../page/hooks/useCustomBG";
 
 interface WrapProps {
   className?: string;
