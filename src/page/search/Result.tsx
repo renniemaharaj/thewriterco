@@ -13,7 +13,7 @@ const Result = ({ title, action }: ResultType) => {
         </Link>
       );
     } else if ("menu" in action) {
-      return <Menu className="!max-h-full" />;
+      return <Menu className="!max-h-full !max-w-full" />;
     }
     return null;
   }, [action, title]);

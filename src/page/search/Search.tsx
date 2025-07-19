@@ -63,9 +63,10 @@ const Search = ({
   const onSubmit = useCallback(
     (e: FormEvent) => {
       e.preventDefault();
-      if (!searchTextQueryAtom) return false;
-      navigateWT("/search/" + searchTextQueryAtom);
+      // if (!searchTextQueryAtom) return false;
+      // navigateWT("/search/" + searchTextQueryAtom);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchTextQueryAtom, navigateWT],
   );
 

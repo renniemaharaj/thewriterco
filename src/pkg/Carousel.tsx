@@ -63,7 +63,7 @@ export const Carousel: React.FC<CarouselProps> = ({ items, className }) => {
       )}
 
       <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex">
+        <div className="flex gap-2">
           {items.map((item, index) => (
             <div key={index} className="flex-[0_0_auto]">
               {item}

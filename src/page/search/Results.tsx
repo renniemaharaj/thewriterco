@@ -3,10 +3,10 @@ import { ReactNode, useMemo } from "react";
 import { useSelector } from "react-redux";
 import Motion from "../Motion";
 import Result from "./Result";
-import React from "react";
 import { RootState } from "../../app/store";
 import { Carousel } from "../../pkg/Carousel";
 import Button from "../../pkg/button/Button";
+import React from "react";
 
 const Results = ({ children }: { children: ReactNode }) => {
   const { searchResults, searchQuery } = useSelector(
@@ -45,7 +45,7 @@ const Results = ({ children }: { children: ReactNode }) => {
       <HoverCard.Content
         className={`${!groupedEntries.length && "!hidden"} !overflow-y-auto !overflow-x-hidden !max-h-[400px] !min-w-[300px]`}
       >
-        <Tabs.Root defaultValue={groupedEntries[0]?.[0]}>
+        <Tabs.Root defaultValue={groupedEntries[0]?.[0]} className="!w-full">
           <Tabs.List className="!w-full pb-2">
             <Carousel
               items={groupedEntries.map(([title], index) => (
@@ -64,7 +64,7 @@ const Results = ({ children }: { children: ReactNode }) => {
               className="!flex !overflow-hidden !max-h-full !max-w-full !pt-2 !gap-2 !flex-row !flex-wrap"
             >
               {results.map((result, index) => (
-                <React.Fragment key={"motion" + index}>
+                <React.Fragment key={result.route + "-" + index}>
                   <Result {...result} />
 
                   {index !== results.length - 1 && (

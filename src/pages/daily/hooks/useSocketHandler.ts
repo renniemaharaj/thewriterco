@@ -17,6 +17,7 @@ import { preferenceTagsAtom } from "../../../page/search/labs/atoms/labs";
  * The Socket URL that the hook should connect to
  */
 const socketURL = "wss://news.thewriterco.com/ws";
+// const socketURL = "ws://localhost:8080/ws";
 
 const useSocketHandler = () => {
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketURL);

@@ -41,6 +41,12 @@ const usePageActions = (): PageAction[] => {
         action: { href: "/ai" },
       },
       {
+        route: "Pages",
+        title: "Daily News",
+        hint: "Daily news summary",
+        action: { href: "/daily" },
+      },
+      {
         route: "Read",
         title: "Articles",
         hint: "View Articles",
