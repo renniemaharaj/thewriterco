@@ -17,7 +17,7 @@ import { customDecodeURI } from "../utils";
 /**
  * The Socket URL that the hook should connect to
  */
-const socketURL = "wss://news.thewriterco.com/ws";
+const socketURL = "https://news-go.onrender.com/ws";
 // const socketURL = "ws://localhost:8080/ws";
 
 const useSocketHandler = () => {
