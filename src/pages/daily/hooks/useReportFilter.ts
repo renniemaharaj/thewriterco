@@ -5,6 +5,7 @@ import { Result } from "./types";
 import useReportReducers from "./useReportReducers";
 import { useParams } from "react-router-dom";
 import { blankResult } from "./confg";
+import { customDecodeURI } from "../utils";
 
 const useReportFilter = () => {
   const searchTextQuery = useAtomValue(searchQueryAtom);
@@ -15,16 +16,23 @@ const useReportFilter = () => {
 
   const resultMatchingURL = useCallback(() => {
     const notFoundReturn =
-      (searchQuery || resultTitle) && !state.length ? blankResult : undefined;
+      (customDecodeURI(searchQuery || "") ||
+        customDecodeURI(resultTitle || "")) &&
+      !state.length
+        ? blankResult
+        : undefined;
 
     const reportInURL = state.filter(
       (report) =>
-        report.searchQuery.toLowerCase() === searchQuery?.toLocaleLowerCase(),
+        report.searchQuery.toLowerCase() ===
+        customDecodeURI(searchQuery || "")?.toLocaleLowerCase(),
     );
     if (!reportInURL[0]) return notFoundReturn;
 
     const resultInURL = reportInURL[0].results.filter(
-      (res) => res.title.toLowerCase() === resultTitle?.toLocaleLowerCase(),
+      (res) =>
+        res.title.toLowerCase() ===
+        customDecodeURI(resultTitle || "")?.toLocaleLowerCase(),
     );
     if (!resultInURL[0]) return notFoundReturn;
 

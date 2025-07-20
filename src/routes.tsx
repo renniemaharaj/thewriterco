@@ -20,7 +20,7 @@ export const protectedRoutes: CustomRoute[] = [
   { path: "studies", element: <></> },
   { path: "writer", element: <Writer />, suspended: false },
   { path: "deduce", element: <Number /> },
-  { path: "search/:searchQuery", element: <Daily /> },
+  // { path: "search/:searchQuery", element: <Daily /> },
 ];
 
 export const publicRoutes: (CustomRoute | IndexRoute)[] = [

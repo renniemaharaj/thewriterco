@@ -23,7 +23,7 @@ const Index = () => {
           subHeader={
             <>
               The Writer <br />
-              Company News
+              Company Daily
             </>
           }
         />

@@ -21,7 +21,7 @@ export const Report = ({ report }: { report: ReportProps }) => {
           {capitalizeBigWords(report.searchQuery)}
         </Heading>
         <Text size="1" color="gray" mb="4">
-          {new Date(report.date).toLocaleDateString()}
+          {report.date ? new Date(report.date)?.toLocaleDateString() : ""}
         </Text>
 
         <Flex className="!flex-row flex-wrap gap-4">

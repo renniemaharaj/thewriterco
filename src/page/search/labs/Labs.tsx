@@ -1,4 +1,11 @@
-import { Callout, Flex, IconButton, Popover, Text } from "@radix-ui/themes";
+import {
+  Callout,
+  Flex,
+  IconButton,
+  Popover,
+  Text,
+  Tooltip,
+} from "@radix-ui/themes";
 import { useAtom, useAtomValue } from "jotai";
 import { FlaskConical } from "lucide-react";
 import { preferenceTagsAtom, tagsAvailableAtom } from "./atoms/labs";
@@ -39,8 +46,15 @@ const Labs = () => {
   return (
     <Popover.Root>
       <Popover.Trigger>
-        <IconButton type="button" aria-label="Search" variant="soft">
-          <FlaskConical width="20" height="20" />
+        <IconButton
+          type="button"
+          aria-label="Search"
+          variant="soft"
+          className="!animate-pulse"
+        >
+          <Tooltip content="Filter Reports">
+            <FlaskConical width="20" height="20" />
+          </Tooltip>
         </IconButton>
       </Popover.Trigger>
       <Popover.Content width="360px">

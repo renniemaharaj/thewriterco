@@ -13,10 +13,10 @@ const blankResult: Result = {
 };
 
 const blankReport: Report = {
-  searchQuery: "Getting Results",
+  searchQuery: "Try selecting tags to filter results",
   results: [],
   title: "",
-  date: Date.now().toString(),
+  date: "",
 };
 
 const useReportReducers = () => {

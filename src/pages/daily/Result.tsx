@@ -4,6 +4,7 @@ import { memo, useMemo } from "react";
 import ImageCarousel from "./ImageCarousel";
 import useReportFilter from "./hooks/useReportFilter";
 import StarRating from "./StarRating";
+import { customEncodeURI } from "./utils";
 
 const Result = ({
   result,
@@ -57,7 +58,7 @@ const Result = ({
                 {result.title}
               </Text>
             ) : (
-              <div className="bg-gray-300 animate-pulse h-full w-full rounded" />
+              <></>
             )}
           </div>
 
@@ -124,9 +125,7 @@ const Result = ({
             )}
             <StarRating alignment={result.alignment} />
             <Link
-              href={`/daily/${encodeURIComponent(
-                ReportSearchQuery.toLowerCase(),
-              )}/${encodeURIComponent(result.title.toLowerCase())}`}
+              href={`/daily/${customEncodeURI(ReportSearchQuery.toLowerCase())}/${customEncodeURI(result.title.toLowerCase())}`}
             >
               Read more →
             </Link>

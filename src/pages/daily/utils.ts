@@ -22,3 +22,11 @@ export function capitalizeBigWords(input: string): string {
     })
     .join(" ");
 }
+
+export function customEncodeURI(str: string): string {
+  return encodeURIComponent(str).replace(/%20/g, "+");
+}
+
+export function customDecodeURI(str: string): string {
+  return decodeURIComponent(str).replace(/\+/g, " ");
+}

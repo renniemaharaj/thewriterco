@@ -11,6 +11,7 @@ import {
 } from "../../../page/search/atoms/search";
 import { pageErrorAtom } from "../../../page/atoms/page";
 import { preferenceTagsAtom } from "../../../page/search/labs/atoms/labs";
+import { customDecodeURI } from "../utils";
 // import useReportReducers from "./useReportReducers";
 
 /**
@@ -52,7 +53,13 @@ const useSocketHandler = () => {
     if (changed) {
       prevTagsRef.current = preferenceTags;
       sendMessage(
-        stringify(feed(preferenceTags, searchQuery || "", resultTitle || "")),
+        stringify(
+          feed(
+            preferenceTags,
+            customDecodeURI(searchQuery || ""),
+            customDecodeURI(resultTitle || ""),
+          ),
+        ),
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,7 +72,7 @@ const useSocketHandler = () => {
     if (searchQuery && resultTitle === "") {
       setSearchQuery("");
       setSearchDisabled(true);
-      sendMessage(stringify(search(searchQuery)));
+      sendMessage(stringify(search(customDecodeURI(searchQuery))));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
