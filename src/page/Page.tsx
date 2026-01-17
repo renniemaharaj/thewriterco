@@ -90,9 +90,9 @@ const Page = ({
           >
             {wrapChildren && (
               <Card
-                className={`w-full blurred-div !py-8 md:!py-12 !px-4 sm:!px-6 md:!px-8 !min-w-[300px] !transition-all !delay-300 ${className}`}
+                className={`w-full blurred-div !py-0 !px-0 !min-w-[300px] !transition-all !delay-300 ${className}`}
               >
-                <Flex data-testid="heroElement" className={`!flex-col !gap-8 md:!gap-10 !w-full !max-w-full`}>
+                <Flex data-testid="heroElement" className={`!flex-col !gap-8 md:!gap-10 !w-full !max-w-full !py-8 md:!py-12 !px-4 sm:!px-6 md:!px-8`}>
                   {hero}
                 </Flex>
                 {isPending ? <Block /> : children}
