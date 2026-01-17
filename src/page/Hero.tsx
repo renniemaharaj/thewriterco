@@ -1,5 +1,5 @@
 import { Flex } from "@radix-ui/themes";
-import type React from "react";
+import * as React from "react";
 import type { ReactNode } from "react";
 import Hint from "../pkg/Hint";
 
@@ -9,12 +9,9 @@ export type HeroProps = {
   hint?: ReactNode;
   className?: string;
 };
-const Hero: React.FC<HeroProps> = ({
-  header,
-  subHeader,
-  hint,
-  className = "!text-center !justify-center !items-center",
-}) => {
+
+const Hero: React.FC<HeroProps> = (props: HeroProps) => {
+  const { header, subHeader, hint, className = "!text-center !justify-center !items-center" } = props;
   return (
     <Flex className={`flex-col gap-4 md:gap-6 ${className}`}>
       <div className="space-y-2">

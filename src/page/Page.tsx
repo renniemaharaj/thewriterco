@@ -114,7 +114,7 @@ const Page = ({
           </motion.div>
         </Flex>
 
-        <Separator size={"2"} />
+        <Separator className="mx-auto" size={"4"} />
         <Footer />
       </div>
     );

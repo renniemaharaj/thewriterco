@@ -1,5 +1,5 @@
 import { Flex } from "@radix-ui/themes";
-import React from "react";
+import * as React from "react";
 import type { Block, Scripture as WScripture } from "../types";
 import Verse from "./Verse";
 

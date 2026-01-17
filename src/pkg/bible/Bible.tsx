@@ -1,5 +1,5 @@
 import { Box, Card, Flex, Tabs } from "@radix-ui/themes";
-import type React from "react";
+import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 
 import { motion } from "framer-motion";

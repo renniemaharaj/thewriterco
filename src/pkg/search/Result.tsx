@@ -1,7 +1,7 @@
 import { type ReactNode, useCallback } from "react";
 import * as React from "react";
-import Menu from "../../pkg/docs/cmpnts/Menu";
-import Link from "../../pkg/link/Link";
+import Menu from "../docs/cmpnts/Menu";
+import Link from "../link/Link";
 import type { ResultType } from "./type";
 
 const Result = ({ title, action }: ResultType) => {

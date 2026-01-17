@@ -1,5 +1,5 @@
 import { Flex } from "@radix-ui/themes";
-import React from "react";
+import * as React from "react";
 import Hero from "../../page/Hero";
 import Page from "../../page/Page";
 import Current from "./Current";

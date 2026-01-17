@@ -1,13 +1,15 @@
 import { Cross1Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { Flex, IconButton, Separator, Text } from "@radix-ui/themes";
+import { Flex, IconButton, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../app/store";
 import Auth from "../pkg/firebase/auth/component/Auth";
 import { useTransitionNavigation } from "../pkg/hooks/useTransitionNavigation";
 import Link from "../pkg/link/Link";
+import Separator from "../pkg/ui/Separator";
 import ThemeButton from "./ThemeButton";
-import Search from "./search/Search";
+import Search from "../pkg/search/Search";
+import FilterBar from "./search/FilterBar";
 
 const navLinks = [
   { label: "Writer", href: "/writer", disabled: false },
@@ -68,7 +70,7 @@ const Navbar: React.FC = () => {
           </IconButton>
 
           {/* Navigation Links - Desktop */}
-          <ul className={`hidden md:flex gap-1 items-center`}>
+          <ul className={`hidden md:flex gap-3 items-center`}>
             {navLinks.map(
               (link, index) =>
                 !link.disabled && (
@@ -79,7 +81,7 @@ const Navbar: React.FC = () => {
                   </li>
                 ),
             )}
-            <Separator orientation="vertical" className="my-auto mx-2" />
+            <Separator orientation="vertical" className="h-5" />
             <li>
               <Auth variant="image" />
             </li>
@@ -104,6 +106,7 @@ const Navbar: React.FC = () => {
           </Flex>
         )}
       </Flex>
+      <FilterBar />
     </>
   );
 };

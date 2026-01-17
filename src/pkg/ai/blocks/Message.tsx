@@ -1,5 +1,5 @@
 import { Flex } from "@radix-ui/themes";
-import type React from "react";
+import * as React from "react";
 import { useEffect } from "react";
 import Avatar from "./Avatar";
 import Code from "./Code";

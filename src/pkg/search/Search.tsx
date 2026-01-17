@@ -4,7 +4,7 @@ import { ScanSearchIcon } from "lucide-react";
 import { type ChangeEvent, type FormEvent, useCallback, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setSearchQuery } from "../../app/page/pageSlice";
-import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
+import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 import Results from "./Results";
 import { searchQueryAtom } from "./atoms/search";
 
