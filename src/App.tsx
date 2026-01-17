@@ -22,6 +22,11 @@ function App() {
 function AppShell() {
   const { theme } = useThemeContext();
 
+  // Update html data-theme attribute for CSS
+  if (typeof document !== "undefined") {
+    document.documentElement.setAttribute("data-theme", theme);
+  }
+
   return (
     <Theme
       appearance={theme}
