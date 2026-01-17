@@ -18,10 +18,10 @@ const Hero: React.FC<HeroProps> = ({
   return (
     <Flex className={`flex-col gap-4 md:gap-6 ${className}`}>
       <div className="space-y-2">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
           {header}
         </h1>
-        <h2 className="text-2xl md:text-3xl font-semibold text-slate-600 dark:text-slate-300">
+        <h2 className="text-2xl md:text-3xl font-semibold">
           {subHeader}
         </h2>
       </div>
