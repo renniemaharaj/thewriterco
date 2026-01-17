@@ -18,14 +18,14 @@ const Hero: React.FC<HeroProps> = ({
   return (
     <Flex className={`flex-col gap-4 md:gap-6 ${className}`}>
       <div className="space-y-2">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
           {header}
         </h1>
         <h2 className="text-2xl md:text-3xl font-semibold text-slate-600 dark:text-slate-300">
           {subHeader}
         </h2>
       </div>
-      {hint && <Hint className="max-w-md md:max-w-lg overflow-hidden mt-2">{hint}</Hint>}
+      {hint && <Hint className="max-w-md md:max-w-lg overflow-hidden mt-2 mb-6 md:mb-8">{hint}</Hint>}
     </Flex>
   );
 };

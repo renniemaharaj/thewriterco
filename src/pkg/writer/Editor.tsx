@@ -52,7 +52,7 @@ function Editor() {
   return (
     <main>
       <div>
-        <div className="blurred-div z-10">
+        <div className="blurred-div z-10 px-2 md:px-4">
           <RichTextEditor
             output="html"
             key={key}

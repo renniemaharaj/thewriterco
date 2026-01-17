@@ -32,9 +32,9 @@ const ThemeButton = () => {
       className="hidden md:block"
     >
       {theme === "dark" ? (
-        <SunMoonIcon width="20" height="20" className="text-white animate-pulse" />
+        <SunMoonIcon width="20" height="20" className="text-amber-400 animate-pulse" />
       ) : (
-        <SunIcon width="20" height="20" className="animate-pulse" />
+        <SunIcon width="20" height="20" className="text-amber-600 animate-pulse" />
       )}
     </MotionIcon>
   );
