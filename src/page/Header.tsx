@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
         className={`w-full !justify-between py-3 md:py-4 px-4 md:px-6 shadow-sm sticky top-0 blurred-div !rounded-none transition-all ${readerState.isOpen ? "z-0" : "z-10"}`}
       >
         <Flex className="gap-4 md:gap-6 items-center justify-start flex-1">
-          <Text className="text-2xl md:text-3xl font-bold cursor-pointer hover:opacity-80 transition-opacity text-slate-900 dark:text-white" onClick={() => navigateWT("/")}>
+          <Text className="text-2xl md:text-3xl font-bold cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigateWT("/")}>
             TheWriterCo
           </Text>
 
