@@ -18,8 +18,7 @@ export const store = configureStore({
     writer: writerSlice.reducer,
     cache: cacheSlice.reducer,
   },
-  //Switch to false for production
-  devTools: false,
+  devTools: process.env.NODE_ENV === "development",
 });
 
 store.subscribe(
