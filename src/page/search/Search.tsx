@@ -1,12 +1,12 @@
 import { Flex, IconButton, TextField } from "@radix-ui/themes";
+import { useAtom } from "jotai";
 import { ScanSearchIcon } from "lucide-react";
-import { ChangeEvent, FormEvent, useCallback, useEffect, useRef } from "react";
-import Results from "./Results";
+import { type ChangeEvent, type FormEvent, useCallback, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setSearchQuery } from "../../app/page/pageSlice";
-import { useAtom } from "jotai";
-import { searchQueryAtom } from "./atoms/search";
 import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
+import Results from "./Results";
+import { searchQueryAtom } from "./atoms/search";
 import Labs from "./labs/Labs";
 
 type SearchProps = {
@@ -15,11 +15,7 @@ type SearchProps = {
   disabled: boolean;
 };
 
-const Search = ({
-  placeHolderOnFocus,
-  placeholderOnBlur,
-  disabled,
-}: SearchProps) => {
+const Search = ({ placeHolderOnFocus, placeholderOnBlur, disabled }: SearchProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const searchBoxRef = useRef<HTMLInputElement>(null);
 

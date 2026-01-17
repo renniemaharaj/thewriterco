@@ -1,24 +1,24 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  ReactFlow,
+  Controls,
   // Background,
   // BackgroundVariant,
-  Node,
-  Controls,
-  NodeChange,
-  applyNodeChanges,
+  type Node,
+  type NodeChange,
   PanOnScrollMode,
-  useReactFlow,
+  ReactFlow,
   ReactFlowProvider,
+  applyNodeChanges,
+  useReactFlow,
 } from "@xyflow/react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "@xyflow/react/dist/style.css";
-import CustomControls from "./pkg/Controls";
 import { Box } from "@radix-ui/themes";
+import CustomControls from "./pkg/Controls";
 
-import { nodeData } from "./config";
-import { useThemeContext } from "../context/theme/useThemeContext";
-import ResourceMonitor from "./pkg/ResourceMonitor";
 import { cloneDeep } from "lodash";
+import { useThemeContext } from "../context/theme/useThemeContext";
+import { nodeData } from "./config";
+import ResourceMonitor from "./pkg/ResourceMonitor";
 
 const FlowComponent = ({
   nodes,
@@ -41,7 +41,7 @@ const FlowComponent = ({
   const onNodesChange =
     // useCallback(
     (changes: NodeChange[]) => {
-      setNodesLocal((prevNodes) => {
+      setNodesLocal(prevNodes => {
         const updatedNodes = applyNodeChanges(changes, cloneDeep(prevNodes));
         return updatedNodes;
       });

@@ -1,9 +1,4 @@
-import {
-  Pagination,
-  Autoplay,
-  Navigation,
-  EffectCreative,
-} from "swiper/modules";
+import { Autoplay, EffectCreative, Navigation, Pagination } from "swiper/modules";
 
 import "swiper/css/effect-creative";
 

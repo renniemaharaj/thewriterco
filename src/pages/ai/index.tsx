@@ -1,12 +1,12 @@
 import { Flex } from "@radix-ui/themes";
-import Reader from "../../pkg/bible/reader/Reader";
+import { useRef } from "react";
+import Seo from "../../page/Seo";
 import SideBar from "../../pkg/SideBar";
 import ChatBox from "../../pkg/ai/ChatBox";
-import Panel from "./Panel";
-import { useRef } from "react";
+import Reader from "../../pkg/bible/reader/Reader";
 import { useOrientation } from "../../pkg/hooks/useOrientation";
+import Panel from "./Panel";
 import Wrap from "./Wrap";
-import Seo from "../../page/Seo";
 
 const Index = () => {
   const orientation = useOrientation();

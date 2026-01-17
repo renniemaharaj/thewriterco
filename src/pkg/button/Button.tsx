@@ -1,15 +1,9 @@
 import { Flex, Button as RButton } from "@radix-ui/themes";
-import React, { ReactNode } from "react";
-import { AllowedColors } from "../RadixColors";
+import type React from "react";
+import type { ReactNode } from "react";
+import type { AllowedColors } from "../RadixColors";
 
-type Variants =
-  | "ghost"
-  | "surface"
-  | "classic"
-  | "solid"
-  | "soft"
-  | "outline"
-  | undefined;
+type Variants = "ghost" | "surface" | "classic" | "solid" | "soft" | "outline" | undefined;
 const Button = ({
   color,
   variant = "soft",
@@ -32,9 +26,7 @@ const Button = ({
   onMouseLeave?: (e: React.MouseEvent) => void;
 }) => {
   return (
-    <Flex
-      className={`${!noHolographic && "holographic-container"} rounded-full !p-0 m-0`}
-    >
+    <Flex className={`${!noHolographic && "holographic-container"} rounded-full !p-0 m-0`}>
       <Flex
         className={`${!noHolographic && "holographic-card"} rounded-full !transition-all !duration-300 !p-0 m-0`}
       >

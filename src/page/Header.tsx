@@ -1,13 +1,13 @@
+import { Cross1Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { Flex, IconButton, Separator, Text } from "@radix-ui/themes";
 import { useState } from "react";
-import { IconButton, Flex, Text, Separator } from "@radix-ui/themes";
-import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { useSelector } from "react-redux";
-import ThemeButton from "./ThemeButton";
-import Search from "./search/Search";
-import { RootState } from "../app/store";
+import type { RootState } from "../app/store";
+import Auth from "../pkg/firebase/auth/component/Auth";
 import { useTransitionNavigation } from "../pkg/hooks/useTransitionNavigation";
 import Link from "../pkg/link/Link";
-import Auth from "../pkg/firebase/auth/component/Auth";
+import ThemeButton from "./ThemeButton";
+import Search from "./search/Search";
 
 const navLinks = [
   { label: "Writer", href: "/writer", disabled: false },
@@ -28,10 +28,7 @@ const Navbar: React.FC = () => {
         className={`w-full !justify-evenly py-2 shadow-md sticky top-0 blurred-div !rounded-none transition-all ${readerState.isOpen ? "z-0" : "z-10"}`}
       >
         <Flex className="gap-4 flex-row md:flex-row items-center justify-between px-4">
-          <Text
-            className="text-2xl font-bold cursor-pointer"
-            onClick={() => navigateWT("/")}
-          >
+          <Text className="text-2xl font-bold cursor-pointer" onClick={() => navigateWT("/")}>
             TheWriterCo
           </Text>
 

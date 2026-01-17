@@ -1,3 +1,3 @@
-import { Cache } from "./types";
+import type { Cache } from "./types";
 
 export const initialState: Cache = {};

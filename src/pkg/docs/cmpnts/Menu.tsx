@@ -1,15 +1,15 @@
+import { Box, Tabs } from "@radix-ui/themes";
 import { useEffect, useMemo, useState } from "react";
-import { Tabs, Box } from "@radix-ui/themes";
 
-import Item from "./Item";
-import { Carousel } from "../../Carousel";
-import Trigger from "./Trigger";
-import { useParams } from "react-router-dom";
-import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
-import useDefaultTabs from "../../hooks/useDefaultTabs";
 import { min } from "lodash";
-import Content from "./Content";
+import { useParams } from "react-router-dom";
 import Motion from "../../../page/Motion";
+import { Carousel } from "../../Carousel";
+import useDefaultTabs from "../../hooks/useDefaultTabs";
+import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
+import Content from "./Content";
+import Item from "./Item";
+import Trigger from "./Trigger";
 
 // Define the shape of each collapsible item
 export type CollapsibleItem = {
@@ -46,8 +46,7 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
     [defaultTabs, additionalTabs],
   );
 
-  const currentTab =
-    combinedTabs.find((tab) => tab.value === urlTab) || combinedTabs[0];
+  const currentTab = combinedTabs.find(tab => tab.value === urlTab) || combinedTabs[0];
   const visibleCount = min([currentTab.content.length, maxItems]) || 0;
 
   const pagination = useMemo(() => {
@@ -60,7 +59,7 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
             Showing {visibleCount} of {currentTab.content.length} items
           </span>
           <button
-            onClick={() => setMaxItems((prev) => prev + 3)}
+            onClick={() => setMaxItems(prev => prev + 3)}
             className="text-blue-600 font-medium hover:underline"
           >
             Show More
@@ -71,11 +70,9 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
   }, [currentTab, visibleCount]);
 
   const renderedTabContents = useMemo(() => {
-    return combinedTabs.map((tab) => {
+    return combinedTabs.map(tab => {
       const isCurrent = tab.value === currentTab.value;
-      const itemsToRender = isCurrent
-        ? tab.content.slice(0, maxItems)
-        : tab.content;
+      const itemsToRender = isCurrent ? tab.content.slice(0, maxItems) : tab.content;
 
       const renderedItems = itemsToRender.map((item, index) => (
         <Motion className="w-full md:!w-[21rem]" index={index}>
@@ -96,7 +93,7 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
   }, []);
   return (
     <Tabs.Root
-      onValueChange={(v) => {
+      onValueChange={v => {
         navigateWT(`/read/${v}`);
       }}
       value={urlTab || combinedTabs[0].value}
@@ -106,7 +103,7 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
       <Tabs.List className="!w-full">
         <Carousel
           className="py-2"
-          items={combinedTabs.map((tab) => (
+          items={combinedTabs.map(tab => (
             // <Motion index={index} cap={false}>
             <Trigger
               key={tab.value}
@@ -123,11 +120,7 @@ const Menu = ({ additionalTabs = [], className }: MenuProps) => {
         {!renderedTabContents.length || delayListing ? (
           <Content key="skeleton-content" value={currentTab.value}>
             {Array.from({ length: 3 }).map((_i, index) => (
-              <Motion
-                className="w-full md:!w-[21rem]"
-                index={index}
-                key={index}
-              >
+              <Motion className="w-full md:!w-[21rem]" index={index} key={index}>
                 <Item urlTab="" title="" />
               </Motion>
             ))}

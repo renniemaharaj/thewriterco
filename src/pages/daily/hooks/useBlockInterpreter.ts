@@ -1,8 +1,8 @@
 import { useSetAtom } from "jotai";
-import { Block, Report } from "./types";
-import useReportReducers from "./useReportReducers";
 import { pageErrorAtom } from "../../../page/atoms/page";
 import { tagsAvailableAtom } from "../../../page/search/labs/atoms/labs";
+import type { Block, Report } from "./types";
+import useReportReducers from "./useReportReducers";
 
 const useBlockInterpreter = () => {
   const { put } = useReportReducers();

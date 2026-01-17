@@ -1,9 +1,9 @@
-import { Text, Button, Link, Flex, Badge } from "@radix-ui/themes";
+import { Badge, Button, Flex, Link, Text } from "@radix-ui/themes";
 import { FlagIcon, HomeIcon } from "lucide-react";
-import Page from "../Page";
-import Hero from "../Hero";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
+import Hero from "../Hero";
+import Page from "../Page";
 // import Link from "next/link";
 
 function Missing({
@@ -38,11 +38,7 @@ function Missing({
       }
     >
       <div className="w-full text-center space-y-4 mt-6">
-        <Flex
-          align={"center"}
-          direction="row"
-          className="gap-1 !justify-center"
-        >
+        <Flex align={"center"} direction="row" className="gap-1 !justify-center">
           <Badge color="gold">🔒 https</Badge>
           {/* <Text as="p" color="green" size="3"></Text> */}
           <Badge color="green">thewriterco.com</Badge>

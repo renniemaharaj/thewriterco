@@ -1,4 +1,4 @@
-import { Pagination, Autoplay, Navigation, EffectFade } from "swiper/modules";
+import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 
 import "swiper/css/effect-fade";
 

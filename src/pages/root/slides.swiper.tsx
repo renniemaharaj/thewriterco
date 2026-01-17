@@ -36,12 +36,11 @@ export const swiperSlides = [
     quote={
       <>
         If you confess with your mouth that Jesus is Lord, <br />
-        and believe in your heart that God raised him from the dead, you will be
+        and believe in your heart that God raised him from the dead, you will be saved.
+        <br />
+        <br />
+        For with the heart one believes and is justified, and with the mouth one confesses and is
         saved.
-        <br />
-        <br />
-        For with the heart one believes and is justified, and with the mouth one
-        confesses and is saved.
       </>
     }
   />,
@@ -74,17 +73,11 @@ export const swiperSlides = [
     quote={
       <>
         Above all, taking the shield of faith,
-        <br /> wherewith ye shall be able to quench all the fiery darts of the
-        wicked.
+        <br /> wherewith ye shall be able to quench all the fiery darts of the wicked.
       </>
     }
     actionBar={
-      <Link
-        as="button"
-        variant="soft"
-        href="/read"
-        aria-label="Study reasoning"
-      >
+      <Link as="button" variant="soft" href="/read" aria-label="Study reasoning">
         Study rationale
       </Link>
     }

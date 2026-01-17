@@ -2,25 +2,20 @@ import {
   Flex,
   IconButton,
   Popover,
-  Tooltip,
-  Text,
-  Separator,
   SegmentedControl,
+  Separator,
+  Text,
+  Tooltip,
 } from "@radix-ui/themes";
-import {
-  EllipsisVerticalIcon,
-  FileCode2,
-  HomeIcon,
-  Trash2Icon,
-} from "lucide-react";
+import { EllipsisVerticalIcon, FileCode2, HomeIcon, Trash2Icon } from "lucide-react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setResponseConstraint, clearMessages } from "../../app/chat/chatSlice";
-import { RootState } from "../../app/store";
+import { clearMessages, setResponseConstraint } from "../../app/chat/chatSlice";
+import type { RootState } from "../../app/store";
+import useCustomBG from "../../page/hooks/useCustomBG";
 import { useOrientation } from "../../pkg/hooks/useOrientation";
 import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
 import Summary from "./Summary";
-import { useState } from "react";
-import useCustomBG from "../../page/hooks/useCustomBG";
 
 const Panel = ({ scrollHandler }: { scrollHandler: () => void }) => {
   const [summaryVisible, setSummaryVisible] = useState(false);
@@ -43,11 +38,7 @@ const Panel = ({ scrollHandler }: { scrollHandler: () => void }) => {
       />
       {/* <Flex> */}
       <Tooltip content="go home">
-        <IconButton
-          variant="ghost"
-          onClick={() => navigateWT("/")}
-          aria-label="Go to Home"
-        >
+        <IconButton variant="ghost" onClick={() => navigateWT("/")} aria-label="Go to Home">
           <HomeIcon />
         </IconButton>
       </Tooltip>
@@ -108,9 +99,7 @@ const Panel = ({ scrollHandler }: { scrollHandler: () => void }) => {
           size="3"
           variant="ghost"
           onClick={() => {
-            {
-              dispatch(clearMessages());
-            }
+            dispatch(clearMessages());
           }}
         >
           <Trash2Icon />
@@ -118,11 +107,7 @@ const Panel = ({ scrollHandler }: { scrollHandler: () => void }) => {
       </Tooltip>
 
       <Tooltip content="request study">
-        <IconButton
-          size="3"
-          variant="ghost"
-          onClick={() => displaySummaizerDialog()}
-        >
+        <IconButton size="3" variant="ghost" onClick={() => displaySummaizerDialog()}>
           <FileCode2 />
         </IconButton>
       </Tooltip>

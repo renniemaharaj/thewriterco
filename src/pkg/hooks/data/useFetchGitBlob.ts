@@ -1,8 +1,4 @@
-type FetchGitBlob = (
-  repoUrl: string,
-  fileName: string,
-  fileExtension: string,
-) => Promise<string>;
+type FetchGitBlob = (repoUrl: string, fileName: string, fileExtension: string) => Promise<string>;
 
 const fetchGitBlob: FetchGitBlob = async (repoUrl, fileName, fileExtension) => {
   try {

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./styles.css";
 
 import pageArt from "../../assets/Bible_Page_Art.jpg";
@@ -38,9 +38,7 @@ export default function Book({
 
   const returnPages = useCallback(() => {
     if (!bookRef.current) return;
-    bookRef.current
-      .querySelectorAll(".flip")
-      .forEach((page) => page.classList.remove("flip"));
+    bookRef.current.querySelectorAll(".flip").forEach(page => page.classList.remove("flip"));
   }, []);
 
   const cleanupPages = useCallback(() => {
@@ -107,22 +105,13 @@ export default function Book({
           <div
             className={`cursor-default holographic-card md-holographic-card p-1 cover ${theme === "light" ? "bg-gray-400" : "bg-[#111110]"} bg-brown-700 text-white flex flex-col items-center justify-center shadow-2xl text-center`}
           >
-            <span
-              className="text-md font-bold w-full"
-              style={{ fontSize: titleFontSize }}
-            >
+            <span className="text-md font-bold w-full" style={{ fontSize: titleFontSize }}>
               {title}
             </span>
-            <span
-              className="text-md italic w-full"
-              style={{ fontSize: divisionFontSize }}
-            >
+            <span className="text-md italic w-full" style={{ fontSize: divisionFontSize }}>
               {division}
             </span>
-            <span
-              className="text-sm w-full"
-              style={{ fontSize: versionFontSize }}
-            >
+            <span className="text-sm w-full" style={{ fontSize: versionFontSize }}>
               {version}
             </span>
           </div>

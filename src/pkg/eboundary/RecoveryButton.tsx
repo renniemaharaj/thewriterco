@@ -1,6 +1,6 @@
+import { Spinner } from "@radix-ui/themes";
 import { useCallback, useState } from "react";
 import Button from "../button/Button";
-import { Spinner } from "@radix-ui/themes";
 import { sharedActionClass } from "./classes";
 
 type RecoveryButtonProps = {

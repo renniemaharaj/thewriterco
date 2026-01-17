@@ -1,4 +1,4 @@
-import { Report } from "../../hooks/types";
+import type { Report } from "../../hooks/types";
 
 export type ReportAction =
   | { type: "ADD"; payload: Report }

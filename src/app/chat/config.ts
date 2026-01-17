@@ -1,5 +1,5 @@
 import React from "react";
-import { Chat } from "./types";
+import type { Chat } from "./types";
 
 export const initialState: Chat = {
   messages: [],

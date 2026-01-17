@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Button, Dialog, Flex, IconButton, Tooltip } from "@radix-ui/themes";
-import FButton from "../button/Button";
 import { ScanText } from "lucide-react";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { setContent, setTitle } from "../../app/writer/writerSlice";
-import { useCallback } from "react";
+import FButton from "../button/Button";
 import { useTransitionNavigation } from "../hooks/useTransitionNavigation";
 
 const Edit = ({
@@ -38,8 +36,7 @@ const Edit = ({
       <Dialog.Content maxWidth="450px">
         <Dialog.Title>Copy Document</Dialog.Title>
         <Dialog.Description size="2" mb="4">
-          Copy and launch this document in the online writer? This will clear
-          any unsaved work.
+          Copy and launch this document in the online writer? This will clear any unsaved work.
         </Dialog.Description>
 
         <Flex gap="3" mt="4" justify="end">

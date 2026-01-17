@@ -1,6 +1,7 @@
 import { Button, Card, Flex } from "@radix-ui/themes";
 import { ArrowUpIcon } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 interface InputProps {
@@ -11,13 +12,7 @@ interface InputProps {
   style?: React.CSSProperties;
 }
 
-const Input: React.FC<InputProps> = ({
-  handleSend,
-  disabled,
-  children,
-  className,
-  style,
-}) => {
+const Input: React.FC<InputProps> = ({ handleSend, disabled, children, className, style }) => {
   const [message, setMessage] = useState("");
   const [inputFocus, setInputFocus] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -82,7 +77,7 @@ const Input: React.FC<InputProps> = ({
           minRows={1}
           maxRows={6}
           value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={e => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
         />
         {message.trim() && (

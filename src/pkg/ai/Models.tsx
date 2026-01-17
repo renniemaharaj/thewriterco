@@ -1,8 +1,8 @@
 import { Flex, IconButton, Select, Tooltip } from "@radix-ui/themes";
+import { PlusCircleIcon } from "lucide-react";
 import { memo, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../app/store";
-import { PlusCircleIcon } from "lucide-react";
+import type { RootState } from "../../app/store";
 import MyPools from "./MyPools";
 
 const Models = ({ className }: { className?: string }) => {
@@ -24,7 +24,7 @@ const Models = ({ className }: { className?: string }) => {
             <Select.Group>
               <Select.Label>Google</Select.Label>
               <Select.Item value="firebase">Firebase</Select.Item>
-              {chatData.models?.map((model) => (
+              {chatData.models?.map(model => (
                 <Select.Item value="custom">{model.displayName}</Select.Item>
               ))}
             </Select.Group>

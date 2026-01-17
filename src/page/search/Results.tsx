@@ -1,17 +1,15 @@
 import { HoverCard, Separator, Tabs } from "@radix-ui/themes";
-import { ReactNode, useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
-import Motion from "../Motion";
-import Result from "./Result";
-import { RootState } from "../../app/store";
+import type { RootState } from "../../app/store";
 import { Carousel } from "../../pkg/Carousel";
 import Button from "../../pkg/button/Button";
-import React from "react";
+import Motion from "../Motion";
+import Result from "./Result";
 
 const Results = ({ children }: { children: ReactNode }) => {
-  const { searchResults, searchQuery } = useSelector(
-    (state: RootState) => state.page,
-  );
+  const { searchResults, searchQuery } = useSelector((state: RootState) => state.page);
 
   // Filtered and grouped results by route
   const groupedResults = useMemo(() => {
@@ -20,21 +18,18 @@ const Results = ({ children }: { children: ReactNode }) => {
     const filtered = !lowerQuery
       ? searchResults
       : searchResults.filter(
-          (r) =>
+          r =>
             r.title?.toLowerCase().includes(lowerQuery) ||
             r.route?.toLowerCase().includes(lowerQuery) ||
             r.hint?.toLowerCase().includes(lowerQuery),
         );
 
-    return filtered.reduce<Record<string, typeof searchResults>>(
-      (acc, result) => {
-        const route = result.route || "Other";
-        if (!acc[route]) acc[route] = [];
-        acc[route].push(result);
-        return acc;
-      },
-      {},
-    );
+    return filtered.reduce<Record<string, typeof searchResults>>((acc, result) => {
+      const route = result.route || "Other";
+      if (!acc[route]) acc[route] = [];
+      acc[route].push(result);
+      return acc;
+    }, {});
   }, [searchResults, searchQuery]);
 
   const groupedEntries = Object.entries(groupedResults);

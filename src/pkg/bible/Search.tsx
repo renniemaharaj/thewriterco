@@ -2,10 +2,7 @@ import { Flex, IconButton, TextField } from "@radix-ui/themes";
 import { CircleXIcon } from "lucide-react";
 import React, { useEffect } from "react";
 
-import {
-  disableGlobalShortcuts,
-  enableGlobalShortcuts,
-} from "../hooks/useGlobalShortcuts";
+import { disableGlobalShortcuts, enableGlobalShortcuts } from "../hooks/useGlobalShortcuts";
 
 const Search = ({ onChange }: { onChange: (str: string) => void }) => {
   const [searchTerm, setSearchTerm] = React.useState("");
@@ -23,8 +20,8 @@ const Search = ({ onChange }: { onChange: (str: string) => void }) => {
         value={searchTerm}
         onFocus={() => disableGlobalShortcuts()}
         onBlur={() => enableGlobalShortcuts()}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyUp={(e) => {
+        onChange={e => setSearchTerm(e.target.value)}
+        onKeyUp={e => {
           if (e.key === "Backspace" || e.key === "Enter") {
             onChange(searchTerm);
           }

@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import useResponseInterpreter from "./useResponseInterpreter";
+import type { Response } from "../types";
 import useDispatchMessage from "./useDispatchMessage";
-import { Response } from "../types";
+import useResponseInterpreter from "./useResponseInterpreter";
 
 const useResponseParser = () => {
   const { interpret } = useResponseInterpreter();

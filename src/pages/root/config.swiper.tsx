@@ -1,7 +1,4 @@
-// import { coverflow } from "./effects/coverflow";
-// import { fade } from "./effects/fade";
 import { creative } from "./effects/creative";
-// import { freeMode } from "./effects/freeMode";
 
 import "swiper/css";
 import "swiper/css/navigation";

@@ -1,4 +1,4 @@
-import { FrameBarPosition, FrameBarSetup } from "./types";
+import type { FrameBarPosition, FrameBarSetup } from "./types";
 
 export const frameSetups = {
   Top: {

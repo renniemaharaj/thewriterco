@@ -1,2 +1,1 @@
-// import { getAnalytics } from "firebase/analytics";
-// const analytics = getAnalytics(app);
+// Firebase analytics disabled - can be enabled when needed

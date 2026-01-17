@@ -1,10 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type VoiceReaderEngine = {
-  speak: (
-    text: string,
-    options?: { rate?: number; pitch?: number; voiceName?: string },
-  ) => void;
+  speak: (text: string, options?: { rate?: number; pitch?: number; voiceName?: string }) => void;
   speakAsync: (
     text: string,
     options?: { rate?: number; pitch?: number; voiceName?: string },
@@ -28,10 +25,7 @@ export function useVoiceReader(): VoiceReaderEngine {
     };
   }, []);
 
-  const speak = (
-    text: string,
-    options?: { rate?: number; pitch?: number; voiceName?: string },
-  ) => {
+  const speak = (text: string, options?: { rate?: number; pitch?: number; voiceName?: string }) => {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = options?.rate ?? 1;
@@ -39,7 +33,7 @@ export function useVoiceReader(): VoiceReaderEngine {
 
     const voices = window.speechSynthesis.getVoices();
     if (options?.voiceName) {
-      const voice = voices.find((v) => v.name === options.voiceName);
+      const voice = voices.find(v => v.name === options.voiceName);
       if (voice) utterance.voice = voice;
     }
 
@@ -71,7 +65,7 @@ export function useVoiceReader(): VoiceReaderEngine {
 
       const voices = window.speechSynthesis.getVoices();
       if (options?.voiceName) {
-        const voice = voices.find((v) => v.name === options.voiceName);
+        const voice = voices.find(v => v.name === options.voiceName);
         if (voice) utterance.voice = voice;
       }
 
@@ -84,7 +78,7 @@ export function useVoiceReader(): VoiceReaderEngine {
         setPaused(false);
         resolve(true);
       };
-      utterance.onerror = (e) => {
+      utterance.onerror = e => {
         setSpeaking(false);
         reject(e.error ?? new Error("Speech error"));
       };

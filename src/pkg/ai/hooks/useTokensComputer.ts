@@ -1,8 +1,8 @@
-import { useCallback } from "react";
 import * as msgpack from "@msgpack/msgpack";
-import { buildConversation } from "../utils";
+import { useCallback } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../app/store";
+import type { RootState } from "../../../app/store";
+import { buildConversation } from "../utils";
 
 const useTokensComputer = () => {
   const chatMessages = useSelector((state: RootState) => state.chat.messages);

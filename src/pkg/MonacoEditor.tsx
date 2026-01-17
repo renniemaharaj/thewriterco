@@ -1,8 +1,8 @@
-import { memo, useCallback, useEffect, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
-import { useThemeContext } from "./context/theme/useThemeContext";
-import { editor } from "monaco-editor";
 import { debounce } from "lodash";
+import type { editor } from "monaco-editor";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { useThemeContext } from "./context/theme/useThemeContext";
 
 const MonacoEditor = ({
   height,
@@ -78,7 +78,7 @@ const MonacoEditor = ({
           fontSize: 14, // Adjusts font size
           lineNumbersMinChars: 3, // Adjusts left gutter space
         }}
-        onChange={(value) => {
+        onChange={value => {
           debounceSendChanges.current(value ?? "");
         }}
       />

@@ -1,24 +1,19 @@
-import { useEffect, useRef } from "react";
-import useWebSocket, { ReadyState } from "react-use-websocket";
-import useBlockInterpreter from "./useBlockInterpreter";
-import { Response } from "./types";
-import useSocketCommands from "./useSocketCommands";
-import { useParams } from "react-router-dom";
 import { useAtomValue, useSetAtom } from "jotai";
-import {
-  searchDisabledAtom,
-  searchQueryAtom,
-} from "../../../page/search/atoms/search";
+import { useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
+import useWebSocket, { ReadyState } from "react-use-websocket";
 import { pageErrorAtom } from "../../../page/atoms/page";
+import { searchDisabledAtom, searchQueryAtom } from "../../../page/search/atoms/search";
 import { preferenceTagsAtom } from "../../../page/search/labs/atoms/labs";
 import { customDecodeURI } from "../utils";
-// import useReportReducers from "./useReportReducers";
+import type { Response } from "./types";
+import useBlockInterpreter from "./useBlockInterpreter";
+import useSocketCommands from "./useSocketCommands";
 
 /**
  * The Socket URL that the hook should connect to
  */
 const socketURL = "https://news-go.onrender.com/ws";
-// const socketURL = "ws://localhost:8080/ws";
 
 const useSocketHandler = () => {
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketURL);
@@ -28,7 +23,7 @@ const useSocketHandler = () => {
   useEffect(() => {
     if (!lastMessage) return;
     const response = JSON.parse(lastMessage?.data) as Response;
-    response.forEach((block) => interpret(block));
+    response.forEach(block => interpret(block));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastMessage]);
 
@@ -47,8 +42,7 @@ const useSocketHandler = () => {
 
     const prevTags = prevTagsRef.current;
     const changed =
-      prevTags.length !== preferenceTags.length ||
-      prevTags.some((t, i) => t !== preferenceTags[i]);
+      prevTags.length !== preferenceTags.length || prevTags.some((t, i) => t !== preferenceTags[i]);
 
     if (changed) {
       prevTagsRef.current = preferenceTags;

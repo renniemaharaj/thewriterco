@@ -1,10 +1,10 @@
+import { useSetAtom } from "jotai";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { clearMessages, nukeSystemMessages } from "../../../app/chat/chatSlice";
-import useDispatchMessage from "./useDispatchMessage";
-import { useSetAtom } from "jotai";
 import { maxTokensAllowed } from "../atoms/tokens";
-import { Command } from "./types";
+import type { Command } from "./types";
+import useDispatchMessage from "./useDispatchMessage";
 
 const useCommandHandler = () => {
   const { dispatchSystemMessage } = useDispatchMessage();
@@ -28,7 +28,7 @@ const useCommandHandler = () => {
 
         case "tokens":
           if (args.length > 0) {
-            const newMaxTokens = parseInt(args[0]);
+            const newMaxTokens = Number.parseInt(args[0]);
             if (newMaxTokens > 0) {
               setMaxTokens(newMaxTokens);
             }

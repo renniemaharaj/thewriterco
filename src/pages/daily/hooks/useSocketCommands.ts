@@ -1,15 +1,11 @@
-import { Command, Body } from "./types";
+import type { Body, Command } from "./types";
 const useSocketCommands = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const stringify = (c: any) => JSON.stringify(c);
 
   const search = (s: string) => ({ name: "search", body: s }) as Command;
 
-  const feed = (
-    tags: string[],
-    urlReportTitle: string,
-    urlResultTitle: string,
-  ) =>
+  const feed = (tags: string[], urlReportTitle: string, urlResultTitle: string) =>
     ({
       name: "feed",
       body: stringify({

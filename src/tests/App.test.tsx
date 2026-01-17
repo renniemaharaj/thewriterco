@@ -1,12 +1,10 @@
-import { render, screen } from "../utils/test-utils";
+import { describe, expect, test } from "vitest";
 import App from "../App";
-import { describe, test, expect } from "vitest";
-// import { act } from "react";
-// import { useElevenLabs } from "../pkg/hooks/data/useElevenLabs";
+import { render, screen } from "../utils/test-utils";
 
 // Utility: Assert that a string matches all provided regex patterns
 const assertTextMatchesAll = (text: string, patterns: RegExp[]) => {
-  patterns.forEach((pattern) => {
+  patterns.forEach(pattern => {
     expect(text).toMatch(pattern);
   });
 };
@@ -37,11 +35,6 @@ describe("App component", () => {
 
   test("header contains all expected navigation links", () => {
     render(<App />, { route: "/" });
-    assertElementContainsAllText("header", [
-      /TheWriterCo/,
-      /Writer/,
-      /KJV/,
-      /Read/,
-    ]);
+    assertElementContainsAllText("header", [/TheWriterCo/, /Writer/, /KJV/, /Read/]);
   });
 });

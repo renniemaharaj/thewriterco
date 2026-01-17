@@ -1,12 +1,12 @@
-import { Flex, Text, Code, Card, Separator } from "@radix-ui/themes";
-import { ShieldAlert, RotateCcw, RefreshCw, Bug } from "lucide-react";
-import { RootState } from "../../app/store";
+import { Card, Code, Flex, Separator, Text } from "@radix-ui/themes";
+import { Bug, RefreshCw, RotateCcw, ShieldAlert } from "lucide-react";
 import { useSelector } from "react-redux";
-import { recoveryFunctionMap } from "./config";
-import { RecoveryCard } from "./RecoveryCard";
-import RecoveryButton from "./RecoveryButton";
+import type { RootState } from "../../app/store";
 import Button from "../button/Button";
+import RecoveryButton from "./RecoveryButton";
+import { RecoveryCard } from "./RecoveryCard";
 import { sharedActionClass } from "./classes";
+import { recoveryFunctionMap } from "./config";
 
 interface ErrorFallbackProps {
   error: Error;
@@ -28,20 +28,12 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
   };
 
   return (
-    <Flex
-      direction="column"
-      align="center"
-      justify="center"
-      className="min-h-screen"
-    >
+    <Flex direction="column" align="center" justify="center" className="min-h-screen">
       <Card className="!max-w-2xl !p-8 shadow-xl !rounded-2xl">
         <Flex direction="column" align="center" gap="6">
           <Flex direction="column" align="center" className="flex-col !gap-2">
             {/* Header Icon */}
-            <ShieldAlert
-              className="w-14 h-14 text-blue-600"
-              aria-hidden="true"
-            />
+            <ShieldAlert className="w-14 h-14 text-blue-600" aria-hidden="true" />
 
             {/* Main Title */}
             <Text size="8" weight="bold" className="text-center">
@@ -69,7 +61,7 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
               onClick={async () => {
                 resetErrorBoundary();
                 // simulate recovery logic
-                await new Promise((res) => setTimeout(res, 1500));
+                await new Promise(res => setTimeout(res, 1500));
                 return true; // or "error" based on logic
               }}
               textContent={
@@ -94,8 +86,7 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
             <Button
               color="gold"
               onClick={() =>
-                (window.location.href =
-                  "mailto:rvesprey@gmail.com?subject=App Crash Report")
+                (window.location.href = "mailto:rvesprey@gmail.com?subject=App Crash Report")
               }
               className={sharedActionClass}
               aria-label="Report crash issue"
@@ -113,13 +104,8 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
                 Registered Functions
               </Text>
 
-              <Flex
-                gap="4"
-                wrap="wrap"
-                justify="center"
-                className="w-full !p-2"
-              >
-                {recoveryFunctions.map((recovery) => (
+              <Flex gap="4" wrap="wrap" justify="center" className="w-full !p-2">
+                {recoveryFunctions.map(recovery => (
                   <RecoveryCard
                     key={recovery.title}
                     recovery={recovery}

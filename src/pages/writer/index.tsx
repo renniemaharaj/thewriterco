@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
+import type { RootState } from "../../app/store";
+import Page from "../../page/Page";
 import { useOrientation } from "../../pkg/hooks/useOrientation";
 import Editor from "../../pkg/writer/Editor";
 import Renderer from "../../pkg/writer/Renderer";
 import { turn_screen } from "./art/turn_screen";
-import { RootState } from "../../app/store";
-import Page from "../../page/Page";
 
 const Index = () => {
   const fullscreen = useSelector((state: RootState) => state.writer.fullscreen);
@@ -18,11 +18,7 @@ const Index = () => {
       title="Online Writer"
       description="The cleanest, most feature-rich online writer for modern writers"
     >
-      {orientation === "horizontal" ? (
-        <Editor />
-      ) : (
-        <Renderer content={turn_screen} />
-      )}
+      {orientation === "horizontal" ? <Editor /> : <Renderer content={turn_screen} />}
     </Page>
   );
 };

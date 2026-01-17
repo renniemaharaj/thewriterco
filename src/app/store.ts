@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import readerSlice from "./reader/readerSlice";
 import chatSlice from "./chat/chatSlice";
+import readerSlice from "./reader/readerSlice";
 
+import { throttle } from "lodash";
+import cacheSlice from "./cache/cacheSlice";
 import errorBoundarySlice from "./eBoundary/eBoundarySlice";
 import pageSlice from "./page/pageSlice";
-import writerSlice from "./writer/writerSlice";
-import cacheSlice from "./cache/cacheSlice";
 import { saveSliceToLocalStorage } from "./utils";
-import { throttle } from "lodash";
+import writerSlice from "./writer/writerSlice";
 
 export const store = configureStore({
   reducer: {

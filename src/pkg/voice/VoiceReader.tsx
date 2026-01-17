@@ -1,6 +1,6 @@
 import { Flex } from "@radix-ui/themes";
 import { useCallback, useEffect, useState } from "react";
-import { VoiceReaderEngine } from "../hooks/useVoiceReader";
+import type { VoiceReaderEngine } from "../hooks/useVoiceReader";
 import VoiceHeader from "./VoiceHeader";
 
 export type Variant = SpeechSynthesisVoice;

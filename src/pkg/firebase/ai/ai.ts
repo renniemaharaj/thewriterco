@@ -1,4 +1,4 @@
-import { getAI, getGenerativeModel, GoogleAIBackend } from "firebase/ai";
+import { GoogleAIBackend, getAI, getGenerativeModel } from "firebase/ai";
 import app from "../firebase";
 import { getSystemInstructions } from "./utils";
 
@@ -7,7 +7,7 @@ const ai = getAI(app, { backend: new GoogleAIBackend() });
 
 // Wrap in an async function so you can use await
 export async function prompt(msg: string) {
-  return getSystemInstructions().then(async (res) => {
+  return getSystemInstructions().then(async res => {
     // Create a `GenerativeModel` instance with a model that supports your use case
     const model = getGenerativeModel(ai, {
       model: "gemini-2.5-flash",

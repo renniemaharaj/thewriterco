@@ -1,9 +1,9 @@
+import { Card } from "@radix-ui/themes";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
-import { Card } from "@radix-ui/themes";
 import { useGitFetchDocument } from "../../hooks/data/gitFetchDocument";
 import useDocumentParser from "../../hooks/useDocumentParser";
+import { useTransitionNavigation } from "../../hooks/useTransitionNavigation";
 
 const Item = ({
   urlTab,
@@ -54,9 +54,7 @@ const Item = ({
         {/* Card Content */}
         <Card className="holographic-card !p-4 relative z-10">
           <div className="flex justify-between items-center mb-1">
-            <span className="text-xs font-bold uppercase text-pink-600 truncate">
-              {urlTab}
-            </span>
+            <span className="text-xs font-bold uppercase text-pink-600 truncate">{urlTab}</span>
             <span className="text-xs font-bold text-green-500 truncate w-[6rem]">
               {date ? (
                 date
@@ -66,9 +64,7 @@ const Item = ({
             </span>
           </div>
 
-          <h4 className="text-lg font-bold leading-snug truncate">
-            {itemTitle}
-          </h4>
+          <h4 className="text-lg font-bold leading-snug truncate">{itemTitle}</h4>
 
           <p
             className="text-sm mt-1 line-clamp-2"

@@ -1,11 +1,11 @@
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { Heading, Text, Flex, TextField, Button } from "@radix-ui/themes";
-import { Facebook, MapPin, Mail, Phone } from "lucide-react";
-import Hero from "./Hero";
+import { Button, Flex, Heading, Text, TextField } from "@radix-ui/themes";
+import { Facebook, Mail, MapPin, Phone } from "lucide-react";
 import FlexBreak from "./FlexBreak";
+import Hero from "./Hero";
 
-import Link from "../pkg/link/Link";
 import Hint from "../pkg/Hint";
+import Link from "../pkg/link/Link";
 const companyName = "The Writer Company";
 const companyMission = `Advocacy of a KJV first approach and preservation of strong
             theological reasoning for faith.`;
@@ -96,11 +96,7 @@ const Footer: React.FC = () => {
           <Flex className="items-start gap-2 text-sm">
             <MapPin className="h-5 w-5 text-primary" />
             <Text>
-              {companyAddress && (
-                <Text className="country-colored-text-tt">
-                  {companyAddress}
-                </Text>
-              )}
+              {companyAddress && <Text className="country-colored-text-tt">{companyAddress}</Text>}
             </Text>
           </Flex>
           <Flex className="items-center gap-2 text-sm mt-2">
@@ -121,8 +117,7 @@ const Footer: React.FC = () => {
 
       {/* Footer Bottom Section */}
       <div className="text-center mt-12 text-xs">
-        &copy; {new Date().getFullYear()} The Writer Company. All rights
-        reserved.
+        &copy; {new Date().getFullYear()} The Writer Company. All rights reserved.
       </div>
     </footer>
   );

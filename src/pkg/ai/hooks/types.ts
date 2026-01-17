@@ -1,4 +1,4 @@
-import { Action } from "../blocks/types";
+import type { Action } from "../blocks/types";
 
 export type ScrollHandler = () => void;
 

@@ -1,4 +1,4 @@
-import { GameEndNotice, QueryForm } from "./types";
+import type { GameEndNotice, QueryForm } from "./types";
 
 export const rangeStart = 1;
 export const rangeEnd = 100;

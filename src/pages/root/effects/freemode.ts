@@ -1,6 +1,5 @@
-import { Pagination, Autoplay, Navigation, FreeMode } from "swiper/modules";
+import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 
-// import "swiper/css/effect-fade";
 import "swiper/css/free-mode";
 
 export const freeMode = {

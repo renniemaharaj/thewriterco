@@ -1,16 +1,16 @@
-import { useCallback } from "react";
-import useDispatchMessage from "./useDispatchMessage";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../app/store";
 import { useAtomValue, useSetAtom } from "jotai";
+import { useCallback } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../app/store";
+import { prompt } from "../../firebase/ai/ai";
 import { maxTokensAllowed } from "../atoms/tokens";
 import { modelTyping } from "../atoms/typing";
-import useBuildContexts from "./useBuildContexts";
 import { buildConversation } from "../utils";
-import useResponseParser from "./useResponseParser";
+import type { SendHandler } from "./types";
+import useBuildContexts from "./useBuildContexts";
 import useCommandHandler from "./useCommandHandler";
-import { prompt } from "../../firebase/ai/ai";
-import { SendHandler } from "./types";
+import useDispatchMessage from "./useDispatchMessage";
+import useResponseParser from "./useResponseParser";
 
 const useSendHandler = () => {
   const chatState = useSelector((state: RootState) => state.chat);
@@ -18,7 +18,6 @@ const useSendHandler = () => {
   const maxTokens = useAtomValue(maxTokensAllowed);
   const { buildContexts } = useBuildContexts();
   const { responseParser } = useResponseParser();
-  //   const isModelTyping = useAtomValue(modelTyping)
   const setIsModelTyping = useSetAtom(modelTyping);
 
   const { commandHandler } = useCommandHandler();
@@ -27,7 +26,6 @@ const useSendHandler = () => {
     async ({ msg, defaultSending = true, scrollHandler }: SendHandler) => {
       if (!msg.trim()) return;
 
-      // Handle commands
       if (msg.startsWith("/")) {
         const arg = msg.replace("/", "").split(" ");
         commandHandler({ command: arg[0], args: arg.slice(1) });
@@ -40,9 +38,7 @@ const useSendHandler = () => {
 
       if (chatState.conversationTokens > maxTokens) {
         if (defaultSending && chatState.conversationMode !== "none") {
-          dispatchSystemMessage(
-            "Conversation limit reached, please start a new chat",
-          );
+          dispatchSystemMessage("Conversation limit reached, please start a new chat");
           return;
         }
       }
@@ -90,9 +86,7 @@ const useSendHandler = () => {
         const result = await prompt(JSON.stringify(requestSchema));
         if (result) data = { response: result };
       } catch (error) {
-        dispatchSystemMessage(
-          "A connection error occurred or you are required to wait 15 seconds",
-        );
+        dispatchSystemMessage("A connection error occurred or you are required to wait 15 seconds");
         dispatchSystemMessage(error as string);
         return; // Exit early to prevent further execution
       } finally {
@@ -103,9 +97,7 @@ const useSendHandler = () => {
       try {
         await responseParser(data);
       } catch (error) {
-        dispatchSystemMessage(
-          "An error occurred while processing the response. Please try again",
-        );
+        dispatchSystemMessage("An error occurred while processing the response. Please try again");
         dispatchSystemMessage(error as string);
       } finally {
         setIsModelTyping(false);

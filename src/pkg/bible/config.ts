@@ -41,13 +41,7 @@ export const generalEpistles: string[] = [
 export const bookOfRevelation: string[] = ["Revelation"];
 
 // The Pentateuch
-export const pentateuch: string[] = [
-  "Genesis",
-  "Exodus",
-  "Leviticus",
-  "Numbers",
-  "Deuteronomy",
-];
+export const pentateuch: string[] = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy"];
 
 // The Historical Books
 export const historicalBooks: string[] = [

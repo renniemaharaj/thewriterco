@@ -1,33 +1,26 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  Flex,
-  Popover,
-  Text,
   Dialog,
-  TextField,
-  Separator,
-  Tooltip,
+  Flex,
   IconButton,
+  Popover,
+  Separator,
+  Text,
+  TextField,
+  Tooltip,
 } from "@radix-ui/themes";
-import {
-  CheckIcon,
-  ChevronDown,
-  DownloadCloud,
-  FolderHeart,
-  UploadCloud,
-} from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../app/store";
+import { CheckIcon, ChevronDown, DownloadCloud, FolderHeart, UploadCloud } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
-import useDownloader from "../../../hooks/useDownloader";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../../../app/store";
 import {
   deleteByTitle,
   saveToLocalStorage,
   setContent,
   setTitle,
 } from "../../../../app/writer/writerSlice";
-import Save from "../../Save";
 import Button from "../../../button/Button";
+import useDownloader from "../../../hooks/useDownloader";
+import Save from "../../Save";
 import Overwrite from "./dialogs/Overwrite";
 
 type FileProps = {
@@ -49,7 +42,7 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
   const [showUploadConfirm, setShowUploadConfirm] = useState(false);
 
   const findSaveByTitle = useCallback(
-    (title: string) => saves.find((s) => s.title === title),
+    (title: string) => saves.find(s => s.title === title),
     [saves],
   );
 
@@ -92,16 +85,13 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
     [dispatch],
   );
 
-  const handleUploadChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (file && file.name.endsWith(".html")) {
-        setUploadFile(file);
-        setShowUploadConfirm(true);
-      }
-    },
-    [],
-  );
+  const handleUploadChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && file.name.endsWith(".html")) {
+      setUploadFile(file);
+      setShowUploadConfirm(true);
+    }
+  }, []);
 
   const confirmUpload = useCallback(() => {
     if (uploadFile) {
@@ -199,7 +189,7 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
 
             <TextField.Root
               value={title}
-              onChange={(e) => dispatch(setTitle(e.target.value))}
+              onChange={e => dispatch(setTitle(e.target.value))}
               placeholder="Title required"
               mt="2"
             />

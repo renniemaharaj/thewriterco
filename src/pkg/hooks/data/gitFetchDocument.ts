@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
-import fetchGitBlob from "./useFetchGitBlob";
+import { useCallback, useEffect, useState } from "react";
 import { documentRepoPath } from "./presets";
+import fetchGitBlob from "./useFetchGitBlob";
 
 interface UseGitFetchDocumentResult {
   content: string | null;
@@ -28,16 +28,11 @@ export const useGitFetchDocument = ({
     try {
       setLoading(true);
       setError(null);
-      const fullPath = `${documentRepoPath}/main/${fetchPath}`.replace(
-        /\/+/g,
-        "/",
-      );
+      const fullPath = `${documentRepoPath}/main/${fetchPath}`.replace(/\/+/g, "/");
       const blob = await fetchGitBlob(fullPath, filename, "html");
       setContent(blob);
     } catch (err) {
-      setError(
-        err instanceof Error ? err : new Error("Failed to fetch document"),
-      );
+      setError(err instanceof Error ? err : new Error("Failed to fetch document"));
       setContent(null);
     } finally {
       setLoading(false);

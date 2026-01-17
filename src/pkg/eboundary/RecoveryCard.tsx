@@ -1,6 +1,6 @@
 import { Card, Text } from "@radix-ui/themes";
 import { useState } from "react";
-import { RecoveryFunction } from "../../app/eBoundary/types";
+import type { RecoveryFunction } from "../../app/eBoundary/types";
 
 export function RecoveryCard({
   recovery,
@@ -9,9 +9,7 @@ export function RecoveryCard({
   recovery: RecoveryFunction;
   handleRecovery: () => Promise<void> | void; // supports async if needed
 }) {
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const onRecoverClick = async () => {
     try {
@@ -48,9 +46,7 @@ export function RecoveryCard({
           <dl className="flex flex-col gap-1">
             <div className="flex justify-between">
               <dt className="font-medium text-gray-700">Description:</dt>
-              <dd className="text-right text-gray-600">
-                {recovery.description}
-              </dd>
+              <dd className="text-right text-gray-600">{recovery.description}</dd>
             </div>
           </dl>
         )}
@@ -59,9 +55,7 @@ export function RecoveryCard({
           <dl className="flex flex-col gap-1">
             <div className="flex justify-between">
               <dt className="font-medium text-gray-700">Route:</dt>
-              <dd className="text-right text-gray-600">
-                {recovery.componentRoute}
-              </dd>
+              <dd className="text-right text-gray-600">{recovery.componentRoute}</dd>
             </div>
           </dl>
         )}

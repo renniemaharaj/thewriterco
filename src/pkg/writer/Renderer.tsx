@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import RichTextEditor from "reactjs-tiptap-editor";
 import "reactjs-tiptap-editor/style.css";
 import "prism-code-editor-lightweight/layout.css";
@@ -7,13 +5,13 @@ import "prism-code-editor-lightweight/themes/github-dark.css";
 import "katex/dist/katex.min.css";
 import "easydrawer/styles.css";
 import "react-image-crop/dist/ReactCrop.css";
-import extensions from "./extenstions";
-import { useThemeContext } from "../context/theme/useThemeContext";
-import { useEffect, useState } from "react";
-import Edit from "./Edit";
-import { useAnimateCopy } from "../hooks/useAnimateCopy";
-import { motion } from "framer-motion";
 import { Spinner } from "@radix-ui/themes";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useThemeContext } from "../context/theme/useThemeContext";
+import { useAnimateCopy } from "../hooks/useAnimateCopy";
+import Edit from "./Edit";
+import extensions from "./extenstions";
 
 function Renderer({ content }: { content: string }) {
   const [localContent, setLocalContent] = useState(content);
@@ -26,7 +24,7 @@ function Renderer({ content }: { content: string }) {
 
   useEffect(() => {
     setLocalContent(content);
-    setKey((prev) => prev + 1);
+    setKey(prev => prev + 1);
   }, [content]);
 
   return (

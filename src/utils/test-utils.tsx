@@ -1,11 +1,10 @@
-/* eslint-disable react-refresh/only-export-components */
+import { Theme } from "@radix-ui/themes";
 import { render } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
-import { Theme } from "@radix-ui/themes";
-import { store } from "../app/store";
-import { ReactNode } from "react";
 import { vi } from "vitest";
+import { store } from "../app/store";
 
 Object.defineProperty(window, "matchMedia", {
   writable: false,

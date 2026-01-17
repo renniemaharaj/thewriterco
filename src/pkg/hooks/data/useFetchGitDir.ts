@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { documentRepoPath } from "./presets";
-import { RootState } from "../../../app/store";
 import { setCache } from "../../../app/cache/cacheSlice";
+import type { RootState } from "../../../app/store";
+import { documentRepoPath } from "./presets";
 
 export type GitHubFile = {
   name: string;
@@ -47,23 +47,19 @@ export function useFetchGitDir(folderPath: string) {
         }
 
         const files: GitHubFile[] = await response.json();
-        const result = files.map((f) => f.name);
+        const result = files.map(f => f.name);
 
         if (!isCancelled) {
           setDir(result);
           setError(null);
 
           // Push to Redux cache
-          dispatch(
-            setCache({ key: folderPath, value: { result, timestamp: now } }),
-          );
+          dispatch(setCache({ key: folderPath, value: { result, timestamp: now } }));
         }
       } catch (err) {
         if (!isCancelled) {
           console.error("Error fetching folder contents:", err);
-          setError(
-            err instanceof Error ? err : new Error("An unknown error occurred"),
-          );
+          setError(err instanceof Error ? err : new Error("An unknown error occurred"));
         }
       } finally {
         if (!isCancelled) {

@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
 import { Tabs } from "@radix-ui/themes";
-import { TabItem } from "./Menu";
+import { useEffect, useRef } from "react";
 import Button from "../../button/Button";
+import type { TabItem } from "./Menu";
 
 const Trigger = ({
   tab,
@@ -31,11 +31,7 @@ const Trigger = ({
       value={tab.value}
       className="!p-0"
     >
-      <Button
-        noHolographic={
-          tab.value === currentTab || (!currentTab && tab.value === defaultTab)
-        }
-      >
+      <Button noHolographic={tab.value === currentTab || (!currentTab && tab.value === defaultTab)}>
         {tab.label}
       </Button>
     </Tabs.Trigger>

@@ -1,5 +1,5 @@
 import { Text } from "@radix-ui/themes";
-import { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 
 const MetaText: FC<{
   children: ReactNode;

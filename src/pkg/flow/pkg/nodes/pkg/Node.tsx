@@ -1,7 +1,6 @@
 import { Handle as ReactHandle } from "@xyflow/react";
-// import { Flex, Text } from "@radix-ui/themes";
 import { useThemeContext } from "../../../../context/theme/useThemeContext";
-import { Handle } from "../types";
+import type { Handle } from "../types";
 
 export function Node({
   handles,
@@ -26,10 +25,7 @@ export function Node({
   const nodeClassName = `${baseClassName} ${themeClassName} ${layoutClassName}`;
 
   return (
-    <div
-      key={"node" + id}
-      className={`${nodeClassName} ${className ? className : ""}`}
-    >
+    <div key={"node" + id} className={`${nodeClassName} ${className ? className : ""}`}>
       {children}
       {/* <Flex align={"center"} gap="1" className="flex !flex-row !justify-start">
         <Text size="3" className="text-sm font-semibold">

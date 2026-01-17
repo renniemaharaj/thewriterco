@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
-import Collapsible from "../Collapsible";
-import { Save as a } from "../../app/writer/types";
 import { Button, Flex } from "@radix-ui/themes";
 import { CodeXml, Trash2 } from "lucide-react";
+import { useEffect, useRef } from "react";
+import type { Save as a } from "../../app/writer/types";
+import Collapsible from "../Collapsible";
 import FlexBreak from "./FlexBreak";
 
 type SaveProps = {
@@ -14,14 +14,7 @@ type SaveProps = {
   fileMenuOpen?: boolean;
 };
 
-const Save = ({
-  index,
-  save,
-  title,
-  loadSave,
-  deleteSave,
-  fileMenuOpen,
-}: SaveProps) => {
+const Save = ({ index, save, title, loadSave, deleteSave, fileMenuOpen }: SaveProps) => {
   const elementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

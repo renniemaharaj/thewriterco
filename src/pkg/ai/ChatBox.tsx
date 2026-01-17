@@ -1,4 +1,4 @@
-import { Flex, Button } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -7,14 +7,10 @@ import { setOpenState } from "../../app/reader/readerSlice.ts";
 import { useAtomValue } from "jotai";
 import { modelTyping } from "./atoms/typing.ts";
 import useSendHandler from "./hooks/useSendHandler.ts";
-
-// import { useSendAskReqMutation } from "../../app/api/apiSlice.ts";
-// import { fromByteArray } from "base64-js";
-
 import Input from "./Input.tsx";
 import Models from "./Models.tsx";
 import View from "./View.tsx";
-import { ScrollHandler } from "./hooks/types.ts";
+import type { ScrollHandler } from "./hooks/types.ts";
 
 const ChatBox = ({
   className,
@@ -23,7 +19,6 @@ const ChatBox = ({
   className: string;
   scrollHandler: ScrollHandler;
 }) => {
-  // const [sendAskReq] = useSendAskReqMutation();
   const chatRef = useRef<HTMLDivElement>(null);
   const isModelTyping = useAtomValue(modelTyping);
   const [chatBoxWidth, setChatBoxWidth] = useState(0);
@@ -57,10 +52,7 @@ const ChatBox = ({
           <Flex gap="2" className="!flex-row">
             <Flex align={"center"} className="!p-1 gap-2 !flex-wrap">
               <Models />
-              <Button
-                variant={"outline"}
-                onClick={() => dispatch(setOpenState(true))}
-              >
+              <Button variant={"outline"} onClick={() => dispatch(setOpenState(true))}>
                 Bible
               </Button>
             </Flex>

@@ -1,16 +1,13 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CachedValue } from "./types";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { initialStateWithLocalStorage } from "../utils";
 import { initialState } from "./config";
+import type { CachedValue } from "./types";
 
 const cacheSlice = createSlice({
   name: "cache",
   initialState: initialStateWithLocalStorage("cacheData", initialState),
   reducers: {
-    setCache(
-      state,
-      action: PayloadAction<{ key: string; value: CachedValue }>,
-    ) {
+    setCache(state, action: PayloadAction<{ key: string; value: CachedValue }>) {
       state[action.payload.key] = action.payload.value;
     },
   },

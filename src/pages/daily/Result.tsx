@@ -1,9 +1,9 @@
 import { Badge, Card, Flex, Link, Text } from "@radix-ui/themes";
-import { Result as ResultProps } from "./hooks/types";
 import { memo, useMemo } from "react";
 import ImageCarousel from "./ImageCarousel";
-import useReportFilter from "./hooks/useReportFilter";
 import StarRating from "./StarRating";
+import type { Result as ResultProps } from "./hooks/types";
+import useReportFilter from "./hooks/useReportFilter";
 import { customEncodeURI } from "./utils";
 
 const Result = ({
@@ -88,7 +88,7 @@ const Result = ({
               {/* Tags */}
               <Flex gap="1" wrap="wrap" mt="2" className="min-h-[1rem]">
                 {result.tags?.length ? (
-                  result.tags.map((tag) => (
+                  result.tags.map(tag => (
                     <Text size="1" color="blue" key={tag}>
                       #{tag}
                     </Text>
@@ -101,7 +101,7 @@ const Result = ({
               {/* Biases */}
               <Flex gap="1" wrap="wrap" mt="2" className="min-h-[1rem]">
                 {result.politicalBiases?.length > 0 &&
-                  result.politicalBiases.map((bias) => (
+                  result.politicalBiases.map(bias => (
                     <Badge size="1" color="blue" key={bias}>
                       {bias}
                     </Badge>
@@ -110,14 +110,7 @@ const Result = ({
             </Flex>
           </Flex>
           {/* Action row */}
-          <Flex
-            direction="row"
-            justify="between"
-            align="center"
-            className="!w-full"
-            mt="2"
-            gap="4"
-          >
+          <Flex direction="row" justify="between" align="center" className="!w-full" mt="2" gap="4">
             {result.href ? (
               <Link href={result.href}>View source →</Link>
             ) : (

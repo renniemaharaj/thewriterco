@@ -1,14 +1,14 @@
 import { Flex, IconButton, Tooltip } from "@radix-ui/themes";
 import { AudioLines, PauseIcon, StopCircle } from "lucide-react";
-import { VoiceReaderEngine } from "../hooks/useVoiceReader";
-import { useSelector } from "react-redux";
-import { RootState } from "../../app/store";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../app/store";
 import {
   registerShortcut,
   unregisterShortcut,
   useGlobalShortcuts,
 } from "../hooks/useGlobalShortcuts";
+import type { VoiceReaderEngine } from "../hooks/useVoiceReader";
 
 export type VoiceHeaderProps = {
   voiceReaderEngine: VoiceReaderEngine;
@@ -29,8 +29,7 @@ const VoiceHeader = ({
   handleResume,
   handleStop,
 }: VoiceHeaderProps) => {
-  const voiceReaderIconClass =
-    "text-gray-500 hover:animate-pulse transition-colors duration-200";
+  const voiceReaderIconClass = "text-gray-500 hover:animate-pulse transition-colors duration-200";
 
   const readerOpen = useSelector((state: RootState) => state.reader.isOpen);
   useGlobalShortcuts(); // Mount global listener once

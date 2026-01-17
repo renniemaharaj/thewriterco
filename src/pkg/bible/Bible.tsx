@@ -1,16 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Flex, Tabs, Box, Card } from "@radix-ui/themes";
+import { Box, Card, Flex, Tabs } from "@radix-ui/themes";
+import type React from "react";
+import { useCallback, useEffect, useState } from "react";
 
-import BookFragment from "./Book";
-import { bibleDivisions } from "./config";
-import { SwordProps } from "./types";
-import Search from "./Search";
-import Seeker from "./Seeker";
-import useBible from "../hooks/useBible";
-import { Carousel } from "../Carousel";
-import Tab from "./Tab";
 import { motion } from "framer-motion";
 import Block from "../../page/Block";
+import { Carousel } from "../Carousel";
+import useBible from "../hooks/useBible";
+import BookFragment from "./Book";
+import Search from "./Search";
+import Seeker from "./Seeker";
+import Tab from "./Tab";
+import { bibleDivisions } from "./config";
+import type { SwordProps } from "./types";
 
 const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
   const [searchText, setSearchText] = useState("");
@@ -28,27 +29,21 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
     return Object.entries(bibleDivisions)
       .map(([division, books]) => {
         const filteredBooks = books.filter(
-          (book) =>
-            book.toLowerCase().includes(searchText.toLowerCase()) ||
-            searchText === "",
+          book => book.toLowerCase().includes(searchText.toLowerCase()) || searchText === "",
         );
-        return filteredBooks.length > 0
-          ? { division, books: filteredBooks }
-          : null;
+        return filteredBooks.length > 0 ? { division, books: filteredBooks } : null;
       })
       .filter(Boolean) as { division: string; books: string[] }[];
   }, [searchText]);
 
   const matchingDivisions = getMatchingDivisions();
   const allTabs = Object.keys(bibleDivisions);
-  const tabsToShow = searchText
-    ? matchingDivisions.map((d) => d.division)
-    : allTabs;
+  const tabsToShow = searchText ? matchingDivisions.map(d => d.division) : allTabs;
 
   const [selectedTab, setSelectedTab] = useState(tabsToShow[0]);
 
   const getBooksForDivision = (division: string) => {
-    return matchingDivisions.find((d) => d.division === division)?.books || [];
+    return matchingDivisions.find(d => d.division === division)?.books || [];
   };
 
   const renderTabs = () =>
@@ -66,9 +61,7 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
             <Flex className="flex-col items-center justify-center">
               <Tab title={division} selected={selectedTab === division} />
 
-              {searchText && books.length > 0 && (
-                <Seeker books={books} onClick={handleBookOpen} />
-              )}
+              {searchText && books.length > 0 && <Seeker books={books} onClick={handleBookOpen} />}
             </Flex>
           </Tabs.Trigger>
         </motion.div>
@@ -80,12 +73,7 @@ const Bible: React.FC<SwordProps> = ({ showAnimation }) => {
 
     return (
       <Tabs.Content key={division} value={division}>
-        <Flex
-          direction="row"
-          gap="3"
-          wrap="wrap"
-          className="relative !justify-center"
-        >
+        <Flex direction="row" gap="3" wrap="wrap" className="relative !justify-center">
           {books.map((book, index) => (
             <motion.div
               key={index + "tabsItem"}

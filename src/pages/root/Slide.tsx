@@ -1,5 +1,5 @@
 import { Flex, Quote, Separator, Text } from "@radix-ui/themes";
-import { FC, ReactNode, useState } from "react";
+import { type FC, type ReactNode, useState } from "react";
 import MetaText from "./MetaText";
 
 import { useThemeContext } from "../../pkg/context/theme/useThemeContext";
@@ -27,14 +27,7 @@ const getYouTubeEmbedUrl = (url: string): string | null => {
   return match ? `https://www.youtube.com/embed/${match[1]}` : null;
 };
 
-const Slide: FC<SlideProps> = ({
-  title,
-  quote,
-  actionBar,
-  media,
-  videoUrl,
-  videoMeta,
-}) => {
+const Slide: FC<SlideProps> = ({ title, quote, actionBar, media, videoUrl, videoMeta }) => {
   const [revealMeta, setRevealMeta] = useState(false);
   const embedUrl = videoUrl ? getYouTubeEmbedUrl(videoUrl) : null;
 
@@ -46,9 +39,7 @@ const Slide: FC<SlideProps> = ({
       justify="center"
       className={`w-full h-full max-w-2xl mx-auto px-4 text-center gap-4 ${theme === "dark" ? "bg-[#171918]" : "border"} blurred-div`}
     >
-      <Text className="text-2xl font-semibold text-foreground leading-snug">
-        {title}
-      </Text>
+      <Text className="text-2xl font-semibold text-foreground leading-snug">{title}</Text>
 
       {quote && (
         <>
@@ -77,16 +68,11 @@ const Slide: FC<SlideProps> = ({
       )}
 
       {embedUrl && videoMeta && (
-        <div
-          className="mt-4 w-full px-1 cursor-pointer"
-          onClick={() => setRevealMeta(true)}
-        >
+        <div className="mt-4 w-full px-1 cursor-pointer" onClick={() => setRevealMeta(true)}>
           <Flex direction="row" justify="between" gap="2" wrap="wrap">
             <Flex direction="column" gap="1" className="flex-1 min-w-[45%]">
               <MetaText reveal={revealMeta}>{videoMeta.title}</MetaText>
-              {videoMeta.album && (
-                <MetaText reveal={revealMeta}>{videoMeta.album}</MetaText>
-              )}
+              {videoMeta.album && <MetaText reveal={revealMeta}>{videoMeta.album}</MetaText>}
             </Flex>
             <Flex direction="column" gap="1" className="flex-1 min-w-[45%]">
               <MetaText reveal={revealMeta} asLink href={videoMeta.originalUrl}>

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Custom hook: useIntersectionObserver
 const useIntersectionObserver = (options: IntersectionObserverInit) => {
@@ -6,8 +6,8 @@ const useIntersectionObserver = (options: IntersectionObserverInit) => {
   const elementRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
         setIsIntersecting(entry.isIntersecting);
       });
     }, options);

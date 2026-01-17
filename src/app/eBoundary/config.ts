@@ -1,4 +1,4 @@
-import { ErrorBoundaryState } from "./types";
+import type { ErrorBoundaryState } from "./types";
 
 export const initialState: ErrorBoundaryState = {
   recoveryFunctions: [],

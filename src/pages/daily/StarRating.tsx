@@ -1,6 +1,6 @@
-import { memo, useCallback } from "react";
 import { Flex } from "@radix-ui/themes";
 import { Star, StarHalf } from "lucide-react";
+import { memo, useCallback } from "react";
 
 const StarRating = memo(({ alignment = 0 }: { alignment?: number }) => {
   const stars = alignment / 2;

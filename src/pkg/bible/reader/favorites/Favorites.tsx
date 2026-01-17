@@ -1,9 +1,9 @@
-import { Dialog, Flex, Text, Box, Button, IconButton } from "@radix-ui/themes";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../../app/store";
-import { removeFavorite } from "../../../../app/reader/readerSlice";
-import Verse from "../../../ai/blocks/Verse";
+import { Box, Button, Dialog, Flex, IconButton, Text } from "@radix-ui/themes";
 import { FolderHeart, XIcon } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFavorite } from "../../../../app/reader/readerSlice";
+import type { RootState } from "../../../../app/store";
+import Verse from "../../../ai/blocks/Verse";
 
 const Favorites = () => {
   const favorites = useSelector((state: RootState) => state.reader.favorites);
@@ -45,11 +45,7 @@ const Favorites = () => {
                       verseContent: "Open this verse",
                     }}
                   />
-                  <IconButton
-                    variant="soft"
-                    color="gray"
-                    onClick={() => handleRemove(fav.title)}
-                  >
+                  <IconButton variant="soft" color="gray" onClick={() => handleRemove(fav.title)}>
                     <XIcon />
                   </IconButton>
                 </Flex>

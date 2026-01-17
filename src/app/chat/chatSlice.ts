@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 // import { initialState } from "./config";
-import { Block } from "../../pkg/ai/types";
+import type { Block } from "../../pkg/ai/types";
 import { initialStateWithLocalStorage } from "../utils";
 import { initialState } from "./config";
 
@@ -18,9 +18,7 @@ const ereaderSlice = createSlice({
     },
     // Remove all system messages from the chat
     nukeSystemMessages(state) {
-      state.messages = state.messages.filter(
-        (message) => message.role !== "system",
-      );
+      state.messages = state.messages.filter(message => message.role !== "system");
     },
     // Clear all messages from the chat
     clearMessages(state) {
@@ -31,10 +29,7 @@ const ereaderSlice = createSlice({
       state.conversationMode = action.payload;
     },
     // Set the response constraint of the chat
-    setResponseConstraint(
-      state,
-      action: PayloadAction<"short" | "shorter" | "detailed">,
-    ) {
+    setResponseConstraint(state, action: PayloadAction<"short" | "shorter" | "detailed">) {
       state.responseConstraint = action.payload;
     },
     // Set the number of conversation tokens

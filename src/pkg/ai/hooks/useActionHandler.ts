@@ -1,8 +1,8 @@
 import { useCallback } from "react";
-import { nukeSystemMessages } from "../../../app/chat/chatSlice";
-import useSendHandler from "./useSendHandler";
 import { useDispatch } from "react-redux";
-import { ActionHandler } from "./types";
+import { nukeSystemMessages } from "../../../app/chat/chatSlice";
+import type { ActionHandler } from "./types";
+import useSendHandler from "./useSendHandler";
 
 const useActionHandler = () => {
   const { sendHandler } = useSendHandler();

@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Save } from "./types";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { initialStateWithLocalStorage } from "../utils";
 import { initialState } from "./config";
+import type { Save } from "./types";
 
 const writerSlice = createSlice({
   name: "writer",
@@ -15,9 +14,7 @@ const writerSlice = createSlice({
       state.content = action.payload;
     },
     saveToLocalStorage: (state, action: PayloadAction<Save>) => {
-      const existingIndex = state.saves.findIndex(
-        (save) => save.title === action.payload.title,
-      );
+      const existingIndex = state.saves.findIndex(save => save.title === action.payload.title);
 
       if (existingIndex !== -1) {
         state.saves[existingIndex] = action.payload;
@@ -26,17 +23,14 @@ const writerSlice = createSlice({
       }
     },
     deleteByTitle: (state, action: PayloadAction<string>) => {
-      state.saves = state.saves.filter((save) => save.title !== action.payload);
+      state.saves = state.saves.filter(save => save.title !== action.payload);
     },
     setFullScreen: (state, action: PayloadAction<boolean>) => {
       state.fullscreen = action.payload;
     },
-    renameByTitle: (
-      state,
-      action: PayloadAction<{ oldTitle: string; newTitle: string }>,
-    ) => {
+    renameByTitle: (state, action: PayloadAction<{ oldTitle: string; newTitle: string }>) => {
       const { oldTitle, newTitle } = action.payload;
-      const save = state.saves.find((s) => s.title === oldTitle);
+      const save = state.saves.find(s => s.title === oldTitle);
       if (save) {
         save.title = newTitle;
       }

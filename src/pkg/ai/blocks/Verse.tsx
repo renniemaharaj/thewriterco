@@ -1,13 +1,13 @@
 import { IconButton, Tooltip } from "@radix-ui/themes";
-import { Verse as WVerse } from "../types";
-import useBible from "../../hooks/useBible";
+import { BookTextIcon } from "lucide-react";
 import { useDispatch } from "react-redux";
 import {
   setGlobalCurrentChapter,
   setGlobalCurrentVerse,
   setOpenState,
 } from "../../../app/reader/readerSlice";
-import { BookTextIcon } from "lucide-react";
+import useBible from "../../hooks/useBible";
+import type { Verse as WVerse } from "../types";
 
 const Verse = ({ verse }: { verse: WVerse }) => {
   const { handleBookOpen } = useBible();

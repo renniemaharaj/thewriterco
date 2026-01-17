@@ -1,4 +1,4 @@
-import { ResultType } from "../../page/search/type";
+import type { ResultType } from "../../page/search/type";
 
 export type PageProps = {
   dismissedDeclaration: number;

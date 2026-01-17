@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+import type { ResultType } from "../../page/search/type";
 import { initialStateWithLocalStorage } from "../utils";
 import { initialState } from "./config";
-import { ResultType } from "../../page/search/type";
 
 const pageSlice = createSlice({
   name: "pageData",
@@ -26,7 +26,6 @@ const pageSlice = createSlice({
   },
 });
 
-export const { dismissDeclaration, pushResult, setSearchQuery } =
-  pageSlice.actions;
+export const { dismissDeclaration, pushResult, setSearchQuery } = pageSlice.actions;
 
 export default pageSlice;

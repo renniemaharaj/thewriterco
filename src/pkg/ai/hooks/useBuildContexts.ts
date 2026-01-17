@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../app/store";
 import { useCallback } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../app/store";
 import useUserLikelySignedIn from "../../firebase/auth/hooks/useUserLikelySignedIn";
 
 const useBuildContexts = () => {

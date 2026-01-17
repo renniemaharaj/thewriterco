@@ -16,11 +16,7 @@ const Overwrite = ({
         <Dialog.Description>Overwrite your current work?</Dialog.Description>
         <Flex gap="3" mt="4" justify="end">
           <Dialog.Close>
-            <Button
-              variant="soft"
-              color="gray"
-              onClick={() => setShowUploadConfirm(false)}
-            >
+            <Button variant="soft" color="gray" onClick={() => setShowUploadConfirm(false)}>
               Cancel
             </Button>
           </Dialog.Close>

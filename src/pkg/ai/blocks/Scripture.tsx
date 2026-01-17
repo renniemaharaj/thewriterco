@@ -1,6 +1,6 @@
 import { Flex } from "@radix-ui/themes";
-import { Block, Scripture as WScripture } from "../types";
 import React from "react";
+import type { Block, Scripture as WScripture } from "../types";
 import Verse from "./Verse";
 
 const Scripture = ({ block }: { block: Block }) => {

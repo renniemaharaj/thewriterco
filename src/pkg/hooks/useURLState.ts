@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useURLState(
-  key: string,
-): [string | null, (value: string) => void] {
+export function useURLState(key: string): [string | null, (value: string) => void] {
   const [state, setState] = useState<string | null>(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get(key);

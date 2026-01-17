@@ -1,12 +1,8 @@
-import { FrameBarSetup } from "./types";
-import { positionClasses } from "./positions";
 import { Skeleton } from "@radix-ui/themes";
+import { positionClasses } from "./positions";
+import type { FrameBarSetup } from "./types";
 
-const Frame: React.FC<FrameBarSetup> = ({
-  frameBars,
-  isAnimating,
-  animationDuration,
-}) => {
+const Frame: React.FC<FrameBarSetup> = ({ frameBars, isAnimating, animationDuration }) => {
   return (
     <>
       {frameBars.map((frame, index) => {

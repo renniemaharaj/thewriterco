@@ -1,8 +1,8 @@
 import { IconButton, Tooltip } from "@radix-ui/themes";
 import { Maximize, Minimize } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../../../app/store";
 import { setFullScreen } from "../../../../app/writer/writerSlice";
-import { RootState } from "../../../../app/store";
 
 const Fullscreen = () => {
   const fullscreen = useSelector((state: RootState) => state.writer.fullscreen);

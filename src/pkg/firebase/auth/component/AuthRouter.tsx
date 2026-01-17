@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import useUserLikelySignedIn from "../hooks/useUserLikelySignedIn";
 import Unauthenticated from "../../../../page/views/Unauthenticated";
+import useUserLikelySignedIn from "../hooks/useUserLikelySignedIn";
 
 export const AuthRouter = () => {
   const { token } = useUserLikelySignedIn();

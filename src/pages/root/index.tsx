@@ -1,12 +1,12 @@
 import { Card, Flex, Separator } from "@radix-ui/themes";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { swiperSlides } from "./slides.swiper";
-import { swiperProps } from "./config.swiper";
+import Hero from "../../page/Hero";
+import Page from "../../page/Page";
 import Renderer from "../../pkg/writer/Renderer";
 import { home_art } from "./art/home_art";
-import Page from "../../page/Page";
-import Hero from "../../page/Hero";
+import { swiperProps } from "./config.swiper";
+import { swiperSlides } from "./slides.swiper";
 
 const Index: React.FC = () => {
   return (
@@ -25,9 +25,9 @@ const Index: React.FC = () => {
           }
           hint={
             <>
-              We're here to: give reasoning for faith; reinforcement to your
-              shield, 🛡️ Wherewith ye shall quench all the fiery darts of the
-              wicked. For his bow is set with a fiery deception 🏹
+              We're here to: give reasoning for faith; reinforcement to your shield, 🛡️ Wherewith ye
+              shall quench all the fiery darts of the wicked. For his bow is set with a fiery
+              deception 🏹
               <Separator size="3" className="my-5 mx-auto" />
             </>
           }
@@ -39,10 +39,7 @@ const Index: React.FC = () => {
         <Flex className="!relative !flex-row !w-[75%] gap-5 mx-auto">
           <Swiper {...swiperProps} slidesPerView="auto">
             {swiperSlides.map((item, index) => (
-              <SwiperSlide
-                key={index}
-                className="flex justify-center items-center"
-              >
+              <SwiperSlide key={index} className="flex justify-center items-center">
                 <Card key={index}>{item}</Card>
               </SwiperSlide>
             ))}

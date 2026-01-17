@@ -1,14 +1,14 @@
 import { Button, Card, Flex } from "@radix-ui/themes";
+import { useAtomValue } from "jotai";
 import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../app/store";
-import { initialSuggestions } from "./configuration";
+import type { RootState } from "../../app/store";
+import { modelTyping } from "./atoms/typing";
 import Message from "./blocks/Message";
 import Skeleton from "./blocks/Skeleton";
+import { initialSuggestions } from "./configuration";
+import type { ScrollHandler } from "./hooks/types";
 import useSendHandler from "./hooks/useSendHandler";
-import { useAtomValue } from "jotai";
-import { modelTyping } from "./atoms/typing";
-import { ScrollHandler } from "./hooks/types";
 
 const View = ({ scrollHandler }: { scrollHandler: ScrollHandler }) => {
   const chatState = useSelector((state: RootState) => state.chat);
@@ -51,11 +51,7 @@ const View = ({ scrollHandler }: { scrollHandler: ScrollHandler }) => {
       {chatState.messages.map((block, index) => (
         <React.Fragment key={index}>
           <Flex>
-            <Message
-              block={block}
-              scrollHandler={scrollHandler}
-              onMount={scrollHandler}
-            />
+            <Message block={block} scrollHandler={scrollHandler} onMount={scrollHandler} />
           </Flex>
         </React.Fragment>
       ))}

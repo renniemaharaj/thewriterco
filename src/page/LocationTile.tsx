@@ -1,6 +1,6 @@
 import { Card, Flex, IconButton, Text } from "@radix-ui/themes";
-import React, { memo, useEffect, useState } from "react";
 import { ChevronRightIcon, HomeIcon } from "lucide-react";
+import React, { memo, useEffect, useState } from "react";
 
 const LocationTile = () => {
   const [locationParts, setLocationParts] = useState<string[]>([]);
@@ -9,16 +9,11 @@ const LocationTile = () => {
     setLocationParts(window.location.pathname.split("/"));
   }, []);
 
-  const upperCaseFirstLetter = (str: string) =>
-    str.charAt(0).toUpperCase() + str.slice(1);
+  const upperCaseFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
   return (
     <Card className="!flex !flex-row !w-full !items-center !h-12 !gap-2 !max-w-full">
       {locationParts.length > 1 && (
-        <IconButton
-          variant="ghost"
-          onClick={() => (location.href = "/")}
-          aria-label="Go to Home"
-        >
+        <IconButton variant="ghost" onClick={() => (location.href = "/")} aria-label="Go to Home">
           <HomeIcon />
         </IconButton>
       )}

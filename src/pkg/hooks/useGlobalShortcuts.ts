@@ -18,7 +18,7 @@ export const registerShortcut = (shortcut: Shortcut) => {
 };
 
 export const unregisterShortcut = (shortcut: Shortcut) => {
-  shortcuts = shortcuts.filter((s) => s !== shortcut);
+  shortcuts = shortcuts.filter(s => s !== shortcut);
 };
 
 export const disableGlobalShortcuts = () => {
@@ -36,11 +36,7 @@ const getShortcutKey = (s: Shortcut) => {
 const isTypingElement = (el: Element | null): boolean => {
   if (!el) return false;
   const tag = el.tagName.toLowerCase();
-  return (
-    tag === "input" ||
-    tag === "textarea" ||
-    (el as HTMLElement).isContentEditable
-  );
+  return tag === "input" || tag === "textarea" || (el as HTMLElement).isContentEditable;
 };
 
 export const useGlobalShortcuts = () => {
@@ -62,10 +58,7 @@ export const useGlobalShortcuts = () => {
           const now = Date.now();
           const debounce = s.debounceMs ?? 300;
 
-          if (
-            !lastExecuted.has(keyId) ||
-            now - (lastExecuted.get(keyId) ?? 0) > debounce
-          ) {
+          if (!lastExecuted.has(keyId) || now - (lastExecuted.get(keyId) ?? 0) > debounce) {
             lastExecuted.set(keyId, now);
             s.action(e);
           }

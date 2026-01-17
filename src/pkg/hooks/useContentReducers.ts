@@ -1,12 +1,9 @@
+import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../app/store";
-import { useCallback, useMemo, useEffect } from "react";
-import { getChapterVerses } from "../bible/utils/reader";
+import { setGlobalCurrentChapter, setGlobalCurrentVerse } from "../../app/reader/readerSlice";
+import type { RootState } from "../../app/store";
 import { SHADOW_COUNT } from "../bible/config";
-import {
-  setGlobalCurrentChapter,
-  setGlobalCurrentVerse,
-} from "../../app/reader/readerSlice";
+import { getChapterVerses } from "../bible/utils/reader";
 
 export const useContentReducers = () => {
   const dispatch = useDispatch();
@@ -58,7 +55,7 @@ export const useContentReducers = () => {
     const verseKeys = Object.keys(chapter);
     const startIndex = verseKeys.indexOf(currentVerse);
 
-    return verseKeys.slice(startIndex).map((verseKey) => chapter[verseKey]);
+    return verseKeys.slice(startIndex).map(verseKey => chapter[verseKey]);
   }, [eContent, currentChapter, currentVerse]);
 
   const getCurrentSlice = useCallback(() => {
@@ -95,8 +92,7 @@ export const useContentReducers = () => {
   const navigateVerse = useCallback(
     (direction: "prev" | "next", targetIndex?: number) => {
       const currentIndex = targetIndex ?? chapterVerses.indexOf(currentVerse);
-      const newIndex =
-        direction === "next" ? currentIndex + 1 : currentIndex - 1;
+      const newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
 
       if (newIndex < 0 && direction === "prev") {
         const chapterKeys = Object.keys(content);
@@ -120,14 +116,7 @@ export const useContentReducers = () => {
         handleVerseChange(chapterVerses[newIndex]);
       }
     },
-    [
-      content,
-      currentChapter,
-      currentVerse,
-      chapterVerses,
-      handleChapterChange,
-      handleVerseChange,
-    ],
+    [content, currentChapter, currentVerse, chapterVerses, handleChapterChange, handleVerseChange],
   );
 
   return {

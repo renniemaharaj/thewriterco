@@ -1,7 +1,7 @@
-import React, { ReactNode, useEffect } from "react";
-import { ChevronDown } from "lucide-react";
 import { Button, Flex, ScrollArea } from "@radix-ui/themes";
 import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import React, { type ReactNode, useEffect } from "react";
 import { useThemeContext } from "./context/theme/useThemeContext";
 
 type CollapsibleProps = {
@@ -50,9 +50,7 @@ const Collapsible = ({
         aria-controls="collapsible-content"
       >
         <span className="font-semibold">{renderedTitle ?? title}</span>
-        <ChevronDown
-          className={`transition-transform ${isCollapsed ? "rotate-180" : ""}`}
-        />
+        <ChevronDown className={`transition-transform ${isCollapsed ? "rotate-180" : ""}`} />
       </Button>
 
       {/* Collapsible Content with Smooth Animation */}

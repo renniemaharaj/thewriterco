@@ -13,7 +13,7 @@ const Verse = ({
     <Select.Root value={currentVerse} onValueChange={handleVerseChange}>
       <Select.Trigger>Verse {currentVerse}</Select.Trigger>
       <Select.Content>
-        {chapterVerses.map((verse) => (
+        {chapterVerses.map(verse => (
           <Select.Item key={"verse-" + verse} value={verse}>
             {verse}
           </Select.Item>

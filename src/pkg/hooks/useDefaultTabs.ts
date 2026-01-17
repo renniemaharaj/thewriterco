@@ -1,7 +1,7 @@
-import { useFetchGitDir } from "./data/useFetchGitDir";
-import { dirToContents } from "../docs/data/dirToContents";
-import { TabItem } from "../docs/cmpnts/Menu";
 import { useMemo } from "react";
+import type { TabItem } from "../docs/cmpnts/Menu";
+import { dirToContents } from "../docs/data/dirToContents";
+import { useFetchGitDir } from "./data/useFetchGitDir";
 
 const useDefaultTabs = () => {
   const axiomsData = useFetchGitDir("axioms");

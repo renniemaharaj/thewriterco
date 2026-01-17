@@ -1,19 +1,16 @@
 import { Card, Flex, Separator } from "@radix-ui/themes";
-import Navbar from "./Header";
-import Reader from "../pkg/bible/reader/Reader";
-import Footer from "./Footer";
-import { ReactNode, useEffect } from "react";
-import Block from "./Block";
+import { type ReactNode, useEffect } from "react";
 import { useDispatch } from "react-redux";
-
-// import light from "../../assets/Light.jpg";
+import Reader from "../pkg/bible/reader/Reader";
+import Block from "./Block";
+import Footer from "./Footer";
+import Navbar from "./Header";
 import { motion } from "framer-motion";
+import { pushResult } from "../app/page/pageSlice";
+import { useOrientation } from "../pkg/hooks/useOrientation";
+import { useTransitionNavigation } from "../pkg/hooks/useTransitionNavigation";
 import Seo from "./Seo";
 import usePageActions from "./hooks/usePageActions";
-import { useTransitionNavigation } from "../pkg/hooks/useTransitionNavigation";
-import { useOrientation } from "../pkg/hooks/useOrientation";
-import { pushResult } from "../app/page/pageSlice";
-// import useTheme from "../hooks/useTheme";
 
 const Page = ({
   children,
@@ -47,7 +44,7 @@ const Page = ({
   }, [isPending, path]);
 
   useEffect(() => {
-    pageActions.forEach((action) => {
+    pageActions.forEach(action => {
       dispatch(pushResult(action));
     });
   }, [dispatch, pageActions]);
@@ -72,10 +69,6 @@ const Page = ({
   else
     return (
       <div className="w-full">
-        {/** Firebase Auth */}
-        {/* <Auth /> */}
-
-        {/** React Helmet */}
         <Seo title={title} description={description} />
 
         {/* <Navbar /> */}
@@ -103,10 +96,7 @@ const Page = ({
               <Card
                 className={`w-full blurred-div !py-6 top-3 !min-w-[300px] !transition-all !delay-300 ${className} ${orientation === "horizontal" ? "!px-3" : "!px-1"}`}
               >
-                <Flex
-                  data-testid="heroElement"
-                  className={`!flex-col !gap-10 !w-full !max-w-full`}
-                >
+                <Flex data-testid="heroElement" className={`!flex-col !gap-10 !w-full !max-w-full`}>
                   {hero}
                 </Flex>
                 {isPending ? <Block /> : children}

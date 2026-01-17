@@ -1,5 +1,5 @@
 import { Flex } from "@radix-ui/themes";
-import { Content } from "../../../app/reader/types";
+import type { Content } from "../../../app/reader/types";
 
 const Shadow = ({
   currentSlice,
@@ -15,22 +15,14 @@ const Shadow = ({
 }) => {
   return (
     currentSlice.length > 0 && (
-      <Flex
-        justify="center"
-        align="center"
-        className="!flex-col text-sm mt-4 gap-4 p-2 rounded-md"
-      >
+      <Flex justify="center" align="center" className="!flex-col text-sm mt-4 gap-4 p-2 rounded-md">
         <div className="blurred-div max-w-[700px] text-center p-4 shadow-lg rounded-md">
           <p>
             {currentSlice.map((verse, index) => (
-              <span
-                key={"bible-verse-" + index}
-                className={`${index == 0 && "font-bold"}`}
-              >
+              <span key={"bible-verse-" + index} className={`${index == 0 && "font-bold"}`}>
                 {" "}
                 ({currentChapter}:{verse}){" "}
-                {typeof content !== "string" &&
-                  content[currentChapter]?.[verse]}
+                {typeof content !== "string" && content[currentChapter]?.[verse]}
               </span>
             ))}
           </p>

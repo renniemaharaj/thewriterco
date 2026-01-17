@@ -1,13 +1,5 @@
-import {
-  Badge,
-  Button,
-  DataList,
-  Flex,
-  HoverCard,
-  IconButton,
-  Link,
-} from "@radix-ui/themes";
-import { User } from "firebase/auth";
+import { Badge, Button, DataList, Flex, HoverCard, IconButton, Link } from "@radix-ui/themes";
+import type { User } from "firebase/auth";
 import Avatar from "./Avatar";
 
 const Card = ({
@@ -35,11 +27,7 @@ const Card = ({
               <DataList.Item>
                 <DataList.Label minWidth="80px">Status</DataList.Label>
                 <DataList.Value>
-                  <Badge
-                    color={user ? "jade" : "red"}
-                    variant="soft"
-                    radius="full"
-                  >
+                  <Badge color={user ? "jade" : "red"} variant="soft" radius="full">
                     {user ? "Authorized" : "Unauthorized"}
                   </Badge>
                 </DataList.Value>
@@ -72,10 +60,7 @@ const Card = ({
               </DataList.Item>
             </DataList.Root>
 
-            <Button
-              onClick={user ? handleSignOut : handleSignIn}
-              variant="soft"
-            >
+            <Button onClick={user ? handleSignOut : handleSignIn} variant="soft">
               {user ? "Sign Out" : "Sign In"}
             </Button>
           </Flex>

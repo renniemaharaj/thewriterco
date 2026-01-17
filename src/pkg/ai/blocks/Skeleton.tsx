@@ -8,20 +8,15 @@ const SkeletonBlock = () => {
     setTimeout(() => setBlockMounted(true), 100);
   }, []);
 
-  const baseClassName =
-    "w-3/4 !h-3 rounded mb-2 opacity-0 transition-opacity duration-700";
+  const baseClassName = "w-3/4 !h-3 rounded mb-2 opacity-0 transition-opacity duration-700";
 
-  const bones = [
-    "!w-4/5 mt-5 delay-100",
-    "!w-3/5 delay-200",
-    "!w-2/5 delay-300",
-  ];
+  const bones = ["!w-4/5 mt-5 delay-100", "!w-3/5 delay-200", "!w-2/5 delay-300"];
 
   return (
     <Flex className="w-full p-3 gap-2">
       <Avatar role="model" />
       <Flex className="w-full p-3 flex-col">
-        {bones.map((bone) => (
+        {bones.map(bone => (
           <Skeleton
             className={`${blockMounted && "animate-fade-in opacity-100"} ${baseClassName} ${bone} !p-2`}
           />

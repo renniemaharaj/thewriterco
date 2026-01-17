@@ -1,7 +1,7 @@
 import { IconButton } from "@radix-ui/themes";
 import { AudioLines } from "lucide-react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../app/store";
+import type { RootState } from "../../app/store";
 
 export type SpeakProps = {
   onClick: () => void;

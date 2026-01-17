@@ -1,8 +1,5 @@
 export function generatePossibilities(from: number, to: number) {
-  const array = Array.from(
-    { length: to - from + 1 },
-    (_, index) => from + index,
-  );
+  const array = Array.from({ length: to - from + 1 }, (_, index) => from + index);
   return array;
 }
 

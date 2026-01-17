@@ -1,5 +1,5 @@
 import { Select } from "@radix-ui/themes";
-import { Content } from "../../../app/reader/types";
+import type { Content } from "../../../app/reader/types";
 
 const Chapter = ({
   currentChapter,
@@ -14,7 +14,7 @@ const Chapter = ({
     <Select.Root value={currentChapter} onValueChange={handleChapterChange}>
       <Select.Trigger>Chapter {currentChapter}</Select.Trigger>
       <Select.Content>
-        {Object.keys(content).map((chapter) => (
+        {Object.keys(content).map(chapter => (
           <Select.Item key={"chapter-" + chapter} value={chapter}>
             {chapter}
           </Select.Item>

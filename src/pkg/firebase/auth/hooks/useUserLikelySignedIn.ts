@@ -1,4 +1,4 @@
-import { onAuthStateChanged, User } from "firebase/auth";
+import { type User, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 
@@ -7,7 +7,7 @@ const useUserLikelySignedIn = () => {
   const [token, setToken] = useState<string>("");
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
+    const unsub = onAuthStateChanged(auth, async firebaseUser => {
       if (firebaseUser) {
         setUser(firebaseUser);
         const tok = await firebaseUser.getIdToken();

@@ -1,4 +1,4 @@
-import { positionClasses } from "./positions";
+import type { positionClasses } from "./positions";
 
 export interface FrameBarConfig {
   position: keyof typeof positionClasses; // Position from the utility map

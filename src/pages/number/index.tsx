@@ -1,19 +1,13 @@
-import { useState, useEffect, useRef } from "react";
-import {
-  defaultQueryForm,
-  defaultForceGuess,
-  rangeStart,
-  rangeEnd,
-} from "./config.ts";
-import { generatePossibilities, mean } from "./utils.ts";
-import { QueryForm, GameEndNotice } from "./types.ts";
-import { Flex, Box, Button, Text, Link, Quote } from "@radix-ui/themes";
-import { AllowedColors } from "../../pkg/RadixColors.ts";
-import Hint from "../../pkg/Hint.tsx";
-// import Footer from "../../pkg/Footer";
+import { Box, Button, Flex, Link, Quote, Text } from "@radix-ui/themes";
 import { BrainCircuit } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import Hero from "../../page/Hero.tsx";
 import Page from "../../page/Page.tsx";
+import Hint from "../../pkg/Hint.tsx";
+import type { AllowedColors } from "../../pkg/RadixColors.ts";
+import { defaultForceGuess, defaultQueryForm, rangeEnd, rangeStart } from "./config.ts";
+import type { GameEndNotice, QueryForm } from "./types.ts";
+import { generatePossibilities, mean } from "./utils.ts";
 // import Footer from "../../pkg/additional/footer";
 
 type Mind = {
@@ -26,12 +20,9 @@ const Index = () => {
   const [workingRange, setWorkingRange] = useState([rangeStart, rangeEnd]);
   const [gamingStatus, setGamingStatus] = useState(false);
   const [queryForm, setQueryForm] = useState<QueryForm>(defaultQueryForm);
-  const [forcedGuess, setForcedGuess] =
-    useState<GameEndNotice>(defaultForceGuess);
+  const [forcedGuess, setForcedGuess] = useState<GameEndNotice>(defaultForceGuess);
   const queriesRequired = useRef(777);
-  const possibilities = useRef<number[]>(
-    generatePossibilities(rangeStart, rangeEnd),
-  );
+  const possibilities = useRef<number[]>(generatePossibilities(rangeStart, rangeEnd));
   const [rangeQuery, setRangeQuery] = useState({ rangeStart: 0, rangeEnd: 0 });
   const [isKnownRange, setIsKnownRange] = useState(true);
 
@@ -42,9 +33,8 @@ const Index = () => {
       setCurrentThought({
         title: "Considering a set of endless possibilities",
         content:
-          possibilities.current[
-            Math.floor(Math.random() * possibilities.current.length)
-          ] ?? "No possibilities left",
+          possibilities.current[Math.floor(Math.random() * possibilities.current.length)] ??
+          "No possibilities left",
         reveal: gamingStatus,
       });
     }, 1000);
@@ -52,10 +42,7 @@ const Index = () => {
   }, [gamingStatus]);
 
   useEffect(() => {
-    possibilities.current = generatePossibilities(
-      workingRange[0],
-      workingRange[1],
-    );
+    possibilities.current = generatePossibilities(workingRange[0], workingRange[1]);
   }, [workingRange]);
 
   const generatePossibilityQuery = () => {
@@ -88,10 +75,8 @@ const Index = () => {
       return;
     }
     if (queryForm.operator === ">") {
-      possibilities.current = possibilities.current.filter((possibility) =>
-        confirmation
-          ? possibility > queryForm.term
-          : possibility <= queryForm.term,
+      possibilities.current = possibilities.current.filter(possibility =>
+        confirmation ? possibility > queryForm.term : possibility <= queryForm.term,
       );
     }
     generatePossibilityQuery();
@@ -108,7 +93,7 @@ const Index = () => {
         // If the number is greater than the term, the range starts from the term
         // and ends at the previous range
         queriesRequired.current = Math.ceil(Math.log2(queryForm.term));
-        setRangeQuery((prevRangeQuery) => ({
+        setRangeQuery(prevRangeQuery => ({
           rangeStart: queryForm.term,
           rangeEnd: prevRangeQuery.rangeEnd,
         }));
@@ -117,7 +102,7 @@ const Index = () => {
         // and the start of the range is the previous range start
         foundRangeEnd = true;
         queriesRequired.current = Math.ceil(Math.log2(queryForm.term));
-        setRangeQuery((prevRangeQuery) => ({
+        setRangeQuery(prevRangeQuery => ({
           rangeStart: prevRangeQuery.rangeStart,
           rangeEnd: queryForm.term,
         }));
@@ -172,7 +157,7 @@ const Index = () => {
   const inferIsGuess = (msg: string) => {
     const keyMatchersRegex = [/\s*I./, /guess/, /number/, /is/i];
     let matches = 0;
-    keyMatchersRegex.forEach((regex) => {
+    keyMatchersRegex.forEach(regex => {
       if (regex.test(msg)) {
         matches++;
       }
@@ -200,9 +185,7 @@ const Index = () => {
             <>
               {" "}
               <Text>It's just math, with 1/2 teaspoon of chance</Text>{" "}
-              <Link href="https:///www.github.com/renniemaharaj/int-deduce-go">
-                Go Package
-              </Link>
+              <Link href="https:///www.github.com/renniemaharaj/int-deduce-go">Go Package</Link>
             </>
           }
         />
@@ -257,8 +240,8 @@ const Index = () => {
                     </Flex>
                   </Flex>
                   <Hint className="max-w-[500px]">
-                    A simple yes or no question, though seemingly weak, may
-                    filter up to half the amount of possibilities.
+                    A simple yes or no question, though seemingly weak, may filter up to half the
+                    amount of possibilities.
                   </Hint>
                 </Box>
               )}
@@ -269,10 +252,7 @@ const Index = () => {
                   color={colorize(forcedGuess.textContent) as AllowedColors}
                 >{`${forcedGuess.textContent} ${forcedGuess.forceGuess}?`}</Text>
 
-                <Link
-                  className="!cursor-pointer"
-                  onClick={() => mayaPlaysAgain()}
-                >
+                <Link className="!cursor-pointer" onClick={() => mayaPlaysAgain()}>
                   play again{" "}
                 </Link>
                 <Link href="/">thewriter.com</Link>
@@ -283,9 +263,7 @@ const Index = () => {
         <Box className="mt-4 !py-16 !px-16">
           <Text className="opacity-70 transform scale-70 flex items-center gap-2 animate-pulse">
             <BrainCircuit size={24} />
-            {currentThought.reveal
-              ? currentThought.content
-              : currentThought.title}
+            {currentThought.reveal ? currentThought.content : currentThought.title}
           </Text>
         </Box>
       </Flex>

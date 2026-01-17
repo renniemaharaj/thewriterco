@@ -1,13 +1,12 @@
-import { Routes, Route } from "react-router-dom";
+import { Theme } from "@radix-ui/themes";
 import { ErrorBoundary } from "react-error-boundary";
 import { HelmetProvider } from "react-helmet-async";
-import { Theme } from "@radix-ui/themes";
+import { Route, Routes } from "react-router-dom";
 
-// import PersistLogin from "./pkg/PersistLogin";
-import ErrorFallback from "./pkg/eboundary/ErrorBoundary";
-import { AuthRouter } from "./pkg/firebase/auth/component/AuthRouter";
 import { ThemeProvider } from "./pkg/context/theme/ThemeProvider";
 import { useThemeContext } from "./pkg/context/theme/useThemeContext";
+import ErrorFallback from "./pkg/eboundary/ErrorBoundary";
+import { AuthRouter } from "./pkg/firebase/auth/component/AuthRouter";
 import { protectedRoutesFunc, publicRoutesFunc } from "./routing";
 
 function App() {
@@ -29,7 +28,6 @@ function AppShell() {
       accentColor="gold"
       radius="full"
       asChild={false}
-      // hasBackground={true}
       panelBackground="translucent"
       scaling="110%"
       grayColor="sage"
@@ -45,12 +43,8 @@ function AppShell() {
 function AppRoutes() {
   return (
     <Routes>
-      {/* Public Routes */}
       {publicRoutesFunc()}
-      {/* Protected Routes */}
-      {/* <Route element={<PersistLogin />}> */}
       <Route element={<AuthRouter />}>{protectedRoutesFunc()}</Route>
-      {/* </Route> */}
     </Routes>
   );
 }

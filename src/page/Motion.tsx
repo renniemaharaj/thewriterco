@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { min } from "lodash";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 const Motion = ({
   unique,

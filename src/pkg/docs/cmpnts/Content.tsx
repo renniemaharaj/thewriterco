@@ -1,5 +1,5 @@
 import { Tabs } from "@radix-ui/themes";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 const Content = ({
   children,
@@ -11,11 +11,7 @@ const Content = ({
   value: string;
 }) => {
   return (
-    <Tabs.Content
-      key={key}
-      value={value}
-      className="!flex !flex-row !flex-wrap !justify-center"
-    >
+    <Tabs.Content key={key} value={value} className="!flex !flex-row !flex-wrap !justify-center">
       {children}
     </Tabs.Content>
   );

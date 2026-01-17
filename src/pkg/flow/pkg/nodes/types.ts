@@ -1,4 +1,4 @@
-import { HandleType, Position } from "@xyflow/react";
+import type { HandleType, Position } from "@xyflow/react";
 
 export type Handle = {
   type: HandleType;

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BaseKit } from "reactjs-tiptap-editor";
 
 import { Attachment } from "reactjs-tiptap-editor/attachment";
@@ -9,10 +8,9 @@ import { Clear } from "reactjs-tiptap-editor/clear";
 import { Code } from "reactjs-tiptap-editor/code";
 import { CodeBlock } from "reactjs-tiptap-editor/codeblock";
 import { Color } from "reactjs-tiptap-editor/color";
-import { ColumnActionButton } from "reactjs-tiptap-editor/multicolumn";
+import { Drawer } from "reactjs-tiptap-editor/drawer";
 import { Emoji } from "reactjs-tiptap-editor/emoji";
 import { ExportPdf } from "reactjs-tiptap-editor/exportpdf";
-// import { ExportWord } from "reactjs-tiptap-editor/exportword";
 import { FontFamily } from "reactjs-tiptap-editor/fontfamily";
 import { FontSize } from "reactjs-tiptap-editor/fontsize";
 import { FormatPainter } from "reactjs-tiptap-editor/formatpainter";
@@ -22,14 +20,15 @@ import { History } from "reactjs-tiptap-editor/history";
 import { HorizontalRule } from "reactjs-tiptap-editor/horizontalrule";
 import { Iframe } from "reactjs-tiptap-editor/iframe";
 import { Image } from "reactjs-tiptap-editor/image";
-// import { ImageGif } from "reactjs-tiptap-editor/imagegif";
 import { ImportWord } from "reactjs-tiptap-editor/importword";
 import { Indent } from "reactjs-tiptap-editor/indent";
 import { Italic } from "reactjs-tiptap-editor/italic";
+import { Katex } from "reactjs-tiptap-editor/katex";
 import { LineHeight } from "reactjs-tiptap-editor/lineheight";
 import { Link } from "reactjs-tiptap-editor/link";
 import { Mention } from "reactjs-tiptap-editor/mention";
 import { MoreMark } from "reactjs-tiptap-editor/moremark";
+import { ColumnActionButton } from "reactjs-tiptap-editor/multicolumn";
 import { OrderedList } from "reactjs-tiptap-editor/orderedlist";
 import { SearchAndReplace } from "reactjs-tiptap-editor/searchandreplace";
 import { SlashCommand } from "reactjs-tiptap-editor/slashcommand";
@@ -38,21 +37,14 @@ import { Table } from "reactjs-tiptap-editor/table";
 import { TableOfContents } from "reactjs-tiptap-editor/tableofcontent";
 import { TaskList } from "reactjs-tiptap-editor/tasklist";
 import { TextAlign } from "reactjs-tiptap-editor/textalign";
-import { TextUnderline } from "reactjs-tiptap-editor/textunderline";
-import { Video } from "reactjs-tiptap-editor/video";
 import { TextDirection } from "reactjs-tiptap-editor/textdirection";
-import { Katex } from "reactjs-tiptap-editor/katex";
-import { Drawer } from "reactjs-tiptap-editor/drawer";
-// import { Excalidraw } from "reactjs-tiptap-editor/excalidraw";
+import { TextUnderline } from "reactjs-tiptap-editor/textunderline";
 import { Twitter } from "reactjs-tiptap-editor/twitter";
+import { Video } from "reactjs-tiptap-editor/video";
 import { convertBase64ToBlob } from "./utils";
-// import { Mermaid } from "reactjs-tiptap-editor/mermaid";
 
 const extensions = [
   BaseKit.configure({
-    // placeholder: {
-    //   showOnlyCurrent: true,
-    // },
     characterCount: false,
   }),
   History,
@@ -85,15 +77,11 @@ const extensions = [
   Link,
   Image.configure({
     upload: (files: File) =>
-      new Promise((resolve) =>
-        setTimeout(() => resolve(URL.createObjectURL(files)), 500),
-      ),
+      new Promise(resolve => setTimeout(() => resolve(URL.createObjectURL(files)), 500)),
   }),
   Video.configure({
     upload: (files: File) =>
-      new Promise((resolve) =>
-        setTimeout(() => resolve(URL.createObjectURL(files)), 500),
-      ),
+      new Promise(resolve => setTimeout(() => resolve(URL.createObjectURL(files)), 500)),
   }),
   // ImageGif.configure({
   //   GIPHY_API_KEY: process.env.NEXT_PUBLIC_GIPHY_API_KEY as string,
@@ -110,18 +98,17 @@ const extensions = [
   ImportWord.configure({
     upload: (files: File[]) =>
       Promise.resolve(
-        files.map((file) => ({
+        files.map(file => ({
           src: URL.createObjectURL(file),
           alt: file.name,
         })),
       ),
   }),
-  // ExportWord,
   TextDirection,
   Mention,
   Attachment.configure({
     upload: (file: any) =>
-      new Promise((resolve) => {
+      new Promise(resolve => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
@@ -131,21 +118,9 @@ const extensions = [
       }),
   }),
   Katex,
-  // Excalidraw,
-  // Mermaid.configure({
-  //   upload: (file: any) =>
-  //     new Promise((resolve) => {
-  //       const reader = new FileReader();
-  //       reader.readAsDataURL(file);
-  //       reader.onload = () => {
-  //         const blob = convertBase64ToBlob(reader.result as string);
-  //         resolve(URL.createObjectURL(blob));
-  //       };
-  //     }),
-  // }),
   Drawer.configure({
     upload: (file: any) =>
-      new Promise((resolve) => {
+      new Promise(resolve => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {

@@ -1,6 +1,6 @@
+import { useVoiceReader } from "../hooks/useVoiceReader";
 import VoiceReader from "../voice/VoiceReader";
 import VoiceSelect from "../voice/VoiceSelect";
-import { useVoiceReader } from "../hooks/useVoiceReader";
 
 import useResolveFallbackVoice from "../hooks/useResolveFallbackVoice";
 

@@ -1,4 +1,4 @@
-import { Block, Code, MarkupResponse, Response, Scripture } from "../types";
+import type { Block, Code, MarkupResponse, Response, Scripture } from "../types";
 
 const useResponseInterpreter = () => {
   const interpret = (block: Response) => {

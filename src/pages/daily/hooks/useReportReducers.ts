@@ -1,8 +1,8 @@
 import { useAtom } from "jotai";
-import { Report, Result } from "./types";
-import { reportsAtom } from "../atoms/reports/reports";
 import { useCallback } from "react";
 import { useTransitionNavigation } from "../../../pkg/hooks/useTransitionNavigation";
+import { reportsAtom } from "../atoms/reports/reports";
+import type { Report, Result } from "./types";
 
 const blankResult: Result = {
   title: "",
@@ -38,9 +38,7 @@ const useReportReducers = () => {
   const skeletonReport = { ...blankReport, results: skeletonResults };
 
   const returnState = useCallback(() => {
-    return path.startsWith("search") || !(reports.length > 0)
-      ? [skeletonReport]
-      : reports;
+    return path.startsWith("search") || !(reports.length > 0) ? [skeletonReport] : reports;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path, reports]);
   return {

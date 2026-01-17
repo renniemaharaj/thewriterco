@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface PerformanceWithMemory extends Performance {
   memory?: {
@@ -35,7 +35,7 @@ const usePerformanceMetrics = () => {
       const elapsed = now - startTime;
 
       if (elapsed >= 1000) {
-        setMetrics((prevMetrics) => ({
+        setMetrics(prevMetrics => ({
           ...prevMetrics,
           fps: Math.round((frameCount * 1000) / elapsed),
         }));

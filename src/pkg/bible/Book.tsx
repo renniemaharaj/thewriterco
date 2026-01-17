@@ -1,7 +1,7 @@
-import React from "react";
-import Book from "../book/Book";
+import type React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../app/store";
+import type { RootState } from "../../app/store";
+import Book from "../book/Book";
 
 type BookFragmentProps = {
   book: string;
@@ -10,12 +10,7 @@ type BookFragmentProps = {
   onClick: () => void;
 };
 
-const BookFragment: React.FC<BookFragmentProps> = ({
-  book,
-  title,
-  onClick,
-  showAnimation,
-}) => {
+const BookFragment: React.FC<BookFragmentProps> = ({ book, title, onClick, showAnimation }) => {
   const eReaderState = useSelector((state: RootState) => state.reader);
 
   return (
@@ -25,9 +20,7 @@ const BookFragment: React.FC<BookFragmentProps> = ({
       version="KJV"
       className="!w-[6rem]"
       showAnimation={showAnimation}
-      actionPagesFlipped={
-        eReaderState.eBook.title === book && eReaderState.isOpen
-      }
+      actionPagesFlipped={eReaderState.eBook.title === book && eReaderState.isOpen}
       onClick={onClick}
     />
   );

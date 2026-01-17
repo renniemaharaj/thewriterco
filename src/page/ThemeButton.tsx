@@ -1,6 +1,6 @@
 import { IconButton } from "@radix-ui/themes";
-import { SunIcon, SunMoonIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import { SunIcon, SunMoonIcon } from "lucide-react";
 import { useThemeContext } from "../pkg/context/theme/useThemeContext";
 
 const ThemeButton = () => {
@@ -32,11 +32,7 @@ const ThemeButton = () => {
       className="hidden md:block"
     >
       {theme === "dark" ? (
-        <SunMoonIcon
-          width="20"
-          height="20"
-          className="text-white animate-pulse"
-        />
+        <SunMoonIcon width="20" height="20" className="text-white animate-pulse" />
       ) : (
         <SunIcon width="20" height="20" className="animate-pulse" />
       )}

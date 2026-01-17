@@ -1,5 +1,5 @@
 import { Button, Dialog, Flex } from "@radix-ui/themes";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import Bible from "./Bible";
 
 const Picker = ({ trigger }: { trigger: ReactNode }) => {
@@ -10,9 +10,7 @@ const Picker = ({ trigger }: { trigger: ReactNode }) => {
         aria-describedby="Explore the various districts of the Holy Bible KJV"
         maxWidth="450px"
       >
-        <Dialog.Title className="w-full text-center">
-          Holy Bible KJV
-        </Dialog.Title>
+        <Dialog.Title className="w-full text-center">Holy Bible KJV</Dialog.Title>
         <Flex direction="column" gap="3">
           <Bible asChild showAnimation={false} />
         </Flex>

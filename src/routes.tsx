@@ -1,5 +1,5 @@
-import { CustomRoute, IndexRoute } from "./routing";
 import { lazy } from "react";
+import type { CustomRoute, IndexRoute } from "./routing";
 
 import Index from "./pages/root/index.tsx";
 
@@ -9,10 +9,9 @@ const Kjv = lazy(() => import("./pages/kjv/index.tsx"));
 const Writer = lazy(() => import("./pages/writer/index.tsx"));
 const Documentation = lazy(() => import("./pages/read/index.tsx"));
 
-import Login from "./pages/login/index";
 import Missing from "./page/views/Missing.tsx";
-// import Suspended from "./page/views/Suspended.tsx";
 import Daily from "./pages/daily/index";
+import Login from "./pages/login/index";
 
 export const protectedRoutes: CustomRoute[] = [
   { path: "ai", element: <AI />, suspended: false },

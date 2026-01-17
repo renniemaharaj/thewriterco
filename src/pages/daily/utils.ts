@@ -1,5 +1,4 @@
-const placeHolderImage =
-  "https://aharvey.com/wp-content/uploads/2018/03/bg-placeholder.jpg";
+const placeHolderImage = "https://aharvey.com/wp-content/uploads/2018/03/bg-placeholder.jpg";
 
 export function getRandomElement(array: string[]): string {
   if (array.length === 0) return placeHolderImage;
@@ -17,7 +16,7 @@ export function getRandomElement(array: string[]): string {
 export function capitalizeBigWords(input: string): string {
   return input
     .split(" ")
-    .map((word) => {
+    .map(word => {
       return word.length > 2 ? word[0].toUpperCase() + word.slice(1) : word;
     })
     .join(" ");

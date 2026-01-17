@@ -1,16 +1,13 @@
+import { AlertDialog, Button, Card, Flex, Text } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../app/store";
+import { setGlobalCurrentChapter, setGlobalCurrentVerse } from "../../app/reader/readerSlice";
+import type { RootState } from "../../app/store";
+import Page from "../../page/Page";
+import Bible from "../../pkg/bible/Bible";
 import useBible from "../../pkg/hooks/useBible";
 import { useURLState } from "../../pkg/hooks/useURLState";
-import { AlertDialog, Button, Card, Flex, Text } from "@radix-ui/themes";
-import {
-  setGlobalCurrentChapter,
-  setGlobalCurrentVerse,
-} from "../../app/reader/readerSlice";
-import Bible from "../../pkg/bible/Bible";
 import Link from "../../pkg/link/Link";
-import Page from "../../page/Page";
 
 const Index = () => {
   const ereaderSlice = useSelector((state: RootState) => state.reader);
@@ -86,8 +83,7 @@ const Index = () => {
           <AlertDialog.Description size="2">
             Would you like to load{" "}
             <strong>
-              {initialURLState?.bookTitle} {initialURLState?.chapter}:
-              {initialURLState?.verse}
+              {initialURLState?.bookTitle} {initialURLState?.chapter}:{initialURLState?.verse}
             </strong>{" "}
             from the URL? This will override your current state
           </AlertDialog.Description>
@@ -108,16 +104,8 @@ const Index = () => {
       </AlertDialog.Root>
 
       {/* Page layout */}
-      <Page
-        wrapChildren={true}
-        title="KJV Bible"
-        description="Read the KJV Bible"
-      >
-        <Flex
-          direction="column"
-          align="center"
-          className="w-full mx-auto gap-6"
-        >
+      <Page wrapChildren={true} title="KJV Bible" description="Read the KJV Bible">
+        <Flex direction="column" align="center" className="w-full mx-auto gap-6">
           <Bible showAnimation={true} />
 
           <Card className="!flex text-center w-full !items-center !justify-center">
@@ -128,11 +116,7 @@ const Index = () => {
               <Text size="3" color="gray">
                 66 Books • 1,189 Chapters • 31,102 Verses
               </Text>
-              <Link
-                animate
-                external
-                href="https://github.com/renniemaharaj/kjv-bible"
-              >
+              <Link animate external href="https://github.com/renniemaharaj/kjv-bible">
                 Git Source
               </Link>
             </Flex>

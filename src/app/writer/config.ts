@@ -1,4 +1,4 @@
-import { WriterProps } from "./types";
+import type { WriterProps } from "./types";
 
 export const initialState: WriterProps = {
   title: "",

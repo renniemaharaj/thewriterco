@@ -1,7 +1,7 @@
-import { NodeProps } from "@xyflow/react";
-import { Node } from "./pkg/Node";
-import { CustomNodeProps } from "./types";
+import type { NodeProps } from "@xyflow/react";
 import { memo } from "react";
+import { Node } from "./pkg/Node";
+import type { CustomNodeProps } from "./types";
 
 const ScrollAreaNode = memo(({ data }: NodeProps & CustomNodeProps) => {
   return (

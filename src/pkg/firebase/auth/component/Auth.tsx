@@ -1,10 +1,10 @@
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { useCallback } from "react";
-import { GoogleAuthProvider, signOut, signInWithPopup } from "firebase/auth";
 
 import { Button } from "@radix-ui/themes";
 import { auth } from "../../firebase";
-import Card from "./user/Card";
 import useUserLikelySignedIn from "../hooks/useUserLikelySignedIn";
+import Card from "./user/Card";
 
 const Auth = ({ variant = "button" }: { variant?: "image" | "button" }) => {
   const { user } = useUserLikelySignedIn();
@@ -27,11 +27,7 @@ const Auth = ({ variant = "button" }: { variant?: "image" | "button" }) => {
   };
 
   return variant === "image" ? (
-    <Card
-      user={user}
-      handleSignIn={handleSignIn}
-      handleSignOut={handleSignOut}
-    />
+    <Card user={user} handleSignIn={handleSignIn} handleSignOut={handleSignOut} />
   ) : (
     <Button variant="soft" onClick={handleSignIn}>
       Sign In

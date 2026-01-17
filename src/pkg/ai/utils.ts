@@ -1,10 +1,8 @@
-import { Block, Code, Exchange, MarkupResponse, Scripture } from "./types";
+import type { Block, Code, Exchange, MarkupResponse, Scripture } from "./types";
 
 // Convert scripture block to string
 export function scriptureToStr(block: Scripture) {
-  return JSON.stringify(
-    Array.isArray(block.verses) ? block.verses.join(" ") : block.verses,
-  );
+  return JSON.stringify(Array.isArray(block.verses) ? block.verses.join(" ") : block.verses);
 }
 
 // Build conversation for AI
@@ -13,8 +11,8 @@ export async function buildConversation(
   additionalExchange?: Exchange,
 ): Promise<Exchange[]> {
   const conversation = primaryBlocks
-    .filter((block) => block.role !== "system")
-    .map((block) => {
+    .filter(block => block.role !== "system")
+    .map(block => {
       switch (block.type) {
         case "markup":
           return {

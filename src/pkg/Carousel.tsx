@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useCallback } from "react";
+import { IconButton } from "@radix-ui/themes";
 import classNames from "classnames";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { IconButton } from "@radix-ui/themes";
+import type React from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type CarouselProps = {
   items: React.ReactNode[];

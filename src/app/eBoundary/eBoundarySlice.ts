@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./config";
-import { RecoveryFunction } from "./types";
+import type { RecoveryFunction } from "./types";
 
 const errorBoundarySlice = createSlice({
   name: "errorBoundary",
@@ -8,7 +8,7 @@ const errorBoundarySlice = createSlice({
   reducers: {
     RegisterRecoveryFunction(state, action: PayloadAction<RecoveryFunction>) {
       const exists = state.recoveryFunctions.some(
-        (recovery) => recovery.title === action.payload.title,
+        recovery => recovery.title === action.payload.title,
       );
       if (!exists) {
         state.recoveryFunctions.push(action.payload);

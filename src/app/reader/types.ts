@@ -1,4 +1,4 @@
-import { Favorite } from "../../pkg/bible/reader/favorites/types";
+import type { Favorite } from "../../pkg/bible/reader/favorites/types";
 
 export type Content =
   | {

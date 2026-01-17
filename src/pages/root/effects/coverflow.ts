@@ -1,9 +1,4 @@
-import {
-  Pagination,
-  Autoplay,
-  Navigation,
-  EffectCoverflow,
-} from "swiper/modules"; // Import modules
+import { Autoplay, EffectCoverflow, Navigation, Pagination } from "swiper/modules"; // Import modules
 
 import "swiper/css/effect-coverflow"; // Import coverflow effect CSS
 export const coverflow = {

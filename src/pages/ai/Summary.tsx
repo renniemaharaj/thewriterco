@@ -1,9 +1,9 @@
 import { Button, Dialog, Flex, Select, Text, Tooltip } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
-import fetchGitBlob from "../../pkg/hooks/data/useFetchGitBlob";
-import { templateRepoPath } from "../../pkg/hooks/data/presets";
-import getRequestInstructions from "./utils";
 import useSendHandler from "../../pkg/ai/hooks/useSendHandler";
+import { templateRepoPath } from "../../pkg/hooks/data/presets";
+import fetchGitBlob from "../../pkg/hooks/data/useFetchGitBlob";
+import getRequestInstructions from "./utils";
 
 const Summary = ({
   summaryVisible,
@@ -15,31 +15,31 @@ const Summary = ({
   scrollHandler: () => void;
 }) => {
   const [selectedTemplate, setSelectedTemplate] = useState<string>("default"); // Default to the first template
-  const [templates, setTemplates] = useState<
-    { id: number; name: string; description: string }[]
-  >([]);
+  const [templates, setTemplates] = useState<{ id: number; name: string; description: string }[]>(
+    [],
+  );
 
   const { sendHandler } = useSendHandler();
 
   async function fetchTemplateCatalogue() {
     fetchGitBlob(templateRepoPath, "/main/catalogue", "json")
-      .then((content) => {
+      .then(content => {
         const catalogue = JSON.parse(content);
         setTemplates(catalogue.templates);
       })
-      .catch((error) => console.error(error));
+      .catch(error => console.error(error));
   }
 
   async function getTemplateContent(template: string) {
     return fetchGitBlob(templateRepoPath, `/main/${template}`, "html")
-      .then((content) => {
+      .then(content => {
         return content;
       })
-      .catch((error) => console.error(error));
+      .catch(error => console.error(error));
   }
 
   async function requestSummarizedDocument() {
-    getTemplateContent(selectedTemplate).then((content) => {
+    getTemplateContent(selectedTemplate).then(content => {
       sendHandler({
         msg: content + "\n" + getRequestInstructions(),
         defaultSending: false,
@@ -54,7 +54,7 @@ const Summary = ({
   return (
     <Dialog.Root
       open={summaryVisible}
-      onOpenChange={(open) => {
+      onOpenChange={open => {
         setSummaryVisible(open);
       }}
     >
@@ -70,11 +70,11 @@ const Summary = ({
             </Text>
             <Select.Root
               value={selectedTemplate}
-              onValueChange={(value) => setSelectedTemplate(value)}
+              onValueChange={value => setSelectedTemplate(value)}
             >
               <Select.Trigger />
               <Select.Content>
-                {templates.map((template) => (
+                {templates.map(template => (
                   <Tooltip key={template.id} content={template.description}>
                     <Select.Item value={template.name.toString().toLowerCase()}>
                       <Text size="2">{template.name}</Text>

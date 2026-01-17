@@ -1,10 +1,10 @@
 import { Box, Button, Card, Flex, Spinner, Text } from "@radix-ui/themes";
 
-import Menu, { TabItem } from "./cmpnts/Menu";
+import { useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useGitFetchDocument } from "../hooks/data/gitFetchDocument";
-import { useCallback, useMemo } from "react";
 import Renderer from "../writer/Renderer";
+import Menu, { type TabItem } from "./cmpnts/Menu";
 
 export type DocumentationProps = {
   additionalTabs?: TabItem[];

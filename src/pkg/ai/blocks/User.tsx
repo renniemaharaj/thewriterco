@@ -1,4 +1,4 @@
-import { Block, MarkupResponse } from "../types";
+import type { Block, MarkupResponse } from "../types";
 
 const User = ({ block }: { block: Block }) => {
   return (

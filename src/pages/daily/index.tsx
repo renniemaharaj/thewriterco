@@ -1,11 +1,11 @@
-import React from "react";
 import { Flex } from "@radix-ui/themes";
+import React from "react";
 import Hero from "../../page/Hero";
 import Page from "../../page/Page";
+import Current from "./Current";
 import { Report } from "./Report"; // renamed for clarity
 import useReportReducers from "./hooks/useReportReducers";
 import useSocketHandler from "./hooks/useSocketHandler";
-import Current from "./Current";
 
 const Index = () => {
   const { state } = useReportReducers();

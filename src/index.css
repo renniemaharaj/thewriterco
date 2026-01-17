@@ -25,9 +25,7 @@
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
-  font-variation-settings:
-    "wdth" 100,
-    "GRAD" 0;
+  font-variation-settings: "wdth" 100, "GRAD" 0;
 }
 
 .roboto-serif-800 {
@@ -35,9 +33,7 @@
   font-optical-sizing: auto;
   font-weight: 800;
   font-style: normal;
-  font-variation-settings:
-    "wdth" 100,
-    "GRAD" 0;
+  font-variation-settings: "wdth" 100, "GRAD" 0;
 }
 
 .country-colored-text-tt {
@@ -174,12 +170,7 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(
-    0deg,
-    transparent,
-    transparent 30%,
-    rgba(255, 215, 0, 0.25)
-  );
+  background: linear-gradient(0deg, transparent, transparent 30%, rgba(255, 215, 0, 0.25));
   transform: rotate(-45deg);
   transition: all 1s ease;
   opacity: 0;
@@ -216,16 +207,10 @@
 
 @keyframes glowing-effect {
   0% {
-    text-shadow:
-      0 0 5px #978365,
-      0 0 10px #978365,
-      0 0 20px #978365;
+    text-shadow: 0 0 5px #978365, 0 0 10px #978365, 0 0 20px #978365;
   }
   100% {
-    text-shadow:
-      0 0 20px #978365,
-      0 0 40px #978365,
-      0 0 60px #978365;
+    text-shadow: 0 0 20px #978365, 0 0 40px #978365, 0 0 60px #978365;
   }
 }
 

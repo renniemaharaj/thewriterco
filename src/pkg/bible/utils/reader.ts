@@ -1,4 +1,4 @@
-import { Content } from "../../../app/reader/types";
+import type { Content } from "../../../app/reader/types";
 
 export const getChapterVerses = ({
   currentChapter,

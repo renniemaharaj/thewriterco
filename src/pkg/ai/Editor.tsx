@@ -1,10 +1,10 @@
 import { Badge, Card, Flex, IconButton } from "@radix-ui/themes";
-import { Block, Code } from "./types";
 import { CopyIcon, DownloadIcon } from "lucide-react";
-import MonacoEditor from "../MonacoEditor";
 import { useCallback } from "react";
-import useDownloader from "../hooks/useDownloader";
+import MonacoEditor from "../MonacoEditor";
 import useCopy from "../hooks/useCopy";
+import useDownloader from "../hooks/useDownloader";
+import type { Block, Code } from "./types";
 
 const Editor: React.FC<{ block: Block }> = ({ block }) => {
   const { download } = useDownloader();

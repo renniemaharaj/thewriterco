@@ -1,4 +1,4 @@
-import { readerState } from "./types";
+import type { readerState } from "./types";
 
 const introductionMessage = ``;
 export default introductionMessage;

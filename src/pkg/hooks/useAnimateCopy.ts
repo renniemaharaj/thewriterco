@@ -5,7 +5,7 @@ export function useAnimateCopy(duration = 1000) {
 
   const animateCopy = () => {
     setAnimating(true);
-    return new Promise<void>((resolve) => {
+    return new Promise<void>(resolve => {
       setTimeout(() => {
         setAnimating(false);
         resolve();
@@ -13,9 +13,7 @@ export function useAnimateCopy(duration = 1000) {
     });
   };
 
-  const animationClass = animating
-    ? "absolute !w-full !h-full !z-10 animate-copy"
-    : "";
+  const animationClass = animating ? "absolute !w-full !h-full !z-10 animate-copy" : "";
 
   return { animateCopy, animationClass };
 }

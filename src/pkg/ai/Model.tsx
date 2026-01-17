@@ -1,14 +1,7 @@
-import {
-  Badge,
-  Code,
-  DataList,
-  Flex,
-  IconButton,
-  Link,
-} from "@radix-ui/themes";
+import { Badge, Code, DataList, Flex, IconButton, Link } from "@radix-ui/themes";
 import { CopyIcon } from "lucide-react";
-import { Model as Mod } from "../../app/chat/types";
 import { memo } from "react";
+import type { Model as Mod } from "../../app/chat/types";
 
 const Model = ({ model }: { model: Mod }) => {
   return (
@@ -26,12 +19,7 @@ const Model = ({ model }: { model: Mod }) => {
         <DataList.Value>
           <Flex align="center" gap="2">
             <Code variant="ghost">{model.key}</Code>
-            <IconButton
-              size="1"
-              aria-label="Copy value"
-              color="gray"
-              variant="ghost"
-            >
+            <IconButton size="1" aria-label="Copy value" color="gray" variant="ghost">
               <CopyIcon />
             </IconButton>
           </Flex>

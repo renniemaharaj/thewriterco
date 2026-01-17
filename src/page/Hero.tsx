@@ -1,5 +1,6 @@
-import React, { ReactNode } from "react";
 import { Flex } from "@radix-ui/themes";
+import type React from "react";
+import type { ReactNode } from "react";
 import Hint from "../pkg/Hint";
 
 export type HeroProps = {

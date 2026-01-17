@@ -1,19 +1,17 @@
 import { Select } from "@radix-ui/themes";
-import VoiceList from "./VoiceList";
 import { memo, useEffect } from "react";
-import useResolveFallbackVoice from "../hooks/useResolveFallbackVoice";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../app/store";
 import { setSelectedVoice } from "../../app/reader/readerSlice";
+import type { RootState } from "../../app/store";
+import useResolveFallbackVoice from "../hooks/useResolveFallbackVoice";
+import VoiceList from "./VoiceList";
 
 export type VoiceSelectProps = {
   voices: SpeechSynthesisVoice[];
 };
 
 const VoiceSelect = ({ voices }: VoiceSelectProps) => {
-  const selectedVoice = useSelector(
-    (state: RootState) => state.reader.selectedVoice,
-  );
+  const selectedVoice = useSelector((state: RootState) => state.reader.selectedVoice);
   const dispatch = useDispatch();
 
   const resolveVoice = useResolveFallbackVoice().resolveOrFallback();
@@ -25,10 +23,7 @@ const VoiceSelect = ({ voices }: VoiceSelectProps) => {
   }, [resolveVoice, dispatch]);
 
   return (
-    <Select.Root
-      value={selectedVoice}
-      onValueChange={(value) => dispatch(setSelectedVoice(value))}
-    >
+    <Select.Root value={selectedVoice} onValueChange={value => dispatch(setSelectedVoice(value))}>
       <Select.Trigger />
       <Select.Content>
         <Select.Group>

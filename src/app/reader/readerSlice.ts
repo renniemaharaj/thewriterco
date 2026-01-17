@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { EBook } from "./types";
-import { Favorite } from "../../pkg/bible/reader/favorites/types";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { Favorite } from "../../pkg/bible/reader/favorites/types";
 import { initialStateWithLocalStorage } from "../utils";
 import { initialState } from "./config";
+import type { EBook } from "./types";
 
 const readerSlice = createSlice({
   name: "reader",
@@ -26,10 +26,7 @@ const readerSlice = createSlice({
     setDate(state, action: PayloadAction<string | undefined>) {
       state.eBook.date = action.payload;
     },
-    setContent(
-      state,
-      action: PayloadAction<string | Record<string, Record<string, string>>>,
-    ) {
+    setContent(state, action: PayloadAction<string | Record<string, Record<string, string>>>) {
       state.eBook.content = action.payload;
     },
     setOpenState(state, action: PayloadAction<boolean>) {
@@ -57,14 +54,10 @@ const readerSlice = createSlice({
       state.speaking = !state.speaking;
     },
     removeFavorite(state, action: PayloadAction<string>) {
-      state.favorites = state.favorites.filter(
-        (fav: Favorite) => fav.title !== action.payload,
-      );
+      state.favorites = state.favorites.filter((fav: Favorite) => fav.title !== action.payload);
     },
     pushFavorite(state, action: PayloadAction<Favorite>) {
-      const exists = state.favorites.some(
-        (fav: Favorite) => fav.title === action.payload.title,
-      );
+      const exists = state.favorites.some((fav: Favorite) => fav.title === action.payload.title);
       if (!exists) {
         state.favorites.push(action.payload);
       }

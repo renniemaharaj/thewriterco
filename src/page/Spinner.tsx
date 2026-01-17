@@ -13,10 +13,7 @@ const Spinner = ({
       align={"center"}
       className={`w-10 aspect-square rounded-full ${className}`}
     >
-      <RSpinner
-        size={size || "2"}
-        className="scale-125 animate-spin !transition-all !delay-300"
-      />
+      <RSpinner size={size || "2"} className="scale-125 animate-spin !transition-all !delay-300" />
     </Flex>
   );
 };

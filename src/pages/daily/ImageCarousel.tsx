@@ -7,7 +7,7 @@ const ImageCarousel = ({ images = [""] }: { images?: string[] }) => {
   return (
     <Carousel
       className="!min-w-[120px] !min-h-[120px]"
-      items={imgs?.map((img) => (
+      items={imgs?.map(img => (
         <Suspense>
           <Image src={img} />
         </Suspense>

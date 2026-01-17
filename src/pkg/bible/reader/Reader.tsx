@@ -1,21 +1,21 @@
-import { useEffect, useRef, useMemo, useCallback } from "react";
 import { Flex, IconButton, Tooltip } from "@radix-ui/themes";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../app/store";
 import { ArrowBigLeft, ArrowBigRight, ArrowBigRightDash } from "lucide-react";
-import { getChapterVerses } from "../utils/reader";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { pushFavorite } from "../../../app/reader/readerSlice";
+import type { RootState } from "../../../app/store";
 import { useContentReducers } from "../../hooks/useContentReducers";
 import {
-  useGlobalShortcuts,
   registerShortcut,
   unregisterShortcut,
+  useGlobalShortcuts,
 } from "../../hooks/useGlobalShortcuts";
-import Shadow from "./Shadow";
-import Current from "./Current";
 import { SHADOW_COUNT } from "../config";
+import { getChapterVerses } from "../utils/reader";
 import Changer from "./Changer";
+import Current from "./Current";
 import HeartPlus from "./HeartPlus";
-import { pushFavorite } from "../../../app/reader/readerSlice";
+import Shadow from "./Shadow";
 import Header from "./header/Header";
 
 const Reader = ({
@@ -56,7 +56,7 @@ const Reader = ({
 
   const currentIsFavorite = useCallback(() => {
     const fav = favorites.some(
-      (fav) => fav.title === `${currentBook} ${currentChapter}:${currentVerse}`,
+      fav => fav.title === `${currentBook} ${currentChapter}:${currentVerse}`,
     );
     return fav;
   }, [favorites, currentBook, currentChapter, currentVerse]);
@@ -70,8 +70,7 @@ const Reader = ({
 
   // Chapter Verses for Select Picker
   const chapterVerses = useMemo(
-    () =>
-      getChapterVerses({ currentChapter: currentChapter, eContent: content }),
+    () => getChapterVerses({ currentChapter: currentChapter, eContent: content }),
     [currentChapter, content],
   );
 
@@ -108,7 +107,7 @@ const Reader = ({
   }, [navigateVerse, eReaderState]);
 
   const hasFiveVersesLeft = useCallback(() => {
-    const currentIndex = parseInt(currentVerse, 10);
+    const currentIndex = Number.parseInt(currentVerse, 10);
     return currentIndex + SHADOW_COUNT < chapterVerses.length;
   }, [currentVerse, chapterVerses]);
 

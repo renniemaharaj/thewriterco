@@ -2,7 +2,7 @@ import { Select } from "@radix-ui/themes";
 
 const VoiceList = ({ voices }: { voices: SpeechSynthesisVoice[] }) => {
   return voices
-    .filter((voice) => !!(voice as SpeechSynthesisVoice).voiceURI)
+    .filter(voice => !!(voice as SpeechSynthesisVoice).voiceURI)
     .map((voice, index) => (
       <Select.Item
         key={`voice-${(voice as SpeechSynthesisVoice).voiceURI ?? index}`}

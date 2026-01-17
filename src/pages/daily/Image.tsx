@@ -1,7 +1,6 @@
 import { Img } from "react-image";
 
-const PlaceholderImage =
-  "https://aharvey.com/wp-content/uploads/2018/03/bg-placeholder.jpg";
+const PlaceholderImage = "https://aharvey.com/wp-content/uploads/2018/03/bg-placeholder.jpg";
 
 const Image = ({ src }: { src: string }) => {
   return (
