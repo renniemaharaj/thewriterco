@@ -34,20 +34,21 @@ const Index: React.FC = () => {
         />
       }
     >
-      {/* <Separator size={"4"} /> */}
-      <Flex className="flex-row !w-full gap-5">
-        <Flex className="!relative !flex-row !w-[75%] gap-5 mx-auto">
-          <Swiper {...swiperProps} slidesPerView="auto">
+      <Flex className="flex-col !w-full gap-6 md:gap-8">
+        <Flex className="!relative !flex-row !w-full gap-5 md:gap-6 justify-center">
+          <Swiper {...swiperProps} slidesPerView="auto" className="!w-full max-w-5xl">
             {swiperSlides.map((item, index) => (
               <SwiperSlide key={index} className="flex justify-center items-center">
-                <Card key={index}>{item}</Card>
+                <Card className="!shadow-md hover:!shadow-lg transition-shadow !h-full" key={index}>{item}</Card>
               </SwiperSlide>
             ))}
           </Swiper>
         </Flex>
       </Flex>
-      <Flex className="!hidden md:!flex mt-10 pb-1 !overflow-auto">
-        <Renderer content={home_art} />
+      <Flex className="!hidden md:!flex mt-10 md:mt-12 pb-2 !overflow-auto !w-full justify-center">
+        <div className="max-w-5xl w-full">
+          <Renderer content={home_art} />
+        </div>
       </Flex>
     </Page>
   );

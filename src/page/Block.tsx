@@ -1,7 +1,7 @@
 import Spinner from "./Spinner";
 
 const Block = () => (
-  <div>
+  <div className="flex justify-center items-center py-12 md:py-16">
     <Spinner />
   </div>
 );

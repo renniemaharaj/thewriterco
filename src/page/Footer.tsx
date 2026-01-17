@@ -17,17 +17,16 @@ const Footer: React.FC = () => {
   return (
     <footer
       id="footer"
-      className="flex lg-holographic-card holographic-card !flex-col !gap-5 py-16"
+      className="flex lg-holographic-card holographic-card !flex-col !gap-8 md:!gap-10 py-16 md:py-20 px-4 sm:px-6 md:px-8"
     >
       {/* First Column: Information Section */}
       <Hero
         header={companyName}
-        className="!text-center max-w-[500px] mx-auto"
+        className="!text-center max-w-2xl mx-auto"
         subHeader={
-          <div>
-            <Text className="country-colored-text-tt">{companyAddress}</Text>
-            <br />
-            <Hint>{companyMission}</Hint>
+          <div className="space-y-3">
+            <Text className="country-colored-text-tt text-lg font-semibold">{companyAddress}</Text>
+            <Hint className="!justify-center">{companyMission}</Hint>
           </div>
         }
       />

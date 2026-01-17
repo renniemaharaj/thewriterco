@@ -29,10 +29,10 @@ const Index = () => {
         />
       }
     >
-      <Flex mt="5" className="flex-col !items-center !justify-center">
+      <Flex className="flex-col !items-center !justify-center !w-full gap-6 md:gap-8">
         <Current />
 
-        <Flex className="!flex-col gap-4 !w-full">
+        <Flex className="!flex-col gap-4 md:gap-6 !w-full">
           {state.map((report, index) => (
             <React.Fragment key={`report-${index}`}>
               <Report report={report} />

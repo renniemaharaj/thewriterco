@@ -7,7 +7,6 @@ import Footer from "./Footer";
 import Navbar from "./Header";
 import { motion } from "framer-motion";
 import { pushResult } from "../app/page/pageSlice";
-import { useOrientation } from "../pkg/hooks/useOrientation";
 import { useTransitionNavigation } from "../pkg/hooks/useTransitionNavigation";
 import Seo from "./Seo";
 import usePageActions from "./hooks/usePageActions";
@@ -32,8 +31,6 @@ const Page = ({
   title?: string;
 }) => {
   const { isPending, path } = useTransitionNavigation();
-
-  const orientation = useOrientation();
 
   const pageActions = usePageActions();
 
@@ -71,7 +68,6 @@ const Page = ({
       <div className="w-full">
         <Seo title={title} description={description} />
 
-        {/* <Navbar /> */}
         <Navbar />
 
         {/** Voice reader */}
@@ -82,7 +78,7 @@ const Page = ({
           direction="column"
           align="center"
           justify="center"
-          className={`!w-full !flex-col !mx-auto pb-20 blurred-div-light`}
+          className={`!w-full !flex-col !mx-auto py-12 md:py-16 px-4 sm:px-6`}
         >
           {/** Page children on motion transition in */}
           <motion.div
@@ -90,13 +86,13 @@ const Page = ({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
-            className="max-w-full"
+            className="w-full max-w-6xl"
           >
             {wrapChildren && (
               <Card
-                className={`w-full blurred-div !py-6 top-3 !min-w-[300px] !transition-all !delay-300 ${className} ${orientation === "horizontal" ? "!px-3" : "!px-1"}`}
+                className={`w-full blurred-div !py-8 md:!py-12 !px-4 sm:!px-6 md:!px-8 !min-w-[300px] !transition-all !delay-300 ${className}`}
               >
-                <Flex data-testid="heroElement" className={`!flex-col !gap-10 !w-full !max-w-full`}>
+                <Flex data-testid="heroElement" className={`!flex-col !gap-8 md:!gap-10 !w-full !max-w-full`}>
                   {hero}
                 </Flex>
                 {isPending ? <Block /> : children}
@@ -104,12 +100,12 @@ const Page = ({
             )}
             {!wrapChildren && (
               <>
-                {hero}{" "}
+                {hero}
                 {isPending ? (
                   <Block />
                 ) : (
-                  <Flex className="!flex-col !gap-10">
-                    <Separator size={"2"} className="mx-auto mt-10" />
+                  <Flex className="!flex-col !gap-8 md:!gap-10 !w-full">
+                    <Separator size={"2"} className="mx-auto mt-8 md:mt-10" />
                     {children}
                   </Flex>
                 )}
@@ -118,10 +114,7 @@ const Page = ({
           </motion.div>
         </Flex>
 
-        {/* </Flex> */}
-        <Separator size={"4"} />
-        <Separator size={"4"} />
-        {/* <Footer /> */}
+        <Separator size={"2"} />
         <Footer />
       </div>
     );

@@ -16,11 +16,16 @@ const Hero: React.FC<HeroProps> = ({
   className = "!text-center !justify-center !items-center",
 }) => {
   return (
-    <Flex className={`flex-col gap-4 ${className}`}>
-      <h2 className="text-2xl font-bold">
-        {header} <span className="w-full text-center">{subHeader}</span>
-      </h2>
-      {hint && <Hint className="max-w-[400px] overflow-hidden">{hint}</Hint>}
+    <Flex className={`flex-col gap-4 md:gap-6 ${className}`}>
+      <div className="space-y-2">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+          {header}
+        </h1>
+        <h2 className="text-2xl md:text-3xl font-semibold text-slate-600 dark:text-slate-300">
+          {subHeader}
+        </h2>
+      </div>
+      {hint && <Hint className="max-w-md md:max-w-lg overflow-hidden mt-2">{hint}</Hint>}
     </Flex>
   );
 };

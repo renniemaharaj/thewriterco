@@ -25,37 +25,50 @@ const Navbar: React.FC = () => {
     <>
       <Flex
         data-testid="header"
-        className={`w-full !justify-evenly py-2 shadow-md sticky top-0 blurred-div !rounded-none transition-all ${readerState.isOpen ? "z-0" : "z-10"}`}
+        className={`w-full !justify-between py-3 md:py-4 px-4 md:px-6 shadow-sm sticky top-0 blurred-div !rounded-none transition-all ${readerState.isOpen ? "z-0" : "z-10"}`}
       >
-        <Flex className="gap-4 flex-row md:flex-row items-center justify-between px-4">
-          <Text className="text-2xl font-bold cursor-pointer" onClick={() => navigateWT("/")}>
+        <Flex className="gap-4 md:gap-6 items-center justify-start flex-1">
+          <Text className="text-2xl md:text-3xl font-bold cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigateWT("/")}>
             TheWriterCo
           </Text>
 
           {/* Search Bar - Hidden on Small Screens */}
-          <Search
-            placeHolderOnFocus="Filter by keywords 🧐"
-            placeholderOnBlur="Discover"
-            disabled={false}
-          />
-          {/* Theme Toggle & Menu Button */}
-          <ThemeButton />
+          <div className="hidden md:block flex-1 max-w-sm ml-4">
+            <Search
+              placeHolderOnFocus="Filter by keywords 🧐"
+              placeholderOnBlur="Discover"
+              disabled={false}
+            />
+          </div>
         </Flex>
 
-        {/* Navigation */}
-        <Flex className="items-center">
+        {/* Right Side: Theme Toggle & Navigation */}
+        <Flex className="gap-2 md:gap-4 items-center">
+          {/* Search Bar - Mobile */}
+          <div className="md:hidden flex-1">
+            <Search
+              placeHolderOnFocus="Search 🧐"
+              placeholderOnBlur="Search"
+              disabled={false}
+            />
+          </div>
+          
+          {/* Theme Toggle */}
+          <ThemeButton />
+          
           {/* Hamburger Menu */}
           <IconButton
             variant="soft"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle Navigation"
-            className="flex md:!hidden flex-col"
+            className="flex md:!hidden"
+            size="2"
           >
             {isMenuOpen ? <Cross1Icon /> : <HamburgerMenuIcon />}
           </IconButton>
 
-          {/* Navigation Links */}
-          <ul className={`md:flex hidden gap-2 mt-2 md:mt-0`}>
+          {/* Navigation Links - Desktop */}
+          <ul className={`hidden md:flex gap-1 items-center`}>
             {navLinks.map(
               (link, index) =>
                 !link.disabled && (
@@ -66,7 +79,7 @@ const Navbar: React.FC = () => {
                   </li>
                 ),
             )}
-            <Separator orientation="vertical" className="my-auto" />
+            <Separator orientation="vertical" className="my-auto mx-2" />
             <li>
               <Auth variant="image" />
             </li>

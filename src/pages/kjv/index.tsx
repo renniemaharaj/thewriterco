@@ -105,19 +105,21 @@ const Index = () => {
 
       {/* Page layout */}
       <Page wrapChildren={true} title="KJV Bible" description="Read the KJV Bible">
-        <Flex direction="column" align="center" className="w-full mx-auto gap-6">
+        <Flex direction="column" align="center" className="w-full mx-auto gap-6 md:gap-8">
           <Bible showAnimation={true} />
 
-          <Card className="!flex text-center w-full !items-center !justify-center">
-            <Flex className="flex-row gap-4">
-              <Text size="3" className="text-md font-bold mb-4" weight="bold">
-                KJV Bible
-              </Text>
-              <Text size="3" color="gray">
-                66 Books • 1,189 Chapters • 31,102 Verses
-              </Text>
+          <Card className="!flex text-center w-full !items-center !justify-center !py-6 md:!py-8 !shadow-md">
+            <Flex className="flex-col md:flex-row gap-4 md:gap-6 items-center">
+              <div>
+                <Text size="3" className="text-lg md:text-xl font-bold mb-2" weight="bold">
+                  KJV Bible
+                </Text>
+                <Text size="3" color="gray" className="text-sm md:text-base">
+                  66 Books • 1,189 Chapters • 31,102 Verses
+                </Text>
+              </div>
               <Link animate external href="https://github.com/renniemaharaj/kjv-bible">
-                Git Source
+                View Source
               </Link>
             </Flex>
           </Card>

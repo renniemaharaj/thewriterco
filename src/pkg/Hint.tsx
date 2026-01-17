@@ -10,9 +10,9 @@ const Hint = ({
   className?: string;
 }) => {
   return (
-    <Flex gap={"1"} justify={"center"} className={`${className} w-full p-2 relative m-auto`}>
-      <InfoIcon size={"1.1rem"} color="blue" className="!flex-shrink-0" />
-      <Text size="1" align={"center"}>
+    <Flex gap={"2"} justify={"center"} className={`${className} w-full px-3 py-2 md:px-4 md:py-3 relative m-auto rounded-lg bg-blue-50 dark:bg-blue-950 bg-opacity-50`}>
+      <InfoIcon size={"1.25rem"} className="!flex-shrink-0 text-blue-600 dark:text-blue-400 mt-0.5" />
+      <Text size="2" align={"center"} className="text-slate-700 dark:text-slate-300">
         {children}
       </Text>
     </Flex>
