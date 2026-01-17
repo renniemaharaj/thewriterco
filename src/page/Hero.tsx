@@ -25,7 +25,7 @@ const Hero: React.FC<HeroProps> = ({
           {subHeader}
         </h2>
       </div>
-      {hint && <Hint className="max-w-md md:max-w-lg overflow-hidden mt-2 mb-6 md:mb-8">{hint}</Hint>}
+      {hint && <Hint className="max-w-md md:max-w-lg overflow-hidden mt-2 mb-3 md:mb-4">{hint}</Hint>}
     </Flex>
   );
 };
