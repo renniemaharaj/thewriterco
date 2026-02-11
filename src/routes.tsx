@@ -21,13 +21,13 @@ export const protectedRoutes: (CustomRoute | IndexRoute)[] = [
   { path: "read/:tab/:title", element: <Documentation /> },
   { path: "daily", element: <Daily /> },
   { path: "daily/:searchQuery/:resultTitle", element: <Daily /> },
-  
+
   // Depreciated
   { path: "reasoning/:tab/:title", element: <Documentation /> },
   { path: "ai", element: <AI />, suspended: false },
   { path: "office", element: <></> },
   { path: "studies", element: <></> },
-  
+
   { path: "deduce", element: <Number /> },
   // { path: "search/:searchQuery", element: <Daily /> },
 ];

@@ -29,6 +29,10 @@ export const publicRoutesFunc = () => {
 
 export const protectedRoutesFunc = () => {
   return protectedRoutes.map((route, i) => (
-    <Route key={`private-${(route as CustomRoute).path || i}` + i} path={(route as CustomRoute).path} element={passThrough((route as CustomRoute))} />
+    <Route
+      key={`private-${(route as CustomRoute).path || i}` + i}
+      path={(route as CustomRoute).path}
+      element={passThrough(route as CustomRoute)}
+    />
   ));
 };
