@@ -7,8 +7,13 @@ import Renderer from "../../pkg/writer/Renderer";
 import { home_art } from "./art/home_art";
 import { swiperProps } from "./config.swiper";
 import { swiperSlides } from "./slides.swiper";
+import useUserLikelySignedIn from "../../pkg/firebase/auth/hooks/useUserLikelySignedIn";
+import Unauthenticated from "../../page/views/Unauthenticated";
 
 const Index: React.FC = () => {
+  const signedIn = useUserLikelySignedIn()
+  if (!signedIn.user) return <Unauthenticated/>
+  
   return (
     <Page
       title="Home"

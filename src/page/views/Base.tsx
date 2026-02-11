@@ -57,7 +57,7 @@ function Missing({
           {cause}
         </Text>
 
-        <div className="flex justify-center gap-4 flex-wrap">
+        <div className="flex justify-center gap-4 py-6 flex-wrap">
           {actions ? (
             <>{actions}</>
           ) : (

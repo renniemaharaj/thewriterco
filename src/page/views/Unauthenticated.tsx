@@ -2,17 +2,12 @@ import Auth from "../../pkg/firebase/auth/component/Auth";
 import Base from "./Base";
 
 const Unauthenticated = () => {
-  const config = {
-    title: "Private Route",
-    description: "This route is private",
-    cause: "Please sign in to continue",
-  };
   return (
     <Base
-      title={config.title}
-      description={config.description}
-      error={config.description}
-      cause={config.cause}
+      title="Private Route"
+      description="This route is private"
+      error="Not Allowed"
+      cause="Please sign in to continue"
       actions={[<Auth />]}
     />
   );
