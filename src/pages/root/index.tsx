@@ -3,16 +3,20 @@ import { Card, Flex, Separator } from "@radix-ui/themes";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Hero from "../../page/Hero";
 import Page from "../../page/Page";
-import Unauthenticated from "../../page/views/Unauthenticated";
+// import Unauthenticated from "../../page/views/Unauthenticated";
 import useUserLikelySignedIn from "../../pkg/firebase/auth/hooks/useUserLikelySignedIn";
 import Renderer from "../../pkg/writer/Renderer";
 import { home_art } from "./art/home_art";
 import { swiperProps } from "./config.swiper";
 import { swiperSlides } from "./slides.swiper";
+// import { useTransitionNavigation } from "../../pkg/hooks/useTransitionNavigation";
+import { lazy } from "react";
+const Writer = lazy(() => import("../writer/index.tsx"));
 
 const Index: React.FC = () => {
   const signedIn = useUserLikelySignedIn();
-  if (!signedIn.user) return <Unauthenticated />;
+  // const navigation = useTransitionNavigation()
+  if (!signedIn.user) return <Writer/>
 
   return (
     <Page
