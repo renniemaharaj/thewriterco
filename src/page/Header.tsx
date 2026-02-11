@@ -6,9 +6,9 @@ import type { RootState } from "../app/store";
 import Auth from "../pkg/firebase/auth/component/Auth";
 import { useTransitionNavigation } from "../pkg/hooks/useTransitionNavigation";
 import Link from "../pkg/link/Link";
+import Search from "../pkg/search/Search";
 import Separator from "../pkg/ui/Separator";
 import ThemeButton from "./ThemeButton";
-import Search from "../pkg/search/Search";
 import FilterBar from "./search/FilterBar";
 
 const navLinks = [
@@ -30,7 +30,10 @@ const Navbar: React.FC = () => {
         className={`w-full !justify-between py-3 md:py-4 px-4 md:px-6 shadow-sm sticky top-0 blurred-div !rounded-none transition-all ${readerState.isOpen ? "z-0" : "z-10"}`}
       >
         <Flex className="gap-4 md:gap-6 items-center justify-start flex-1">
-          <Text className="text-2xl md:text-3xl font-bold cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigateWT("/")}>
+          <Text
+            className="text-2xl md:text-3xl font-bold cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={() => navigateWT("/")}
+          >
             TheWriterCo
           </Text>
 
@@ -48,16 +51,12 @@ const Navbar: React.FC = () => {
         <Flex className="gap-2 md:gap-4 items-center">
           {/* Search Bar - Mobile */}
           <div className="md:hidden flex-1">
-            <Search
-              placeHolderOnFocus="Search 🧐"
-              placeholderOnBlur="Search"
-              disabled={false}
-            />
+            <Search placeHolderOnFocus="Search 🧐" placeholderOnBlur="Search" disabled={false} />
           </div>
-          
+
           {/* Theme Toggle */}
           <ThemeButton />
-          
+
           {/* Hamburger Menu */}
           <IconButton
             variant="soft"

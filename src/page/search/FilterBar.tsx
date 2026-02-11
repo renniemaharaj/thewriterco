@@ -1,7 +1,7 @@
 import { Flex } from "@radix-ui/themes";
 import { useLocation } from "react-router-dom";
-import Separator from "../../pkg/ui/Separator";
 import Labs from "../../pkg/search/labs/Labs";
+import Separator from "../../pkg/ui/Separator";
 
 const FilterBar = () => {
   const { pathname } = useLocation();

@@ -1,6 +1,6 @@
 import { Box, Button, Card } from "@radix-ui/themes";
 import { AnimatePresence, motion } from "framer-motion";
-import * as React from "react";
+import type * as React from "react";
 import { useRef } from "react";
 
 type SeekerProps = {

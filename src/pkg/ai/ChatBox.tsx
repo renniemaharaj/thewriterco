@@ -5,12 +5,12 @@ import { useDispatch } from "react-redux";
 import { setOpenState } from "../../app/reader/readerSlice.ts";
 
 import { useAtomValue } from "jotai";
-import { modelTyping } from "./atoms/typing.ts";
-import useSendHandler from "./hooks/useSendHandler.ts";
 import Input from "./Input.tsx";
 import Models from "./Models.tsx";
 import View from "./View.tsx";
+import { modelTyping } from "./atoms/typing.ts";
 import type { ScrollHandler } from "./hooks/types.ts";
+import useSendHandler from "./hooks/useSendHandler.ts";
 
 const ChatBox = ({
   className,

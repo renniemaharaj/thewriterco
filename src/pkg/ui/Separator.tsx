@@ -22,15 +22,13 @@ interface SeparatorProps extends ComponentPropsWithoutRef<typeof RadixSeparator>
  * <Separator size="2" className="my-4" />  // Larger separator with spacing
  * ```
  */
-const Separator = ({ size = "1", orientation = "horizontal", className, ...props }: SeparatorProps) => {
-  return (
-    <RadixSeparator
-      size={size}
-      orientation={orientation}
-      className={className}
-      {...props}
-    />
-  );
+const Separator = ({
+  size = "1",
+  orientation = "horizontal",
+  className,
+  ...props
+}: SeparatorProps) => {
+  return <RadixSeparator size={size} orientation={orientation} className={className} {...props} />;
 };
 
 export default Separator;

@@ -3,9 +3,9 @@ import { type ReactNode, useMemo } from "react";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
+import Motion from "../../page/Motion";
 import { Carousel } from "../Carousel";
 import Button from "../button/Button";
-import Motion from "../../page/Motion";
 import Result from "./Result";
 
 const Results = ({ children }: { children: ReactNode }) => {
