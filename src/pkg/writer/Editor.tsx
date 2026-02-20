@@ -32,7 +32,7 @@ function Editor() {
 
   const [key, setKey] = useState(1);
 
-  const triggerRemount = () => setKey(prev => prev + 1);
+  const triggerRemount = () => setKey((prev) => prev + 1);
 
   const onValueChange = debounce((value: any) => setLocalContent(value), 300);
 
@@ -42,7 +42,10 @@ function Editor() {
 
   useEffect(() => {
     setExtraHeaderItems([
-      <File setEditorContent={setLocalContent} triggerRemount={triggerRemount} />,
+      <File
+        setEditorContent={setLocalContent}
+        triggerRemount={triggerRemount}
+      />,
       <Fullscreen />,
     ]);
 
@@ -52,7 +55,7 @@ function Editor() {
   return (
     <main>
       <div>
-        <div className="blurred-div z-10 px-2 md:px-4">
+        <div className="blurred-div !pt-10 z-10 px-2 md:px-4">
           <RichTextEditor
             output="html"
             key={key}
