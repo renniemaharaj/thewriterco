@@ -24,7 +24,7 @@ function Renderer({ content }: { content: string }) {
 
   useEffect(() => {
     setLocalContent(content);
-    setKey(prev => prev + 1);
+    setKey((prev) => prev + 1);
   }, [content]);
 
   return (
@@ -42,7 +42,7 @@ function Renderer({ content }: { content: string }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.8 }}
         >
-          <div className="blurred-div z-10">
+          <div className="blurred-div z-10 renderer-editor">
             <RichTextEditor
               output="html"
               key={key}
