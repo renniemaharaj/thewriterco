@@ -105,12 +105,12 @@ const Page = ({
           )}
           {!wrapChildren && (
             <>
-              {hero}
+              {hero != undefined && hero}
               {isPending ? (
                 <Block />
               ) : (
                 <Flex className="!flex-col !gap-8 md:!gap-10 !w-full">
-                  <Separator size={"2"} className="mx-auto mt-8 md:mt-10" />
+                  {/* <Separator size={"2"} className="mx-auto mt-8 md:mt-10" /> */}
                   {children}
                 </Flex>
               )}

@@ -8,7 +8,13 @@ import {
   TextField,
   Tooltip,
 } from "@radix-ui/themes";
-import { CheckIcon, ChevronDown, DownloadCloud, FolderHeart, UploadCloud } from "lucide-react";
+import {
+  CheckIcon,
+  ChevronUp,
+  DownloadCloud,
+  FolderHeart,
+  UploadCloud,
+} from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../../app/store";
@@ -42,7 +48,7 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
   const [showUploadConfirm, setShowUploadConfirm] = useState(false);
 
   const findSaveByTitle = useCallback(
-    (title: string) => saves.find(s => s.title === title),
+    (title: string) => saves.find((s) => s.title === title),
     [saves],
   );
 
@@ -85,13 +91,16 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
     [dispatch],
   );
 
-  const handleUploadChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file && file.name.endsWith(".html")) {
-      setUploadFile(file);
-      setShowUploadConfirm(true);
-    }
-  }, []);
+  const handleUploadChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file && file.name.endsWith(".html")) {
+        setUploadFile(file);
+        setShowUploadConfirm(true);
+      }
+    },
+    [],
+  );
 
   const confirmUpload = useCallback(() => {
     if (uploadFile) {
@@ -119,7 +128,7 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
       <Popover.Trigger>
         <IconButton variant="soft" aria-controls="file-content">
           <Tooltip content="File management">
-            <ChevronDown className="h-4 w-4 " />
+            <ChevronUp className="h-4 w-4 " />
           </Tooltip>
         </IconButton>
       </Popover.Trigger>
@@ -189,7 +198,7 @@ const File = ({ triggerRemount, setEditorContent }: FileProps) => {
 
             <TextField.Root
               value={title}
-              onChange={e => dispatch(setTitle(e.target.value))}
+              onChange={(e) => dispatch(setTitle(e.target.value))}
               placeholder="Title required"
               mt="2"
             />
